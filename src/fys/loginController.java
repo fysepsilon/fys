@@ -50,7 +50,7 @@ public class loginController implements Initializable {
             loginerror.setText("Gebruikersnaam en/of wachtwoord veld(en) zijn leeg gelaten!");
             loginerror.setVisible(true);
         } else{
-            if(fys.authenticateLogin(username.getText(), password.getText())){
+            if(fys.authenticateLogin(username.getText(), fys.encrypt(password.getText()))){
                 //Switch screen to Home.
                 fys.changeToAnotherFXML("Corendon-WachtwoordVergeten", "wachtwoordVergeten.fxml");
             } else{

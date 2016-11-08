@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -22,16 +23,15 @@ import javafx.stage.Stage;
  */
 public class WachtwoordVergetenController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    @FXML
+    TextField username;
     @FXML
     private Label label;
 
     @FXML
     private void handleBackButtonAction(ActionEvent event) throws IOException {
         FYS fys = new FYS();
-        fys.changeToAnotherFXML("login.fxml");
+        fys.changeToAnotherFXML("Corendon-Login", "login.fxml");
     }
     
     @Override

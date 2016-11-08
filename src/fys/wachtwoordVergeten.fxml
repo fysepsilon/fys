@@ -16,7 +16,7 @@
             </image>
         </ImageView>
         <Label layoutX="253.0" layoutY="200.0" text="Gebruikersnaam:" />
-        <TextField layoutX="429.0" layoutY="195.0" prefHeight="31.0" prefWidth="260.0" />
+        <TextField id="username" fx:id="username" layoutX="429.0" layoutY="195.0" prefHeight="31.0" prefWidth="260.0" />
         <Button layoutX="502.0" layoutY="293.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="187.0" text="Versturen" />
       <Button id="backButton" layoutX="253.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleBackButtonAction" prefHeight="31.0" prefWidth="187.0" text="Terug" />
     </children>

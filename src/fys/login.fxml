@@ -16,9 +16,9 @@
         </ImageView>
         <Label layoutX="253.0" layoutY="200.0" text="Gebruikersnaam:" />
         <Label layoutX="277.0" layoutY="262.0" text="Wachtwoord:" />
-        <TextField layoutX="429.0" layoutY="195.0" prefHeight="31.0" prefWidth="260.0" />
-        <TextField layoutX="429.0" layoutY="257.0" prefHeight="31.0" prefWidth="260.0" />
-        <Button id="logInButton" layoutX="466.0" layoutY="365.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="187.0" text="Inloggen" />
+        <TextField id="username" fx:id="username" layoutX="429.0" layoutY="195.0" prefHeight="31.0" prefWidth="260.0" />
+        <PasswordField id="password" fx:id="password" layoutX="429.0" layoutY="257.0" prefHeight="31.0" prefWidth="260.0" />
+        <Button id="logInButton" layoutX="466.0" layoutY="365.0" mnemonicParsing="false" onAction="#handleChechLoginAction" prefHeight="31.0" prefWidth="187.0" text="Inloggen" />
         <Hyperlink id="forgotPassword" layoutX="477.0" layoutY="309.0" onAction="#handleForgotPasswordAction" text="Wachtwoord vergeten?" />
     
     </children>

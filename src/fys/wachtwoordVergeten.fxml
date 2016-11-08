@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.WachtwoordVergetenController">
+    <children>
+        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="26.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@Images/corendon_logo.jpg" />
+            </image>
+        </ImageView>
+        <Label layoutX="253.0" layoutY="200.0" text="Gebruikersnaam:" />
+        <TextField layoutX="429.0" layoutY="195.0" prefHeight="31.0" prefWidth="260.0" />
+        <Button layoutX="502.0" layoutY="293.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="187.0" text="Versturen" />
+      <Button id="backButton" layoutX="253.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleBackButtonAction" prefHeight="31.0" prefWidth="187.0" text="Terug" />
+    </children>
+</AnchorPane>

@@ -31,6 +31,7 @@ public class FYS extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.setTitle("Corendon-Login");
         stage.show();
     }
@@ -42,6 +43,7 @@ public class FYS extends Application {
         Stage mainStage;
         mainStage = FYS.parentWindow;
         mainStage.setTitle(title);
+        mainStage.setResizable(false);
         mainStage.getScene().setRoot(window1);
     }
     

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -20,6 +21,11 @@
         <PasswordField id="password" fx:id="password" layoutX="429.0" layoutY="257.0" prefHeight="31.0" prefWidth="260.0" />
         <Button id="logInButton" layoutX="466.0" layoutY="365.0" mnemonicParsing="false" onAction="#handleChechLoginAction" prefHeight="31.0" prefWidth="187.0" text="Inloggen" />
         <Hyperlink id="forgotPassword" layoutX="477.0" layoutY="309.0" onAction="#handleForgotPasswordAction" text="Wachtwoord vergeten?" />
+      <Label id="loginerror" fx:id="loginerror" alignment="CENTER" layoutX="171.0" layoutY="133.0" prefHeight="25.0" prefWidth="586.0" textFill="RED" visible="false">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
     
     </children>
 </AnchorPane>

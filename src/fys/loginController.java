@@ -7,6 +7,7 @@ package fys;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,18 +31,33 @@ public class loginController implements Initializable {
     PasswordField password;
     @FXML
     private Label label;
+    @FXML
+    private Label loginerror;
     
     @FXML
     private void handleForgotPasswordAction(ActionEvent event) throws IOException {
+        //Switch screen to wachtwoordvergeten.
         FYS fys = new FYS();
         fys.changeToAnotherFXML("Corendon-WachtwoordVergeten", "wachtwoordVergeten.fxml");
     }
     
     @FXML
-    private void handleChechLoginAction(ActionEvent event) throws IOException {
+    private void handleChechLoginAction(ActionEvent event) throws IOException, SQLException {
         FYS fys = new FYS();
-        System.out.println(username.getText() + " " + password.getText());
-        //fys.changeToAnotherFXML("wachtwoordVergeten.fxml");
+        //Check if username and password is filled in and correct.
+        //Show error if not filled in or not correct.
+        if((username.getText() == null || username.getText().trim().isEmpty()) || (password.getText() == null || password.getText().trim().isEmpty())){
+            loginerror.setText("Gebruikersnaam en/of wachtwoord veld(en) zijn leeg gelaten!");
+            loginerror.setVisible(true);
+        } else{
+            if(fys.authenticateLogin(username.getText(), password.getText())){
+                //Switch screen to Home.
+                fys.changeToAnotherFXML("Corendon-WachtwoordVergeten", "wachtwoordVergeten.fxml");
+            } else{
+                loginerror.setText("Uw gebruikersnaam en wachtwoord komen niet overeen!");
+                loginerror.setVisible(true);
+            }
+        }
     }
     
     @Override

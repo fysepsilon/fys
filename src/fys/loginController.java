@@ -7,7 +7,11 @@ package fys;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,13 +54,51 @@ public class loginController implements Initializable {
             loginerror.setText("Gebruikersnaam en/of wachtwoord veld(en) zijn leeg gelaten!");
             loginerror.setVisible(true);
         } else{
-            if(fys.authenticateLogin(username.getText(), fys.encrypt(password.getText()))){
+            if(authenticateLogin(username.getText(), fys.encrypt(password.getText()))){
                 //Switch screen to Home.
                 fys.changeToAnotherFXML("Corendon-WachtwoordVergeten", "wachtwoordVergeten.fxml");
             } else{
                 loginerror.setText("Uw gebruikersnaam en wachtwoord komen niet overeen!");
                 loginerror.setVisible(true);
             }
+        }
+    }
+    
+    private boolean authenticateLogin(String inputUsername, String inputPassword) throws SQLException {
+        FYS fys = new FYS();
+        String username = "", password = "";
+        try {
+            Statement stmt = null;
+            Connection conn = null;
+
+            conn = fys.connectToDatabase(conn);
+            stmt = conn.createStatement();
+
+            //connectToDatabase(conn, stmt, "test", "root", "root");
+            String sql = "SELECT mail, password FROM accounts WHERE mail='" + inputUsername + "' AND password = '" + inputPassword + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                //Retrieve by column name
+                username = rs.getString("mail");
+                password = rs.getString("password");
+                //Display values
+//                System.out.print("username: " + username);
+//                System.out.print(" password: " + password);
+            }
+            rs.close();
+            conn.close();
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+
+        //Return boolean values.
+        if (username != "" && password != "") {
+            return true;
+        } else {
+            return false;
         }
     }
     

@@ -39,8 +39,7 @@ public class FYS extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Corendon-Login");
-        stage.show();
-        
+        stage.show();  
     }
     
     //Made a method to switch to FXML screens.
@@ -52,6 +51,12 @@ public class FYS extends Application {
         mainStage.setTitle(title);
         mainStage.setResizable(false);
         mainStage.getScene().setRoot(window1);
+    }
+    
+    //Conect to database.
+    public Connection connectToDatabase(Connection conn) throws SQLException {
+        conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=root");
+        return conn;
     }
     
     //Made a method to decrypt strings.
@@ -108,44 +113,7 @@ public class FYS extends Application {
             hexString.append(plainText);
         }
         return hexString.toString();
-    }
-    
-    public boolean authenticateLogin(String inputUsername, String inputPassword) throws SQLException{
-        String username = "", password = "";
-        try {
-            Statement stmt = null;
-            Connection conn = null;
-            
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=root");
-            stmt = conn.createStatement();
-            
-            //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql = "SELECT mail, password FROM accounts WHERE mail='" + inputUsername +"' AND password = '" + inputPassword + "'";
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                //Retrieve by column name
-                username = rs.getString("mail");
-                password = rs.getString("password");
-                //Display values
-//                System.out.print("username: " + username);
-//                System.out.print(" password: " + password);
-            }
-            rs.close();
-            conn.close();
-        } catch (SQLException ex) {
-            // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-        }
-        
-        //Return boolean values.
-        if(username != "" && password != ""){
-            return true;
-        }else{
-            return false;
-        }
-    }
+    } 
 
     /**
      * @param args the command line arguments

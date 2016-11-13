@@ -10,14 +10,18 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.WachtwoordVergetenController">
     <children>
-        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="26.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@Images/corendon_logo.jpg" />
+                <Image url="@images/corendon_logo.jpg" />
             </image>
         </ImageView>
         <Label layoutX="253.0" layoutY="200.0" text="Gebruikersnaam:" />
         <TextField id="username" fx:id="username" layoutX="429.0" layoutY="195.0" prefHeight="31.0" prefWidth="260.0" />
-        <Button layoutX="502.0" layoutY="293.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="187.0" text="Versturen" />
+        <Button id="sendNewPasswordButton" layoutX="502.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleSendNewPasswordAction" prefHeight="31.0" prefWidth="187.0" text="Versturen" />
       <Button id="backButton" layoutX="253.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleBackButtonAction" prefHeight="31.0" prefWidth="187.0" text="Terug" />
+      <Label id="sendPasswordError" fx:id="sendPasswordError" alignment="TOP_LEFT" layoutX="252.0" layoutY="133.0" prefHeight="25.0" prefWidth="579.0" textFill="RED" visible="false">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
     </children>
 </AnchorPane>

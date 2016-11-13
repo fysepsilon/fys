@@ -30,9 +30,9 @@ import javax.xml.ws.BindingProvider;
  */
 public class loginController implements Initializable {
     @FXML
-    TextField username;
+    private TextField username;
     @FXML
-    PasswordField password;
+    private PasswordField password;
     @FXML
     private Label label;
     @FXML

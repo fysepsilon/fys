@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
@@ -19,7 +20,7 @@
         <TextField id="username" fx:id="username" layoutX="429.0" layoutY="195.0" prefHeight="31.0" prefWidth="260.0" />
         <Button id="sendNewPasswordButton" layoutX="502.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleSendNewPasswordAction" prefHeight="31.0" prefWidth="187.0" text="Versturen" />
       <Button id="backButton" layoutX="253.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleBackButtonAction" prefHeight="31.0" prefWidth="187.0" text="Terug" />
-      <Label id="sendPasswordError" fx:id="sendPasswordError" alignment="TOP_LEFT" layoutX="252.0" layoutY="133.0" prefHeight="25.0" prefWidth="579.0" textFill="RED" visible="false">
+      <Label id="sendPasswordMessage" fx:id="sendPasswordMessage" alignment="TOP_LEFT" layoutX="252.0" layoutY="133.0" prefHeight="25.0" prefWidth="579.0" textFill="RED" visible="false">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>

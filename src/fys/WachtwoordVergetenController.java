@@ -32,7 +32,7 @@ public class WachtwoordVergetenController implements Initializable {
     @FXML
     private Label label;
     @FXML
-    private Label sendPasswordError;
+    private Label sendPasswordMessage;
 
     @FXML
     private void handleBackButtonAction(ActionEvent event) throws IOException {
@@ -50,8 +50,9 @@ public class WachtwoordVergetenController implements Initializable {
         stmt = conn.createStatement();
         
         if ((username.getText() == null || username.getText().trim().isEmpty())) {
-            sendPasswordError.setText("Gebruikersnaam is leeg gelaten!");
-            sendPasswordError.setVisible(true);
+            sendPasswordMessage.setText("Gebruikersnaam is leeg gelaten!");
+            sendPasswordMessage.setStyle("-fx-text-fill: red;");
+            sendPasswordMessage.setVisible(true);
         } else {
             try {
                 //connectToDatabase(conn, stmt, "test", "root", "root");
@@ -64,7 +65,6 @@ public class WachtwoordVergetenController implements Initializable {
                     //System.out.print("username: " + email);
                 }
                 rs.close();
-                conn.close();
             } catch (SQLException ex) {
                 // handle any errors
                 System.out.println("SQLException: " + ex.getMessage());
@@ -73,18 +73,42 @@ public class WachtwoordVergetenController implements Initializable {
             }
             
             if ((email == null || email.trim().isEmpty())) {
-                sendPasswordError.setText("Deze gebruikersnaam bestaat helaas niet!");
-                sendPasswordError.setVisible(true);
+                sendPasswordMessage.setText("Deze gebruikersnaam bestaat helaas niet!");
+                sendPasswordMessage.setStyle("-fx-text-fill: red;");
+                sendPasswordMessage.setVisible(true);
             } else{
+                String[] mailInformation = new String[3];
+                try {
+                    //connectToDatabase(conn, stmt, "test", "root", "root");
+                    String sql = "SELECT firstname, lastname, password FROM accounts WHERE mail='" + username.getText() + "'";
+                    ResultSet rs = stmt.executeQuery(sql);
+                    while (rs.next()) {
+                        //Retrieve by column name
+                        mailInformation[0] = rs.getString("firstname").substring(0, 1).toUpperCase() + rs.getString("firstname").substring(1);
+                        mailInformation[1] = rs.getString("lastname").substring(0, 1).toUpperCase() + rs.getString("lastname").substring(1);
+                        mailInformation[2] = fys.decrypt(rs.getString("password"));
+                        //Display values
+                        //System.out.print("username: " + email);
+                    }
+                    rs.close();
+                    conn.close();
+                } catch (SQLException ex) {
+                    // handle any errors
+                    System.out.println("SQLException: " + ex.getMessage());
+                    System.out.println("SQLState: " + ex.getSQLState());
+                    System.out.println("VendorError: " + ex.getErrorCode());
+                }
                 fys.sendEmail(username.getText(), "Corendon - Wachtwoord", "Beste "
-                        + ", "
+                        + mailInformation[0] + " " + mailInformation[1] + ", "
                         + "<br><br> Hierbij sturen wij jouw wachtwoord van het Corendon systeem. "
-                        + "<br>Wachtwoord: "
-                        + "<br><br> Wij hopen je goed te hebben geholpen."
+                        + "<br>Wachtwoord: <i>" + mailInformation[2]
+                        + "</i><br><br> Wij hopen hopen u hiermee goed te hebben geholpen."
                         + "<br><br>Met vriendelijke groet,"
                         + "<br><br><b>Corendon</b>", "Sent message successfully....");
+                sendPasswordMessage.setText("Uw wachtwoord is verstuurd naar: " + username.getText() + "!");
+                sendPasswordMessage.setStyle("-fx-text-fill: green;");
+                sendPasswordMessage.setVisible(true);
                 username.setText("");
-                sendPasswordError.setVisible(false);
             }
         }
     }

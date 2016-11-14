@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -33,6 +34,8 @@ public class WachtwoordVergetenController implements Initializable {
     private Label label;
     @FXML
     private Label sendPasswordMessage;
+    @FXML
+    private Button sendNewPasswordButton;
 
     @FXML
     private void handleBackButtonAction(ActionEvent event) throws IOException {
@@ -77,6 +80,7 @@ public class WachtwoordVergetenController implements Initializable {
                 sendPasswordMessage.setStyle("-fx-text-fill: red;");
                 sendPasswordMessage.setVisible(true);
             } else{
+                sendNewPasswordButton.setDisable(true);
                 String[] mailInformation = new String[3];
                 try {
                     //connectToDatabase(conn, stmt, "test", "root", "root");
@@ -109,6 +113,7 @@ public class WachtwoordVergetenController implements Initializable {
                 sendPasswordMessage.setStyle("-fx-text-fill: green;");
                 sendPasswordMessage.setVisible(true);
                 username.setText("");
+                sendNewPasswordButton.setDisable(false);
             }
         }
     }

@@ -45,6 +45,7 @@ public class WachtwoordVergetenController implements Initializable {
     
     @FXML
     private void handleSendNewPasswordAction(ActionEvent event) throws IOException, SQLException {
+        sendNewPasswordButton.setDisable(true);
         FYS fys = new FYS();
         String email = "";
         Statement stmt = null;
@@ -56,6 +57,7 @@ public class WachtwoordVergetenController implements Initializable {
             sendPasswordMessage.setText("Gebruikersnaam is leeg gelaten!");
             sendPasswordMessage.setStyle("-fx-text-fill: red;");
             sendPasswordMessage.setVisible(true);
+            sendNewPasswordButton.setDisable(false);
         } else {
             try {
                 //connectToDatabase(conn, stmt, "test", "root", "root");
@@ -79,8 +81,8 @@ public class WachtwoordVergetenController implements Initializable {
                 sendPasswordMessage.setText("Deze gebruikersnaam bestaat helaas niet!");
                 sendPasswordMessage.setStyle("-fx-text-fill: red;");
                 sendPasswordMessage.setVisible(true);
+                sendNewPasswordButton.setDisable(false);
             } else{
-                sendNewPasswordButton.setDisable(true);
                 String[] mailInformation = new String[3];
                 try {
                     //connectToDatabase(conn, stmt, "test", "root", "root");

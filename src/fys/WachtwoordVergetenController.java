@@ -90,8 +90,8 @@ public class WachtwoordVergetenController implements Initializable {
                     ResultSet rs = stmt.executeQuery(sql);
                     while (rs.next()) {
                         //Retrieve by column name
-                        mailInformation[0] = rs.getString("firstname").substring(0, 1).toUpperCase() + rs.getString("firstname").substring(1);
-                        mailInformation[1] = rs.getString("lastname").substring(0, 1).toUpperCase() + rs.getString("lastname").substring(1);
+                        mailInformation[0] = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("firstname").substring(1);
+                        mailInformation[1] = rs.getString("last_name").substring(0, 1).toUpperCase() + rs.getString("lastname").substring(1);
                         mailInformation[2] = fys.decrypt(rs.getString("password"));
                         //Display values
                         //System.out.print("username: " + email);

@@ -56,7 +56,7 @@ public class loginController implements Initializable {
         } else{
             if(authenticateLogin(username.getText(), fys.encrypt(password.getText()))){
                 //Switch screen to Home.
-                fys.changeToAnotherFXML("Corendon-WachtwoordVergeten", "wachtwoordVergeten.fxml");
+                fys.changeToAnotherFXML("Corendon-WachtwoordVergeten", "bagageformulieren.fxml");
             } else{
                 loginerror.setText("Uw gebruikersnaam en wachtwoord komen niet overeen!");
                 loginerror.setVisible(true);

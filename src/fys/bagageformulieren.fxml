@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.media.*?>
-<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bagageformulieren.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.BagageformulierenController">
     <children>
         <Label fx:id="label" layoutX="127.0" layoutY="205.0" minHeight="16" minWidth="69" />
         <Label layoutX="15.0" layoutY="105.0" prefHeight="27.0" prefWidth="126.0" text="Luchthaven:" />
@@ -42,9 +39,9 @@
         <Label layoutX="545.0" layoutY="496.0" prefHeight="27.0" prefWidth="126.0" text="Afbeelding:" />
         <Button layoutX="669.0" layoutY="490.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="318.0" text="Klik hier om een afbeelding toe te voegen" />
         <Button layoutX="14.0" layoutY="547.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="972.0" text="Verzenden" />
-      <TextField layoutX="669.0" layoutY="149.0" prefHeight="39.0" prefWidth="318.0" />
-      <TextField layoutX="669.0" layoutY="99.0" prefHeight="39.0" prefWidth="318.0" />
-      <Label layoutX="543.0" layoutY="155.0" prefHeight="27.0" prefWidth="126.0" text="Bestemming:" />
-      <Label layoutX="543.0" layoutY="105.0" prefHeight="27.0" prefWidth="126.0" text="Vluchtnummer:" />
-      </children>
+        <TextField layoutX="669.0" layoutY="149.0" prefHeight="39.0" prefWidth="318.0" />
+        <TextField layoutX="669.0" layoutY="99.0" prefHeight="39.0" prefWidth="318.0" />
+        <Label layoutX="543.0" layoutY="155.0" prefHeight="27.0" prefWidth="126.0" text="Bestemming:" />
+        <Label layoutX="543.0" layoutY="105.0" prefHeight="27.0" prefWidth="126.0" text="Vluchtnummer:" />
+    </children>
 </AnchorPane>

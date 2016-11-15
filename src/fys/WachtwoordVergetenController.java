@@ -86,7 +86,7 @@ public class WachtwoordVergetenController implements Initializable {
                 String[] mailInformation = new String[3];
                 try {
                     //connectToDatabase(conn, stmt, "test", "root", "root");
-                    String sql = "SELECT firstname, lastname, password FROM accounts WHERE mail='" + username.getText() + "'";
+                    String sql = "SELECT first_name, last_name, password FROM accounts WHERE mail='" + username.getText() + "'";
                     ResultSet rs = stmt.executeQuery(sql);
                     while (rs.next()) {
                         //Retrieve by column name

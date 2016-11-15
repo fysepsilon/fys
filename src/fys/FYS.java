@@ -38,7 +38,7 @@ import javax.mail.internet.MimeMessage;
 public class FYS extends Application {
     
     public static Stage parentWindow;
-    private static String key = "1234abcd";
+    private static final String key = "1234abcd";
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -64,7 +64,7 @@ public class FYS extends Application {
     
     //Conect to database.
     public Connection connectToDatabase(Connection conn) throws SQLException {
-        conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=root");
+        conn = DriverManager.getConnection("jdbc:mysql://localhost/bagagedatabase?user=root&password=root");
         return conn;
     }
     

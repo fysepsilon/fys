@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="100.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.NavigatiebalkController">
+    <children>
+        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+           <image>
+              <Image url="@images/corendon_logo.jpg" />
+           </image>
+        </ImageView>
+      <Button layoutY="71.0" mnemonicParsing="false" text="Home" />
+      <Button layoutX="61.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleBagageformulieren" text="Vermiste bagage registreren" />
+      <Button layoutX="269.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleBagageformulieren" text="Gevonden bagage registreren" />
+      <Button layoutX="487.0" layoutY="71.0" mnemonicParsing="false" text="Bagage database" />
+      <Button layoutX="621.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleAccounts" text="Klant accounts" />
+    </children>
+</AnchorPane>

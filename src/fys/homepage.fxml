@@ -9,9 +9,6 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="fys.HomepageController">
    <children>
-      <Button layoutX="58.0" layoutY="58.0" onAction="#handleBagageformulieren" mnemonicParsing="false" text="Vermiste bagage registreren" />
-      <Button layoutX="249.0" layoutY="58.0" onAction="#handleBagageformulieren" mnemonicParsing="false" text="Gevonden bagage registreren" />
-      <Button layoutX="454.0" layoutY="58.0" mnemonicParsing="false" text="Bagage database" />
-      <Button layoutX="603.0" layoutY="58.0" onAction="#handleAccounts" mnemonicParsing="false" text="Klant accounts" />
+       <fx:include source="navigatiebalk.fxml" fx:id="navigatiebalk" />
    </children>
 </AnchorPane>

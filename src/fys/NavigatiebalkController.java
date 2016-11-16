@@ -92,7 +92,6 @@ public class NavigatiebalkController implements Initializable {
         loginController loginController = new loginController();
         String name = loginController.getUsersName().replaceAll("null", "");
         name = name.replaceAll("  ", " ");
-        System.out.println(name);
         if(loginController.getUsertype().equals("1")){
             homeAdmin.setVisible(true);
             missingAdmin.setVisible(true);

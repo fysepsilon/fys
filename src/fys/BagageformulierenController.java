@@ -8,10 +8,14 @@ package fys;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.util.Date;
+import java.text.DateFormat;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,8 +44,9 @@ public class BagageformulierenController implements Initializable {
     @FXML private TextField phone_input;
     @FXML private TextField mail_input;
     @FXML private CheckBox account_checkbox;
-    @FXML private TextField lablenumber_input;
+    @FXML private TextField labelnumber_input;
     @FXML private TextField flightnumber_input;
+    @FXML private TextField destination_input;
     @FXML private ComboBox type_combo;
     @FXML private TextField brand_input;
     @FXML private TextField color_input;
@@ -52,26 +57,37 @@ public class BagageformulierenController implements Initializable {
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
         FYS fys = new FYS();
         //Check if username and password is filled in and correct.
-        //Show error if not filled in or not correct.
-        if((name_input.getText() == null || name_input.getText().trim().isEmpty()) 
+        //Show error if not filled in or not correct.      
+        if((name_input.getText() == null || name_input.getText().trim().isEmpty())
+                || (airport_combo.getValue() == null)
                 || (address_input.getText() == null || address_input.getText().trim().isEmpty())
                 || (residence_input.getText() == null || residence_input.getText().trim().isEmpty())
                 || (zipcode_input.getText() == null || zipcode_input.getText().trim().isEmpty())
                 || (mail_input.getText() == null || mail_input.getText().trim().isEmpty())
+                || (type_combo.getValue() == null)
                 || (brand_input.getText() == null || brand_input.getText().trim().isEmpty())
                 || (color_input.getText() == null || color_input.getText().trim().isEmpty()
         )){
             //Doen indien niet goed
         } else{
-            sendToDatabase(name_input.getText(), name_input.getText(), address_input.getText(), 
-                    residence_input.getText(), country_input.getText(), phone_input.getText(), 
-                    mail_input.getText());
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date date = new Date();
+            String dateString = dateFormat.format(date);
+            
+            sendToDatabase(airport_combo.getValue().toString(), name_input.getText(), 
+                    address_input.getText(), residence_input.getText(), zipcode_input.getText(),
+                    country_input.getText(), phone_input.getText(), mail_input.getText(), 
+                    account_checkbox.isSelected(), labelnumber_input.getText(), 
+                    flightnumber_input.getText(), destination_input.getText(), 
+                    type_combo.getValue().toString(), brand_input.getText(), 
+                    color_input.getText(), dateString);
         }
     }
     
     @FXML
-    private void sendToDatabase(String name, String address, String residence, String zipcode, 
-            String country, String phone, String mail) throws IOException, SQLException {
+    private void sendToDatabase(String airport, String name, String address, String residence, String zipcode, 
+            String country, String phone, String mail, Boolean checkbox, String labelnumber, String flightnumber, 
+            String destination, String type, String brand, String color, String date) throws IOException, SQLException {
         FYS fys = new FYS();
         
         try {
@@ -82,12 +98,17 @@ public class BagageformulierenController implements Initializable {
             stmt = conn.createStatement();
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql = "INSERT INTO bagagedatabase.person_table (first_name, address, residence, "
+            String sql_person = "INSERT INTO bagagedatabase.person_table (first_name, address, residence, "
                     + "zipcode, country, phone, mail) VALUES ('" + name + "', '" + address + "', "
                     + "'" + residence + "', '" + zipcode + "', '" + country + "', '" + phone + "', "
                     + "'" + mail + "')";
             
-            stmt.executeUpdate(sql);
+            String sql_airport = "INSERT INTO bagagedatabase.airport_table (date, airport_lost, "
+                    + "label_number, flight_number, destination) VALUES ('" + date + "', '" + airport + "', "
+                    + "'" + labelnumber + "', '" + flightnumber + "', '" + destination + "')";
+            
+            stmt.executeUpdate(sql_person);
+            //stmt.executeUpdate(sql_airport);
             conn.close();
         } catch (SQLException ex) {
             // handle any errors

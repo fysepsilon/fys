@@ -63,6 +63,7 @@ public class NavigatiebalkController implements Initializable {
     @FXML
     private void handleAccountsAdmin(ActionEvent event) throws IOException {
         FYS fys = new FYS();
+        fys.changeToAnotherFXML("Accounts", "accounts.fxml");
     }
     
     @FXML

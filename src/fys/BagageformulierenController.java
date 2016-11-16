@@ -63,7 +63,9 @@ public class BagageformulierenController implements Initializable {
         )){
             //Doen indien niet goed
         } else{
-            sendToDatabase(name_input.getText(), name_input.getText(), address_input.getText(), residence_input.getText(), country_input.getText(), phone_input.getText(), mail_input.getText());
+            sendToDatabase(name_input.getText(), name_input.getText(), address_input.getText(), 
+                    residence_input.getText(), country_input.getText(), phone_input.getText(), 
+                    mail_input.getText());
         }
     }
     

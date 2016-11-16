@@ -15,10 +15,10 @@
               <Image url="@images/corendon_logo.jpg" />
            </image>
         </ImageView>
-      <Button layoutY="71.0" mnemonicParsing="false" text="Home" />
+      <Button layoutY="71.0" mnemonicParsing="false" onAction="#handleHome" text="Home" />
       <Button layoutX="61.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleBagageformulieren" text="Vermiste bagage registreren" />
       <Button layoutX="269.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleBagageformulieren" text="Gevonden bagage registreren" />
-      <Button layoutX="487.0" layoutY="71.0" mnemonicParsing="false" text="Bagage database" />
+      <Button layoutX="487.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleBagagedatabase" text="Bagage database" />
       <Button layoutX="621.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleAccounts" text="Klant accounts" />
     </children>
 </AnchorPane>

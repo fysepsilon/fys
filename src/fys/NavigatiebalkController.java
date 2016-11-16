@@ -105,9 +105,9 @@ public class NavigatiebalkController implements Initializable {
             found.setVisible(false);
             luggage.setVisible(false);
             account.setVisible(false);
-            welcomeText.setText("Administrator - Welkom " + name + ",");
+            welcomeText.setText("Administrator - Welkom! " + name);
         } else{
-            welcomeText.setText("Servicemedewerker - Welkom " + name + ",");
+            welcomeText.setText("Servicemedewerker - Welkom! " + name);
         }
     }    
 }

@@ -7,6 +7,7 @@ package fys;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.event.ActionEvent;
@@ -28,23 +29,25 @@ public class accountsController {
         fys.changeToAnotherFXML("Nieuw account aanmaken", "homepage.fxml");
     }
 
-    private void sendToDatabase(String name, String address, String residence, String zipcode,
-            String country, String phone, String mail) throws IOException, SQLException {
+    @FXML public static void main (String[] args) {
         FYS fys = new FYS();
-
         try {
             Statement stmt = null;
             Connection conn = null;
-
+            
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-
+            
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql = "SELECT * FROM bagagedatabase.accounts";
-
-            stmt.executeUpdate(sql);
+            ResultSet rs;
+ 
+            rs = stmt.executeQuery("SELECT first_name FROM bagagedatabase.accounts");
+            while ( rs.next() ) {
+                String lastName = rs.getString("Lname");
+                System.out.println(lastName);
+            }
             conn.close();
-        } catch (SQLException ex) {
+       } catch (SQLException ex) {
             // handle any errors
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());

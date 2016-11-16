@@ -63,12 +63,13 @@ public class BagageformulierenController implements Initializable {
         )){
             //Doen indien niet goed
         } else{
-            sendToDatabase(name_input.getText());
+            sendToDatabase(name_input.getText(), name_input.getText(), address_input.getText(), residence_input.getText(), country_input.getText(), phone_input.getText(), mail_input.getText());
         }
     }
     
     @FXML
-    private void sendToDatabase(String name) throws IOException, SQLException {
+    private void sendToDatabase(String name, String address, String residence, String zipcode, 
+            String country, String phone, String mail) throws IOException, SQLException {
         FYS fys = new FYS();
         
         try {
@@ -79,9 +80,10 @@ public class BagageformulierenController implements Initializable {
             stmt = conn.createStatement();
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql = "INSERT INTO bagagedatabase.person_table (first_name, surname, "
-                    + "address, residence, zipcode, country, phone, mail) VALUES ('" + name + "', '" + name + "', "
-                    + "'" + name + "', '" + name + "', '" + name + "', '" + name + "', '" + name + "', '" + name + "')";
+            String sql = "INSERT INTO bagagedatabase.person_table (first_name, address, residence, "
+                    + "zipcode, country, phone, mail) VALUES ('" + name + "', '" + address + "', "
+                    + "'" + residence + "', '" + zipcode + "', '" + country + "', '" + phone + "', "
+                    + "'" + mail + "')";
             
             stmt.executeUpdate(sql);
             conn.close();

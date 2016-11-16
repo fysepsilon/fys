@@ -77,7 +77,7 @@ public class BagageformulierenController implements Initializable {
             sendToDatabase(airport_combo.getValue().toString(), name_input.getText(), 
                     address_input.getText(), residence_input.getText(), zipcode_input.getText(),
                     country_input.getText(), phone_input.getText(), mail_input.getText(), 
-                    /*account_checkbox.isSelected(),*/ labelnumber_input.getText(), 
+                    account_checkbox.isSelected(), labelnumber_input.getText(), 
                     flightnumber_input.getText(), destination_input.getText(), 
                     type_combo.getValue().toString(), brand_input.getText(), 
                     color_input.getText(), dateString);
@@ -86,7 +86,7 @@ public class BagageformulierenController implements Initializable {
     
     @FXML
     private void sendToDatabase(String airport, String name, String address, String residence, String zipcode, 
-            String country, String phone, String mail, /*Boolean checkbox,*/ String labelnumber, String flightnumber, 
+            String country, String phone, String mail, Boolean checkbox, String labelnumber, String flightnumber, 
             String destination, String type, String brand, String color, String date) throws IOException, SQLException {
         FYS fys = new FYS();
         
@@ -103,12 +103,12 @@ public class BagageformulierenController implements Initializable {
                     + "'" + residence + "', '" + zipcode + "', '" + country + "', '" + phone + "', "
                     + "'" + mail + "')";
             
-            /*String sql_airport = "INSERT INTO bagagedatabase.airport_table (date, airport_lost, "
+            String sql_airport = "INSERT INTO bagagedatabase.airport_table (date, airport_lost, "
                     + "label_number, flight_number, destination) VALUES ('" + date + "', '" + airport + "', "
-                    + "'" + labelnumber + "', '" + flightnumber + "', '" + destination + "')";*/
+                    + "'" + labelnumber + "', '" + flightnumber + "', '" + destination + "')";
             
             stmt.executeUpdate(sql_person);
-            //stmt.executeUpdate(sql_airport);
+            stmt.executeUpdate(sql_airport);
             conn.close();
         } catch (SQLException ex) {
             // handle any errors

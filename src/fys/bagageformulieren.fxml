@@ -11,39 +11,39 @@
     <children>
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
         <Label fx:id="label" layoutX="127.0" layoutY="205.0" minHeight="16" minWidth="69" />
-        <Label layoutX="15.0" layoutY="105.0" prefHeight="27.0" prefWidth="126.0" text="Luchthaven:" />
-        <Label layoutX="15.0" layoutY="155.0" prefHeight="27.0" prefWidth="126.0" text="Naam:" />
-        <Label layoutX="15.0" layoutY="205.0" prefHeight="27.0" prefWidth="126.0" text="Adres:" />
-        <Label layoutX="15.0" layoutY="352.0" prefHeight="27.0" prefWidth="126.0" text="Land:" />
-        <Label layoutX="15.0" layoutY="305.0" prefHeight="27.0" prefWidth="126.0" text="Postcode:" />
-        <Label layoutX="15.0" layoutY="255.0" prefHeight="27.0" prefWidth="126.0" text="Woonplaats:" />
-        <TextField fx:id="name_input" layoutX="141.0" layoutY="149.0" prefHeight="39.0" prefWidth="318.0" />
-        <TextField fx:id="address_input" layoutX="141.0" layoutY="199.0" prefHeight="39.0" prefWidth="318.0" />
-        <TextField fx:id="residence_input" layoutX="141.0" layoutY="249.0" prefHeight="39.0" prefWidth="318.0" />
-        <TextField fx:id="zipcode_input" layoutX="141.0" layoutY="299.0" prefHeight="39.0" prefWidth="318.0" />
-        <TextField fx:id="country_input" layoutX="141.0" layoutY="346.0" prefHeight="39.0" prefWidth="318.0" />
-        <Label layoutX="15.0" layoutY="401.0" prefHeight="27.0" prefWidth="126.0" text="Telefoon:" />
-        <Label layoutX="15.0" layoutY="448.0" prefHeight="27.0" prefWidth="126.0" text="E-mail:" />
-        <TextField fx:id="phone_input" layoutX="141.0" layoutY="395.0" prefHeight="39.0" prefWidth="318.0" />
-        <TextField fx:id="mail_input" layoutX="141.0" layoutY="442.0" prefHeight="39.0" prefWidth="184.0" />
-        <CheckBox fx:id="account_checkbox" layoutX="336.0" layoutY="448.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="193.0" text="Aanmaken account" />
-        <Label layoutX="15.0" layoutY="496.0" prefHeight="27.0" prefWidth="126.0" text="Labelnummer:" />
-        <Label layoutX="545.0" layoutY="205.0" prefHeight="27.0" prefWidth="126.0" text="Type:" />
-        <TextField fx:id="labelnumber_input" layoutX="141.0" layoutY="490.0" prefHeight="39.0" prefWidth="318.0" />
-        <Label layoutX="545.0" layoutY="255.0" prefHeight="27.0" prefWidth="126.0" text="Merk:" />
-        <Label layoutX="545.0" layoutY="301.0" prefHeight="27.0" prefWidth="126.0" text="Kleur:" />
-        <Label layoutX="545.0" layoutY="347.0" prefHeight="27.0" prefWidth="126.0" text="Kenmerken:" />
-        <TextField fx:id="brand_input" layoutX="669.0" layoutY="249.0" prefHeight="39.0" prefWidth="318.0" />
-        <TextField fx:id="color_input" layoutX="669.0" layoutY="295.0" prefHeight="39.0" prefWidth="318.0" />
-        <TextField fx:id="characteristics_input" alignment="TOP_LEFT" layoutX="669.0" layoutY="346.0" prefHeight="133.0" prefWidth="318.0" />
-        <Label layoutX="545.0" layoutY="496.0" prefHeight="27.0" prefWidth="126.0" text="Afbeelding:" />
-        <Button fx:id="picture_button" layoutX="669.0" layoutY="490.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="318.0" text="Klik hier om een afbeelding toe te voegen" />
+        <Label layoutX="14.0" layoutY="118.0" prefHeight="27.0" prefWidth="126.0" text="Luchthaven:" />
+        <Label layoutX="14.0" layoutY="168.0" prefHeight="27.0" prefWidth="126.0" text="Naam:" />
+        <Label layoutX="14.0" layoutY="218.0" prefHeight="27.0" prefWidth="126.0" text="Adres:" />
+        <Label layoutX="14.0" layoutY="365.0" prefHeight="27.0" prefWidth="126.0" text="Land:" />
+        <Label layoutX="14.0" layoutY="318.0" prefHeight="27.0" prefWidth="126.0" text="Postcode:" />
+        <Label layoutX="14.0" layoutY="268.0" prefHeight="27.0" prefWidth="126.0" text="Woonplaats:" />
+        <TextField fx:id="name_input" layoutX="140.0" layoutY="162.0" prefHeight="39.0" prefWidth="318.0" />
+        <TextField fx:id="address_input" layoutX="140.0" layoutY="212.0" prefHeight="39.0" prefWidth="318.0" />
+        <TextField fx:id="residence_input" layoutX="140.0" layoutY="262.0" prefHeight="39.0" prefWidth="318.0" />
+        <TextField fx:id="zipcode_input" layoutX="140.0" layoutY="312.0" prefHeight="39.0" prefWidth="318.0" />
+        <TextField fx:id="country_input" layoutX="140.0" layoutY="359.0" prefHeight="39.0" prefWidth="318.0" />
+        <Label layoutX="14.0" layoutY="414.0" prefHeight="27.0" prefWidth="126.0" text="Telefoon:" />
+        <Label layoutX="14.0" layoutY="461.0" prefHeight="27.0" prefWidth="126.0" text="E-mail:" />
+        <TextField fx:id="phone_input" layoutX="140.0" layoutY="408.0" prefHeight="39.0" prefWidth="318.0" />
+        <TextField fx:id="mail_input" layoutX="140.0" layoutY="455.0" prefHeight="39.0" prefWidth="184.0" />
+        <CheckBox fx:id="account_checkbox" layoutX="335.0" layoutY="461.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="193.0" text="Aanmaken account" />
+        <Label layoutX="14.0" layoutY="509.0" prefHeight="27.0" prefWidth="126.0" text="Labelnummer:" />
+        <Label layoutX="544.0" layoutY="218.0" prefHeight="27.0" prefWidth="126.0" text="Type:" />
+        <TextField fx:id="labelnumber_input" layoutX="140.0" layoutY="503.0" prefHeight="39.0" prefWidth="318.0" />
+        <Label layoutX="544.0" layoutY="268.0" prefHeight="27.0" prefWidth="126.0" text="Merk:" />
+        <Label layoutX="544.0" layoutY="314.0" prefHeight="27.0" prefWidth="126.0" text="Kleur:" />
+        <Label layoutX="544.0" layoutY="360.0" prefHeight="27.0" prefWidth="126.0" text="Kenmerken:" />
+        <TextField fx:id="brand_input" layoutX="668.0" layoutY="262.0" prefHeight="39.0" prefWidth="318.0" />
+        <TextField fx:id="color_input" layoutX="668.0" layoutY="308.0" prefHeight="39.0" prefWidth="318.0" />
+        <TextField fx:id="characteristics_input" alignment="TOP_LEFT" layoutX="668.0" layoutY="359.0" prefHeight="133.0" prefWidth="318.0" />
+        <Label layoutX="544.0" layoutY="509.0" prefHeight="27.0" prefWidth="126.0" text="Afbeelding:" />
+        <Button fx:id="picture_button" layoutX="668.0" layoutY="503.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="318.0" text="Klik hier om een afbeelding toe te voegen" />
         <Button fx:id="send_button" layoutX="14.0" layoutY="547.0" mnemonicParsing="false" onAction="#handleSendToDatabase" prefHeight="39.0" prefWidth="972.0" text="Verzenden" />
-        <TextField fx:id="destination_input" layoutX="669.0" layoutY="149.0" prefHeight="39.0" prefWidth="318.0" />
-        <TextField fx:id="flightnumber_input" layoutX="669.0" layoutY="99.0" prefHeight="39.0" prefWidth="318.0" />
-        <Label layoutX="543.0" layoutY="155.0" prefHeight="27.0" prefWidth="126.0" text="Bestemming:" />
-        <Label layoutX="543.0" layoutY="105.0" prefHeight="27.0" prefWidth="126.0" text="Vluchtnummer:" />
-        <ComboBox fx:id="airport_combo" layoutX="141.0" layoutY="99.0" prefHeight="39.0" prefWidth="318.0" promptText="Kies hier uw luchthaven">
+        <TextField fx:id="destination_input" layoutX="668.0" layoutY="162.0" prefHeight="39.0" prefWidth="318.0" />
+        <TextField fx:id="flightnumber_input" layoutX="668.0" layoutY="112.0" prefHeight="39.0" prefWidth="318.0" />
+        <Label layoutX="542.0" layoutY="168.0" prefHeight="27.0" prefWidth="126.0" text="Bestemming:" />
+        <Label layoutX="542.0" layoutY="118.0" prefHeight="27.0" prefWidth="126.0" text="Vluchtnummer:" />
+        <ComboBox fx:id="airport_combo" layoutX="140.0" layoutY="112.0" prefHeight="39.0" prefWidth="318.0" promptText="Kies hier uw luchthaven">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Alanya-Gazipasa" />
@@ -52,7 +52,7 @@
                 </FXCollections>
             </items>
         </ComboBox>
-        <ComboBox fx:id="type_combo" layoutX="671.0" layoutY="199.0" minHeight="-Infinity" prefHeight="39.0" prefWidth="318.0" promptText="Kies hier uw type bagage">
+        <ComboBox fx:id="type_combo" layoutX="670.0" layoutY="212.0" minHeight="-Infinity" prefHeight="39.0" prefWidth="318.0" promptText="Kies hier uw type bagage">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Koffer" />

@@ -10,8 +10,8 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.accountsController">
    <children>
-        <fx:include source="navigatiebalk.fxml" fx:id="navigatiebalk" />
-        <Button id="logInButton" layoutX="214.0" layoutY="83.0" mnemonicParsing="false" onAction="#handleNieuwAccount" prefHeight="31.0" prefWidth="187.0" text="Aanmaken nieuw account" />
+        <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
+        <Button id="logInButton" layoutX="210.0" layoutY="147.0" mnemonicParsing="false" onAction="#handleNieuwAccount" prefHeight="31.0" prefWidth="187.0" text="Aanmaken nieuw account" />
       <GridPane layoutX="67.0" layoutY="77.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -23,7 +23,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <TableView layoutX="214.0" layoutY="146.0" prefHeight="284.0" prefWidth="598.0">
+      <TableView layoutX="210.0" layoutY="210.0" prefHeight="284.0" prefWidth="598.0">
         <columns>
           <TableColumn prefWidth="75.0" text="Voornaam" />
           <TableColumn prefWidth="84.0" text="Achternaam" />

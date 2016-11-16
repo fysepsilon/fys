@@ -29,14 +29,28 @@ import javax.xml.ws.BindingProvider;
  * @author Paras
  */
 public class loginController implements Initializable {
-    @FXML
-    private TextField username;
-    @FXML
-    private PasswordField password;
-    @FXML
-    private Label label;
-    @FXML
-    private Label loginerror;
+    @FXML private TextField username;
+    @FXML private PasswordField password;
+    @FXML private Label label;
+    @FXML private Label loginerror;
+    @FXML private static String usertype;
+    @FXML private static String usersname;
+
+    public String getUsertype() {
+        return usertype;
+    }
+
+    public void setUsertype(String userType) {
+        this.usertype = userType;
+    }
+    
+    public String getUsersName() {
+        return usersname;
+    }
+
+    public void setUsersName(String usersname) {
+        this.usersname = usersname;
+    }
     
     @FXML
     private void handleForgotPasswordAction(ActionEvent event) throws IOException {
@@ -63,7 +77,7 @@ public class loginController implements Initializable {
             }
         }
     }
-    
+          
     private boolean authenticateLogin(String inputUsername, String inputPassword) throws SQLException {
         FYS fys = new FYS();
         String username = "", password = "";
@@ -75,12 +89,16 @@ public class loginController implements Initializable {
             stmt = conn.createStatement();
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql = "SELECT mail, password FROM accounts WHERE mail='" + inputUsername + "' AND password = '" + inputPassword + "'";
+            String sql = "SELECT mail, password, type, first_name, insertion, last_name FROM accounts WHERE mail='" + inputUsername + "' AND password = '" + inputPassword + "'";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name
                 username = rs.getString("mail");
                 password = rs.getString("password");
+                setUsertype(rs.getString("type"));
+                setUsersName(rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1)
+                        + " " + rs.getString("insertion") + " " + 
+                        rs.getString("last_name").substring(0, 1).toUpperCase() + rs.getString("last_name").substring(1));
                 //Display values
 //                System.out.print("username: " + username);
 //                System.out.print(" password: " + password);
@@ -95,7 +113,7 @@ public class loginController implements Initializable {
         }
 
         //Return boolean values.
-        if (username != "" && password != "") {
+        if (!username.equals("") && !password.equals("")) {
             return true;
         } else {
             return false;

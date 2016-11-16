@@ -10,6 +10,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.accountsController">
     <children>
+        <fx:include source="navigatiebalk.fxml" fx:id="navigatiebalk" />
         <Button id="logInButton" layoutX="214.0" layoutY="83.0" mnemonicParsing="false" onAction="#handleNieuwAccount" prefHeight="31.0" prefWidth="187.0" text="Aanmaken nieuw account" />
       <GridPane layoutX="67.0" layoutY="77.0">
         <columnConstraints>

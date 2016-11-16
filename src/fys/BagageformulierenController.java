@@ -8,6 +8,7 @@ package fys;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -78,17 +79,11 @@ public class BagageformulierenController implements Initializable {
             stmt = conn.createStatement();
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql = "INSERT INTO bagagedatabase.person_table (first_name, surname, address, residence, zipcode, country, phone, mail) VALUES (test, test, test, test, test, test, test, test)";
-                    
-                    /*"INSERT INTO `bagagedatabase`.`person_table` (`first_name`, "
-                    + "`surname`, `address`, `residence`, `zipcode`, `country`, `phone`, `mail`) "
-                    + "VALUES ('" + name + "', '" + name + "', '" + name + "', '" + name + "', "
-                    + "'" + name + "', '" + name + "', '" + name + "', '" + name + "');";*/
+            String sql = "INSERT INTO bagagedatabase.person_table (first_name, surname, "
+                    + "address, residence, zipcode, country, phone, mail) VALUES ('" + name + "', '" + name + "', "
+                    + "'" + name + "', '" + name + "', '" + name + "', '" + name + "', '" + name + "', '" + name + "')";
             
-            
-            //"SELECT mail, password FROM accounts WHERE mail='" + inputUsername + "' AND password = '" + inputPassword + "'";
-            stmt.executeQuery(sql);
-            
+            stmt.executeUpdate(sql);
             conn.close();
         } catch (SQLException ex) {
             // handle any errors

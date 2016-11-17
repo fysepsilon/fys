@@ -61,7 +61,7 @@ public class WachtwoordVergetenController implements Initializable {
         } else {
             try {
                 //connectToDatabase(conn, stmt, "test", "root", "root");
-                String sql = "SELECT mail FROM accounts WHERE mail='" + username.getText() + "'";
+                String sql = "SELECT mail FROM person_table WHERE mail='" + username.getText() + "'";
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {
                     //Retrieve by column name
@@ -86,12 +86,12 @@ public class WachtwoordVergetenController implements Initializable {
                 String[] mailInformation = new String[3];
                 try {
                     //connectToDatabase(conn, stmt, "test", "root", "root");
-                    String sql = "SELECT first_name, last_name, password FROM accounts WHERE mail='" + username.getText() + "'";
+                    String sql = "SELECT first_name, surname, password FROM person_table WHERE mail='" + username.getText() + "'";
                     ResultSet rs = stmt.executeQuery(sql);
                     while (rs.next()) {
                         //Retrieve by column name
                         mailInformation[0] = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
-                        mailInformation[1] = rs.getString("last_name").substring(0, 1).toUpperCase() + rs.getString("last_name").substring(1);
+                        mailInformation[1] = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
                         mailInformation[2] = fys.decrypt(rs.getString("password"));
                         //Display values
                         //System.out.print("username: " + email);

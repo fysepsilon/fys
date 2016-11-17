@@ -35,6 +35,9 @@ import javafx.scene.control.TextField;
  *
  * @author Veron
  */
+
+// TO DO: BUTTON DONE LINKJE ETC
+// TO DO: EMAIL MET PASSWORD VERSTUREN
 public class NieuwaccountaanmakenController implements Initializable {
 
     @FXML private TextField name_input;
@@ -64,7 +67,7 @@ public class NieuwaccountaanmakenController implements Initializable {
                 || (language_combo.getValue() == null)
                 || (type_combo.getValue() == null)) 
         {
-            // KLOPT NOG NIET
+            // Foutmelding
             loginerror.setText("U heeft niet alles ingevuld!");
             loginerror.setVisible(true);
             

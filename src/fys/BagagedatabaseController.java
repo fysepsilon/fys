@@ -67,12 +67,14 @@ public class BagagedatabaseController implements Initializable {
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
         color.setCellValueFactory(new PropertyValueFactory<>("color"));
         brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        date.setCellValueFactory(new PropertyValueFactory<>("date"));
         information.setCellValueFactory(new PropertyValueFactory<>("information"));
         id.setStyle("-fx-alignment: CENTER;");
         status.setStyle("-fx-alignment: CENTER;");
         type.setStyle("-fx-alignment: CENTER;");
         color.setStyle("-fx-alignment: CENTER;");
         brand.setStyle("-fx-alignment: CENTER;");
+        date.setStyle("-fx-alignment: CENTER;");
         information.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
     }
@@ -83,11 +85,12 @@ public class BagagedatabaseController implements Initializable {
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i).getColor().toLowerCase().contains(colorfilter.getText().toLowerCase())
                     && data.get(i).getBrand().toLowerCase().contains(brandfilter.getText().toLowerCase())
+                    && data.get(i).getDate().toLowerCase().contains(datefilter.getText().toLowerCase())
                     && data.get(i).getStatus().toLowerCase().contains(statusfilter.getSelectionModel().getSelectedItem().toString().toLowerCase())
                     && data.get(i).getType().toLowerCase().contains(typefilter.getSelectionModel().getSelectedItem().toString().toLowerCase())
                     && data.get(i).getInformation().toLowerCase().contains(characteristicsfilter.getText().toLowerCase())) {
                 datafilter.add(new Bagage(data.get(i).getId(), data.get(i).getStatus(), 
-                        data.get(i).getType(), data.get(i).getColor(), data.get(i).getBrand(), data.get(i).getInformation()));
+                        data.get(i).getType(), data.get(i).getColor(), data.get(i).getBrand(), data.get(i).getDate(), data.get(i).getInformation()));
             }
         }
         table.setItems(datafilter);
@@ -115,9 +118,10 @@ public class BagagedatabaseController implements Initializable {
                 String type = rs.getString("type");
                 String color = rs.getString("color");
                 String brand = rs.getString("brand");
+                String date = rs.getString("date");
                 String characteristics = rs.getString("characteristics");
 
-                data.add(new Bagage(luggage, status, type, color, brand, characteristics));
+                data.add(new Bagage(luggage, status, type, color, brand, date, characteristics));
             }
             rs.close();
             conn.close();
@@ -136,14 +140,16 @@ public class BagagedatabaseController implements Initializable {
         @FXML private final SimpleStringProperty type;
         @FXML private final SimpleStringProperty color;
         @FXML private final SimpleStringProperty brand;
+        @FXML private final SimpleStringProperty date;
         @FXML private final SimpleStringProperty information;
         
-        private Bagage(Integer idname, String statusname, String typename, String colorname, String brandname, String informationname) {
+        private Bagage(Integer idname, String statusname, String typename, String colorname, String brandname, String datename, String informationname) {
             this.id = new SimpleIntegerProperty(idname);
             this.status = new SimpleStringProperty(statusname);
             this.type = new SimpleStringProperty(typename);
             this.color = new SimpleStringProperty(colorname);
             this.brand = new SimpleStringProperty(brandname);
+            this.date = new SimpleStringProperty(datename);
             this.information = new SimpleStringProperty(informationname);
         }
 
@@ -185,6 +191,14 @@ public class BagagedatabaseController implements Initializable {
 
         public void setBrand(String brandname) {
             brand.set(brandname);
+        }
+        
+        public String getDate() {
+            return date.get();
+        }
+
+        public void setDate(String datename) {
+            date.set(datename);
         }
         
         public String getInformation() {

@@ -19,5 +19,6 @@
                 <TableColumn id="acties" fx:id="acties" maxWidth="500.0" minWidth="115.0" prefWidth="161.0" text="Acties" />
             </columns>
         </TableView>
+      <Button id="nieuwaccount" fx:id="nieuwaccount" layoutX="14.0" layoutY="157.0" mnemonicParsing="false" onAction="#handlenieuwaccount"  prefHeight="41.0" prefWidth="171.0" text="Nieuw account aanmaken" />
     </children>
 </AnchorPane>

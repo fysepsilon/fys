@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="fys.NieuwaccountaanmakenController">
+   <children>
+        <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
+        <Label fx:id="name_label" layoutX="15.0" layoutY="155.0" prefHeight="27.0" prefWidth="126.0" text="Voornaam:" />
+        <Label fx:id="surname_label" layoutX="15.0" layoutY="202.0" prefHeight="27.0" prefWidth="126.0" text="Achternaam:" />
+        <Label fx:id="address_label" layoutX="14.0" layoutY="251.0" prefHeight="27.0" prefWidth="126.0" text="Adres:" />
+        <Label fx:id="residence_label" layoutX="14.0" layoutY="301.0" prefHeight="27.0" prefWidth="126.0" text="Woonplaats:" />
+        <Label fx:id="zipcode_label" layoutX="14.0" layoutY="351.0" prefHeight="27.0" prefWidth="126.0" text="Postcode:" />
+        <Label fx:id="country_label" layoutX="14.0" layoutY="398.0" prefHeight="27.0" prefWidth="126.0" text="Land:" />
+        <Label fx:id="phone_label" layoutX="14.0" layoutY="447.0" prefHeight="27.0" prefWidth="126.0" text="Telefoon:" />
+        <Label fx:id="mail_label" layoutX="14.0" layoutY="494.0" prefHeight="27.0" prefWidth="126.0" text="E-mail:" />
+        <Label fx:id="language_label" layoutX="543.0" layoutY="155.0" prefHeight="27.0" prefWidth="126.0" text="Taal: " />
+        <Label fx:id="type_label" layoutX="545.0" layoutY="257.0" prefHeight="27.0" prefWidth="126.0" text="Type:" />
+       
+        <TextField fx:id="name_input" layoutX="141.0" layoutY="149.0" prefHeight="39.0" prefWidth="318.0" />
+        <TextField fx:id="surname_input" layoutX="141.0" layoutY="196.0" prefHeight="39.0" prefWidth="318.0" />
+        <TextField fx:id="address_input" layoutX="140.0" layoutY="245.0" prefHeight="39.0" prefWidth="318.0" />
+        <TextField fx:id="residence_input" layoutX="140.0" layoutY="295.0" prefHeight="39.0" prefWidth="318.0" />
+        <TextField fx:id="zipcode_input" layoutX="140.0" layoutY="345.0" prefHeight="39.0" prefWidth="318.0" />
+        <TextField fx:id="country_input" layoutX="140.0" layoutY="392.0" prefHeight="39.0" prefWidth="318.0" />
+        <TextField fx:id="phone_input" layoutX="140.0" layoutY="441.0" prefHeight="39.0" prefWidth="318.0" />
+        <TextField fx:id="mail_input" layoutX="140.0" layoutY="488.0" prefHeight="39.0" prefWidth="318.0" />
+       
+        <ComboBox fx:id="language_combo" layoutX="668.0" layoutY="149.0" prefHeight="39.0" prefWidth="318.0" promptText="Kies hier de taal">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="0"/>
+                    <String fx:value="1" />
+                    <String fx:value="2" />
+                    <String fx:value="3" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+        <ComboBox fx:id="type_combo" layoutX="671.0" layoutY="251.0" minHeight="-Infinity" prefHeight="39.0" prefWidth="318.0" promptText="Kies hier de rol">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="0" />
+                    <String fx:value="1" />
+                    <String fx:value="2" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+        <Button fx:id="send_button" layoutX="14.0" layoutY="547.0" mnemonicParsing="false" onAction="#handleSendToDatabase" prefHeight="39.0" prefWidth="972.0" text="Verzenden" />
+      <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutX="10.0" layoutY="110.0" prefHeight="25.0" prefWidth="598.0" textFill="RED" visible="false">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

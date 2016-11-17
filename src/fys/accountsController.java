@@ -5,6 +5,7 @@
  */
 package fys;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,18 +16,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -35,18 +31,32 @@ import javafx.stage.Stage;
  */
 public class accountsController implements Initializable {
 
-    //@FXML private final TableView<Person> table = new TableView<>();
-    @FXML private TableView<Accounts> table;
-    @FXML private ObservableList<Accounts> data = FXCollections.observableArrayList();
-    //@FXML private TableView<Person> table;
-    @FXML private TableColumn first_name;
-    @FXML private TableColumn mail;
-    @FXML private TableColumn type;
-    @FXML private TableColumn acties;
+    @FXML
+    private Button home;
 
-    
+    //@FXML private final TableView<Person> table = new TableView<>();
+    @FXML
+    private TableView<Accounts> table;
+    @FXML
+    private ObservableList<Accounts> data = FXCollections.observableArrayList();
+    //@FXML private TableView<Person> table;
+    @FXML
+    private TableColumn first_name;
+    @FXML
+    private TableColumn mail;
+    @FXML
+    private TableColumn type;
+    @FXML
+    private TableColumn acties;
+
+    @FXML
+    private void handlenieuwaccount(ActionEvent event) throws IOException {
+        FYS fys = new FYS();
+        fys.changeToAnotherFXML("Nieuw account aanmaken", "nieuwaccountaanmaken.fxml");
+    }
+
     @Override
-    public void initialize(URL url, ResourceBundle rb) {       
+    public void initialize(URL url, ResourceBundle rb) {
         getLuggageData();
         first_name.setCellValueFactory(new PropertyValueFactory<>("first_name"));
         mail.setCellValueFactory(new PropertyValueFactory<>("mail"));
@@ -57,8 +67,8 @@ public class accountsController implements Initializable {
         type.setStyle("-fx-alignment: CENTER;");
         acties.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
-    } 
-    
+    }
+
     public void getLuggageData() {
         FYS fys = new FYS();
         Statement stmt = null;
@@ -75,7 +85,7 @@ public class accountsController implements Initializable {
                 String mail = rs.getString("mail");
                 int type = rs.getInt("type");
                 String acties = ("Wijzigen/Verwijderen ");
-                
+
                 //Display values
 //              System.out.print("ID: " + first_name);
 //                System.out.print(" status: " + status);
@@ -95,23 +105,26 @@ public class accountsController implements Initializable {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
     }
-    
+
     public static class Accounts {
 
-        @FXML private final SimpleStringProperty first_name;
-        @FXML private final SimpleStringProperty mail;
-        @FXML private final SimpleIntegerProperty type;
-        @FXML private final SimpleStringProperty acties;
-          
+        @FXML
+        private final SimpleStringProperty first_name;
+        @FXML
+        private final SimpleStringProperty mail;
+        @FXML
+        private final SimpleIntegerProperty type;
+        @FXML
+        private final SimpleStringProperty acties;
+
         private Accounts(String first_namename, String mailname, Integer typename, String actiesname) {
             this.first_name = new SimpleStringProperty(first_namename);
             this.mail = new SimpleStringProperty(mailname);
             this.type = new SimpleIntegerProperty(typename);
             this.acties = new SimpleStringProperty(actiesname);
 
-             }
+        }
 
-        
         public String getFirst_name() {
             return first_name.get();
         }
@@ -119,7 +132,7 @@ public class accountsController implements Initializable {
         public void setFirst_name(String first_namename) {
             first_name.set(first_namename);
         }
-       
+
         public String getMail() {
             return mail.get();
         }
@@ -128,7 +141,6 @@ public class accountsController implements Initializable {
             mail.set(mailname);
         }
 
-       
         public Integer getType() {
             return type.get();
         }
@@ -136,8 +148,7 @@ public class accountsController implements Initializable {
         public void setType(Integer typename) {
             type.set(typename);
         }
-        
-        
+
         public String getActies() {
             return acties.get();
         }
@@ -146,6 +157,6 @@ public class accountsController implements Initializable {
             acties.set(actiesname);
         }
 
-      }
-    
+    }
+
 }

@@ -67,7 +67,7 @@ public class FYS extends Application {
         conn = DriverManager.getConnection("jdbc:mysql://localhost/bagagedatabase?user=root&password=root");
         return conn;
     }
-    
+        
     public void sendEmail(String to, String subject, String content, String printMessage) throws UnsupportedEncodingException{
         String from = "admin@corendon.com";
         final String username = "fysepsilon@gmail.com";//Gmail-username

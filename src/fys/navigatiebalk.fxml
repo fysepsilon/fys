@@ -12,13 +12,91 @@
     <children>
         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
            <image>
-              <Image url="@images/corendon_logo.jpg" />
+              <Image url="@images/corendon_logo.png" />
            </image>
         </ImageView>
-      <Button layoutY="71.0" mnemonicParsing="false" onAction="#handleHome" text="Home" />
-      <Button layoutX="61.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleBagageformulieren" text="Vermiste bagage registreren" />
-      <Button layoutX="269.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleBagageformulieren" text="Gevonden bagage registreren" />
-      <Button layoutX="487.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleBagagedatabase" text="Bagage database" />
-      <Button layoutX="621.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleAccounts" text="Klant accounts" />
+      <Button id="home" fx:id="home" layoutX="14.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="31.0" prefWidth="136.0" text="Home" />
+      <Button id="missing" fx:id="missing" layoutX="150.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="31.0" prefWidth="225.0" text="Vermiste bagage registreren">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button id="found" fx:id="found" layoutX="375.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="31.0" prefWidth="225.0" text="Gevonden bagage registreren">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button id="luggage" fx:id="luggage" layoutX="600.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagagedatabase" prefHeight="31.0" prefWidth="200.0" text="Bagage database">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button id="account" fx:id="account" layoutX="800.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleAccounts" prefHeight="31.0" prefWidth="200.0" text="Klant accounts">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button id="homeAdmin" fx:id="homeAdmin" layoutX="14.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleHomeAdmin" prefHeight="31.0" prefWidth="134.0" text="Home" visible="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button id="missingAdmin" fx:id="missingAdmin" layoutX="148.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="31.0" prefWidth="225.0" text="Vermiste bagage registreren" visible="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button id="foundAdmin" fx:id="foundAdmin" layoutX="373.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="31.0" prefWidth="225.0" text="Gevonden bagage registreren" visible="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button id="luggageAdmin" fx:id="luggageAdmin" layoutX="598.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagagedatabase" prefHeight="31.0" prefWidth="134.0" text="Bagage database" visible="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button id="accountAdmin" fx:id="accountAdmin" layoutX="732.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleAccountsAdmin" prefHeight="31.0" prefWidth="134.0" text="Accounts" visible="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button id="staticsAdmin" fx:id="staticsAdmin" layoutX="866.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleStaticsAdmin" prefHeight="31.0" prefWidth="134.0" text="Statistieken" visible="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      
+      <Button id="logout" fx:id="logout" layoutX="900.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleLogout" prefHeight="58.0" prefWidth="87.0" style="-fx-background-color: transparent;">
+          <font>
+              <Font size="30.0" />
+          </font>
+          <graphic>
+              <ImageView fitHeight="47.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: transparent;;">
+                  <image>
+                      <Image url="@images/logout.png" />
+                  </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+              </ImageView>
+          </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Text id="welcomeText" fx:id="welcomeText" layoutX="294.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" " textAlignment="RIGHT" wrappingWidth="525.9482421875">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Text>
+      <Button id="settings" fx:id="settings" layoutX="820.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleSettings" prefHeight="24.0" prefWidth="9.0" style="-fx-background-color: transparent;">
+         <font>
+            <Font size="30.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="47.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: transparent;;">
+               <image>
+                  <Image url="@images/settings-icon.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
     </children>
 </AnchorPane>

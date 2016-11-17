@@ -12,7 +12,7 @@
     <children>
         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
            <image>
-              <Image url="@images/corendon_logo.jpg" />
+              <Image url="@images/corendon_logo.png" />
            </image>
         </ImageView>
         <Label layoutX="253.0" layoutY="200.0" text="Gebruikersnaam:" />

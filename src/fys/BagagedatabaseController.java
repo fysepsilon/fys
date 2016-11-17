@@ -6,8 +6,27 @@
 package fys;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -16,12 +35,133 @@ import javafx.fxml.Initializable;
  */
 public class BagagedatabaseController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    //@FXML private final TableView<Person> table = new TableView<>();
+    @FXML private TableView<Bagage> table;
+    @FXML private ObservableList<Bagage> data = FXCollections.observableArrayList();
+    //@FXML private TableView<Person> table;
+    @FXML private TableColumn id;
+    @FXML private TableColumn status;
+    @FXML private TableColumn type;
+    @FXML private TableColumn color;
+    @FXML private TableColumn brand;
+    @FXML private TableColumn information;
+    
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    public void initialize(URL url, ResourceBundle rb) {       
+        getLuggageData();
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        status.setCellValueFactory(new PropertyValueFactory<>("status"));
+        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        color.setCellValueFactory(new PropertyValueFactory<>("color"));
+        brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        information.setCellValueFactory(new PropertyValueFactory<>("information"));
+        table.setItems(data);
+    } 
+    
+    public void getLuggageData() {
+        FYS fys = new FYS();
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = fys.connectToDatabase(conn);
+            stmt = conn.createStatement();
+            //connectToDatabase(conn, stmt, "test", "root", "root");           
+            String sql = "SELECT * FROM found_table UNION SELECT * FROM lost_table";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                //Retrieve by column name
+                int id = rs.getInt("id");
+                String status = rs.getString("status");
+                String type = rs.getString("type");
+                String color = rs.getString("color");
+                String brand = rs.getString("brand");
+                String characteristics = rs.getString("characteristics");
+
+                //Display values
+//                System.out.print("ID: " + id);
+//                System.out.print(" status: " + status);
+//                System.out.print(" type: " + type);
+//                System.out.print(" color: " + color);
+//                System.out.print(" brand: " + brand);
+//                 System.out.print(" characteristics: " + characteristics);
+//                System.out.println();
+                data.add(new Bagage(id, status, type, color, brand, characteristics));
+            }
+            rs.close();
+            conn.close();
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+    }
+    
+    public static class Bagage {
+
+        @FXML private final SimpleIntegerProperty id;
+        @FXML private final SimpleStringProperty status;
+        @FXML private final SimpleStringProperty type;
+        @FXML private final SimpleStringProperty color;
+        @FXML private final SimpleStringProperty brand;
+        @FXML private final SimpleStringProperty information;
+        
+        private Bagage(Integer idname, String statusname, String typename, String colorname, String brandname, String informationname) {
+            this.id = new SimpleIntegerProperty(idname);
+            this.status = new SimpleStringProperty(statusname);
+            this.type = new SimpleStringProperty(typename);
+            this.color = new SimpleStringProperty(colorname);
+            this.brand = new SimpleStringProperty(brandname);
+            this.information = new SimpleStringProperty(informationname);
+        }
+
+        public Integer getId() {
+            return id.get();
+        }
+
+        public void setId(Integer idname) {
+            id.set(idname);
+        }
+
+        public String getStatus() {
+            return status.get();
+        }
+
+        public void setStatus(String statusname) {
+            status.set(statusname);
+        }
+
+        public String getType() {
+            return type.get();
+        }
+
+        public void setStudentid(String typename) {
+            type.set(typename);
+        }
+
+        public String getColor() {
+            return color.get();
+        }
+
+        public void setCijfer(String colorname) {
+            color.set(colorname);
+        }
+
+        public String getBrand() {
+            return brand.get();
+        }
+
+        public void setBrand(String brandname) {
+            brand.set(brandname);
+        }
+        
+        public String getInformation() {
+            return information.get();
+        }
+
+        public void setInformation(String informationname) {
+            information.set(informationname);
+        }
+    }
     
 }

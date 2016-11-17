@@ -89,7 +89,7 @@ public class loginController implements Initializable {
             stmt = conn.createStatement();
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql = "SELECT mail, password, type, first_name, insertion, last_name FROM person_table WHERE mail='" + inputUsername + "' AND password = '" + inputPassword + "'";
+            String sql = "SELECT mail, password, type, first_name, insertion, surname FROM person_table WHERE mail='" + inputUsername + "' AND password = '" + inputPassword + "'";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name
@@ -98,7 +98,7 @@ public class loginController implements Initializable {
                 setUsertype(rs.getString("type"));
                 setUsersName(rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1)
                         + " " + rs.getString("insertion") + " " + 
-                        rs.getString("last_name").substring(0, 1).toUpperCase() + rs.getString("last_name").substring(1));
+                        rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1));
                 //Display values
 //                System.out.print("username: " + username);
 //                System.out.print(" password: " + password);

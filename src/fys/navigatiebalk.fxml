@@ -12,7 +12,7 @@
     <children>
         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
            <image>
-              <Image url="@images/corendon_logo.jpg" />
+              <Image url="@images/corendon_logo.png" />
            </image>
         </ImageView>
       <Button id="home" fx:id="home" layoutX="14.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="31.0" prefWidth="136.0" text="Home" />

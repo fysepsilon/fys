@@ -109,5 +109,5 @@ public class NavigatiebalkController implements Initializable {
         } else{
             welcomeText.setText("Servicemedewerker - Welkom! " + name);
         }
-    }    
+    }   
 }

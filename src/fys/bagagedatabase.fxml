@@ -18,12 +18,12 @@
         </Label>
         <TableView fx:id="table" layoutX="265.0" layoutY="157.0" prefHeight="384.0" prefWidth="643.0">
             <columns>
-                <TableColumn id="id" fx:id="id" prefWidth="50.0" text="ID" />
-                <TableColumn id="status" fx:id="status" prefWidth="125.0" text="Status" />
-                <TableColumn id="type" fx:id="type" prefWidth="68.0" text="Type" />
-                <TableColumn id="color" fx:id="color" prefWidth="69.0" text="Kleur" />
-                <TableColumn id="brand" fx:id="brand" prefWidth="136.0" text="Merk" />
-                <TableColumn id="information" fx:id="information" prefWidth="194.0" text="Extra informatie" />
+                <TableColumn id="id" fx:id="id" maxWidth="100.0" minWidth="50.0" prefWidth="50.0" text="ID" />
+                <TableColumn id="status" fx:id="status" maxWidth="150.0" minWidth="125.0" prefWidth="125.0" text="Status" />
+                <TableColumn id="type" fx:id="type" maxWidth="150.0" minWidth="68.0" prefWidth="68.0" text="Type" />
+                <TableColumn id="color" fx:id="color" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Kleur" />
+                <TableColumn id="brand" fx:id="brand" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Merk" />
+                <TableColumn id="information" fx:id="information" maxWidth="500.0" minWidth="194.0" prefWidth="194.0" text="Extra informatie" />
             </columns>
         </TableView>
     </children>

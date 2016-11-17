@@ -55,6 +55,12 @@ public class BagagedatabaseController implements Initializable {
         color.setCellValueFactory(new PropertyValueFactory<>("color"));
         brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
         information.setCellValueFactory(new PropertyValueFactory<>("information"));
+        id.setStyle("-fx-alignment: CENTER;");
+        status.setStyle("-fx-alignment: CENTER;");
+        type.setStyle("-fx-alignment: CENTER;");
+        color.setStyle("-fx-alignment: CENTER;");
+        brand.setStyle("-fx-alignment: CENTER;");
+        information.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
     } 
     

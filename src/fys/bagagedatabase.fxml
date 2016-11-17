@@ -7,24 +7,91 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.BagagedatabaseController">
     <children>
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
-        <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutX="251.0" layoutY="133.0" prefHeight="25.0" prefWidth="598.0" textFill="RED" visible="false">
-            <font>
-               <Font name="System Bold" size="16.0" />
-            </font>
-        </Label>
-        <TableView fx:id="table" layoutX="265.0" layoutY="157.0" prefHeight="384.0" prefWidth="643.0">
+        <TableView fx:id="table" layoutX="323.0" layoutY="157.0" prefHeight="384.0" prefWidth="673.0">
             <columns>
                 <TableColumn id="id" fx:id="id" maxWidth="100.0" minWidth="50.0" prefWidth="50.0" text="ID" />
-                <TableColumn id="status" fx:id="status" maxWidth="150.0" minWidth="125.0" prefWidth="125.0" text="Status" />
+                <TableColumn id="status" fx:id="status" maxWidth="150.0" minWidth="85.0" prefWidth="85.0" text="Status" />
+                <TableColumn id="date" fx:id="date" maxWidth="150.0" minWidth="85.0" prefWidth="85.0" text="Datum" />
                 <TableColumn id="type" fx:id="type" maxWidth="150.0" minWidth="68.0" prefWidth="68.0" text="Type" />
                 <TableColumn id="color" fx:id="color" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Kleur" />
                 <TableColumn id="brand" fx:id="brand" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Merk" />
                 <TableColumn id="information" fx:id="information" maxWidth="500.0" minWidth="194.0" prefWidth="194.0" text="Extra informatie" />
             </columns>
         </TableView>
+      <Text layoutX="19.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filteren" wrappingWidth="133.5">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="14.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status:" wrappingWidth="71.5">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="statusfilter" layoutX="115.0" layoutY="210.0" prefHeight="31.0" prefWidth="187.0" promptText="Kies een status">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="" />
+                <String fx:value="Gevonden" />
+                <String fx:value="Vermist" />
+                <String fx:value="Vernietigd" />
+                <String fx:value="Afgehandeld" />
+                <String fx:value="Nooit gevonden" />
+                <String fx:value="Depot" />
+            </FXCollections>
+        </items>
+        <value>
+            <String fx:value="" />
+        </value>
+      </ComboBox>
+      <Text layoutX="14.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kleur:" wrappingWidth="71.5">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="14.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:" wrappingWidth="71.5">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="brandfilter" layoutX="115.0" layoutY="360.0" />
+      <Text layoutX="14.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Merk:" wrappingWidth="71.5">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="typefilter" layoutX="115.0" layoutY="310.0" prefHeight="31.0" prefWidth="187.0" promptText="Kies type">
+          <items>
+              <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="" />
+                  <String fx:value="Koffer" />
+                  <String fx:value="Sporttas" />
+                  <String fx:value="Handtas" />
+                  <String fx:value="Rugzak" />
+              </FXCollections>
+          </items>
+          <value>
+              <String fx:value="" />
+          </value>
+      </ComboBox>
+      <Text layoutX="14.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Datum:" wrappingWidth="71.5">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="datefilter" layoutX="115.0" layoutY="410.0" />
+      <Text layoutX="14.0" layoutY="476.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Extra informatie:" wrappingWidth="88.5">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="characteristicsfilter" layoutX="115.0" layoutY="456.0" prefHeight="87.0" prefWidth="187.0" />
+      <Button fx:id="filter" layoutX="115.0" layoutY="158.0" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="31.0" prefWidth="187.0" text="Filteren" />
+      <TextField fx:id="colorfilter" layoutX="115.0" layoutY="260.0" />
     </children>
 </AnchorPane>

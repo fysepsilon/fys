@@ -5,6 +5,7 @@
  */
 package fys;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,14 +16,18 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -38,13 +43,21 @@ public class BagagedatabaseController implements Initializable {
     //@FXML private final TableView<Person> table = new TableView<>();
     @FXML private TableView<Bagage> table;
     @FXML private ObservableList<Bagage> data = FXCollections.observableArrayList();
+    @FXML private ObservableList<Bagage> datafilter = FXCollections.observableArrayList();
     //@FXML private TableView<Person> table;
     @FXML private TableColumn id;
     @FXML private TableColumn status;
     @FXML private TableColumn type;
     @FXML private TableColumn color;
     @FXML private TableColumn brand;
+    @FXML private TableColumn date;
     @FXML private TableColumn information;
+    @FXML private TextField colorfilter;
+    @FXML private TextField brandfilter;
+    @FXML private TextField datefilter;
+    @FXML private ComboBox statusfilter;
+    @FXML private ComboBox typefilter;
+    @FXML private TextArea characteristicsfilter;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {       
@@ -62,19 +75,40 @@ public class BagagedatabaseController implements Initializable {
         brand.setStyle("-fx-alignment: CENTER;");
         information.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
-    } 
+    }
+    
+    @FXML
+    private void handleFilterAction(ActionEvent event) throws IOException {
+        datafilter = FXCollections.observableArrayList();
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getColor().toLowerCase().contains(colorfilter.getText().toLowerCase())
+                    && data.get(i).getBrand().toLowerCase().contains(brandfilter.getText().toLowerCase())
+                    && data.get(i).getStatus().toLowerCase().contains(statusfilter.getSelectionModel().getSelectedItem().toString().toLowerCase())
+                    && data.get(i).getType().toLowerCase().contains(typefilter.getSelectionModel().getSelectedItem().toString().toLowerCase())
+                    && data.get(i).getInformation().toLowerCase().contains(characteristicsfilter.getText().toLowerCase())) {
+                datafilter.add(new Bagage(data.get(i).getId(), data.get(i).getStatus(), 
+                        data.get(i).getType(), data.get(i).getColor(), data.get(i).getBrand(), data.get(i).getInformation()));
+            }
+        }
+        table.setItems(datafilter);
+    }
     
     public void getLuggageData() {
         FYS fys = new FYS();
         Statement stmt = null;
         Connection conn = null;
+        int luggage = 0;
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
             //connectToDatabase(conn, stmt, "test", "root", "root");           
-            String sql = "SELECT * FROM found_table UNION SELECT * FROM lost_table";
+            String sql = "SELECT found_table.*, airport_table.date FROM found_table, airport_table "
+                    + "WHERE found_table.lost_and_found_id = airport_table.lost_and_found_id "
+                    + "UNION SELECT lost_table.*, airport_table.date FROM lost_table, airport_table "
+                    + "WHERE lost_table.lost_and_found_id = airport_table.lost_and_found_id";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
+                luggage++;
                 //Retrieve by column name
                 int id = rs.getInt("id");
                 String status = rs.getString("status");
@@ -83,15 +117,7 @@ public class BagagedatabaseController implements Initializable {
                 String brand = rs.getString("brand");
                 String characteristics = rs.getString("characteristics");
 
-                //Display values
-//                System.out.print("ID: " + id);
-//                System.out.print(" status: " + status);
-//                System.out.print(" type: " + type);
-//                System.out.print(" color: " + color);
-//                System.out.print(" brand: " + brand);
-//                 System.out.print(" characteristics: " + characteristics);
-//                System.out.println();
-                data.add(new Bagage(id, status, type, color, brand, characteristics));
+                data.add(new Bagage(luggage, status, type, color, brand, characteristics));
             }
             rs.close();
             conn.close();

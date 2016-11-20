@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.Random;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -37,8 +38,9 @@ import javax.mail.internet.MimeMessage;
  */
 public class FYS extends Application {
     
-    public static Stage parentWindow;
+    private static Stage parentWindow;
     private static final String key = "1234abcd";
+    private final static String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?";
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -60,6 +62,15 @@ public class FYS extends Application {
         mainStage.setTitle(title);
         mainStage.setResizable(false);
         mainStage.getScene().setRoot(window1);
+    }
+    
+    public static String generateRandomPassword(int length) {
+        Random rng = new Random();
+        char[] text = new char[length];
+        for (int i = 0; i < length; i++) {
+            text[i] = characters.charAt(rng.nextInt(characters.length()));
+        }
+        return new String(text);
     }
     
     //Conect to database.

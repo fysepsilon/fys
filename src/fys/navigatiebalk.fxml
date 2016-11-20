@@ -18,7 +18,7 @@
         
         
         
-      <Button id="home" fx:id="home" layoutX="14.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="31.0" prefWidth="136.0" stylesheets="@../../../../../../Desktop/menu.css" text="Home" />
+      <Button id="home" fx:id="home" layoutX="14.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="31.0" prefWidth="136.0" text="Home" />
       <Button id="missing" fx:id="missing" layoutX="150.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="31.0" prefWidth="225.0" text="Vermiste bagage registreren">
          <cursor>
             <Cursor fx:constant="HAND" />

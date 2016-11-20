@@ -15,24 +15,36 @@
               <Image url="@images/corendon_logo.png" />
            </image>
         </ImageView>
-      <Button id="home" fx:id="home" layoutX="14.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="31.0" prefWidth="136.0" text="Home" />
+        
+        
+        
+      <Button id="home" fx:id="home" layoutX="14.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="31.0" prefWidth="136.0" stylesheets="@../../../../../../Desktop/menu.css" text="Home" />
       <Button id="missing" fx:id="missing" layoutX="150.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="31.0" prefWidth="225.0" text="Vermiste bagage registreren">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></Button>
+         </cursor>
+      </Button>
       <Button id="found" fx:id="found" layoutX="375.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="31.0" prefWidth="225.0" text="Gevonden bagage registreren">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></Button>
+         </cursor>
+      </Button>
       <Button id="luggage" fx:id="luggage" layoutX="600.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagagedatabase" prefHeight="31.0" prefWidth="200.0" text="Bagage database">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></Button>
+         </cursor>
+      </Button>
       <Button id="account" fx:id="account" layoutX="800.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleAccounts" prefHeight="31.0" prefWidth="200.0" text="Klant accounts">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></Button>
-      <Button id="homeAdmin" fx:id="homeAdmin" layoutX="14.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleHomeAdmin" prefHeight="31.0" prefWidth="134.0" text="Home" visible="false">
+         </cursor>
+      </Button>
+     
+     
+     
+     
+     
+         <Button id="homeAdmin" fx:id="homeAdmin" layoutX="14.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleHomeAdmin" prefHeight="31.0" prefWidth="134.0" text="Home" visible="false">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
@@ -56,6 +68,8 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
+      
+      
       
       <Button id="logout" fx:id="logout" layoutX="900.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleLogout" prefHeight="58.0" prefWidth="87.0" style="-fx-background-color: transparent;">
           <font>
@@ -98,5 +112,10 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      
+      
+    
+      
+      
     </children>
 </AnchorPane>

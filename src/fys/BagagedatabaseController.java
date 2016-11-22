@@ -108,7 +108,7 @@ public class BagagedatabaseController implements Initializable {
             String sql = "SELECT found_table.*, airport_table.date FROM found_table, airport_table "
                     + "WHERE found_table.lost_and_found_id = airport_table.lost_and_found_id "
                     + "UNION SELECT lost_table.*, airport_table.date FROM lost_table, airport_table "
-                    + "WHERE lost_table.lost_and_found_id = airport_table.lost_and_found_id";
+                    + "WHERE lost_table.lost_and_found_id = airport_table.lost_and_found_id ORDER BY status";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 luggage++;

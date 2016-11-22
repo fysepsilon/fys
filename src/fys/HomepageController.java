@@ -19,18 +19,6 @@ import javafx.fxml.Initializable;
  * @author Veron
  */
 public class HomepageController implements Initializable {
-    @FXML
-    private void handleBagageformulieren(ActionEvent event) throws IOException {
-        //Switch screen to wachtwoordvergeten.
-        FYS fys = new FYS();
-        fys.changeToAnotherFXML("Bagage formulieren", "bagageformulieren.fxml");
-    }
-    @FXML
-    private void handleAccounts(ActionEvent event) throws IOException {
-        //Switch screen to wachtwoordvergeten.
-        FYS fys = new FYS();
-        fys.changeToAnotherFXML("Accounts", "accounts.fxml");
-    }
     /**
      * Initializes the controller class.
      */

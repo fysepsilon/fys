@@ -54,7 +54,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button id="found" fx:id="found" layoutX="326.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="GEVONDEN BAGAGE REGISTREREN" textFill="WHITE">
+        <Button id="found" fx:id="found" layoutX="326.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleGevondenBagageFormulier" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="GEVONDEN BAGAGE REGISTREREN" textFill="WHITE">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -124,7 +124,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button id="foundAdmin" fx:id="foundAdmin" layoutX="326.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="GEVONDEN BAGAGE REGISTREREN" textFill="WHITE" visible="false">
+        <Button id="foundAdmin" fx:id="foundAdmin" layoutX="326.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleGevondenBagageFormulier" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="GEVONDEN BAGAGE REGISTREREN" textFill="WHITE" visible="false">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -175,7 +175,7 @@
             </font>
         </Text>
            
-      <MenuBar layoutX="965.0" layoutY="28.0" prefWidth="20.0" prefHeight="10.0" style="-fx-background-color: #D81E05;" stylesheets="@images/menu.css">
+      <MenuBar layoutX="965.0" layoutY="28.0" prefHeight="10.0" prefWidth="20.0" style="-fx-background-color: #D81E05;" stylesheets="@images/menu.css">
         <menus>
           <Menu>
             <items>

@@ -85,6 +85,7 @@ public class NavigatiebalkController implements Initializable {
     @FXML
     private void handleStaticsAdmin(ActionEvent event) throws IOException {
         FYS fys = new FYS();
+        fys.changeToAnotherFXML("Statistieken", "statistieken.fxml");
     }
     
     @FXML

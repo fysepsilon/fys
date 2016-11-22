@@ -11,5 +11,13 @@
     <children>
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
       <PieChart id="piechart" fx:id="piechart" layoutX="468.0" layoutY="153.0" />
+      <LineChart layoutX="14.0" layoutY="153.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </LineChart>
     </children>
 </AnchorPane>

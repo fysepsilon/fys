@@ -96,9 +96,8 @@ public class StatistiekenController implements Initializable {
         
         pieChartData.forEach(data -> data.nameProperty().bind(
                 Bindings.concat(
-                        
                         (int) data.getPieValue(), " ", data.getName(), ": ", 
-                        ( total != 0 ||  (int) data.getPieValue() != 0? (int) data.getPieValue() / (int) total * 100 : 0), "%"
+                        (total == 0 || (int) data.getPieValue() == 0) ? 0 : (int)( data.getPieValue() / total * 100), "%"
                 )
         ));
     }     

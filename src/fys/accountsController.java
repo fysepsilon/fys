@@ -70,6 +70,7 @@ public class accountsController implements Initializable {
     }
 
     public void getLuggageData() {
+        String type_text;
         FYS fys = new FYS();
         Statement stmt = null;
         Connection conn = null;
@@ -84,6 +85,7 @@ public class accountsController implements Initializable {
                 String first_name = rs.getString("first_name");
                 String mail = rs.getString("mail");
                 int type = rs.getInt("type");
+                type_text = fys.getUserFunction(type);
                 String acties = ("Wijzigen/Verwijderen ");
 
                 //Display values
@@ -94,7 +96,7 @@ public class accountsController implements Initializable {
 //                System.out.print(" brand: " + brand);
 //                 System.out.print(" characteristics: " + characteristics);
 //                System.out.println();
-                data.add(new Accounts(first_name, mail, type, acties));
+                data.add(new Accounts(first_name, mail, type_text, acties));
             }
             rs.close();
             conn.close();
@@ -113,14 +115,14 @@ public class accountsController implements Initializable {
         @FXML
         private final SimpleStringProperty mail;
         @FXML
-        private final SimpleIntegerProperty type;
+        private final SimpleStringProperty type;
         @FXML
         private final SimpleStringProperty acties;
 
-        private Accounts(String first_namename, String mailname, Integer typename, String actiesname) {
+        private Accounts(String first_namename, String mailname, String typename, String actiesname) {
             this.first_name = new SimpleStringProperty(first_namename);
             this.mail = new SimpleStringProperty(mailname);
-            this.type = new SimpleIntegerProperty(typename);
+            this.type = new SimpleStringProperty(typename);
             this.acties = new SimpleStringProperty(actiesname);
 
         }
@@ -141,11 +143,11 @@ public class accountsController implements Initializable {
             mail.set(mailname);
         }
 
-        public Integer getType() {
+        public String getType() {
             return type.get();
         }
 
-        public void setType(Integer typename) {
+        public void setType(String typename) {
             type.set(typename);
         }
 

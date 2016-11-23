@@ -72,9 +72,9 @@ public class accountsController implements Initializable {
     }
 
     public void getLuggageData() {
-        String type_text;
         FYS fys = new FYS();
-
+        String type_text;
+        
         loginController loginController = new loginController();
         if (loginController.getUsertype().equals("2")) { //Show button bij administrator (type = 2)
             NewAccountButton.setVisible(true);
@@ -86,26 +86,37 @@ public class accountsController implements Initializable {
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-            //connectToDatabase(conn, stmt, "test", "root", "root");           
-            String sql = "SELECT * FROM person_table";
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                //Retrieve by column name
-                String first_name = rs.getString("first_name");
-                String mail = rs.getString("mail");
-                int type = rs.getInt("type");
-                type_text = fys.getUserFunction(type);
-                String acties = ("Wijzigen/Verwijderen ");
+            //connectToDatabase(conn, stmt, "test", "root", "root");  
+            if (loginController.getUsertype().equals("1")) { //SQL bij servicemedewerker (type = 1)
+                String sql = "SELECT * FROM bagagedatabase.person_table WHERE type = '0'";
 
-                //Display values
-//              System.out.print("ID: " + first_name);
-//                System.out.print(" status: " + status);
-//                System.out.print(" type: " + type);
-//                System.out.print(" color: " + color);
-//                System.out.print(" brand: " + brand);
-//                 System.out.print(" characteristics: " + characteristics);
-//                System.out.println();
-                data.add(new Accounts(first_name, mail, type_text, acties));
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    //Retrieve by column name
+                    String first_name = rs.getString("first_name");
+                    String mail = rs.getString("mail");
+                    int type = rs.getInt("type");
+                 type_text = fys.getUserFunction(type);
+                 String acties = ("Wijzigen/Verwijderen ");
+
+                    data.add(new Accounts(first_name, mail, type_text, acties));
+                }
+                rs.close();
+            } else { //SQL bij administrator (type = 2)
+                String sql = "SELECT * FROM bagagedatabase.person_table";
+
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    //Retrieve by column name
+                    String first_name = rs.getString("first_name");
+                    String mail = rs.getString("mail");
+                    int type = rs.getInt("type");
+                    type_text = fys.getUserFunction(type);
+                    String acties = ("Wijzigen/Verwijderen ");
+
+                    data.add(new Accounts(first_name, mail, type_text, acties));
+                }
+                rs.close();
             }
             conn.close();
                         

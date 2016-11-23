@@ -137,7 +137,7 @@ public class BagageformulierenController implements Initializable {
             
             String sql_lost = "INSERT INTO bagagedatabase.lost_table (type, brand, color, "
                     + "characteristics, status, person_id, lost_and_found_id) VALUES ('" + type + "', "
-                    + "'" + brand + "', '" + color + "', '" + characteristics + "', 'Lost', "
+                    + "'" + brand + "', '" + color + "', '" + characteristics + "', 'Verloren', "
                     + "'" + personId + "', '" + lostAndFoundId + "')";
 
             stmt.executeUpdate(sql_lost);

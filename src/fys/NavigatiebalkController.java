@@ -59,6 +59,12 @@ public class NavigatiebalkController implements Initializable {
     }
     
     @FXML
+    private void handleGevondenBagageFormulier(ActionEvent event) throws IOException {
+        FYS fys = new FYS();
+        fys.changeToAnotherFXML("Gevonden bagage registreren", "gevondenformulier.fxml");
+    }
+    
+    @FXML
     private void handleHome(ActionEvent event) throws IOException {
         FYS fys = new FYS();
         fys.changeToAnotherFXML("Home", "homepage.fxml");

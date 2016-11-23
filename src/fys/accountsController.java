@@ -22,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
@@ -33,13 +34,10 @@ public class accountsController implements Initializable {
 
     @FXML
     private Button home;
-
-    //@FXML private final TableView<Person> table = new TableView<>();
     @FXML
     private TableView<Accounts> table;
     @FXML
     private ObservableList<Accounts> data = FXCollections.observableArrayList();
-    //@FXML private TableView<Person> table;
     @FXML
     private TableColumn first_name;
     @FXML
@@ -48,6 +46,10 @@ public class accountsController implements Initializable {
     private TableColumn type;
     @FXML
     private TableColumn acties;
+    @FXML
+    private Button NewAccountButton;
+    @FXML   
+    private TextField naam_input;
 
     @FXML
     private void handlenieuwaccount(ActionEvent event) throws IOException {
@@ -71,33 +73,50 @@ public class accountsController implements Initializable {
 
     public void getLuggageData() {
         FYS fys = new FYS();
+
+        loginController loginController = new loginController();
+        if (loginController.getUsertype().equals("2")) { //Show button bij administrator (type = 2)
+            NewAccountButton.setVisible(true);
+        }
+        
         Statement stmt = null;
         Connection conn = null;
+
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-            //connectToDatabase(conn, stmt, "test", "root", "root");           
-            String sql = "SELECT * FROM person_table";
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                //Retrieve by column name
-                String first_name = rs.getString("first_name");
-                String mail = rs.getString("mail");
-                int type = rs.getInt("type");
-                String acties = ("Wijzigen/Verwijderen ");
+            //connectToDatabase(conn, stmt, "test", "root", "root");  
+            if (loginController.getUsertype().equals("1")) { //SQL bij servicemedewerker (type = 1)
+                String sql = "SELECT * FROM bagagedatabase.person_table WHERE type = '0'";
 
-                //Display values
-//              System.out.print("ID: " + first_name);
-//                System.out.print(" status: " + status);
-//                System.out.print(" type: " + type);
-//                System.out.print(" color: " + color);
-//                System.out.print(" brand: " + brand);
-//                 System.out.print(" characteristics: " + characteristics);
-//                System.out.println();
-                data.add(new Accounts(first_name, mail, type, acties));
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    //Retrieve by column name
+                    String first_name = rs.getString("first_name");
+                    String mail = rs.getString("mail");
+                    int type = rs.getInt("type");
+                    String acties = ("Wijzigen/Verwijderen ");
+
+                    data.add(new Accounts(first_name, mail, type, acties));
+                }
+                rs.close();
+            } else { //SQL bij administrator (type = 2)
+                String sql = "SELECT * FROM bagagedatabase.person_table";
+
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    //Retrieve by column name
+                    String first_name = rs.getString("first_name");
+                    String mail = rs.getString("mail");
+                    int type = rs.getInt("type");
+                    String acties = ("Wijzigen/Verwijderen ");
+
+                    data.add(new Accounts(first_name, mail, type, acties));
+                }
+                rs.close();
             }
-            rs.close();
             conn.close();
+                        
         } catch (SQLException ex) {
             // handle any errors
             System.out.println("SQLException: " + ex.getMessage());
@@ -156,7 +175,5 @@ public class accountsController implements Initializable {
         public void setActies(String actiesname) {
             acties.set(actiesname);
         }
-
     }
-
 }

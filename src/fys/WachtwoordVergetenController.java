@@ -28,14 +28,10 @@ import javafx.stage.Stage;
  */
 public class WachtwoordVergetenController implements Initializable {
 
-    @FXML
-    private TextField username;
-    @FXML
-    private Label label;
-    @FXML
-    private Label sendPasswordMessage;
-    @FXML
-    private Button sendNewPasswordButton;
+    @FXML private TextField username;
+    @FXML private Label label;
+    @FXML private Label sendPasswordMessage;
+    @FXML private Button sendNewPasswordButton;
 
     @FXML
     private void handleBackButtonAction(ActionEvent event) throws IOException {
@@ -106,11 +102,12 @@ public class WachtwoordVergetenController implements Initializable {
                 }
                 fys.sendEmail(username.getText(), "Corendon - Wachtwoord", "Beste "
                         + mailInformation[0] + " " + mailInformation[1] + ", "
-                        + "<br><br> Hierbij sturen wij jouw wachtwoord van het Corendon systeem. "
-                        + "<br>Wachtwoord: <i>" + mailInformation[2]
+                        + "<br><br>U heeft aangegeven dat u het wachtwoord van uw account wilt opvragen."
+                        + "<br>Bij deze uw wachtwoord: <i>" + mailInformation[2]
                         + "</i><br><br> Wij hopen hopen u hiermee goed te hebben geholpen."
+                        + "<br>Als u uw wachtwoord niet heeft opgevraagd kunt u deze e-mail verwijderen."
                         + "<br><br>Met vriendelijke groet,"
-                        + "<br><br><b>Corendon</b>", "Sent message successfully....");
+                        + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
                 sendPasswordMessage.setText("Uw wachtwoord is verstuurd naar: " + username.getText() + "!");
                 sendPasswordMessage.setStyle("-fx-text-fill: green;");
                 sendPasswordMessage.setVisible(true);

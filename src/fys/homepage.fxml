@@ -10,5 +10,14 @@
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="fys.HomepageController">
    <children>
        <fx:include source="navigatiebalk.fxml" fx:id="navigatiebalk" />
+       <TableView fx:id="table" layoutX="323.0" layoutY="157.0" prefHeight="384.0" prefWidth="673.0">
+            <columns>
+                <TableColumn id="id" fx:id="id" maxWidth="100.0" minWidth="50.0" prefWidth="50.0" text="ID" />
+                <TableColumn id="date" fx:id="date" maxWidth="150.0" minWidth="85.0" prefWidth="85.0" text="Datum" />
+                <TableColumn id="type" fx:id="type" maxWidth="150.0" minWidth="68.0" prefWidth="68.0" text="Type" />
+                <TableColumn id="color" fx:id="color" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Kleur" />
+                <TableColumn id="brand" fx:id="brand" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Merk" />
+            </columns>
+        </TableView>
    </children>
 </AnchorPane>

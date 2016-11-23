@@ -1,23 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="fys.HomepageController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.HomepageController">
    <children>
-       <fx:include source="navigatiebalk.fxml" fx:id="navigatiebalk" />
-       <TableView fx:id="table" layoutX="323.0" layoutY="157.0" prefHeight="384.0" prefWidth="673.0">
-            <columns>
-                <TableColumn id="id" fx:id="id" maxWidth="100.0" minWidth="50.0" prefWidth="50.0" text="ID" />
-                <TableColumn id="date" fx:id="date" maxWidth="150.0" minWidth="85.0" prefWidth="85.0" text="Datum" />
-                <TableColumn id="type" fx:id="type" maxWidth="150.0" minWidth="68.0" prefWidth="68.0" text="Type" />
-                <TableColumn id="color" fx:id="color" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Kleur" />
-                <TableColumn id="brand" fx:id="brand" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Merk" />
-            </columns>
-        </TableView>
+       <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
+      <GridPane layoutX="59.0" layoutY="216.0" prefHeight="337.0" prefWidth="580.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="447.0" minWidth="10.0" prefWidth="290.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="763.0" minWidth="10.0" prefWidth="290.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="157.0" minHeight="8.0" prefHeight="22.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="320.0" minHeight="10.0" prefHeight="306.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="294.0" text="Verloren" GridPane.columnIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+             <TableView fx:id="table" prefHeight="306.0" prefWidth="334.0" GridPane.rowIndex="1">
+                  <columns>
+                      <TableColumn id="date" fx:id="date" maxWidth="150.0" minWidth="85.0" prefWidth="85.0" text="Datum" />
+                      <TableColumn id="color" fx:id="color" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Kleur" />
+                      <TableColumn id="brand" fx:id="brand" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Merk" />
+                  </columns>
+              </TableView>
+            <TableView fx:id="table1" prefHeight="306.0" prefWidth="334.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <columns>
+                  <TableColumn id="date1" fx:id="date1" maxWidth="150.0" minWidth="85.0" prefWidth="85.0" text="Datum" />
+                  <TableColumn id="color1" fx:id="color1" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Kleur" />
+                  <TableColumn id="brand1" fx:id="brand1" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Merk" />
+               </columns>
+            </TableView>
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="291.0" text="Gevonden" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <Label alignment="CENTER" layoutX="59.0" layoutY="163.0" prefHeight="53.0" prefWidth="580.0" text="Meest recente bagage">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

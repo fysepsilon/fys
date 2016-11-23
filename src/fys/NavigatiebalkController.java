@@ -73,7 +73,7 @@ public class NavigatiebalkController implements Initializable {
     @FXML
     private void handleHomeAdmin(ActionEvent event) throws IOException {
         FYS fys = new FYS();
-        fys.changeToAnotherFXML("Home", "homepage.fxml");
+        fys.changeToAnotherFXML("Home", "homepageadmin.fxml");
     }
     
     @FXML

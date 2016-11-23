@@ -92,6 +92,17 @@ public class FYS extends Application {
         return 0;
     }
     
+    public Integer getUserLanguageString(String type) {
+        if (type.equals("Nederlands")) {
+            return 1;
+        } else if (type == "Spaans") {
+            return 2;
+        } else if (type == "Turks") {
+            return 3;
+        }
+        return 0;
+    }
+    
     //Conect to database.
     public Connection connectToDatabase(Connection conn) throws SQLException {
         conn = DriverManager.getConnection("jdbc:mysql://localhost/bagagedatabase?user=root&password=root");

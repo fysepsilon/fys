@@ -205,6 +205,7 @@ public class NieuwaccountaanmakenController implements Initializable {
             stmt = conn.createStatement();
             
             type = fys.getUserFunctionString(type).toString();
+            language = fys.getUserLanguageString(language).toString();
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
             String sql_account = "INSERT INTO bagagedatabase.person_table (type, mail,"
@@ -226,10 +227,15 @@ public class NieuwaccountaanmakenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         type_combo.getItems().clear();
-
+        language_combo.getItems().clear();
         type_combo.getItems().addAll(
                 "Klant",
                 "Servicemedewerker",
                 "Admin");
+        language_combo.getItems().addAll(
+                "Engels",
+                "Nederlands",
+                "Spaans",
+                "Turks");
     }
 }

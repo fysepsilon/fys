@@ -46,10 +46,7 @@ public class GevondenformulierController implements Initializable {
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
         FYS fys = new FYS();
 
-        if ((name_input.getText() == null || name_input.getText().trim().isEmpty())
-                || (surname_input.getText() == null || surname_input.getText().trim().isEmpty())
-                || (airport_combo.getValue() == null)
-                || (type_combo.getValue() == null)
+        if ((airport_combo.getValue() == null) || (type_combo.getValue() == null)
                 || (brand_input.getText() == null || brand_input.getText().trim().isEmpty())
                 || (color_input.getText() == null || color_input.getText().trim().isEmpty())) {
             System.out.println("U heeft niet alles ingevuld!");
@@ -93,7 +90,7 @@ public class GevondenformulierController implements Initializable {
             stmt.executeUpdate(sql_person);
 
             String sql_airport = "INSERT INTO bagagedatabase.airport_table (date, "
-                    + "time, airport_lost, label_number, flight_number, destination) "
+                    + "time, airport_found, label_number, flight_number, destination) "
                     + "VALUES ('" + date + "', '" + time + "', '" + airport + "', "
                     + "'" + labelnumber + "', '" + flightnumber + "', '" + destination + "')";
 
@@ -140,6 +137,5 @@ public class GevondenformulierController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }   
 }

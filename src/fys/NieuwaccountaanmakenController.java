@@ -75,7 +75,7 @@ public class NieuwaccountaanmakenController implements Initializable {
         Connection conn = null;
         conn = fys.connectToDatabase(conn);
         stmt = conn.createStatement();
-
+        
         if ((name_input.getText() == null || name_input.getText().trim().isEmpty())
                 || (surname_input.getText() == null || surname_input.getText().trim().isEmpty())
                 || (address_input.getText() == null || address_input.getText().trim().isEmpty())
@@ -203,6 +203,8 @@ public class NieuwaccountaanmakenController implements Initializable {
 
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
+            
+            type = fys.getUserFunctionString(type).toString();
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
             String sql_account = "INSERT INTO bagagedatabase.person_table (type, mail,"
@@ -223,6 +225,11 @@ public class NieuwaccountaanmakenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        type_combo.getItems().clear();
+
+        type_combo.getItems().addAll(
+                "Klant",
+                "Servicemedewerker",
+                "Admin");
     }
 }

@@ -83,6 +83,15 @@ public class FYS extends Application {
         return "Klant";
     }
     
+    public Integer getUserFunctionString(String type) {
+        if (type.equals("Servicemedewerker")) {
+            return 1;
+        } else if (type == "Admin") {
+            return 2;
+        }
+        return 0;
+    }
+    
     //Conect to database.
     public Connection connectToDatabase(Connection conn) throws SQLException {
         conn = DriverManager.getConnection("jdbc:mysql://localhost/bagagedatabase?user=root&password=root");

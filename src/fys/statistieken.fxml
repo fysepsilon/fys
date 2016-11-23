@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.chart.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -11,7 +12,7 @@
     <children>
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
       <PieChart id="piechart" fx:id="piechart" layoutX="468.0" layoutY="153.0" />
-      <LineChart layoutX="14.0" layoutY="153.0">
+      <LineChart id="linechart" fx:id="linechart" layoutX="14.0" layoutY="186.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -19,5 +20,10 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
+      <Label layoutX="194.0" layoutY="165.0" text="Schadeclaims">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

@@ -22,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
@@ -33,13 +34,10 @@ public class accountsController implements Initializable {
 
     @FXML
     private Button home;
-
-    //@FXML private final TableView<Person> table = new TableView<>();
     @FXML
     private TableView<Accounts> table;
     @FXML
     private ObservableList<Accounts> data = FXCollections.observableArrayList();
-    //@FXML private TableView<Person> table;
     @FXML
     private TableColumn first_name;
     @FXML
@@ -48,6 +46,10 @@ public class accountsController implements Initializable {
     private TableColumn type;
     @FXML
     private TableColumn acties;
+    @FXML
+    private Button NewAccountButton;
+    @FXML   
+    private TextField naam_input;
 
     @FXML
     private void handlenieuwaccount(ActionEvent event) throws IOException {
@@ -70,9 +72,17 @@ public class accountsController implements Initializable {
     }
 
     public void getLuggageData() {
+        String type_text;
         FYS fys = new FYS();
+
+        loginController loginController = new loginController();
+        if (loginController.getUsertype().equals("2")) { //Show button bij administrator (type = 2)
+            NewAccountButton.setVisible(true);
+        }
+        
         Statement stmt = null;
         Connection conn = null;
+
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
@@ -84,6 +94,7 @@ public class accountsController implements Initializable {
                 String first_name = rs.getString("first_name");
                 String mail = rs.getString("mail");
                 int type = rs.getInt("type");
+                type_text = fys.getUserFunction(type);
                 String acties = ("Wijzigen/Verwijderen ");
 
                 //Display values
@@ -94,10 +105,10 @@ public class accountsController implements Initializable {
 //                System.out.print(" brand: " + brand);
 //                 System.out.print(" characteristics: " + characteristics);
 //                System.out.println();
-                data.add(new Accounts(first_name, mail, type, acties));
+                data.add(new Accounts(first_name, mail, type_text, acties));
             }
-            rs.close();
             conn.close();
+                        
         } catch (SQLException ex) {
             // handle any errors
             System.out.println("SQLException: " + ex.getMessage());
@@ -113,14 +124,14 @@ public class accountsController implements Initializable {
         @FXML
         private final SimpleStringProperty mail;
         @FXML
-        private final SimpleIntegerProperty type;
+        private final SimpleStringProperty type;
         @FXML
         private final SimpleStringProperty acties;
 
-        private Accounts(String first_namename, String mailname, Integer typename, String actiesname) {
+        private Accounts(String first_namename, String mailname, String typename, String actiesname) {
             this.first_name = new SimpleStringProperty(first_namename);
             this.mail = new SimpleStringProperty(mailname);
-            this.type = new SimpleIntegerProperty(typename);
+            this.type = new SimpleStringProperty(typename);
             this.acties = new SimpleStringProperty(actiesname);
 
         }
@@ -141,11 +152,11 @@ public class accountsController implements Initializable {
             mail.set(mailname);
         }
 
-        public Integer getType() {
+        public String getType() {
             return type.get();
         }
 
-        public void setType(Integer typename) {
+        public void setType(String typename) {
             type.set(typename);
         }
 
@@ -156,7 +167,5 @@ public class accountsController implements Initializable {
         public void setActies(String actiesname) {
             acties.set(actiesname);
         }
-
     }
-
 }

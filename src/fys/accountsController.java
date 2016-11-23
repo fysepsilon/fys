@@ -22,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
@@ -33,13 +34,10 @@ public class accountsController implements Initializable {
 
     @FXML
     private Button home;
-
-    //@FXML private final TableView<Person> table = new TableView<>();
     @FXML
     private TableView<Accounts> table;
     @FXML
     private ObservableList<Accounts> data = FXCollections.observableArrayList();
-    //@FXML private TableView<Person> table;
     @FXML
     private TableColumn first_name;
     @FXML
@@ -48,6 +46,10 @@ public class accountsController implements Initializable {
     private TableColumn type;
     @FXML
     private TableColumn acties;
+    @FXML
+    private Button NewAccountButton;
+    @FXML   
+    private TextField naam_input;
 
     @FXML
     private void handlenieuwaccount(ActionEvent event) throws IOException {
@@ -72,8 +74,15 @@ public class accountsController implements Initializable {
     public void getLuggageData() {
         String type_text;
         FYS fys = new FYS();
+
+        loginController loginController = new loginController();
+        if (loginController.getUsertype().equals("2")) { //Show button bij administrator (type = 2)
+            NewAccountButton.setVisible(true);
+        }
+        
         Statement stmt = null;
         Connection conn = null;
+
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
@@ -98,8 +107,8 @@ public class accountsController implements Initializable {
 //                System.out.println();
                 data.add(new Accounts(first_name, mail, type_text, acties));
             }
-            rs.close();
             conn.close();
+                        
         } catch (SQLException ex) {
             // handle any errors
             System.out.println("SQLException: " + ex.getMessage());
@@ -158,7 +167,5 @@ public class accountsController implements Initializable {
         public void setActies(String actiesname) {
             acties.set(actiesname);
         }
-
     }
-
 }

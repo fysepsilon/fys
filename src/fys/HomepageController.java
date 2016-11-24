@@ -164,7 +164,7 @@ public class HomepageController implements Initializable {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
             //connectToDatabase(conn, stmt, "test", "root", "root");           
-            String sql = "SELECT found_table.*, airport_table.date FROM found_table, airport_table "
+            String sql = "SELECT lost_table.*, airport_table.date FROM found_table, airport_table "
                     + "WHERE found_table.lost_and_found_id = airport_table.lost_and_found_id "
                     + "ORDER BY date ASC";
             ResultSet rs = stmt.executeQuery(sql);

@@ -78,12 +78,37 @@
                   </items>
               </ComboBox>
               <TextField fx:id="brand_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-              <TextField fx:id="color_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+              <ComboBox fx:id="color_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" promptText="Kies hier de kleur van de bagage" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                  <items>
+                      <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="Bruin" />
+                          <String fx:value="Beige" />
+                          <String fx:value="Rood" />
+                          <String fx:value="Oranje" />
+                          <String fx:value="Geel" />
+                          <String fx:value="Groen" />
+                          <String fx:value="Blauw" />
+                          <String fx:value="Paars" />
+                          <String fx:value="Roze" />
+                          
+                          
+                          
+                          
+                          
+                          <String fx:value="Zwart" />
+                          <String fx:value="Grijs" />
+                          <String fx:value="Wit" />
+                          
+                          
+                      </FXCollections>
+                  </items>
+              </ComboBox>
               <TextField fx:id="characteristics_input" alignment="TOP_LEFT" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
               <Button fx:id="picture_button" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="318.0" text="Klik hier om een afbeelding toe te voegen" GridPane.columnIndex="4" GridPane.rowIndex="7" />
               <CheckBox fx:id="account_checkbox" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="193.0" text="Aanmaken account" GridPane.columnIndex="4" GridPane.rowIndex="8" />
          </children>
       </GridPane>
       <Button fx:id="send_button" layoutX="14.0" layoutY="557.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleSendToDatabase" prefHeight="35.0" prefWidth="972.0" text="Verzenden" />
+        <TextField fx:id="color_input" layoutX="597.0" layoutY="19.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" />
     </children>
 </AnchorPane>

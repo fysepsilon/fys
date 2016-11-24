@@ -99,7 +99,7 @@ public class GevondenformulierController implements Initializable {
             String sql_personID = "SELECT person_id, lost_and_found_id FROM person_table, airport_table WHERE "
                     + "person_table.first_name = '" + frontname + "'AND person_table.surname = '" + surname + "' "
                     + "AND airport_table.date = '" + date + "' AND airport_table.time = '" + time + "' "
-                    + "AND airport_table.airport_lost = '" + airport + "' AND airport_table.label_number = '"
+                    + "AND airport_table.airport_found = '" + airport + "' AND airport_table.label_number = '"
                     + labelnumber + "' AND airport_table.flight_number = '" + flightnumber + "' "
                     + "AND airport_table.destination = '" + destination + "'";
 

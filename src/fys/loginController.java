@@ -69,8 +69,13 @@ public class loginController implements Initializable {
             loginerror.setVisible(true);
         } else{
             if(authenticateLogin(username.getText(), fys.encrypt(password.getText()))){
+                loginController loginController = new loginController();
                 //Switch screen to Home.
+                if(loginController.getUsertype().equals("1")){
                 fys.changeToAnotherFXML("Homepagina", "homepage.fxml");
+                } else { // Switch screen to HomeAdmin
+                fys.changeToAnotherFXML("Homepagina", "homepageadmin.fxml");                    
+                }
             } else{
                 loginerror.setText("Uw gebruikersnaam en wachtwoord komen niet overeen!");
                 loginerror.setVisible(true);

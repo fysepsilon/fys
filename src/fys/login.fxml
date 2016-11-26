@@ -19,7 +19,7 @@
         <Label layoutX="253.0" layoutY="262.0" text="Wachtwoord:" />
         <TextField id="username" fx:id="username" layoutX="429.0" layoutY="195.0" prefHeight="31.0" prefWidth="260.0" />
         <PasswordField id="password" fx:id="password" layoutX="429.0" layoutY="257.0" prefHeight="31.0" prefWidth="260.0" />
-        <Button id="logInButton" layoutX="466.0" layoutY="365.0" mnemonicParsing="false" onAction="#handleChechLoginAction" prefHeight="31.0" prefWidth="187.0" text="Inloggen" />
+        <Button id="logInButton" fx:id="logInButton" layoutX="466.0" layoutY="365.0" mnemonicParsing="false" onAction="#handleChechLoginAction" prefHeight="31.0" prefWidth="187.0" text="Inloggen" />
         <Hyperlink id="forgotPassword" layoutX="477.0" layoutY="309.0" onAction="#handleForgotPasswordAction" text="Wachtwoord vergeten?" />
       <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutX="251.0" layoutY="133.0" prefHeight="25.0" prefWidth="598.0" textFill="RED" visible="false">
          <font>

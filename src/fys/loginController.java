@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -35,6 +36,7 @@ public class loginController implements Initializable {
     @FXML private Label loginerror;
     @FXML private static int usertype;
     @FXML private static String usersname;
+    @FXML private Button logInButton;
 
     public int getUsertype() {
         return usertype;
@@ -127,7 +129,7 @@ public class loginController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        logInButton.setDefaultButton(true);
     }    
     
 }

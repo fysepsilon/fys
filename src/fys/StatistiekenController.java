@@ -126,6 +126,8 @@ public class StatistiekenController implements Initializable {
         series.getData().add(new XYChart.Data<>("nov", 0)); 
         series.getData().add(new XYChart.Data("dec", 0)); 
         
+        System.out.println(series.getData().get(0));
+        
         linechart.setCreateSymbols(true);
         linechart.getData().add(series); 
     }

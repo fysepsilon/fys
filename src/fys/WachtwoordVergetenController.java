@@ -55,63 +55,70 @@ public class WachtwoordVergetenController implements Initializable {
             sendPasswordMessage.setVisible(true);
             sendNewPasswordButton.setDisable(false);
         } else {
-            try {
-                //connectToDatabase(conn, stmt, "test", "root", "root");
-                String sql = "SELECT mail FROM person_table WHERE mail='" + username.getText() + "'";
-                ResultSet rs = stmt.executeQuery(sql);
-                while (rs.next()) {
-                    //Retrieve by column name
-                    email = rs.getString("mail");
-                    //Display values
-                    //System.out.print("username: " + email);
-                }
-                rs.close();
-            } catch (SQLException ex) {
-                // handle any errors
-                System.out.println("SQLException: " + ex.getMessage());
-                System.out.println("SQLState: " + ex.getSQLState());
-                System.out.println("VendorError: " + ex.getErrorCode());
-            }
-            
-            if ((email == null || email.trim().isEmpty())) {
-                sendPasswordMessage.setText("Deze gebruikersnaam bestaat helaas niet!");
-                sendPasswordMessage.setStyle("-fx-text-fill: red;");
-                sendPasswordMessage.setVisible(true);
-                sendNewPasswordButton.setDisable(false);
-            } else{
-                String[] mailInformation = new String[3];
+            if(fys.isValidEmailAddress(username.getText())){
                 try {
                     //connectToDatabase(conn, stmt, "test", "root", "root");
-                    String sql = "SELECT first_name, surname, password FROM person_table WHERE mail='" + username.getText() + "'";
+                    String sql = "SELECT mail FROM person_table WHERE mail='" + username.getText() + "'";
                     ResultSet rs = stmt.executeQuery(sql);
                     while (rs.next()) {
                         //Retrieve by column name
-                        mailInformation[0] = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
-                        mailInformation[1] = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
-                        mailInformation[2] = fys.decrypt(rs.getString("password"));
+                        email = rs.getString("mail");
                         //Display values
                         //System.out.print("username: " + email);
                     }
                     rs.close();
-                    conn.close();
                 } catch (SQLException ex) {
                     // handle any errors
                     System.out.println("SQLException: " + ex.getMessage());
                     System.out.println("SQLState: " + ex.getSQLState());
                     System.out.println("VendorError: " + ex.getErrorCode());
                 }
-                fys.sendEmail(username.getText(), "Corendon - Wachtwoord", "Beste "
-                        + mailInformation[0] + " " + mailInformation[1] + ", "
-                        + "<br><br>U heeft aangegeven dat u het wachtwoord van uw account wilt opvragen."
-                        + "<br>Bij deze uw wachtwoord: <i>" + mailInformation[2]
-                        + "</i><br><br> Wij hopen hopen u hiermee goed te hebben geholpen."
-                        + "<br>Als u uw wachtwoord niet heeft opgevraagd kunt u deze e-mail verwijderen."
-                        + "<br><br>Met vriendelijke groet,"
-                        + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
-                sendPasswordMessage.setText("Uw wachtwoord is verstuurd naar: " + username.getText() + "!");
-                sendPasswordMessage.setStyle("-fx-text-fill: green;");
+
+                if ((email == null || email.trim().isEmpty())) {
+                    sendPasswordMessage.setText("Deze gebruikersnaam bestaat helaas niet!");
+                    sendPasswordMessage.setStyle("-fx-text-fill: red;");
+                    sendPasswordMessage.setVisible(true);
+                    sendNewPasswordButton.setDisable(false);
+                } else{
+                    String[] mailInformation = new String[3];
+                    try {
+                        //connectToDatabase(conn, stmt, "test", "root", "root");
+                        String sql = "SELECT first_name, surname, password FROM person_table WHERE type = '1' OR type = '2' AND mail='" + username.getText() + "'";
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()) {
+                            //Retrieve by column name
+                            mailInformation[0] = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
+                            mailInformation[1] = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
+                            mailInformation[2] = fys.decrypt(rs.getString("password"));
+                            //Display values
+                            //System.out.print("username: " + email);
+                        }
+                        rs.close();
+                        conn.close();
+                    } catch (SQLException ex) {
+                        // handle any errors
+                        System.out.println("SQLException: " + ex.getMessage());
+                        System.out.println("SQLState: " + ex.getSQLState());
+                        System.out.println("VendorError: " + ex.getErrorCode());
+                    }
+                    fys.sendEmail(username.getText(), "Corendon - Wachtwoord", "Beste "
+                            + mailInformation[0] + " " + mailInformation[1] + ", "
+                            + "<br><br>U heeft aangegeven dat u het wachtwoord van uw account wilt opvragen."
+                            + "<br>Bij deze uw wachtwoord: <i>" + mailInformation[2]
+                            + "</i><br><br> Wij hopen hopen u hiermee goed te hebben geholpen."
+                            + "<br>Als u uw wachtwoord niet heeft opgevraagd kunt u deze e-mail verwijderen."
+                            + "<br><br>Met vriendelijke groet,"
+                            + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
+                    sendPasswordMessage.setText("Uw wachtwoord is verstuurd naar: " + username.getText() + "!");
+                    sendPasswordMessage.setStyle("-fx-text-fill: green;");
+                    sendPasswordMessage.setVisible(true);
+                    username.setText("");
+                    sendNewPasswordButton.setDisable(false);
+                }
+            } else{
+                sendPasswordMessage.setText("Voer wel een gelidige e-mailadres in!");
+                sendPasswordMessage.setStyle("-fx-text-fill: red;");
                 sendPasswordMessage.setVisible(true);
-                username.setText("");
                 sendNewPasswordButton.setDisable(false);
             }
         }
@@ -119,7 +126,7 @@ public class WachtwoordVergetenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        sendNewPasswordButton.setDefaultButton(true);
     }    
     
 }

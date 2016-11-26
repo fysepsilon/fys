@@ -70,7 +70,7 @@ public class loginController implements Initializable {
             loginerror.setText("Gebruikersnaam en/of wachtwoord veld(en) zijn leeg gelaten!");
             loginerror.setVisible(true);
         } else{
-            if(authenticateLogin(username.getText(), fys.encrypt(password.getText()))){
+            if(authenticateLogin(username.getText(), fys.encrypt(password.getText())) && (getUsertype() == 1 || getUsertype() == 2) ){
                 loginController loginController = new loginController();
                 //Switch screen to Home.
                 if(loginController.getUsertype() == 1){

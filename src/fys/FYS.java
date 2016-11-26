@@ -40,7 +40,7 @@ public class FYS extends Application {
     
     private static Stage parentWindow;
     private static final String key = "1234abcd";
-    private final static String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?";
+    private final static String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
     
     @Override
     public void start(Stage stage) throws Exception {

@@ -54,7 +54,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button id="found" fx:id="found" layoutX="326.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="GEVONDEN BAGAGE REGISTREREN" textFill="WHITE">
+        <Button id="found" fx:id="found" layoutX="326.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleGevondenBagageFormulier" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="GEVONDEN BAGAGE REGISTREREN" textFill="WHITE">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>

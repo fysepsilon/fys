@@ -94,7 +94,7 @@ public class BagagedatabaseController implements Initializable {
             if (data.get(i).getColor().toLowerCase().contains(colorfilter.getText().toLowerCase())
                     && data.get(i).getBrand().toLowerCase().contains(brandfilter.getText().toLowerCase())
                     && data.get(i).getDate().toLowerCase().contains(datefilter.getText().toLowerCase())
-                    && data.get(i).getStatus().toLowerCase().contains(statusfilter.getSelectionModel().getSelectedItem().toString().toLowerCase())
+                    && data.get(i).getStatus().toLowerCase().equals(statusfilter.getSelectionModel().getSelectedItem().toString().toLowerCase())
                     && data.get(i).getType().toLowerCase().contains(typefilter.getSelectionModel().getSelectedItem().toString().toLowerCase())
                     && data.get(i).getInformation().toLowerCase().contains(characteristicsfilter.getText().toLowerCase())) {
                 datafilter.add(new Bagage(data.get(i).getId(), data.get(i).getStatus(), 

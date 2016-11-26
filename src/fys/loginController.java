@@ -33,14 +33,14 @@ public class loginController implements Initializable {
     @FXML private PasswordField password;
     @FXML private Label label;
     @FXML private Label loginerror;
-    @FXML private static String usertype;
+    @FXML private static int usertype;
     @FXML private static String usersname;
 
-    public String getUsertype() {
+    public int getUsertype() {
         return usertype;
     }
 
-    public void setUsertype(String userType) {
+    public void setUsertype(int userType) {
         this.usertype = userType;
     }
     
@@ -71,7 +71,7 @@ public class loginController implements Initializable {
             if(authenticateLogin(username.getText(), fys.encrypt(password.getText()))){
                 loginController loginController = new loginController();
                 //Switch screen to Home.
-                if(loginController.getUsertype().equals("1")){
+                if(loginController.getUsertype() == 1){
                 fys.changeToAnotherFXML("Homepagina", "homepage.fxml");
                 } else { // Switch screen to HomeAdmin
                 fys.changeToAnotherFXML("Homepagina", "homepageadmin.fxml");                    
@@ -100,7 +100,7 @@ public class loginController implements Initializable {
                 //Retrieve by column name
                 username = rs.getString("mail");
                 password = rs.getString("password");
-                setUsertype(rs.getString("type"));
+                setUsertype(rs.getInt("type"));
                 setUsersName(rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1)
                         + " " + rs.getString("insertion") + " " + 
                         rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1));

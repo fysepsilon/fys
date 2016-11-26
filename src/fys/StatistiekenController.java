@@ -16,6 +16,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
@@ -39,13 +40,7 @@ public class StatistiekenController implements Initializable {
     private int depotAmount = 0;
     
     @FXML
-    public LineChart linechart;
-
-    @FXML
-    NumberAxis xAxis = new NumberAxis("Number saved", 1, 10.1, 1);
-
-    @FXML
-    NumberAxis yAxis = new NumberAxis("Calculated Value", 0, 100, 1);
+    private LineChart<Number, Number> linechart;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -111,23 +106,28 @@ public class StatistiekenController implements Initializable {
                 )
         ));
         
-        ObservableList<XYChart.Series<Double, Double>> lineChartData = FXCollections.observableArrayList(
-                new LineChart.Series<Double, Double>("Series 1", FXCollections.observableArrayList(
-                        new XYChart.Data<Double, Double>(0.0, 1.0),
-                        new XYChart.Data<Double, Double>(1.2, 1.4),
-                        new XYChart.Data<Double, Double>(2.2, 1.9),
-                        new XYChart.Data<Double, Double>(2.7, 2.3),
-                        new XYChart.Data<Double, Double>(2.9, 0.5)
-                )),
-                new LineChart.Series<Double, Double>("Series 2", FXCollections.observableArrayList(
-                        new XYChart.Data<Double, Double>(0.0, 1.6),
-                        new XYChart.Data<Double, Double>(0.8, 0.4),
-                        new XYChart.Data<Double, Double>(1.4, 2.9),
-                        new XYChart.Data<Double, Double>(2.1, 1.3),
-                        new XYChart.Data<Double, Double>(2.6, 0.9)
-                ))
-        );
-        linechart = new LineChart(xAxis, yAxis, lineChartData);
+        //LINECHART
+        linechart.setTitle("Schadeclaims");
+        linechart.getXAxis().setAutoRanging(true); 
+        linechart.getYAxis().setAutoRanging(true); 
+        
+        XYChart.Series series = new XYChart.Series<>(); 
+        series.setName("Aantal schadeclaims");
+        series.getData().add(new XYChart.Data<>("jan", 0)); 
+        series.getData().add(new XYChart.Data("feb", 0));
+        series.getData().add(new XYChart.Data<>("mar", 0)); 
+        series.getData().add(new XYChart.Data("apr", 0)); 
+        series.getData().add(new XYChart.Data<>("mei", 0)); 
+        series.getData().add(new XYChart.Data("jun", 0)); 
+        series.getData().add(new XYChart.Data<>("jul", 0)); 
+        series.getData().add(new XYChart.Data("aug", 0));
+        series.getData().add(new XYChart.Data<>("sep", 0)); 
+        series.getData().add(new XYChart.Data("okt", 0)); 
+        series.getData().add(new XYChart.Data<>("nov", 0)); 
+        series.getData().add(new XYChart.Data("dec", 0)); 
+        
+        linechart.setCreateSymbols(true);
+        linechart.getData().add(series); 
     }
     
     

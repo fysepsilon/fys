@@ -116,7 +116,7 @@ public class NavigatiebalkController implements Initializable {
         loginController loginController = new loginController();
         String name = loginController.getUsersName().replaceAll("null", "");
         name = name.replaceAll("  ", " ");
-        if(loginController.getUsertype().equals("2")){
+        if(loginController.getUsertype() == 2){
             homeAdmin.setVisible(true);
             missingAdmin.setVisible(true);
             foundAdmin.setVisible(true);

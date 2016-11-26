@@ -99,6 +99,102 @@ public class FYS extends Application {
             return 2;
         } else if (type == "Turks") {
             return 3;
+        }  
+        return 0;
+    }
+    
+    public String getStatus(int status) {
+        switch (status) {
+            case 1:
+                return "Vermist";
+            case 2:
+                return "Vernietigd";
+            case 3:
+                return "Afgehanded";
+            case 4:
+                return "Nooit gevonden";
+            case 5:
+                return "Depot";
+            default:
+                break;
+        }
+        return "Gevonden";
+    }
+    
+    public Integer getStatusString(String status) {
+        switch (status) {
+            case "Vermist":
+                return 1;
+            case "Vernietigd":
+                return 2;
+            case "Afgehanded":
+                return 3;
+            case "Nooit gevonden":
+                return 4;
+            case "Depot":
+                return 5;
+            default:
+                break;
+        }
+        return 0;
+    }
+    
+    public String getColor(int color) {
+        switch (color) {
+            case 1:
+                return "Beige";
+            case 2:
+                return "Rood";
+            case 3:
+                return "Oranje";
+            case 4:
+                return "Geel";
+            case 5:
+                return "Groen";
+            case 6:
+                return "Blauw";
+            case 7:
+                return "Paars";
+            case 8:
+                return "Roze";
+            case 9:
+                return "Zwart";
+            case 10:
+                return "Grijs";
+            case 11:
+                return "Wit";    
+            default:
+                break;
+        }
+        return "Bruin";
+    }
+
+    public Integer getColorString(String color) {
+        switch (color) {
+            case "Beige":
+                return 1;
+            case "Rood":
+                return 2;
+            case "Oranje":
+                return 3;
+            case "Geel":
+                return 4;
+            case "Groen":
+                return 5;
+            case "Blauw":
+                return 6;
+            case "Paars":
+                return 7;
+            case "Roze":
+                return 8;
+            case "Zwart":
+                return 9;
+            case "Grijs":
+                return 10;
+            case "Wit":
+                return 11;    
+            default:
+                break;
         }
         return 0;
     }

@@ -81,25 +81,6 @@
               <ComboBox fx:id="color_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" promptText="Kies hier de kleur van de bagage" GridPane.columnIndex="4" GridPane.rowIndex="5">
                   <items>
                       <FXCollections fx:factory="observableArrayList">
-                          <String fx:value="Bruin" />
-                          <String fx:value="Beige" />
-                          <String fx:value="Rood" />
-                          <String fx:value="Oranje" />
-                          <String fx:value="Geel" />
-                          <String fx:value="Groen" />
-                          <String fx:value="Blauw" />
-                          <String fx:value="Paars" />
-                          <String fx:value="Roze" />
-                          
-                          
-                          
-                          
-                          
-                          <String fx:value="Zwart" />
-                          <String fx:value="Grijs" />
-                          <String fx:value="Wit" />
-                          
-                          
                       </FXCollections>
                   </items>
               </ComboBox>
@@ -109,6 +90,5 @@
          </children>
       </GridPane>
       <Button fx:id="send_button" layoutX="14.0" layoutY="557.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleSendToDatabase" prefHeight="35.0" prefWidth="972.0" text="Verzenden" />
-        <TextField fx:id="color_input" layoutX="597.0" layoutY="19.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" />
     </children>
 </AnchorPane>

@@ -226,8 +226,6 @@ public class NieuwaccountaanmakenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        type_combo.getItems().clear();
-        language_combo.getItems().clear();
         type_combo.getItems().addAll(
                 "Klant",
                 "Servicemedewerker",

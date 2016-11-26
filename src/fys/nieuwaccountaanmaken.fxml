@@ -67,10 +67,6 @@
               <ComboBox fx:id="language_combo" prefHeight="39.0" prefWidth="318.0" promptText="Kies hier de taal" GridPane.columnIndex="1">
                   <items>
                       <FXCollections fx:factory="observableArrayList">
-                          <String fx:value="0" />
-                          <String fx:value="1" />
-                          <String fx:value="2" />
-                          <String fx:value="3" />
                       </FXCollections>
                   </items>
               </ComboBox>
@@ -78,9 +74,6 @@
               <ComboBox fx:id="type_combo" minHeight="-Infinity" prefHeight="39.0" prefWidth="318.0" promptText="Kies hier de rol" GridPane.columnIndex="1" GridPane.rowIndex="1">
                   <items>
                       <FXCollections fx:factory="observableArrayList">
-                          <String fx:value="0" />
-                          <String fx:value="1" />
-                          <String fx:value="2" />
                       </FXCollections>
                   </items>
               </ComboBox>

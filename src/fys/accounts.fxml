@@ -19,8 +19,8 @@
                 <TableColumn id="acties" fx:id="acties" maxWidth="500.0" minWidth="115.0" prefWidth="161.0" text="Acties" />
             </columns>
         </TableView>
-      <Button id="NewAccountButton" fx:id="NewAccountButton" layoutX="14.0" layoutY="157.0" mnemonicParsing="false" onAction="#handlenieuwaccount" prefHeight="41.0" prefWidth="171.0" text="Nieuw account aanmaken" visible="false" />
-      <GridPane layoutX="39.0" layoutY="187.0" prefHeight="100.0" prefWidth="183.0">
+      <Button id="NewAccountButton" fx:id="NewAccountButton" layoutX="14.0" layoutY="157.0" mnemonicParsing="false" onAction="#handlenieuwaccount" prefHeight="41.0" prefWidth="208.0" text="Nieuw account aanmaken" />
+      <GridPane layoutX="14.0" layoutY="219.0" prefHeight="100.0" prefWidth="183.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="59.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="206.0" minWidth="10.0" prefWidth="149.0" />

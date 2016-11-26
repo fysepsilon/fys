@@ -120,7 +120,7 @@ public class GevondenformulierController implements Initializable {
 
             String sql_found = "INSERT INTO bagagedatabase.found_table (type, brand, color, "
                     + "characteristics, status, person_id, lost_and_found_id) VALUES ('" + type + "', "
-                    + "'" + brand + "', '" + color + "', '" + characteristics + "', 'Gevonden', "
+                    + "'" + brand + "', '" + color + "', '" + characteristics + "', 0, "
                     + "'" + personId + "', '" + lostAndFoundId + "')";
 
             stmt.executeUpdate(sql_found);

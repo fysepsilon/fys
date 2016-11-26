@@ -89,7 +89,7 @@ public class HomepageController implements Initializable {
                 luggage++;
                 //Retrieve by column name
                 String date = rs.getString("date");
-                String color = rs.getString("color");
+                String color = fys.getColor(rs.getInt("color"));
                 String brand = rs.getString("brand");
 
                 data.add(new HomepageController.Bagage(date, color, brand));
@@ -172,7 +172,7 @@ public class HomepageController implements Initializable {
                 luggage++;
                 //Retrieve by column name
                 String date1 = rs.getString("date");
-                String color1 = rs.getString("color");
+                String color1 = fys.getColor(rs.getInt("color"));
                 String brand1 = rs.getString("brand");
 
                 data1.add(new HomepageController.Bagage1(date1, color1, brand1));

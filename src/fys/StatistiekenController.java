@@ -78,12 +78,12 @@ public class StatistiekenController implements Initializable {
                 luggage++;
                 //System.out.println(rs.getString("status") + " " + rs.getInt("Count"));
                 //Retrieve by column name
-                foundAmount = (rs.getString("status").equals("Gevonden") ? rs.getInt("Count") : foundAmount);
-                lostAmount = (rs.getString("status").equals("Vermist") ? rs.getInt("Count") : lostAmount);
-                destroyAmount = (rs.getString("status").equals("Vernietigd") ? rs.getInt("Count") : destroyAmount);
-                settleAmount = (rs.getString("status").equals("Afgehandeld") ? rs.getInt("Count") : settleAmount);
-                neverFoundAmount = (rs.getString("status").equals("Nooit gevonden") ? rs.getInt("Count") : neverFoundAmount);
-                depotAmount = (rs.getString("status").equals("Depot") ? rs.getInt("Count") : depotAmount);
+                foundAmount = (rs.getInt("status") == 0 ? rs.getInt("Count") : foundAmount);
+                lostAmount = (rs.getInt("status") == 1 ? rs.getInt("Count") : lostAmount);
+                destroyAmount = (rs.getInt("status") == 2 ? rs.getInt("Count") : destroyAmount);
+                settleAmount = (rs.getInt("status") == 3 ? rs.getInt("Count") : settleAmount);
+                neverFoundAmount = (rs.getInt("status") == 4 ? rs.getInt("Count") : neverFoundAmount);
+                depotAmount = (rs.getInt("status") == 5 ? rs.getInt("Count") : depotAmount);
             }
             rs.close();
             conn.close();

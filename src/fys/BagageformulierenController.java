@@ -31,11 +31,11 @@ import javafx.scene.layout.AnchorPane;
  * @author Paras
  */
 public class BagageformulierenController implements Initializable {        
-    @FXML private ComboBox airport_combo, type_combo;
+    @FXML private ComboBox airport_combo, type_combo, color_combo;
     @FXML private TextField name_input, surname_input, address_input, 
             residence_input, zipcode_input, country_input, phone_input, 
             mail_input, labelnumber_input, flightnumber_input, destination_input,
-            brand_input, color_input, characteristics_input;
+            brand_input, characteristics_input;
     @FXML private CheckBox account_checkbox;
     @FXML private Button picture_button;
     @FXML private Label surname_label, name_label, airport_label, label_label, 
@@ -56,7 +56,7 @@ public class BagageformulierenController implements Initializable {
                 || (mail_input.getText() == null || mail_input.getText().trim().isEmpty())
                 || (type_combo.getValue() == null)
                 || (brand_input.getText() == null || brand_input.getText().trim().isEmpty())
-                || (color_input.getText() == null || color_input.getText().trim().isEmpty()
+                || (color_combo.getValue() == null
         )){
             System.out.println("U heeft niet alles ingevuld!");
         } else{
@@ -75,7 +75,7 @@ public class BagageformulierenController implements Initializable {
                     zipcode_input.getText(), country_input.getText(), phone_input.getText(), 
                     mail_input.getText(), account_checkbox.isSelected(), labelnumber_input.getText(), 
                     flightnumber_input.getText(), destination_input.getText(), 
-                    type_combo.getValue().toString(), brand_input.getText(), color_input.getText(), 
+                    type_combo.getValue().toString(), brand_input.getText(), fys.getColorString(color_combo.getValue().toString()), 
                     characteristics_input.getText(), dateString, timeString);
         }
     }
@@ -84,7 +84,7 @@ public class BagageformulierenController implements Initializable {
             String address, String residence, String zipcode, String country, 
             String phone, String mail, Boolean checkBox, String labelnumber, 
             String flightnumber, String destination, String type, String brand, 
-            String color, String characteristics, String date, String time) 
+            Integer color, String characteristics, String date, String time) 
             throws IOException, SQLException {
         FYS fys = new FYS();
         
@@ -137,7 +137,7 @@ public class BagageformulierenController implements Initializable {
             
             String sql_lost = "INSERT INTO bagagedatabase.lost_table (type, brand, color, "
                     + "characteristics, status, person_id, lost_and_found_id) VALUES ('" + type + "', "
-                    + "'" + brand + "', '" + color + "', '" + characteristics + "', 'Vermist', "
+                    + "'" + brand + "', '" + color + "', '" + characteristics + "', 1, "
                     + "'" + personId + "', '" + lostAndFoundId + "')";
 
             stmt.executeUpdate(sql_lost);
@@ -159,6 +159,8 @@ public class BagageformulierenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        color_combo.getItems().addAll(
+                "Bruin", "Beige", "Rood", "Oranje", "Geel",
+                "Groen", "Blauw", "Paars", "Roze", "Zwart", "Grijs", "Wit");
     }       
 }

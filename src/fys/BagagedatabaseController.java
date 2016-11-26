@@ -60,7 +60,15 @@ public class BagagedatabaseController implements Initializable {
     @FXML private TextArea characteristicsfilter;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {       
+    public void initialize(URL url, ResourceBundle rb) { 
+        statusfilter.getItems().addAll(
+                "",
+                "Gevonden",
+                "Vermist",
+                "Vernietigd",
+                "Afgehandeld",
+                "Nooit gevonden",
+                "Depot");
         getLuggageData();
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -114,9 +122,9 @@ public class BagagedatabaseController implements Initializable {
                 luggage++;
                 //Retrieve by column name
                 int id = rs.getInt("id");
-                String status = rs.getString("status");
+                String status =  fys.getStatus(rs.getInt("status"));
                 String type = rs.getString("type");
-                String color = rs.getString("color");
+                String color = fys.getColor(rs.getInt("color"));
                 String brand = rs.getString("brand");
                 String date = rs.getString("date");
                 String characteristics = rs.getString("characteristics");

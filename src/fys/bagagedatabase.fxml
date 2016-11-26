@@ -36,13 +36,6 @@
       <ComboBox fx:id="statusfilter" layoutX="115.0" layoutY="210.0" prefHeight="31.0" prefWidth="187.0" promptText="Kies een status">
         <items>
             <FXCollections fx:factory="observableArrayList">
-                <String fx:value="" />
-                <String fx:value="Gevonden" />
-                <String fx:value="Vermist" />
-                <String fx:value="Vernietigd" />
-                <String fx:value="Afgehandeld" />
-                <String fx:value="Nooit gevonden" />
-                <String fx:value="Depot" />
             </FXCollections>
         </items>
         <value>

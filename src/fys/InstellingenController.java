@@ -78,11 +78,11 @@ public class InstellingenController implements Initializable {
             error.setText("E-mailadres bestaat al!");
             error.setStyle("-fx-text-fill: red;");
             error.setVisible(true);
-        } else if(!fys.isValidEmailAddress(username.getText())){
+        } /*else if(!fys.isValidEmailAddress(username.getText())){
             error.setText("E-mailadres is niet geldig!");
             error.setStyle("-fx-text-fill: red;");
             error.setVisible(true);
-        } else{
+        }*/ else{
             Statement stmt = null;
             Connection conn = null;
             try {

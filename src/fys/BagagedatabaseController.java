@@ -19,9 +19,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -29,9 +27,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -45,19 +40,12 @@ public class BagagedatabaseController implements Initializable {
     @FXML private ObservableList<Bagage> data = FXCollections.observableArrayList();
     @FXML private ObservableList<Bagage> datafilter = FXCollections.observableArrayList();
     //@FXML private TableView<Person> table;
-    @FXML private TableColumn id;
-    @FXML private TableColumn status;
-    @FXML private TableColumn type;
-    @FXML private TableColumn color;
-    @FXML private TableColumn brand;
-    @FXML private TableColumn date;
-    @FXML private TableColumn information;
-    @FXML private TextField colorfilter;
-    @FXML private TextField brandfilter;
-    @FXML private TextField datefilter;
-    @FXML private ComboBox statusfilter;
-    @FXML private ComboBox typefilter;
+    @FXML private TableColumn id, status, type, color, brand, date, information;
+    @FXML private TextField colorfilter, brandfilter, datefilter;
+    @FXML private ComboBox statusfilter, typefilter;
     @FXML private TextArea characteristicsfilter;
+//    @FXML private Button filter;
+//    @FXML private Label status_label, color_label, type_label, brand_label, date_label, extrainfo_label;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) { 

@@ -130,9 +130,9 @@ public class NavigatiebalkController implements Initializable {
             afscheiding4.setVisible(false);
             rechteropvulling1.setVisible(false);
 
-            welcomeText.setText("Administrator - Welkom! " + name);
+            welcomeText.setText( taal[6] + " - " + taal[5] + "! " + name);
         } else{
-            welcomeText.setText("Servicemedewerker - Welkom! " + name);
+            welcomeText.setText( taal[7] + " - " + taal[5] + "! " + name);
             missing.setText(taal[0]);
             found.setText(taal[1]);
             luggage.setText(taal[2]);

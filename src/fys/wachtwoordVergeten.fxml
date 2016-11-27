@@ -11,11 +11,6 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.WachtwoordVergetenController">
     <children>
-        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@images/corendon_logo.jpg" />
-            </image>
-        </ImageView>
         <Label layoutX="253.0" layoutY="200.0" text="Gebruikersnaam:" />
         <TextField id="username" fx:id="username" layoutX="429.0" layoutY="195.0" prefHeight="31.0" prefWidth="260.0" />
         <Button id="sendNewPasswordButton" fx:id="sendNewPasswordButton" layoutX="502.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleSendNewPasswordAction" prefHeight="31.0" prefWidth="187.0" text="Versturen" />

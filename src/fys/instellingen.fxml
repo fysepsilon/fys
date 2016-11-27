@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.InstellingenController">
+    <children>
+        <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
+      <Button fx:id="save" layoutX="367.0" layoutY="417.0" mnemonicParsing="false" onAction="#handleSaveAction" prefHeight="31.0" prefWidth="431.0" text="Opslaan" />
+      <TextField fx:id="username" layoutX="367.0" layoutY="207.0" prefHeight="31.0" prefWidth="431.0" />
+      <Text layoutX="203.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mailadres:" />
+      <ComboBox fx:id="language" layoutX="367.0" layoutY="333.0" prefHeight="31.0" prefWidth="431.0" />
+      <Text layoutX="203.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wachtwoord:" />
+      <PasswordField fx:id="password" layoutX="367.0" layoutY="269.0" prefHeight="31.0" prefWidth="431.0" />
+      <Text layoutX="203.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Taal:" />
+      <Label id="loginerror" fx:id="error" alignment="CENTER" layoutX="200.0" layoutY="143.0" prefHeight="25.0" prefWidth="596.0" textFill="RED" visible="false">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>

@@ -200,6 +200,54 @@ public class FYS extends Application {
         return 0;
     }
     
+    public boolean checkEmailExists(String email, Integer type){
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM person_table "
+                    + "WHERE type = '" + type + "' AND mail='" + email + "'";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    return true;
+                }
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        return false;
+    }
+    
+        public boolean checkEmailExistsOnChange(String email, Integer type, String emailWas){
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM person_table"
+                    + " WHERE type = '" + type + "' AND mail='" + email + "' AND mail not like '" + emailWas + "'";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    return true;
+                }
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        return false;
+    }
+    
     //Conect to database.
     public Connection connectToDatabase(Connection conn) throws SQLException {
         conn = DriverManager.getConnection("jdbc:mysql://localhost/bagagedatabase?user=root&password=root");

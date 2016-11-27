@@ -36,6 +36,7 @@ public class loginController implements Initializable {
     @FXML private Label loginerror;
     @FXML private static int usertype;
     @FXML private static String usersname;
+    @FXML private static String email;
     @FXML private Button logInButton;
 
     public int getUsertype() {
@@ -44,6 +45,14 @@ public class loginController implements Initializable {
 
     public void setUsertype(int userType) {
         this.usertype = userType;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
     
     public String getUsersName() {
@@ -101,6 +110,7 @@ public class loginController implements Initializable {
             while (rs.next()) {
                 //Retrieve by column name
                 username = rs.getString("mail");
+                setEmail(rs.getString("mail"));
                 password = rs.getString("password");
                 setUsertype(rs.getInt("type"));
                 setUsersName(rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1)

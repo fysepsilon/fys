@@ -109,6 +109,7 @@ public class NavigatiebalkController implements Initializable {
     @FXML
     private void handleSettings(ActionEvent event) throws IOException {
         FYS fys = new FYS();
+        fys.changeToAnotherFXML("Corendon-Instellingen", "instellingen.fxml");
     }
     
     @Override

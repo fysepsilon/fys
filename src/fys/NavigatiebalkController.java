@@ -27,30 +27,12 @@ public class NavigatiebalkController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    @FXML private Button homeAdmin;
-    @FXML private Button missingAdmin;
-    @FXML private Button foundAdmin;
-    @FXML private Button luggageAdmin;
-    @FXML private Button accountAdmin;
-    @FXML private Button staticsAdmin;
-    @FXML private Button home;
-    @FXML private Button missing;
-    @FXML private Button found;
-    @FXML private Button luggage;
-    @FXML private Button account;
+    @FXML private Button homeAdmin, missingAdmin, foundAdmin, luggageAdmin, accountAdmin
+            , staticsAdmin, home, missing, found, luggage, account;
     @FXML private Text welcomeText;   
-    @FXML private Separator afscheiding1;
-    @FXML private Separator afscheiding2;
-    @FXML private Separator afscheiding3;
-    @FXML private Separator afscheiding4;
-    @FXML private Separator afscheiding5;
-    @FXML private Separator afscheiding6;
-    @FXML private Separator afscheiding7;
-    @FXML private Separator afscheiding8;
-    @FXML private Separator afscheiding9;
-
-    @FXML private Label rechteropvulling1;
-    @FXML private Label rechteropvulling2;
+    @FXML private Separator afscheiding1, afscheiding2, afscheiding3, afscheiding4
+            , afscheiding5, afscheiding6, afscheiding7, afscheiding8, afscheiding9;
+    @FXML private Label rechteropvulling1, rechteropvulling2;
   
     @FXML
     private void handleBagageformulieren(ActionEvent event) throws IOException {
@@ -117,9 +99,9 @@ public class NavigatiebalkController implements Initializable {
         loginController loginController = new loginController();
         String name = loginController.getUsersName().replaceAll("null", "");
         name = name.replaceAll("  ", " ");
+        taal language = new taal();
+        String[] taal = language.getLanguage();
         if(loginController.getUsertype() == 2){
-            taal language = new taal();
-            String[] taal = language.getLanguage();
             missingAdmin.setText(taal[0]);
             foundAdmin.setText(taal[1]);
             luggageAdmin.setText(taal[2]);
@@ -151,6 +133,10 @@ public class NavigatiebalkController implements Initializable {
             welcomeText.setText("Administrator - Welkom! " + name);
         } else{
             welcomeText.setText("Servicemedewerker - Welkom! " + name);
+            missing.setText(taal[0]);
+            found.setText(taal[1]);
+            luggage.setText(taal[2]);
+            account.setText(taal[3]);
         }
     }   
 }

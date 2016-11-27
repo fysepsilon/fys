@@ -18,7 +18,7 @@
         <Separator id="afscheiding1" fx:id="afscheiding1" layoutX="74.0" layoutY="73.0" orientation="VERTICAL" prefHeight="49.0" prefWidth="1.0" style="-fx-background-color: #B81A04;" />
         <Separator id="afscheiding2" fx:id="afscheiding2" layoutX="320.0" layoutY="73.0" orientation="VERTICAL" prefHeight="49.0" prefWidth="1.0" style="-fx-background-color: #B81A04;" />
         <Separator id="afscheiding3" fx:id="afscheiding3" layoutX="576.0" layoutY="73.0" orientation="VERTICAL" prefHeight="49.0" prefWidth="1.0" style="-fx-background-color: #B81A04;" />
-        <Separator id="afscheiding4" fx:id="afscheiding4" layoutX="732.0" layoutY="73.0" orientation="VERTICAL" prefHeight="49.0" prefWidth="1.0" style="-fx-background-color: #B81A04;" />
+        <Separator id="afscheiding4" fx:id="afscheiding4" layoutX="734.0" layoutY="73.0" orientation="VERTICAL" prefHeight="49.0" prefWidth="1.0" style="-fx-background-color: #B81A04;" />
         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@images/corendon_logo.png" />
@@ -65,7 +65,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button id="luggage" fx:id="luggage" layoutX="582.0" layoutY="73.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleBagagedatabase" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="BAGAGE DATABASE" textFill="WHITE">
+        <Button id="luggage" fx:id="luggage" layoutX="582.0" layoutY="73.0" minWidth="156.0" mnemonicParsing="false" onAction="#handleBagagedatabase" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="BAGAGE DATABASE" textFill="WHITE">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -76,7 +76,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button id="account" fx:id="account" layoutX="738.0" layoutY="73.0" minWidth="90.0" mnemonicParsing="false" onAction="#handleAccounts" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="ACCOUNTS" textFill="WHITE">
+        <Button id="account" fx:id="account" layoutX="740.0" layoutY="73.0" minWidth="90.0" mnemonicParsing="false" onAction="#handleAccounts" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="ACCOUNTS" textFill="WHITE">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -92,7 +92,7 @@
         <Separator id="afscheiding5" fx:id="afscheiding5" layoutX="74.0" layoutY="73.0" orientation="VERTICAL" prefHeight="49.0" prefWidth="1.0" style="-fx-background-color: #B81A04;" visible="false" />
         <Separator id="afscheiding6" fx:id="afscheiding6" layoutX="320.0" layoutY="73.0" orientation="VERTICAL" prefHeight="49.0" prefWidth="1.0" style="-fx-background-color: #B81A04;" visible="false" />
         <Separator id="afscheiding7" fx:id="afscheiding7" layoutX="576.0" layoutY="73.0" orientation="VERTICAL" prefHeight="49.0" prefWidth="1.0" style="-fx-background-color: #B81A04;" visible="false" />
-        <Separator id="afscheiding8" fx:id="afscheiding8" layoutX="732.0" layoutY="73.0" orientation="VERTICAL" prefHeight="49.0" prefWidth="1.0" style="-fx-background-color: #B81A04;" visible="false" />
+        <Separator id="afscheiding8" fx:id="afscheiding8" layoutX="734.0" layoutY="73.0" orientation="VERTICAL" prefHeight="49.0" prefWidth="1.0" style="-fx-background-color: #B81A04;" visible="false" />
         <Separator id="afscheiding9" fx:id="afscheiding9" layoutX="831.0" layoutY="73.0" orientation="VERTICAL" prefHeight="49.0" prefWidth="1.0" style="-fx-background-color: #B81A04;" visible="false" />
       
         <Button id="homeAdmin" fx:id="homeAdmin" layoutX="39.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleHomeAdmin" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" textFill="WHITE" visible="false">
@@ -135,7 +135,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button id="luggageAdmin" fx:id="luggageAdmin" layoutX="582.0" layoutY="73.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleBagagedatabase" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="BAGAGE DATABASE" textFill="WHITE" visible="false">
+        <Button id="luggageAdmin" fx:id="luggageAdmin" layoutX="582.0" layoutY="73.0" minWidth="156.0" mnemonicParsing="false" onAction="#handleBagagedatabase" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="BAGAGE DATABASE" textFill="WHITE" visible="false">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -146,7 +146,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button id="accountAdmin" fx:id="accountAdmin" layoutX="738.0" layoutY="73.0" minWidth="90.0" mnemonicParsing="false" onAction="#handleAccountsAdmin" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="ACCOUNTS" textFill="WHITE" visible="false">
+        <Button id="accountAdmin" fx:id="accountAdmin" layoutX="740.0" layoutY="73.0" minWidth="90.0" mnemonicParsing="false" onAction="#handleAccountsAdmin" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="ACCOUNTS" textFill="WHITE" visible="false">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>

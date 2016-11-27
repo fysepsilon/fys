@@ -74,7 +74,7 @@ public class InstellingenController implements Initializable {
             error.setText("Velden zijn leeggelaten!");
             error.setStyle("-fx-text-fill: red;");
             error.setVisible(true);
-        } else if(fys.checkEmailExistsOnChange(username.getText(), login.getUsertype(), login.getEmail())){
+        } else if(fys.checkEmailExistsOnChange(username.getText(), login.getEmail())){
             error.setText("E-mailadres bestaat al!");
             error.setStyle("-fx-text-fill: red;");
             error.setVisible(true);
@@ -93,7 +93,6 @@ public class InstellingenController implements Initializable {
                         + fys.getUserLanguageString(language.getSelectionModel().getSelectedItem().toString())
                         + "' WHERE person_id = " + id + ";";
                 stmt.executeUpdate(sql);
-                System.out.println(sql);
                 conn.close();
                 error.setText("Uw gegevens zijn gewijzigd!");
                 error.setStyle("-fx-text-fill: green;");

@@ -200,14 +200,14 @@ public class FYS extends Application {
         return 0;
     }
     
-    public boolean checkEmailExists(String email, Integer type){
+    public boolean checkEmailExists(String email){
         Statement stmt = null;
         Connection conn = null;
         try {
             conn = connectToDatabase(conn);
             stmt = conn.createStatement();
             String sql = "SELECT * FROM person_table "
-                    + "WHERE type = '" + type + "' AND mail='" + email + "'";
+                    + "WHERE mail='" + email + "'";
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
@@ -224,14 +224,14 @@ public class FYS extends Application {
         return false;
     }
     
-        public boolean checkEmailExistsOnChange(String email, Integer type, String emailWas){
+        public boolean checkEmailExistsOnChange(String email, String emailWas){
         Statement stmt = null;
         Connection conn = null;
         try {
             conn = connectToDatabase(conn);
             stmt = conn.createStatement();
             String sql = "SELECT * FROM person_table"
-                    + " WHERE type = '" + type + "' AND mail='" + email + "' AND mail not like '" + emailWas + "'";
+                    + " WHERE mail='" + email + "' AND mail not like '" + emailWas + "'";
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name

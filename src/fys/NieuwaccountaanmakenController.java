@@ -41,30 +41,12 @@ import javax.imageio.ImageIO;
  */
 public class NieuwaccountaanmakenController implements Initializable {
 
-    @FXML
-    private TextField name_input;
-    @FXML
-    private TextField surname_input;
-    @FXML
-    private TextField address_input;
-    @FXML
-    private TextField residence_input;
-    @FXML
-    private TextField zipcode_input;
-    @FXML
-    private TextField country_input;
-    @FXML
-    private TextField phone_input;
-    @FXML
-    private TextField mail_input;
-    @FXML
-    private ComboBox language_combo;
-    @FXML
-    private ComboBox type_combo;
-    @FXML
-    private Label loginerror;
-    @FXML
-    private Button SendNewAccount;
+    @FXML private TextField name_input, surname_input, address_input, residence_input, 
+            zipcode_input, country_input, phone_input, mail_input;
+    @FXML private ComboBox language_combo, type_combo;
+    @FXML private Label loginerror, surname_label, name_label, type_label, address_label, residence_label,
+            zipcode_label, country_label, phone_label, mail_label, language_label;
+    @FXML private Button SendNewAccount;
 
     @FXML
     private void handleAction(ActionEvent event) throws IOException, SQLException {
@@ -233,14 +215,29 @@ public class NieuwaccountaanmakenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        name_label.setText(taal[9] + ":");
+        surname_label.setText(taal[10] + ":");
+        address_label.setText(taal[11] + ":");
+        residence_label.setText(taal[12] + ":");
+        zipcode_label.setText(taal[13] + ":");
+        country_label.setText(taal[14] + ":");
+        phone_label.setText(taal[15] + ":");
+        mail_label.setText(taal[16] + ":");
+        type_label.setText(taal[20] + ":");
+        language_label.setText(taal[68] + ":");
+        SendNewAccount.setText(taal[46]);
+        language_combo.setPromptText(taal[73]);
+        type_combo.setPromptText(taal[74]);
         type_combo.getItems().addAll(
-                "Klant",
-                "Servicemedewerker",
-                "Admin");
+                taal[66],
+                taal[64],
+                taal[65]);
         language_combo.getItems().addAll(
-                "Engels",
-                "Nederlands",
-                "Spaans",
-                "Turks");
+                taal[69],
+                taal[70],
+                taal[71],
+                taal[72]);
     }
 }

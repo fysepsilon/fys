@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
 
 import javafx.scene.text.Text;
@@ -33,6 +34,7 @@ public class NavigatiebalkController implements Initializable {
     @FXML private Separator afscheiding1, afscheiding2, afscheiding3, afscheiding4
             , afscheiding5, afscheiding6, afscheiding7, afscheiding8, afscheiding9;
     @FXML private Label rechteropvulling1, rechteropvulling2;
+    @FXML private MenuItem settings, logout;
   
     @FXML
     private void handleBagageformulieren(ActionEvent event) throws IOException {
@@ -138,5 +140,7 @@ public class NavigatiebalkController implements Initializable {
             luggage.setText(taal[2]);
             account.setText(taal[3]);
         }
+        settings.setText(taal[61]);
+        logout.setText(taal[62]);
     }   
 }

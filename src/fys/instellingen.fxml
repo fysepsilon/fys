@@ -13,11 +13,11 @@
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
       <Button fx:id="save" layoutX="367.0" layoutY="417.0" mnemonicParsing="false" onAction="#handleSaveAction" prefHeight="31.0" prefWidth="431.0" text="Opslaan" />
       <TextField fx:id="username" layoutX="367.0" layoutY="207.0" prefHeight="31.0" prefWidth="431.0" />
-      <Text layoutX="203.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mailadres:" />
+      <Text fx:id="email_label" layoutX="203.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mailadres:" />
       <ComboBox fx:id="language" layoutX="367.0" layoutY="333.0" prefHeight="31.0" prefWidth="431.0" />
-      <Text layoutX="203.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wachtwoord:" />
+      <Text fx:id="password_label" layoutX="203.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wachtwoord:" />
       <PasswordField fx:id="password" layoutX="367.0" layoutY="269.0" prefHeight="31.0" prefWidth="431.0" />
-      <Text layoutX="203.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Taal:" />
+      <Text fx:id="language_label" layoutX="203.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Taal:" />
       <Label id="loginerror" fx:id="error" alignment="CENTER" layoutX="200.0" layoutY="143.0" prefHeight="25.0" prefWidth="596.0" textFill="RED" visible="false">
          <font>
             <Font name="System Bold" size="16.0" />

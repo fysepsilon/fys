@@ -31,10 +31,10 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Naam" />
+            <Label fx:id="name_label" text="Naam" />
             <TextField id="naam_input" GridPane.columnIndex="1" />
             <TextField id="email_input" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Email" GridPane.rowIndex="1" />
+            <Label fx:id="email_label" text="Email" GridPane.rowIndex="1" />
          </children>
       </GridPane>
     </children>

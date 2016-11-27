@@ -73,7 +73,7 @@
          </font>
       </Text>
       <TextField fx:id="datefilter" layoutX="115.0" layoutY="410.0" />
-      <Text fx:id="extraInfo_label" layoutX="14.0" layoutY="476.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Extra informatie:" wrappingWidth="88.5">
+      <Text fx:id="extraInfo_label" layoutX="14.0" layoutY="476.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Extra informatie:" wrappingWidth="98.5">
          <font>
             <Font size="18.0" />
          </font>

@@ -21,12 +21,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 
 /**
  * FXML Controller class
@@ -44,19 +44,34 @@ public class BagagedatabaseController implements Initializable {
     @FXML private TextField colorfilter, brandfilter, datefilter;
     @FXML private ComboBox statusfilter, typefilter;
     @FXML private TextArea characteristicsfilter;
-//    @FXML private Button filter;
-//    @FXML private Label status_label, color_label, type_label, brand_label, date_label, extrainfo_label;
+    @FXML private Button filter;
+    @FXML private Text status_label, color_label, type_label, brand_label, date_label, extraInfo_label;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) { 
+    public void initialize(URL url, ResourceBundle rb) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        filter.setText(taal[47]);
+        status_label.setText(taal[48] + ":");
+        color_label.setText(taal[49] + ":");
+        type_label.setText(taal[50] + ":");
+        brand_label.setText(taal[51] + ":");
+        date_label.setText(taal[52] + ":");
+        extraInfo_label.setText(taal[53] + ":");
+        status.setText(taal[48]);
+        color.setText(taal[49]);
+        type.setText(taal[50]);
+        brand.setText(taal[51]);
+        date.setText(taal[52]);
+        information.setText(taal[53]);
         statusfilter.getItems().addAll(
                 "",
-                "Gevonden",
-                "Vermist",
-                "Vernietigd",
-                "Afgehandeld",
-                "Nooit gevonden",
-                "Depot");
+                taal[54],
+                taal[55],
+                taal[56],
+                taal[57],
+                taal[58],
+                taal[59]);
         getLuggageData();
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));

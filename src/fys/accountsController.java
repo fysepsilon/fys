@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -32,33 +32,33 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class accountsController implements Initializable {
 
-    @FXML
-    private Button home;
-    @FXML
-    private TableView<Accounts> table;
-    @FXML
-    private ObservableList<Accounts> data = FXCollections.observableArrayList();
-    @FXML
-    private TableColumn first_name;
-    @FXML
-    private TableColumn mail;
-    @FXML
-    private TableColumn type;
-    @FXML
-    private TableColumn acties;
-    @FXML
-    private Button NewAccountButton;
-    @FXML   
-    private TextField naam_input;
+    @FXML private Button home, NewAccountButton;
+    @FXML private TableView<Accounts> table;
+    @FXML private ObservableList<Accounts> data = FXCollections.observableArrayList();
+    @FXML private TableColumn first_name, mail, type, acties;
+    @FXML private TextField naam_input;
+    @FXML private Label name_label, email_label;
 
     @FXML
     private void handlenieuwaccount(ActionEvent event) throws IOException {
         FYS fys = new FYS();
-        fys.changeToAnotherFXML("Nieuw account aanmaken", "nieuwaccountaanmaken.fxml");
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        fys.changeToAnotherFXML(taal[63], "nieuwaccountaanmaken.fxml");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        name_label.setText(taal[9] + ":");
+        email_label.setText(taal[16] + ":");
+        first_name.setText(taal[9]);
+        mail.setText(taal[16]);
+        type.setText(taal[20]);
+        acties.setText(taal[60]);  
+        NewAccountButton.setText(taal[63]);
+        
         getLuggageData();
         first_name.setCellValueFactory(new PropertyValueFactory<>("first_name"));
         mail.setCellValueFactory(new PropertyValueFactory<>("mail"));
@@ -72,6 +72,8 @@ public class accountsController implements Initializable {
     }
 
     public void getLuggageData() {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
         FYS fys = new FYS();
         String type_text;
         
@@ -97,7 +99,7 @@ public class accountsController implements Initializable {
                         String mail = rs.getString("mail");
                         int type = rs.getInt("type");
                         type_text = fys.getUserFunction(type);
-                        String acties = ("Wijzigen/Verwijderen ");
+                        String acties = (taal[67] + " / " + taal[68]);
                         
                         data.add(new Accounts(first_name, mail, type_text, acties));
                     }

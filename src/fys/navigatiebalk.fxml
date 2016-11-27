@@ -43,7 +43,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button id="missing" fx:id="missing" layoutX="80.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="VERMISTE BAGAGE REGISTREREN" textFill="WHITE">
+        <Button id="missing" fx:id="missing" layoutX="80.0" layoutY="73.0" minWidth="243.0" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="VERMISTE BAGAGE REGISTREREN" textFill="WHITE">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -54,7 +54,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button id="found" fx:id="found" layoutX="326.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleGevondenBagageFormulier" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="GEVONDEN BAGAGE REGISTREREN" textFill="WHITE">
+        <Button id="found" fx:id="found" layoutX="326.0" layoutY="73.0" minWidth="253.0" mnemonicParsing="false" onAction="#handleGevondenBagageFormulier" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="GEVONDEN BAGAGE REGISTREREN" textFill="WHITE">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -65,7 +65,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button id="luggage" fx:id="luggage" layoutX="582.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagagedatabase" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="BAGAGE DATABASE" textFill="WHITE">
+        <Button id="luggage" fx:id="luggage" layoutX="582.0" layoutY="73.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleBagagedatabase" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="BAGAGE DATABASE" textFill="WHITE">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -76,7 +76,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button id="account" fx:id="account" layoutX="738.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleAccounts" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="ACCOUNTS" textFill="WHITE">
+        <Button id="account" fx:id="account" layoutX="738.0" layoutY="73.0" minWidth="90.0" mnemonicParsing="false" onAction="#handleAccounts" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="ACCOUNTS" textFill="WHITE">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -113,7 +113,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button id="missingAdmin" fx:id="missingAdmin" layoutX="80.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="VERMISTE BAGAGE REGISTREREN" textFill="WHITE" visible="false">
+        <Button id="missingAdmin" fx:id="missingAdmin" layoutX="80.0" layoutY="73.0" minWidth="243.0" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="VERMISTE BAGAGE REGISTREREN" textFill="WHITE" visible="false">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -124,7 +124,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button id="foundAdmin" fx:id="foundAdmin" layoutX="326.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleGevondenBagageFormulier" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="GEVONDEN BAGAGE REGISTREREN" textFill="WHITE" visible="false">
+        <Button id="foundAdmin" fx:id="foundAdmin" layoutX="326.0" layoutY="73.0" minWidth="253.0" mnemonicParsing="false" onAction="#handleGevondenBagageFormulier" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="GEVONDEN BAGAGE REGISTREREN" textFill="WHITE" visible="false">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -135,7 +135,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button id="luggageAdmin" fx:id="luggageAdmin" layoutX="582.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleBagagedatabase" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="BAGAGE DATABASE" textFill="WHITE" visible="false">
+        <Button id="luggageAdmin" fx:id="luggageAdmin" layoutX="582.0" layoutY="73.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleBagagedatabase" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="BAGAGE DATABASE" textFill="WHITE" visible="false">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -146,7 +146,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button id="accountAdmin" fx:id="accountAdmin" layoutX="738.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleAccountsAdmin" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="ACCOUNTS" textFill="WHITE" visible="false">
+        <Button id="accountAdmin" fx:id="accountAdmin" layoutX="738.0" layoutY="73.0" minWidth="90.0" mnemonicParsing="false" onAction="#handleAccountsAdmin" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="ACCOUNTS" textFill="WHITE" visible="false">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -157,7 +157,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button id="staticsAdmin" fx:id="staticsAdmin" layoutX="837.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleStaticsAdmin" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="STATISTIEKEN" textFill="WHITE" visible="false">
+        <Button id="staticsAdmin" fx:id="staticsAdmin" layoutX="837.0" layoutY="73.0" minWidth="150.0" mnemonicParsing="false" onAction="#handleStaticsAdmin" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="STATISTIEKEN" textFill="WHITE" visible="false">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>

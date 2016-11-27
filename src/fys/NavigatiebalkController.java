@@ -118,6 +118,13 @@ public class NavigatiebalkController implements Initializable {
         String name = loginController.getUsersName().replaceAll("null", "");
         name = name.replaceAll("  ", " ");
         if(loginController.getUsertype() == 2){
+            taal language = new taal();
+            String[] taal = language.getLanguage();
+            missingAdmin.setText(taal[0]);
+            foundAdmin.setText(taal[1]);
+            luggageAdmin.setText(taal[2]);
+            accountAdmin.setText(taal[3]);
+            staticsAdmin.setText(taal[4]);
             homeAdmin.setVisible(true);
             missingAdmin.setVisible(true);
             foundAdmin.setVisible(true);

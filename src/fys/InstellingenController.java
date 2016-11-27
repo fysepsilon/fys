@@ -39,7 +39,7 @@ public class InstellingenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         save.setDefaultButton(true);
         language.getItems().addAll(
-                "Nederlands","Engels", "Turks", "Spaans");
+                "Engels","Nederlands", "Turks", "Spaans");
         FYS fys = new FYS();
         loginController login = new loginController();
         Statement stmt = null;
@@ -93,6 +93,7 @@ public class InstellingenController implements Initializable {
                         + fys.getUserLanguageString(language.getSelectionModel().getSelectedItem().toString())
                         + "' WHERE person_id = " + id + ";";
                 stmt.executeUpdate(sql);
+                System.out.println(sql);
                 conn.close();
                 error.setText("Uw gegevens zijn gewijzigd!");
                 error.setStyle("-fx-text-fill: green;");

@@ -97,6 +97,7 @@ public class InstellingenController implements Initializable {
                 error.setText("Uw gegevens zijn gewijzigd!");
                 error.setStyle("-fx-text-fill: green;");
                 error.setVisible(true);
+                login.setEmail(username.getText());
             } catch (SQLException ex) {
                 // handle any errors
                 System.out.println("SQLException: " + ex.getMessage());

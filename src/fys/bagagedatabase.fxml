@@ -81,5 +81,6 @@
       <TextArea fx:id="characteristicsfilter" layoutX="115.0" layoutY="456.0" prefHeight="87.0" prefWidth="187.0" />
       <Button fx:id="filter" layoutX="13.0" layoutY="158.0" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="31.0" prefWidth="289.0" text="Filteren" />
       <TextField fx:id="colorfilter" layoutX="115.0" layoutY="260.0" />
+      <Button fx:id="change_button" layoutX="323.0" layoutY="547.0" mnemonicParsing="false" onAction="#handleChange" prefHeight="39.0" prefWidth="673.0" text="Wijzig" />
     </children>
 </AnchorPane>

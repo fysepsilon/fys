@@ -19,8 +19,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -46,6 +49,14 @@ public class BagagedatabaseController implements Initializable {
     @FXML private TextArea characteristicsfilter;
     @FXML private Button filter;
     @FXML private Text status_label, color_label, type_label, brand_label, date_label, extraInfo_label;
+    
+    @FXML private ComboBox airport_combo, type_combo, color_combo;
+    @FXML private TextField name_input, surname_input, address_input, 
+            residence_input, zipcode_input, country_input, phone_input, 
+            mail_input, labelnumber_input, flightnumber_input, destination_input,
+            brand_input, characteristics_input;
+    @FXML private CheckBox account_checkbox;
+    @FXML private Button picture_button, send_button;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -223,4 +234,33 @@ public class BagagedatabaseController implements Initializable {
         }
     }
     
+    public void handleChange(ActionEvent event) throws IOException {
+        int selectedIndex
+                = (table).getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            FYS fys = new FYS();
+            fys.changeToAnotherFXML("Bagage database", "wijzigFormulier.fxml");
+            doNext();
+            /* Vervolgens moet, waarschijnlijk via een andere methode, alle gegevens
+            die al in de database staan ingevuld worden in de velden van het volgende
+            scherm (net als met de bedrijfscursus). Vervolgens kan de gebruiker
+            deze gegevens aanpassen en verzenden waarna de gegevens in de 
+            database worden bijgewerkt.
+            
+            Het veranderen van de tekst van de input- en combovelden in het volgende
+            FXML scherm (wijzigFormulier.fxml) lukt nog niet.
+                -Lucas
+            */   
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Wijzigen van gegevens");
+            alert.setContentText("Selecteer eerst een rij in de tabel om deze te wijzigen");
+            alert.showAndWait();
+        }
+    }
+    
+    @FXML
+    public void doNext(){
+        name_input.setText("Poepertje");
+    } 
 }

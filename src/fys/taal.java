@@ -113,7 +113,6 @@ public class taal {
             languagefields[66] = "Customer";
             languagefields[67] = "Edit";
             languagefields[68] = "Delete";
-            languagefields[68] = "Language";
             languagefields[69] = "English";
             languagefields[70] = "Dutch";
             languagefields[71] = "Spanish";

@@ -64,14 +64,14 @@ public class GevondenformulierController implements Initializable {
             sendToDatabase(airport_combo.getValue().toString(), name_input.getText(),
                     surname_input.getText(), labelnumber_input.getText(), 
                     flightnumber_input.getText(), destination_input.getText(), 
-                    type_combo.getValue().toString(), brand_input.getText(), 
+                    fys.getBaggageTypeString(type_combo.getValue().toString()), brand_input.getText(), 
                     fys.getColorString(color_combo.getValue().toString()), characteristics_input.getText(), 
                     dateString, timeString);
         }
     }
     
     private void sendToDatabase(String airport, String frontname, String surname,
-            String labelnumber, String flightnumber, String destination, String type, 
+            String labelnumber, String flightnumber, String destination, int type, 
             String brand, Integer color, String characteristics, String date, 
             String time) throws IOException, SQLException {
         FYS fys = new FYS();
@@ -155,6 +155,7 @@ public class GevondenformulierController implements Initializable {
         color_combo.getItems().addAll(
                 taal[32], taal[33], taal[34], taal[35], taal[36],
                 taal[37], taal[38], taal[39], taal[40], taal[41], taal[42], taal[43]);
+        type_combo.getItems().addAll(taal[27], taal[28], taal[29], taal[30]);
         picture_button.setText(taal[44]);
         send_button.setText(taal[46]);
     }   

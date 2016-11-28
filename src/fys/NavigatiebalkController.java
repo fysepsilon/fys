@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.layout.HBox;
 
 import javafx.scene.text.Text;
 
@@ -30,9 +31,7 @@ public class NavigatiebalkController implements Initializable {
     @FXML private Button homeAdmin, missingAdmin, foundAdmin, luggageAdmin, accountAdmin
             , staticsAdmin, home, missing, found, luggage, account;
     @FXML private Text welcomeText;   
-    @FXML private Separator afscheiding1, afscheiding2, afscheiding3, afscheiding4
-            , afscheiding5, afscheiding6, afscheiding7, afscheiding8, afscheiding9;
-    @FXML private Label rechteropvulling1, rechteropvulling2;
+    @FXML private HBox HBoxAdmin, HBoxSM;
   
     @FXML
     private void handleBagageformulieren(ActionEvent event) throws IOException {
@@ -107,29 +106,10 @@ public class NavigatiebalkController implements Initializable {
             luggageAdmin.setText(taal[2]);
             accountAdmin.setText(taal[3]);
             staticsAdmin.setText(taal[4]);
-            homeAdmin.setVisible(true);
-            missingAdmin.setVisible(true);
-            foundAdmin.setVisible(true);
-            luggageAdmin.setVisible(true);
-            accountAdmin.setVisible(true);
-            staticsAdmin.setVisible(true);
-            afscheiding5.setVisible(true);
-            afscheiding6.setVisible(true);
-            afscheiding7.setVisible(true);
-            afscheiding8.setVisible(true);
-            afscheiding9.setVisible(true);
-            rechteropvulling2.setVisible(true);
-            home.setVisible(false);
-            missing.setVisible(false);
-            found.setVisible(false);
-            luggage.setVisible(false);
-            account.setVisible(false);
-            afscheiding1.setVisible(false);
-            afscheiding2.setVisible(false);
-            afscheiding3.setVisible(false);
-            afscheiding4.setVisible(false);
-            rechteropvulling1.setVisible(false);
-
+            
+            HBoxAdmin.setVisible(true);
+            HBoxSM.setVisible(false);
+          
             welcomeText.setText("Administrator - Welkom! " + name);
         } else{
             welcomeText.setText("Servicemedewerker - Welkom! " + name);

@@ -3,5 +3,9 @@
 }
 
 .button:hover {
--fx-background-color: #B81A04;
+    -fx-background-color: #B81A04;
+}
+
+Pane {
+     -fx-background-image: url("bg.jpg");
 }

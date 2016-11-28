@@ -67,7 +67,7 @@ public class loginController implements Initializable {
     private void handleForgotPasswordAction(ActionEvent event) throws IOException {
         //Switch screen to wachtwoordvergeten.
         FYS fys = new FYS();
-        fys.changeToAnotherFXML("Corendon-WachtwoordVergeten", "wachtwoordVergeten.fxml");
+        fys.changeToAnotherFXML("Corendon-Forgotpassword", "wachtwoordVergeten.fxml");
     }
     
     @FXML
@@ -76,19 +76,19 @@ public class loginController implements Initializable {
         //Check if username and password is filled in and correct.
         //Show error if not filled in or not correct.
         if((username.getText() == null || username.getText().trim().isEmpty()) || (password.getText() == null || password.getText().trim().isEmpty())){
-            loginerror.setText("Gebruikersnaam en/of wachtwoord veld(en) zijn leeg gelaten!");
+            loginerror.setText("Username and/or password fied(s) are empty!");
             loginerror.setVisible(true);
         } else{
             if(authenticateLogin(username.getText(), fys.encrypt(password.getText())) && (getUsertype() == 1 || getUsertype() == 2) ){
                 loginController loginController = new loginController();
                 //Switch screen to Home.
                 if(loginController.getUsertype() == 1){
-                fys.changeToAnotherFXML("Homepagina", "homepage.fxml");
+                fys.changeToAnotherFXML("Corendon-Home", "homepage.fxml");
                 } else { // Switch screen to HomeAdmin
-                fys.changeToAnotherFXML("Homepagina", "homepageadmin.fxml");                    
+                fys.changeToAnotherFXML("Corendon-Home", "homepageadmin.fxml");                    
                 }
             } else{
-                loginerror.setText("Uw gebruikersnaam en wachtwoord komen niet overeen!");
+                loginerror.setText("Your username and password do not match!");
                 loginerror.setVisible(true);
             }
         }

@@ -19,9 +19,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -29,9 +29,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
+import javafx.scene.text.Text;
 
 /**
  * FXML Controller class
@@ -45,30 +43,46 @@ public class BagagedatabaseController implements Initializable {
     @FXML private ObservableList<Bagage> data = FXCollections.observableArrayList();
     @FXML private ObservableList<Bagage> datafilter = FXCollections.observableArrayList();
     //@FXML private TableView<Person> table;
-    @FXML private TableColumn id;
-    @FXML private TableColumn status;
-    @FXML private TableColumn type;
-    @FXML private TableColumn color;
-    @FXML private TableColumn brand;
-    @FXML private TableColumn date;
-    @FXML private TableColumn information;
-    @FXML private TextField colorfilter;
-    @FXML private TextField brandfilter;
-    @FXML private TextField datefilter;
-    @FXML private ComboBox statusfilter;
-    @FXML private ComboBox typefilter;
+    @FXML private TableColumn id, status, type, color, brand, date, information;
+    @FXML private TextField colorfilter, brandfilter, datefilter;
+    @FXML private ComboBox statusfilter, typefilter;
     @FXML private TextArea characteristicsfilter;
+    @FXML private Button filter;
+    @FXML private Text status_label, color_label, type_label, brand_label, date_label, extraInfo_label;
+    
+    @FXML private ComboBox airport_combo, type_combo, color_combo;
+    @FXML private TextField name_input, surname_input, address_input, 
+            residence_input, zipcode_input, country_input, phone_input, 
+            mail_input, labelnumber_input, flightnumber_input, destination_input,
+            brand_input, characteristics_input;
+    @FXML private CheckBox account_checkbox;
+    @FXML private Button picture_button, send_button;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) { 
+    public void initialize(URL url, ResourceBundle rb) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        filter.setText(taal[47]);
+        status_label.setText(taal[48] + ":");
+        color_label.setText(taal[49] + ":");
+        type_label.setText(taal[50] + ":");
+        brand_label.setText(taal[51] + ":");
+        date_label.setText(taal[52] + ":");
+        extraInfo_label.setText(taal[53] + ":");
+        status.setText(taal[48]);
+        color.setText(taal[49]);
+        type.setText(taal[50]);
+        brand.setText(taal[51]);
+        date.setText(taal[52]);
+        information.setText(taal[53]);
         statusfilter.getItems().addAll(
                 "",
-                "Gevonden",
-                "Vermist",
-                "Vernietigd",
-                "Afgehandeld",
-                "Nooit gevonden",
-                "Depot");
+                taal[54],
+                taal[55],
+                taal[56],
+                taal[57],
+                taal[58],
+                taal[59]);
         getLuggageData();
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -220,4 +234,33 @@ public class BagagedatabaseController implements Initializable {
         }
     }
     
+    public void handleChange(ActionEvent event) throws IOException {
+        int selectedIndex
+                = (table).getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            FYS fys = new FYS();
+            fys.changeToAnotherFXML("Bagage database", "wijzigFormulier.fxml");
+            doNext();
+            /* Vervolgens moet, waarschijnlijk via een andere methode, alle gegevens
+            die al in de database staan ingevuld worden in de velden van het volgende
+            scherm (net als met de bedrijfscursus). Vervolgens kan de gebruiker
+            deze gegevens aanpassen en verzenden waarna de gegevens in de 
+            database worden bijgewerkt.
+            
+            Het veranderen van de tekst van de input- en combovelden in het volgende
+            FXML scherm (wijzigFormulier.fxml) lukt nog niet.
+                -Lucas
+            */   
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Wijzigen van gegevens");
+            alert.setContentText("Selecteer eerst een rij in de tabel om deze te wijzigen");
+            alert.showAndWait();
+        }
+    }
+    
+    @FXML
+    public void doNext(){
+        name_input.setText("Poepertje");
+    } 
 }

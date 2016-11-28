@@ -23,12 +23,7 @@
                 <TableColumn id="information" fx:id="information" maxWidth="500.0" minWidth="194.0" prefWidth="194.0" text="Extra informatie" />
             </columns>
         </TableView>
-      <Text layoutX="19.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filteren" wrappingWidth="133.5">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Text>
-      <Text layoutX="14.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status:" wrappingWidth="71.5">
+      <Text fx:id="status_label" layoutX="14.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status:" wrappingWidth="71.5">
          <font>
             <Font size="18.0" />
          </font>
@@ -42,18 +37,18 @@
             <String fx:value="" />
         </value>
       </ComboBox>
-      <Text layoutX="14.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kleur:" wrappingWidth="71.5">
+      <Text fx:id="color_label" layoutX="14.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kleur:" wrappingWidth="71.5">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="14.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:" wrappingWidth="71.5">
+      <Text fx:id="type_label" layoutX="14.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:" wrappingWidth="71.5">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
       <TextField fx:id="brandfilter" layoutX="115.0" layoutY="360.0" />
-      <Text layoutX="14.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Merk:" wrappingWidth="71.5">
+      <Text fx:id="brand_label" layoutX="14.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Merk:" wrappingWidth="71.5">
          <font>
             <Font size="18.0" />
          </font>
@@ -72,19 +67,20 @@
               <String fx:value="" />
           </value>
       </ComboBox>
-      <Text layoutX="14.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Datum:" wrappingWidth="71.5">
+      <Text fx:id="date_label" layoutX="14.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Datum:" wrappingWidth="71.5">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
       <TextField fx:id="datefilter" layoutX="115.0" layoutY="410.0" />
-      <Text layoutX="14.0" layoutY="476.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Extra informatie:" wrappingWidth="88.5">
+      <Text fx:id="extraInfo_label" layoutX="14.0" layoutY="476.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Extra informatie:" wrappingWidth="98.5">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
       <TextArea fx:id="characteristicsfilter" layoutX="115.0" layoutY="456.0" prefHeight="87.0" prefWidth="187.0" />
-      <Button fx:id="filter" layoutX="115.0" layoutY="158.0" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="31.0" prefWidth="187.0" text="Filteren" />
+      <Button fx:id="filter" layoutX="13.0" layoutY="158.0" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="31.0" prefWidth="289.0" text="Filteren" />
       <TextField fx:id="colorfilter" layoutX="115.0" layoutY="260.0" />
+      <Button fx:id="change_button" layoutX="323.0" layoutY="547.0" mnemonicParsing="false" onAction="#handleChange" prefHeight="39.0" prefWidth="673.0" text="Wijzig" />
     </children>
 </AnchorPane>

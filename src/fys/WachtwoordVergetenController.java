@@ -50,7 +50,7 @@ public class WachtwoordVergetenController implements Initializable {
         stmt = conn.createStatement();
         
         if ((username.getText() == null || username.getText().trim().isEmpty())) {
-            sendPasswordMessage.setText("Gebruikersnaam is leeg gelaten!");
+            sendPasswordMessage.setText("Username is empty!");
             sendPasswordMessage.setStyle("-fx-text-fill: red;");
             sendPasswordMessage.setVisible(true);
             sendNewPasswordButton.setDisable(false);
@@ -75,7 +75,7 @@ public class WachtwoordVergetenController implements Initializable {
                 }
 
                 if ((email == null || email.trim().isEmpty())) {
-                    sendPasswordMessage.setText("Deze gebruikersnaam bestaat helaas niet!");
+                    sendPasswordMessage.setText("This username does unfortunately not exists!");
                     sendPasswordMessage.setStyle("-fx-text-fill: red;");
                     sendPasswordMessage.setVisible(true);
                     sendNewPasswordButton.setDisable(false);
@@ -116,7 +116,7 @@ public class WachtwoordVergetenController implements Initializable {
                     sendNewPasswordButton.setDisable(false);
                 }
             } else{
-                sendPasswordMessage.setText("Voer wel een gelidige e-mailadres in!");
+                sendPasswordMessage.setText("Please fill a correct e-mailaddress in!");
                 sendPasswordMessage.setStyle("-fx-text-fill: red;");
                 sendPasswordMessage.setVisible(true);
                 sendNewPasswordButton.setDisable(false);

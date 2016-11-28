@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 
@@ -32,6 +33,7 @@ public class NavigatiebalkController implements Initializable {
             , staticsAdmin, home, missing, found, luggage, account;
     @FXML private Text welcomeText;   
     @FXML private HBox HBoxAdmin, HBoxSM;
+    @FXML private MenuItem settings, logout;
   
     @FXML
     private void handleBagageformulieren(ActionEvent event) throws IOException {
@@ -105,18 +107,21 @@ public class NavigatiebalkController implements Initializable {
             foundAdmin.setText(taal[1]);
             luggageAdmin.setText(taal[2]);
             accountAdmin.setText(taal[3]);
-            staticsAdmin.setText(taal[4]);
+            staticsAdmin.setText(taal[4]);            
             
             HBoxAdmin.setVisible(true);
             HBoxSM.setVisible(false);
           
-            welcomeText.setText("Administrator - Welkom! " + name);
+
+            welcomeText.setText( taal[6] + " - " + taal[5] + "! " + name);
         } else{
-            welcomeText.setText("Servicemedewerker - Welkom! " + name);
+            welcomeText.setText( taal[7] + " - " + taal[5] + "! " + name);
             missing.setText(taal[0]);
             found.setText(taal[1]);
             luggage.setText(taal[2]);
             account.setText(taal[3]);
         }
+        settings.setText(taal[61]);
+        logout.setText(taal[62]);
     }   
 }

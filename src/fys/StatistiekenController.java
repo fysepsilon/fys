@@ -38,16 +38,18 @@ public class StatistiekenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
         ObservableList<PieChart.Data> pieChartData
                 = FXCollections.observableArrayList(
-                        new PieChart.Data("Gevonden", 0),
-                        new PieChart.Data("Vermist", 0),
-                        new PieChart.Data("Vernietigd", 0),
-                        new PieChart.Data("Afgehandeld", 0),
-                        new PieChart.Data("Nooit gevonden", 0),
-                        new PieChart.Data("Depot", 0));
+                        new PieChart.Data(taal[54], 0),
+                        new PieChart.Data(taal[55], 0),
+                        new PieChart.Data(taal[56], 0),
+                        new PieChart.Data(taal[57], 0),
+                        new PieChart.Data(taal[58], 0),
+                        new PieChart.Data(taal[59], 0));
 
-        piechart.setTitle("Statussen");
+        piechart.setTitle(taal[75]);
         piechart.setData(pieChartData);
         FYS fys = new FYS();
         Statement stmt = null;
@@ -100,25 +102,25 @@ public class StatistiekenController implements Initializable {
         ));
         
         //LINECHART
-        linechart.setTitle("Schadeclaims");
+        linechart.setTitle(taal[76]);
         linechart.setAnimated(true);
         linechart.getXAxis().setAutoRanging(true); 
         linechart.getYAxis().setAutoRanging(true); 
         
         XYChart.Series series = new XYChart.Series<>(); 
-        series.setName("Aantal schadeclaims");
-        series.getData().add(new XYChart.Data<>("jan", 0)); 
-        series.getData().add(new XYChart.Data("feb", 0));
-        series.getData().add(new XYChart.Data<>("mar", 0)); 
-        series.getData().add(new XYChart.Data("apr", 0)); 
-        series.getData().add(new XYChart.Data<>("mei", 0)); 
-        series.getData().add(new XYChart.Data("jun", 0)); 
-        series.getData().add(new XYChart.Data<>("jul", 0)); 
-        series.getData().add(new XYChart.Data("aug", 0));
-        series.getData().add(new XYChart.Data<>("sep", 0)); 
-        series.getData().add(new XYChart.Data("okt", 0)); 
-        series.getData().add(new XYChart.Data<>("nov", 0)); 
-        series.getData().add(new XYChart.Data("dec", 0));
+        series.setName(taal[77]);
+        series.getData().add(new XYChart.Data<>(taal[78], 0)); 
+        series.getData().add(new XYChart.Data(taal[79], 0));
+        series.getData().add(new XYChart.Data<>(taal[80], 0)); 
+        series.getData().add(new XYChart.Data(taal[81], 0)); 
+        series.getData().add(new XYChart.Data<>(taal[82], 0)); 
+        series.getData().add(new XYChart.Data(taal[83], 0)); 
+        series.getData().add(new XYChart.Data<>(taal[84], 0)); 
+        series.getData().add(new XYChart.Data(taal[85], 0));
+        series.getData().add(new XYChart.Data<>(taal[86], 0)); 
+        series.getData().add(new XYChart.Data(taal[87], 0)); 
+        series.getData().add(new XYChart.Data<>(taal[88], 0)); 
+        series.getData().add(new XYChart.Data(taal[89], 0));
         
         linechart.setCreateSymbols(true);
         linechart.getData().add(series); 
@@ -160,18 +162,18 @@ public class StatistiekenController implements Initializable {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         
-        series.getData().set(0, new XYChart.Data<>("jan", jan));
-        series.getData().set(1, new XYChart.Data("feb", feb));
-        series.getData().set(2, new XYChart.Data<>("mar", mar)); 
-        series.getData().set(3, new XYChart.Data("apr", apr)); 
-        series.getData().set(4, new XYChart.Data<>("mei", mei)); 
-        series.getData().set(5, new XYChart.Data("jun", jun)); 
-        series.getData().set(6, new XYChart.Data<>("jul", jul)); 
-        series.getData().set(7, new XYChart.Data("aug", aug));
-        series.getData().set(8, new XYChart.Data<>("sep", sep)); 
-        series.getData().set(9, new XYChart.Data("okt", okt)); 
-        series.getData().set(10, new XYChart.Data<>("nov", nov)); 
-        series.getData().set(11, new XYChart.Data("dec", dec));
+        series.getData().set(0, new XYChart.Data<>(taal[78], jan));
+        series.getData().set(1, new XYChart.Data(taal[79], feb));
+        series.getData().set(2, new XYChart.Data<>(taal[80], mar)); 
+        series.getData().set(3, new XYChart.Data(taal[81], apr)); 
+        series.getData().set(4, new XYChart.Data<>(taal[82], mei)); 
+        series.getData().set(5, new XYChart.Data(taal[83], jun)); 
+        series.getData().set(6, new XYChart.Data<>(taal[84], jul)); 
+        series.getData().set(7, new XYChart.Data(taal[85], aug));
+        series.getData().set(8, new XYChart.Data<>(taal[86], sep)); 
+        series.getData().set(9, new XYChart.Data(taal[87], okt)); 
+        series.getData().set(10, new XYChart.Data<>(taal[88], nov)); 
+        series.getData().set(11, new XYChart.Data(taal[89], dec));
     }
     
     

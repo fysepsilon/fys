@@ -20,6 +20,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 /**
  * FXML Controller class
@@ -34,12 +35,19 @@ public class InstellingenController implements Initializable {
     @FXML private ComboBox language;
     @FXML private Button save;
     @FXML private Label error;
+    @FXML private Text email_label, password_label, language_label;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        taal languages = new taal();
+        String[] taal = languages.getLanguage();
+        email_label.setText(taal[91] + ":");
+        password_label.setText(taal[90] + ":");
+        language_label.setText(taal[68] + ":");
+        save.setText(taal[92]);
         save.setDefaultButton(true);
         language.getItems().addAll(
-                "Engels","Nederlands", "Turks", "Spaans");
+                taal[69],taal[70], taal[71], taal[72]);
         FYS fys = new FYS();
         loginController login = new loginController();
         Statement stmt = null;
@@ -78,11 +86,11 @@ public class InstellingenController implements Initializable {
             error.setText("E-mailadres bestaat al!");
             error.setStyle("-fx-text-fill: red;");
             error.setVisible(true);
-        } else if(!fys.isValidEmailAddress(username.getText())){
+        } /*else if(!fys.isValidEmailAddress(username.getText())){
             error.setText("E-mailadres is niet geldig!");
             error.setStyle("-fx-text-fill: red;");
             error.setVisible(true);
-        } else{
+        }*/ else{
             Statement stmt = null;
             Connection conn = null;
             try {

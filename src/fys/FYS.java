@@ -76,128 +76,138 @@ public class FYS extends Application {
     }
     
     public String getUserFunction(int type){
+        taal language = new taal();
+        String[] taal = language.getLanguage();
         if (type == 1) {
-            return "Servicemedewerker";
+            return taal[64];
         } else if (type == 2) {
-            return "Admin";
+            return taal[65];
         } 
-        return "Klant";
+        return taal[66];
     }
     
     public Integer getUserFunctionString(String type) {
-        if (type.equals("Servicemedewerker")) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        if (type.equals(taal[64])) {
             return 1;
-        } else if (type == "Admin") {
+        } else if (type == taal[65]) {
             return 2;
         }
         return 0;
     }
     
     public Integer getUserLanguageString(String type) {
-        if (type.equals("Nederlands")) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        if (type.equals(taal[70])) {
             return 1;
-        } else if (type == "Spaans") {
+        } else if (type == taal[71]) {
             return 2;
-        } else if (type == "Turks") {
+        } else if (type == taal[72]) {
             return 3;
         }  
         return 0;
     }
     
     public String getStatus(int status) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
         switch (status) {
             case 1:
-                return "Vermist";
+                return taal[55];
             case 2:
-                return "Vernietigd";
+                return taal[56];
             case 3:
-                return "Afgehanded";
+                return taal[57];
             case 4:
-                return "Nooit gevonden";
+                return taal[58];
             case 5:
-                return "Depot";
+                return taal[59];
             default:
                 break;
         }
-        return "Gevonden";
+        return taal[54];
     }
     
     public Integer getStatusString(String status) {
-        switch (status) {
-            case "Vermist":
-                return 1;
-            case "Vernietigd":
-                return 2;
-            case "Afgehanded":
-                return 3;
-            case "Nooit gevonden":
-                return 4;
-            case "Depot":
-                return 5;
-            default:
-                break;
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        if (status.equals(taal[55])){
+            return 1;
+        } else if(status.equals(taal[56])){
+            return 2;
+        } else if(status.equals(taal[57])){
+            return 3;
+        } else if(status.equals(taal[58])){
+            return 4;
+        } else if(status.equals(taal[59])){
+            return 5;
+        } else {
+            return 0;
         }
-        return 0;
     }
     
     public String getColor(int color) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
         switch (color) {
             case 1:
-                return "Beige";
+                return taal[33];
             case 2:
-                return "Rood";
+                return taal[34];
             case 3:
-                return "Oranje";
+                return taal[35];
             case 4:
-                return "Geel";
+                return taal[36];
             case 5:
-                return "Groen";
+                return taal[37];
             case 6:
-                return "Blauw";
+                return taal[38];
             case 7:
-                return "Paars";
+                return taal[39];
             case 8:
-                return "Roze";
+                return taal[40];
             case 9:
-                return "Zwart";
+                return taal[41];
             case 10:
-                return "Grijs";
+                return taal[42];
             case 11:
-                return "Wit";    
+                return taal[43];    
             default:
                 break;
         }
-        return "Bruin";
+        return taal[32];
     }
 
     public Integer getColorString(String color) {
-        switch (color) {
-            case "Beige":
-                return 1;
-            case "Rood":
-                return 2;
-            case "Oranje":
-                return 3;
-            case "Geel":
-                return 4;
-            case "Groen":
-                return 5;
-            case "Blauw":
-                return 6;
-            case "Paars":
-                return 7;
-            case "Roze":
-                return 8;
-            case "Zwart":
-                return 9;
-            case "Grijs":
-                return 10;
-            case "Wit":
-                return 11;    
-            default:
-                break;
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        if (color.equals(taal[33])){
+            return 1;
+        } else if (color.equals(taal[34])){
+            return 2;
+        } else if (color.equals(taal[35])){
+            return 2;
+        } else if (color.equals(taal[36])){
+            return 2;
+        } else if (color.equals(taal[37])){
+            return 2;
+        } else if (color.equals(taal[38])){
+            return 2;
+        } else if (color.equals(taal[39])){
+            return 2;
+        } else if (color.equals(taal[40])){
+            return 2;
+        } else if (color.equals(taal[41])){
+            return 2;
+        } else if (color.equals(taal[42])){
+            return 2;
+        } else if (color.equals(taal[43])){
+            return 2;
+        } else {
+            return 0;
         }
-        return 0;
     }
     
     public boolean checkEmailExists(String email){

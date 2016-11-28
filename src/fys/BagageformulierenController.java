@@ -37,11 +37,11 @@ public class BagageformulierenController implements Initializable {
             mail_input, labelnumber_input, flightnumber_input, destination_input,
             brand_input, characteristics_input;
     @FXML private CheckBox account_checkbox;
-    @FXML private Button picture_button;
+    @FXML private Button picture_button, send_button;
     @FXML private Label surname_label, name_label, airport_label, label_label, 
             flight_label, destination_label, type_label, brand_label, color_label,
-            characteristics_label, picture_label;
-    @FXML private Button send_button;
+            characteristics_label, picture_label, address_label, residence_label,
+            zipcode_label, country_label, phone_label, mail_label ;
     
     @FXML
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
@@ -159,8 +159,33 @@ public class BagageformulierenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        airport_label.setText(taal[8] + ":");
+        name_label.setText(taal[9] + ":");
+        surname_label.setText(taal[10] + ":");
+        address_label.setText(taal[11] + ":");
+        residence_label.setText(taal[12] + ":");
+        zipcode_label.setText(taal[13] + ":");
+        country_label.setText(taal[14] + ":");
+        phone_label.setText(taal[15] + ":");
+        mail_label.setText(taal[16] + ":");
+        label_label.setText(taal[17] + ":");
+        flight_label.setText(taal[18] + ":");
+        destination_label.setText(taal[19] + ":");
+        type_label.setText(taal[20] + ":");
+        brand_label.setText(taal[21] + ":");
+        color_label.setText(taal[22] + ":");
+        characteristics_label.setText(taal[23] + ":");
+        picture_label.setText(taal[24] + ":");
+        airport_combo.setPromptText(taal[25]);
+        type_combo.setPromptText(taal[26]);
+        color_combo.setPromptText(taal[31]);
         color_combo.getItems().addAll(
-                "Bruin", "Beige", "Rood", "Oranje", "Geel",
-                "Groen", "Blauw", "Paars", "Roze", "Zwart", "Grijs", "Wit");
+                taal[32], taal[33], taal[34], taal[35], taal[36],
+                taal[37], taal[38], taal[39], taal[40], taal[41], taal[42], taal[43]);
+        picture_button.setText(taal[44]);
+        account_checkbox.setText(taal[45]);
+        send_button.setText(taal[46]);
     }       
 }

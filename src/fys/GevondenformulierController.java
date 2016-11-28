@@ -31,9 +31,9 @@ import javafx.scene.layout.AnchorPane;
  * @author Lucas Lageweg
  */
 public class GevondenformulierController implements Initializable {
-    @FXML private ComboBox airport_combo, type_combo;
+    @FXML private ComboBox airport_combo, color_combo, type_combo;
     @FXML private TextField name_input, surname_input, labelnumber_input, 
-            flightnumber_input, destination_input, brand_input, color_input, 
+            flightnumber_input, destination_input, brand_input, 
             characteristics_input;
     private CheckBox account_checkbox;
     @FXML private Button picture_button;
@@ -48,7 +48,7 @@ public class GevondenformulierController implements Initializable {
 
         if ((airport_combo.getValue() == null) || (type_combo.getValue() == null)
                 || (brand_input.getText() == null || brand_input.getText().trim().isEmpty())
-                || (color_input.getText() == null || color_input.getText().trim().isEmpty())) {
+                || (color_combo.getValue() == null)) {
             System.out.println("U heeft niet alles ingevuld!");
         } else {
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -65,14 +65,14 @@ public class GevondenformulierController implements Initializable {
                     surname_input.getText(), labelnumber_input.getText(), 
                     flightnumber_input.getText(), destination_input.getText(), 
                     type_combo.getValue().toString(), brand_input.getText(), 
-                    color_input.getText(), characteristics_input.getText(), 
+                    fys.getColorString(color_combo.getValue().toString()), characteristics_input.getText(), 
                     dateString, timeString);
         }
     }
     
     private void sendToDatabase(String airport, String frontname, String surname,
             String labelnumber, String flightnumber, String destination, String type, 
-            String brand, String color, String characteristics, String date, 
+            String brand, Integer color, String characteristics, String date, 
             String time) throws IOException, SQLException {
         FYS fys = new FYS();
 
@@ -136,6 +136,26 @@ public class GevondenformulierController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        airport_label.setText(taal[8] + ":");
+        name_label.setText(taal[9] + ":");
+        surname_label.setText(taal[10] + ":");
+        label_label.setText(taal[17] + ":");
+        flight_label.setText(taal[18] + ":");
+        destination_label.setText(taal[19] + ":");
+        type_label.setText(taal[20] + ":");
+        brand_label.setText(taal[21] + ":");
+        color_label.setText(taal[22] + ":");
+        characteristics_label.setText(taal[23] + ":");
+        picture_label.setText(taal[24] + ":");
+        airport_combo.setPromptText(taal[25]);
+        type_combo.setPromptText(taal[26]);
+        color_combo.setPromptText(taal[31]);
+        color_combo.getItems().addAll(
+                taal[32], taal[33], taal[34], taal[35], taal[36],
+                taal[37], taal[38], taal[39], taal[40], taal[41], taal[42], taal[43]);
+        picture_button.setText(taal[44]);
+        send_button.setText(taal[46]);
     }   
 }

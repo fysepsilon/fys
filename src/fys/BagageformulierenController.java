@@ -75,7 +75,7 @@ public class BagageformulierenController implements Initializable {
                     zipcode_input.getText(), country_input.getText(), phone_input.getText(), 
                     mail_input.getText(), account_checkbox.isSelected(), labelnumber_input.getText(), 
                     flightnumber_input.getText(), destination_input.getText(), 
-                    type_combo.getValue().toString(), brand_input.getText(), fys.getColorString(color_combo.getValue().toString()), 
+                    fys.getBaggageTypeString(type_combo.getValue().toString()), brand_input.getText(), fys.getColorString(color_combo.getValue().toString()), 
                     characteristics_input.getText(), dateString, timeString);
         }
     }
@@ -83,7 +83,7 @@ public class BagageformulierenController implements Initializable {
     private void sendToDatabase(String airport, String frontname, String surname, 
             String address, String residence, String zipcode, String country, 
             String phone, String mail, Boolean checkBox, String labelnumber, 
-            String flightnumber, String destination, String type, String brand, 
+            String flightnumber, String destination, int type, String brand, 
             Integer color, String characteristics, String date, String time) 
             throws IOException, SQLException {
         FYS fys = new FYS();
@@ -184,6 +184,7 @@ public class BagageformulierenController implements Initializable {
         color_combo.getItems().addAll(
                 taal[32], taal[33], taal[34], taal[35], taal[36],
                 taal[37], taal[38], taal[39], taal[40], taal[41], taal[42], taal[43]);
+        type_combo.getItems().addAll(taal[27], taal[28], taal[29], taal[30]);
         picture_button.setText(taal[44]);
         account_checkbox.setText(taal[45]);
         send_button.setText(taal[46]);

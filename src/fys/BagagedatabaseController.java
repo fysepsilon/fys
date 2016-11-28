@@ -83,6 +83,7 @@ public class BagagedatabaseController implements Initializable {
                 taal[57],
                 taal[58],
                 taal[59]);
+        typefilter.getItems().addAll(taal[27], taal[28], taal[29], taal[30]);
         getLuggageData();
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -139,7 +140,7 @@ public class BagagedatabaseController implements Initializable {
                 //Retrieve by column name
                 int id = rs.getInt("id");
                 String status =  fys.getStatus(rs.getInt("status"));
-                String type = rs.getString("type");
+                String type = fys.getBaggageType(rs.getInt("type"));
                 String color = fys.getColor(rs.getInt("color"));
                 String brand = rs.getString("brand");
                 String date = rs.getString("date");

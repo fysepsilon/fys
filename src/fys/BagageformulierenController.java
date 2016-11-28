@@ -60,7 +60,7 @@ public class BagageformulierenController implements Initializable {
         )){
             System.out.println("U heeft niet alles ingevuld!");
         } else{
-            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date date = new Date();
             String dateTimeString = dateFormat.format(date);    
             String[] tokens = dateTimeString.split(" ");

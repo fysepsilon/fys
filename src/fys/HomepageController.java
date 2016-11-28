@@ -38,7 +38,7 @@ public class HomepageController implements Initializable {
     @FXML
     private TableView<HomepageController.Bagage> table;
      @FXML
-    private TableView<HomepageController.Bagage> table1;
+    private TableView<HomepageController.Bagage1> table1;
     @FXML
     private ObservableList<HomepageController.Bagage> data = FXCollections.observableArrayList();
     @FXML
@@ -146,13 +146,13 @@ public class HomepageController implements Initializable {
     
     public void initialize1(URL url, ResourceBundle rb) {
         getLuggageData1();
-        date.setCellValueFactory(new PropertyValueFactory<>("date"));
-        color.setCellValueFactory(new PropertyValueFactory<>("color"));
-        brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
-        date.setStyle("-fx-alignment: CENTER;");
-        color.setStyle("-fx-alignment: CENTER;");
-        brand.setStyle("-fx-alignment: CENTER;");
-        table.setItems(data);
+        date1.setCellValueFactory(new PropertyValueFactory<>("date"));
+        color1.setCellValueFactory(new PropertyValueFactory<>("color"));
+        brand1.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        date1.setStyle("-fx-alignment: CENTER;");
+        color1.setStyle("-fx-alignment: CENTER;");
+        brand1.setStyle("-fx-alignment: CENTER;");
+        table1.setItems(data1);
     }
 
     public void getLuggageData1() {
@@ -196,34 +196,34 @@ public class HomepageController implements Initializable {
         @FXML
         private final SimpleStringProperty brand1;
 
-        private Bagage1(String datename, String colorname, String brandname) {
-            this.date1 = new SimpleStringProperty(datename);
-            this.color1 = new SimpleStringProperty(colorname);
-            this.brand1 = new SimpleStringProperty(brandname);
+        private Bagage1(String datename1, String colorname1, String brandname1) {
+            this.date1 = new SimpleStringProperty(datename1);
+            this.color1 = new SimpleStringProperty(colorname1);
+            this.brand1 = new SimpleStringProperty(brandname1);
         }
 
-        public String getDate() {
+        public String getDate1() {
             return date1.get();
         }
 
-        public void setDate(String datename) {
-            date1.set(datename);
+        public void setDate1(String datename1) {
+            date1.set(datename1);
         }
 
-        public String getColor() {
+        public String getColor1() {
             return color1.get();
         }
 
-        public void setCijfer(String colorname) {
-            color1.set(colorname);
+        public void setCijfer1(String colorname1) {
+            color1.set(colorname1);
         }
 
-        public String getBrand() {
+        public String getBrand1() {
             return brand1.get();
         }
 
-        public void setBrand(String brandname) {
-            brand1.set(brandname);
+        public void setBrand1(String brandname1) {
+            brand1.set(brandname1);
         }
     }
     

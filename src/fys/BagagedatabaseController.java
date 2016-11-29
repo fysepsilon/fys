@@ -29,6 +29,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 /**
@@ -37,8 +38,8 @@ import javafx.scene.text.Text;
  * @author Paras
  */
 public class BagagedatabaseController implements Initializable {
-
     //@FXML private final TableView<Person> table = new TableView<>();
+    @FXML private AnchorPane database_pane, wijzig_pane;
     @FXML private TableView<Bagage> table;
     @FXML private ObservableList<Bagage> data = FXCollections.observableArrayList();
     @FXML private ObservableList<Bagage> datafilter = FXCollections.observableArrayList();
@@ -239,8 +240,6 @@ public class BagagedatabaseController implements Initializable {
         int selectedIndex
                 = (table).getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            FYS fys = new FYS();
-            fys.changeToAnotherFXML("Poep", "wijzigFormulier.fxml");
             doNext();
             /* Vervolgens moet, waarschijnlijk via een andere methode, alle gegevens
             die al in de database staan ingevuld worden in de velden van het volgende
@@ -262,6 +261,9 @@ public class BagagedatabaseController implements Initializable {
     
     @FXML
     public void doNext(){
-        System.out.println("Test");
-    } 
+        database_pane.setDisable(true);
+        database_pane.setVisible(false);
+        wijzig_pane.setDisable(false);
+        wijzig_pane.setVisible(true);
+    }
 }

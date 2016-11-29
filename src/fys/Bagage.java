@@ -34,13 +34,14 @@ public class Bagage {
         @FXML private SimpleStringProperty flightnumber;
         @FXML private SimpleStringProperty destination;
         @FXML private SimpleStringProperty airport;
+        @FXML private SimpleIntegerProperty realid;
         
         
         public Bagage(Integer idname, String statusname, String typename, String colorname, 
                 String brandname, String datename, String informationname, String firstnamename,
                  String surnamename, String addressname, String residencename, String zipcodename, 
                  String countryname, String phonename, String mailname, String labelnumbername, 
-                 String flightnumbername, String destinationname, String airportname) {
+                 String flightnumbername, String destinationname, String airportname, Integer realidname) {
             this.id = new SimpleIntegerProperty(idname);
             this.status = new SimpleStringProperty(statusname);
             this.type = new SimpleStringProperty(typename);
@@ -60,7 +61,7 @@ public class Bagage {
             this.flightnumber = new SimpleStringProperty(flightnumbername);
             this.destination = new SimpleStringProperty(destinationname);
             this.airport = new SimpleStringProperty(airportname);
-            
+            this.realid = new SimpleIntegerProperty(realidname);
         }
 
         public Integer getId() {
@@ -286,6 +287,18 @@ public class Bagage {
         public void setAirport(String airportname) {
             airport.set(airportname);
         }
-        
 
+        /**
+         * @return the realid
+         */
+        public Integer getRealid() {
+            return realid.get();
+        }
+
+        /**
+         * @param realid the realid to set
+         */
+        public void setRealid(Integer realidname) {
+            realid.set(realidname);
+        }      
     }

@@ -70,12 +70,12 @@ public class BagagedatabaseController implements Initializable {
         taal language = new taal();
         String[] taal = language.getLanguage();
         filter.setText(taal[47]);
-        status_label.setText(taal[48] + ":");
-        color_label.setText(taal[49] + ":");
-        type_label.setText(taal[50] + ":");
-        brand_label.setText(taal[51] + ":");
-        date_label.setText(taal[52] + ":");
-        extraInfo_label.setText(taal[53] + ":");
+        statusfilter.setPromptText(taal[48]);
+        typefilter.setPromptText(taal[50]);
+        colorfilter.setPromptText(taal[49]);
+        brandfilter.setPromptText(taal[50]);
+        datefilter.setPromptText(taal[52]);
+        characteristicsfilter.setPromptText(taal[53]);
         status.setText(taal[48]);
         color.setText(taal[49]);
         type.setText(taal[50]);
@@ -103,6 +103,19 @@ public class BagagedatabaseController implements Initializable {
                 taal[58],
                 taal[59]);
         typefilter.getItems().addAll(taal[27], taal[28], taal[29], taal[30]);
+        type_combo.setPromptText(taal[26]);
+        color_combo.setPromptText(taal[31]);
+        color_combo.getItems().addAll(
+                taal[32], taal[33], taal[34], taal[35], taal[36],
+                taal[37], taal[38], taal[39], taal[40], taal[41], taal[42], taal[43]);
+        type_combo.getItems().addAll(taal[27], taal[28], taal[29], taal[30]);
+        status_combo.getItems().addAll(
+                taal[54],
+                taal[55],
+                taal[56],
+                taal[57],
+                taal[58],
+                taal[59]);
         getLuggageData();
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -151,7 +164,7 @@ public class BagagedatabaseController implements Initializable {
                         data.get(i).getDate(), data.get(i).getInformation(), data.get(i).getFirst_name(),
                  data.get(i).getSurname(), data.get(i).getAddress(), data.get(i).getResidence(), data.get(i).getZipcode(), 
                 data.get(i).getCountry(), data.get(i).getPhone(), data.get(i).getMail(), data.get(i).getLabelnumber(), 
-                data.get(i).getFlightnumber(), data.get(i).getDestination(), data.get(i).getAirport()));
+                data.get(i).getFlightnumber(), data.get(i).getDestination(), data.get(i).getAirport(), data.get(i).getRealid()));
             }
         }
         table.setItems(datafilter);
@@ -204,7 +217,7 @@ public class BagagedatabaseController implements Initializable {
 
                 data.add(new Bagage(luggage, status, type, color, brand, date, characteristics, firstname,
                  surname, address, residence, zipcode, country, phone, mail, labelnumber, flightnumber, destination,
-                 airport));
+                 airport, id));
             }
             rs.close();
             conn.close();
@@ -222,7 +235,7 @@ public class BagagedatabaseController implements Initializable {
         int selectedIndex
                 = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            int dr_id = (table.getSelectionModel().getSelectedItem().getId());
+            int dr_id = (table.getSelectionModel().getSelectedItem().getRealid());
             String dr_status = (table.getSelectionModel().getSelectedItem().getStatus());
             String dr_airport = (table.getSelectionModel().getSelectedItem().getAirport());
             String dr_name = (table.getSelectionModel().getSelectedItem().getFirst_name());

@@ -50,13 +50,13 @@ public class BagagedatabaseController implements Initializable {
     @FXML private Button filter;
     @FXML private Text status_label, color_label, type_label, brand_label, date_label, extraInfo_label;
     
-    @FXML private ComboBox airport_combo, type_combo, color_combo;
+    /*@FXML private ComboBox status_combo, airport_combo, type_combo, color_combo;
     @FXML private TextField name_input, surname_input, address_input, 
             residence_input, zipcode_input, country_input, phone_input, 
             mail_input, labelnumber_input, flightnumber_input, destination_input,
             brand_input, characteristics_input;
     @FXML private CheckBox account_checkbox;
-    @FXML private Button picture_button, send_button;
+    @FXML private Button picture_button, send_button;*/
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -239,7 +239,7 @@ public class BagagedatabaseController implements Initializable {
                 = (table).getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             FYS fys = new FYS();
-            fys.changeToAnotherFXML("Bagage database", "wijzigFormulier.fxml");
+            fys.changeToAnotherFXML("Poep", "wijzigFormulier.fxml");
             doNext();
             /* Vervolgens moet, waarschijnlijk via een andere methode, alle gegevens
             die al in de database staan ingevuld worden in de velden van het volgende
@@ -261,6 +261,6 @@ public class BagagedatabaseController implements Initializable {
     
     @FXML
     public void doNext(){
-        name_input.setText("Poepertje");
+        System.out.println("Test");
     } 
 }

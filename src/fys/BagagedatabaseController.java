@@ -11,12 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.ResourceBundle;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -394,9 +389,12 @@ public class BagagedatabaseController implements Initializable {
                 sql_lost = "UPDATE bagagedatabase.lost_table SET status='" + status + "',"
                         + "type='" + type + "', brand='" + brand + "',"
                         + "color='" + color + "', characteristics='" + characteristics + "'"
-                        + "WHERE id='" + dr_id + "')";
+                        + "WHERE id='" + dr_id + "'";
             }
             stmt.executeUpdate(sql_lost);
+            taal languages = new taal();
+            String[] taal = languages.getLanguage(); 
+            fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");
             conn.close();
         } catch (SQLException ex) {
             // handle any errors

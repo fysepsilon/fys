@@ -254,9 +254,9 @@ public class BagagedatabaseController implements Initializable {
                 = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             int dr_id = (table.getSelectionModel().getSelectedItem().getRealid());
-            int dr_personId = (table.getSelectionModel().getSelectedItem().getPersonid());
-            int dr_lafId = (table.getSelectionModel().getSelectedItem().getLost_and_found_id());
-            int dr_tableFrom = (table.getSelectionModel().getSelectedItem().getTableFrom());
+            int dr_personId = (table.getSelectionModel().getSelectedItem().getPersonID());
+            int dr_lafId = (table.getSelectionModel().getSelectedItem().getLostAndFoundID());
+            int dr_tableFrom = Integer.parseInt((table.getSelectionModel().getSelectedItem().getTableFrom()));
             String dr_status = (table.getSelectionModel().getSelectedItem().getStatus());
             String dr_airport = (table.getSelectionModel().getSelectedItem().getAirportFound());
             String dr_name = (table.getSelectionModel().getSelectedItem().getFirst_name());

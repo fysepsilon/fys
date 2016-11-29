@@ -3,5 +3,15 @@
 }
 
 .button:hover {
--fx-background-color: #B81A04;
+    -fx-background-color: #B81A04;
+}
+
+#background {
+     -fx-background-image: url("bg.jpg");
+}
+
+#middlePane {
+    -fx-border-width:0 2 0 2;
+    -fx-border-color:lightgrey;
+    -fx-background-color: white;
 }

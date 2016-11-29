@@ -91,7 +91,7 @@ public class FYS extends Application {
         String[] taal = language.getLanguage();
         if (type.equals(taal[64])) {
             return 1;
-        } else if (type == taal[65]) {
+        } else if (type.equals(taal[65])) {
             return 2;
         }
         return 0;
@@ -102,12 +102,41 @@ public class FYS extends Application {
         String[] taal = language.getLanguage();
         if (type.equals(taal[70])) {
             return 1;
-        } else if (type == taal[71]) {
+        } else if (type.equals(taal[71])) {
             return 2;
-        } else if (type == taal[72]) {
+        } else if (type.equals(taal[72])) {
             return 3;
         }  
         return 0;
+    }
+    
+    public Integer getBaggageTypeString(String type) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        if (type.equals(taal[28])) {
+            return 1;
+        } else if (type.equals(taal[29])) {
+            return 2;
+        } else if (type.equals(taal[30])) {
+            return 3;
+        }
+        return 0;
+    }
+    
+    public String getBaggageType(int type) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        switch (type) {
+            case 1:
+                return taal[28];
+            case 2:
+                return taal[29];
+            case 3:
+                return taal[30];
+            default:
+                break;
+        }
+        return taal[27];
     }
     
     public String getStatus(int status) {

@@ -70,10 +70,6 @@
               <ComboBox fx:id="type_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" promptText="Kies hier uw type bagage" GridPane.columnIndex="4" GridPane.rowIndex="3">
                   <items>
                       <FXCollections fx:factory="observableArrayList">
-                          <String fx:value="Koffer" />
-                          <String fx:value="Sporttas" />
-                          <String fx:value="Handtas" />
-                          <String fx:value="Rugzak" />
                       </FXCollections>
                   </items>
               </ComboBox>

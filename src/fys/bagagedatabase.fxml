@@ -191,8 +191,8 @@
                         <Label fx:id="status_label2" prefHeight="30.0" prefWidth="126.0" text="Status:" />
                         <ComboBox fx:id="status_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1">
                             <items>
-                                <FXCollections fx:factory="Found">
-                                    <String fx:value="Lost" />
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Alanya-Gazipasa" />
                                     <String fx:value="Schiphol" />
                                     <String fx:value="Malta Airport" />
                                 </FXCollections>

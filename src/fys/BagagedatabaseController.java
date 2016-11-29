@@ -44,7 +44,9 @@ public class BagagedatabaseController implements Initializable {
     @FXML private ObservableList<Bagage> data = FXCollections.observableArrayList();
     @FXML private ObservableList<Bagage> datafilter = FXCollections.observableArrayList();
     //@FXML private TableView<Person> table;
-    @FXML private TableColumn id, status, type, color, brand, date, information;
+    @FXML private TableColumn id, status, type, color, brand, date, information, 
+    first_name, surname, address, residence, zipcode, country, phone, mail, 
+    labelnumber, flightnumber, destination, airport;
     @FXML private TextField colorfilter, brandfilter, datefilter;
     @FXML private ComboBox statusfilter, typefilter;
     @FXML private TextArea characteristicsfilter;
@@ -76,6 +78,18 @@ public class BagagedatabaseController implements Initializable {
         brand.setText(taal[51]);
         date.setText(taal[52]);
         information.setText(taal[53]);
+        first_name.setText(taal[9]);
+        surname.setText(taal[10]);
+        address.setText(taal[11]);
+        residence.setText(taal[12]);
+        zipcode.setText(taal[13]);
+        country.setText(taal[14]);
+        phone.setText(taal[15]);
+        mail.setText(taal[16]);
+        labelnumber.setText(taal[17]);
+        flightnumber.setText(taal[18]);
+        destination.setText(taal[19]);
+        airport.setText(taal[8]);
         statusfilter.getItems().addAll(
                 "",
                 taal[54],
@@ -93,6 +107,18 @@ public class BagagedatabaseController implements Initializable {
         brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
         information.setCellValueFactory(new PropertyValueFactory<>("information"));
+        first_name.setCellValueFactory(new PropertyValueFactory<>("first_name"));
+        surname.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        address.setCellValueFactory(new PropertyValueFactory<>("address"));
+        residence.setCellValueFactory(new PropertyValueFactory<>("residence"));
+        zipcode.setCellValueFactory(new PropertyValueFactory<>("zipcode"));
+        country.setCellValueFactory(new PropertyValueFactory<>("country"));
+        phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        mail.setCellValueFactory(new PropertyValueFactory<>("mail"));
+        labelnumber.setCellValueFactory(new PropertyValueFactory<>("labelnumber"));
+        flightnumber.setCellValueFactory(new PropertyValueFactory<>("flightnumber"));
+        destination.setCellValueFactory(new PropertyValueFactory<>("destination"));
+        airport.setCellValueFactory(new PropertyValueFactory<>("airport"));
         id.setStyle("-fx-alignment: CENTER;");
         status.setStyle("-fx-alignment: CENTER;");
         type.setStyle("-fx-alignment: CENTER;");
@@ -100,6 +126,7 @@ public class BagagedatabaseController implements Initializable {
         brand.setStyle("-fx-alignment: CENTER;");
         date.setStyle("-fx-alignment: CENTER;");
         information.setStyle("-fx-alignment: CENTER;");
+        first_name.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
     }
     
@@ -116,7 +143,11 @@ public class BagagedatabaseController implements Initializable {
                     && data.get(i).getType().toLowerCase().contains(typefilter.getSelectionModel().getSelectedItem().toString().toLowerCase())
                     && data.get(i).getInformation().toLowerCase().contains(characteristicsfilter.getText().toLowerCase())) {
                 datafilter.add(new Bagage(data.get(i).getId(), data.get(i).getStatus(), 
-                        data.get(i).getType(), data.get(i).getColor(), data.get(i).getBrand(), data.get(i).getDate(), data.get(i).getInformation()));
+                        data.get(i).getType(), data.get(i).getColor(), data.get(i).getBrand(), 
+                        data.get(i).getDate(), data.get(i).getInformation(), data.get(i).getFirst_name(),
+                 data.get(i).getSurname(), data.get(i).getAddress(), data.get(i).getResidence(), data.get(i).getZipcode(), 
+                data.get(i).getCountry(), data.get(i).getPhone(), data.get(i).getMail(), data.get(i).getLabelnumber(), 
+                data.get(i).getFlightnumber(), data.get(i).getDestination(), data.get(i).getAirport()));
             }
         }
         table.setItems(datafilter);
@@ -131,10 +162,18 @@ public class BagagedatabaseController implements Initializable {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
             //connectToDatabase(conn, stmt, "test", "root", "root");           
-            String sql = "SELECT found_table.*, airport_table.date FROM found_table, airport_table "
-                    + "WHERE found_table.lost_and_found_id = airport_table.lost_and_found_id "
-                    + "UNION SELECT lost_table.*, airport_table.date FROM lost_table, airport_table "
-                    + "WHERE lost_table.lost_and_found_id = airport_table.lost_and_found_id ORDER BY status";
+            String sql = "SELECT found_table.*, airport_table.date, airport_table.airport_found AS airport, "
+                    + "airport_table.label_number, airport_table.flight_number, airport_table.destination, "
+                    + "person_table.first_name, person_table.surname, person_table.address, person_table.zip_code,"
+                    + "person_table.residence, person_table.country, person_table.phone, person_table.mail "
+                    + "FROM found_table, airport_table, person_table WHERE found_table.lost_and_found_id = airport_table.lost_and_found_id "
+                    + "AND found_table.person_id = person_table.person_id "
+                    + "UNION SELECT lost_table.*, airport_table.date, airport_table.airport_lost AS airport, airport_table.label_number, "
+                    + "airport_table.flight_number, airport_table.destination, person_table.first_name, person_table.surname, "
+                    + "person_table.address, person_table.zip_code, person_table.residence, person_table.country, person_table.phone, person_table.mail "
+                    + "FROM lost_table, airport_table, person_table WHERE lost_table.lost_and_found_id = airport_table.lost_and_found_id "
+                    + "AND lost_table.person_id = person_table.person_id "
+                    + "ORDER BY status";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 luggage++;
@@ -146,8 +185,22 @@ public class BagagedatabaseController implements Initializable {
                 String brand = rs.getString("brand");
                 String date = rs.getString("date");
                 String characteristics = rs.getString("characteristics");
+                String firstname = rs.getString("first_name");
+                String surname = rs.getString("surname");
+                String address = rs.getString("address");
+                String residence = rs.getString("residence");
+                String zipcode = rs.getString("zip_code");
+                String country = rs.getString("country");
+                String phone = rs.getString("phone");
+                String mail = rs.getString("mail");
+                String labelnumber = rs.getString("label_number");
+                String flightnumber = rs.getString("flight_number");
+                String destination = rs.getString("destination");
+                String airport = rs.getString("airport");
 
-                data.add(new Bagage(luggage, status, type, color, brand, date, characteristics));
+                data.add(new Bagage(luggage, status, type, color, brand, date, characteristics, firstname,
+                 surname, address, residence, zipcode, country, phone, mail, labelnumber, flightnumber, destination,
+                 airport));
             }
             rs.close();
             conn.close();
@@ -159,103 +212,26 @@ public class BagagedatabaseController implements Initializable {
         }
     }
     
-    public static class Bagage {
-
-        @FXML private final SimpleIntegerProperty id;
-        @FXML private final SimpleStringProperty status;
-        @FXML private final SimpleStringProperty type;
-        @FXML private final SimpleStringProperty color;
-        @FXML private final SimpleStringProperty brand;
-        @FXML private final SimpleStringProperty date;
-        @FXML private final SimpleStringProperty information;
-        
-        private Bagage(Integer idname, String statusname, String typename, String colorname, String brandname, String datename, String informationname) {
-            this.id = new SimpleIntegerProperty(idname);
-            this.status = new SimpleStringProperty(statusname);
-            this.type = new SimpleStringProperty(typename);
-            this.color = new SimpleStringProperty(colorname);
-            this.brand = new SimpleStringProperty(brandname);
-            this.date = new SimpleStringProperty(datename);
-            this.information = new SimpleStringProperty(informationname);
-        }
-
-        public Integer getId() {
-            return id.get();
-        }
-
-        public void setId(Integer idname) {
-            id.set(idname);
-        }
-
-        public String getStatus() {
-            return status.get();
-        }
-
-        public void setStatus(String statusname) {
-            status.set(statusname);
-        }
-
-        public String getType() {
-            return type.get();
-        }
-
-        public void setStudentid(String typename) {
-            type.set(typename);
-        }
-
-        public String getColor() {
-            return color.get();
-        }
-
-        public void setCijfer(String colorname) {
-            color.set(colorname);
-        }
-
-        public String getBrand() {
-            return brand.get();
-        }
-
-        public void setBrand(String brandname) {
-            brand.set(brandname);
-        }
-        
-        public String getDate() {
-            return date.get();
-        }
-
-        public void setDate(String datename) {
-            date.set(datename);
-        }
-        
-        public String getInformation() {
-            return information.get();
-        }
-
-        public void setInformation(String informationname) {
-            information.set(informationname);
-        }
-    }
-    
     public void handleChange(ActionEvent event) throws IOException {
         int selectedIndex
                 = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            int dr_id = (table.getSelectionModel().getSelectedItem().id).getValue();
-            String dr_status = (table.getSelectionModel().getSelectedItem().status).getValue();
-            /*String dr_airport = (table.getSelectionModel().getSelectedItem().airport).getValue();
-            String dr_name = (table.getSelectionModel().getSelectedItem().name).surnamecolor).getValue();
-            String dr_adress = (table.getSelectionModel().getSelectedItem().adress).getValue();
-            String dr_residence = (table.getSelectionModel().getSelectedItem().residence).getValue();
-            String dr_zipcode = (table.getSelectionModel().getSelectedItem().zipcode).getValue();
-            String dr_country = (table.getSelectionModel().getSelectedItem().country).getValue();
-            String dr_phone = (table.getSelectionModel().getSelectedItem().phone).getValue();
-            String dr_mail = (table.getSelectionModel().getSelectedItem().mail).getValue();
-            String dr_label = (table.getSelectionModel().getSelectedItem().label).getValue();
-            String dr_flight = (table.getSelectionModel().getSelectedItem().flight).getValue();
-            String dr_destination = (table.getSelectionModel().getSelectedItem().destination).getValue();*/
-            String dr_type = (table.getSelectionModel().getSelectedItem().type).getValue();
-            String dr_brand = (table.getSelectionModel().getSelectedItem().brand).getValue();
-            String dr_color = (table.getSelectionModel().getSelectedItem().color).getValue();
+            int dr_id = (table.getSelectionModel().getSelectedItem().getId());
+            String dr_status = (table.getSelectionModel().getSelectedItem().getStatus());
+            String dr_airport = (table.getSelectionModel().getSelectedItem().getAirport());
+            String dr_name = (table.getSelectionModel().getSelectedItem().getFirst_name());
+            String dr_adress = (table.getSelectionModel().getSelectedItem().getAddress());
+            String dr_residence = (table.getSelectionModel().getSelectedItem().getResidence());
+            String dr_zipcode = (table.getSelectionModel().getSelectedItem().getZipcode());
+            String dr_country = (table.getSelectionModel().getSelectedItem().getCountry());
+            String dr_phone = (table.getSelectionModel().getSelectedItem().getPhone());
+            String dr_mail = (table.getSelectionModel().getSelectedItem().getMail());
+            String dr_label = (table.getSelectionModel().getSelectedItem().getLabelnumber());
+            String dr_flight = (table.getSelectionModel().getSelectedItem().getFlightnumber());
+            String dr_destination = (table.getSelectionModel().getSelectedItem().getDestination());
+            String dr_type = (table.getSelectionModel().getSelectedItem().getType());
+            String dr_brand = (table.getSelectionModel().getSelectedItem().getBrand());
+            String dr_color = (table.getSelectionModel().getSelectedItem().getColor());
             
             doNext(dr_id, dr_status, dr_type, dr_brand);
             /* Vervolgens moet, waarschijnlijk via een andere methode, alle gegevens

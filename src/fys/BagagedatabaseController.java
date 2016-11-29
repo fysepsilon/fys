@@ -73,7 +73,7 @@ public class BagagedatabaseController implements Initializable {
         statusfilter.setPromptText(taal[48]);
         typefilter.setPromptText(taal[50]);
         colorfilter.setPromptText(taal[49]);
-        brandfilter.setPromptText(taal[50]);
+        brandfilter.setPromptText(taal[51]);
         datefilter.setPromptText(taal[52]);
         characteristicsfilter.setPromptText(taal[53]);
         status.setText(taal[48]);

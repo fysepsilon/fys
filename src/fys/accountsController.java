@@ -32,12 +32,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class accountsController implements Initializable {
 
-    @FXML private Button home, NewAccountButton;
+    @FXML private Button NewAccountButton;
     @FXML private TableView<Accounts> table;
     @FXML private ObservableList<Accounts> data = FXCollections.observableArrayList();
-    @FXML private TableColumn first_name, mail, type, acties;
-    @FXML private TextField naam_input;
-    @FXML private Label name_label, email_label;
+    @FXML private TableColumn first_name, mail, type;
 
     @FXML
     private void handlenieuwaccount(ActionEvent event) throws IOException {
@@ -51,23 +49,18 @@ public class accountsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         taal language = new taal();
         String[] taal = language.getLanguage();
-        name_label.setText(taal[9] + ":");
-        email_label.setText(taal[16] + ":");
         first_name.setText(taal[9]);
         mail.setText(taal[16]);
         type.setText(taal[20]);
-        acties.setText(taal[60]);  
         NewAccountButton.setText(taal[63]);
         
         getLuggageData();
         first_name.setCellValueFactory(new PropertyValueFactory<>("first_name"));
         mail.setCellValueFactory(new PropertyValueFactory<>("mail"));
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
-        acties.setCellValueFactory(new PropertyValueFactory<>("acties"));
         first_name.setStyle("-fx-alignment: CENTER;");
         mail.setStyle("-fx-alignment: CENTER;");
         type.setStyle("-fx-alignment: CENTER;");
-        acties.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
     }
 
@@ -99,9 +92,8 @@ public class accountsController implements Initializable {
                         String mail = rs.getString("mail");
                         int type = rs.getInt("type");
                         type_text = fys.getUserFunction(type);
-                        String acties = (taal[67] + " / " + taal[68]);
                         
-                        data.add(new Accounts(first_name, mail, type_text, acties));
+                        data.add(new Accounts(first_name, mail, type_text));
                     }
                 }
             } else { //SQL bij servicemedewerker (type = 1)
@@ -114,9 +106,8 @@ public class accountsController implements Initializable {
                         String mail = rs.getString("mail");
                         int type = rs.getInt("type");
                         type_text = fys.getUserFunction(type);
-                        String acties = ("Wijzigen/Verwijderen ");
                         
-                        data.add(new Accounts(first_name, mail, type_text, acties));
+                        data.add(new Accounts(first_name, mail, type_text));
                     }
                 }
             }
@@ -138,15 +129,11 @@ public class accountsController implements Initializable {
         private final SimpleStringProperty mail;
         @FXML
         private final SimpleStringProperty type;
-        @FXML
-        private final SimpleStringProperty acties;
 
-        private Accounts(String first_namename, String mailname, String typename, String actiesname) {
+        private Accounts(String first_namename, String mailname, String typename) {
             this.first_name = new SimpleStringProperty(first_namename);
             this.mail = new SimpleStringProperty(mailname);
             this.type = new SimpleStringProperty(typename);
-            this.acties = new SimpleStringProperty(actiesname);
-
         }
 
         public String getFirst_name() {
@@ -171,14 +158,6 @@ public class accountsController implements Initializable {
 
         public void setType(String typename) {
             type.set(typename);
-        }
-
-        public String getActies() {
-            return acties.get();
-        }
-
-        public void setActies(String actiesname) {
-            acties.set(actiesname);
         }
     }
 }

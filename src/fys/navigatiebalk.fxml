@@ -172,7 +172,7 @@
                   </font>
               </Button>
                 <SplitPane id="afscheiding8" fx:id="afscheiding8" prefHeight="49.0" prefWidth="2.0" style="-fx-background-color: #B81A04;" />
-              <Button id="accountAdmin" fx:id="accountAdmin" mnemonicParsing="false" onAction="#handleAccountsAdmin" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="ACCOUNTS" textFill="WHITE">
+              <Button id="accountAdmin" fx:id="accountAdmin" mnemonicParsing="false" onAction="#handleAccounts" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="ACCOUNTS" textFill="WHITE">
                   <cursor>
                       <Cursor fx:constant="HAND" />
                   </cursor>

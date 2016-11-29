@@ -77,13 +77,15 @@ public class InstellingenController implements Initializable {
     @FXML
     private void handleSaveAction(ActionEvent event) throws IOException {
         FYS fys = new FYS();
+        taal languages = new taal();
+        String[] taal = languages.getLanguage();
         loginController login = new loginController();
         if((username.getText() == null || username.getText().trim().isEmpty()) || (password.getText() == null || password.getText().trim().isEmpty())){
-            error.setText("Velden zijn leeggelaten!");
+            error.setText(taal[93]);
             error.setStyle("-fx-text-fill: red;");
             error.setVisible(true);
         } else if(fys.checkEmailExistsOnChange(username.getText(), login.getEmail())){
-            error.setText("E-mailadres bestaat al!");
+            error.setText(taal[94]);
             error.setStyle("-fx-text-fill: red;");
             error.setVisible(true);
         } /*else if(!fys.isValidEmailAddress(username.getText())){
@@ -102,9 +104,7 @@ public class InstellingenController implements Initializable {
                         + "' WHERE person_id = " + id + ";";
                 stmt.executeUpdate(sql);
                 conn.close();
-                error.setText("Uw gegevens zijn gewijzigd!");
-                error.setStyle("-fx-text-fill: green;");
-                error.setVisible(true);
+                fys.changeToAnotherFXML(taal[95], "bagageformulieren.fxml");
                 login.setEmail(username.getText());
             } catch (SQLException ex) {
                 // handle any errors

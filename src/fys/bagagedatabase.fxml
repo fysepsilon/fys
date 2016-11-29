@@ -26,19 +26,23 @@
                         <TableColumn id="color" fx:id="color" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Kleur" />
                         <TableColumn id="brand" fx:id="brand" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Merk" />
                         <TableColumn id="information" fx:id="information" maxWidth="500.0" minWidth="194.0" prefWidth="194.0" text="Extra informatie" />
-                        <TableColumn id="first_name" fx:id="first_name" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Voornaam" />
-                        <TableColumn id="surname" fx:id="surname" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Achternaam" />
-                        <TableColumn id="address" fx:id="address" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Adres" />
-                        <TableColumn id="residence" fx:id="residence" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Woonplaats" />
-                        <TableColumn id="zipcode" fx:id="zipcode" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Postcode" />
-                        <TableColumn id="country" fx:id="country" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Land" />
-                        <TableColumn id="phone" fx:id="phone" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Telefoonnummer" />
-                        <TableColumn id="mail" fx:id="mail" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="E-mail" />
-                        <TableColumn id="labelnumber" fx:id="labelnumber" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Label nummer" />
-                        <TableColumn id="flightnumber" fx:id="flightnumber" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Vlucht nummer" />
-                        <TableColumn id="destination" fx:id="destination" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Bestemming" />
-                        <TableColumn id="airport" fx:id="airport" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Luchthaven" />
-                        <TableColumn id="realid" fx:id="realid" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="realid" visible="false" />
+                        <TableColumn id="first_name" fx:id="first_name" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Voornaam" />
+                        <TableColumn id="surname" fx:id="surname" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Achternaam" />
+                        <TableColumn id="address" fx:id="address" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Adres" />
+                        <TableColumn id="residence" fx:id="residence" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Woonplaats" />
+                        <TableColumn id="zipcode" fx:id="zipcode" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Postcode" />
+                        <TableColumn id="country" fx:id="country" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Land" />
+                        <TableColumn id="phone" fx:id="phone" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Telefoonnummer" />
+                        <TableColumn id="mail" fx:id="mail" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="E-mail" />
+                        <TableColumn id="labelnumber" fx:id="labelnumber" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Label nummer" />
+                        <TableColumn id="flightnumber" fx:id="flightnumber" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Vlucht nummer" />
+                        <TableColumn id="destination" fx:id="destination" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Bestemming" />
+                        <TableColumn id="airportFound" fx:id="airportFound" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Luchthaven gevonden" />
+                        <TableColumn id="airportLost" fx:id="airportLost" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Luchthaven verloren" />
+                        <TableColumn id="tableFrom" fx:id="tableFrom" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Table" />
+                        <TableColumn id="lostAndFoundID" fx:id="lostAndFoundID" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="realid" visible="false" />
+                        <TableColumn id="personID" fx:id="personID" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="realid" visible="false" />
+                        <TableColumn id="realid" fx:id="realid" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="realid" visible="false" />
                     </columns>
                 </TableView>
                 <ComboBox fx:id="statusfilter" layoutX="116.0" layoutY="82.0" prefHeight="31.0" prefWidth="187.0" promptText="Kies een status">

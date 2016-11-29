@@ -15,22 +15,12 @@ import javafx.fxml.FXML;
  */
 public class Bagage {
 
-        @FXML private final SimpleIntegerProperty id, realid;
-    @FXML
-    private SimpleIntegerProperty lostAndFoundID;
-    @FXML
-    private SimpleIntegerProperty personID;
-        @FXML private final SimpleStringProperty status, type, color, brand, date, information, 
+    @FXML private final SimpleIntegerProperty id, realid, lostAndFoundID, personID;
+    @FXML private final SimpleStringProperty status, type, color, brand, date, information, 
                 first_name, surname, address, residence, zipcode, country, phone, mail, labelnumber, 
-                flightnumber, destination;
-    @FXML
-    private SimpleStringProperty airportFound;
-    @FXML
-    private SimpleStringProperty airportLost;
-    @FXML
-    private SimpleStringProperty tableFrom;
+                flightnumber, destination, airportFound, airportLost, tableFrom;
         
-        public Bagage(Integer idname, String statusname, String typename, String colorname, 
+    public Bagage(Integer idname, String statusname, String typename, String colorname, 
                 String brandname, String datename, String informationname, String firstnamename,
                  String surnamename, String addressname, String residencename, String zipcodename, 
                  String countryname, String phonename, String mailname, String labelnumbername, 

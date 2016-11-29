@@ -193,16 +193,18 @@ public class BagagedatabaseController implements Initializable {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
             //connectToDatabase(conn, stmt, "test", "root", "root");           
-            String sql = "SELECT found_table.*, airport_table.date, airport_table.airport_found , airport_table.airport_lost, "
+            String sql = "SELECT found_table.*, airport_table.date, airport_table.airport_found, airport_table.airport_lost, "
                     + "airport_table.label_number, airport_table.flight_number, airport_table.destination, "
-                    + "person_table.first_name, person_table.surname, person_table.address, person_table.zip_code,"
+                    + "person_table.first_name, person_table.surname, person_table.address, person_table.zip_code, "
                     + "person_table.residence, person_table.country, person_table.phone, person_table.mail, 1 as tablefrom "
-                    + "FROM found_table, airport_table, person_table WHERE found_table.lost_and_found_id = airport_table.lost_and_found_id "
+                    + "FROM found_table, airport_table, person_table "
+                    + "WHERE found_table.lost_and_found_id = airport_table.lost_and_found_id "
                     + "AND found_table.person_id = person_table.person_id "
-                    + "UNION SELECT lost_table.*, airport_table.date, airport_table.airport_lost, airport_table.airport_found, airport_table.label_number, "
-                    + "airport_table.flight_number, airport_table.destination, person_table.first_name, person_table.surname, "
-                    + "person_table.address, person_table.zip_code, person_table.residence, person_table.country, person_table.phone, person_table.mail, 0 as tablefrom "
-                    + "FROM lost_table, airport_table, person_table WHERE lost_table.lost_and_found_id = airport_table.lost_and_found_id "
+                    + "UNION SELECT lost_table.*, airport_table.date, airport_table.airport_found, airport_table.airport_lost, "
+                    + "airport_table.label_number, airport_table.flight_number, airport_table.destination, "
+                    + "person_table.first_name, person_table.surname, person_table.address, person_table.zip_code, person_table.residence, "
+                    + "person_table.country, person_table.phone, person_table.mail, 0 as tablefrom FROM lost_table, airport_table, person_table "
+                    + "WHERE lost_table.lost_and_found_id = airport_table.lost_and_found_id "
                     + "AND lost_table.person_id = person_table.person_id "
                     + "ORDER BY status";
             ResultSet rs = stmt.executeQuery(sql);

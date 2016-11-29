@@ -34,65 +34,77 @@ public class NavigatiebalkController implements Initializable {
     @FXML private Text welcomeText;   
     @FXML private HBox HBoxAdmin, HBoxSM;
     @FXML private MenuItem settings, logout;
-  
+    
     @FXML
     private void handleBagageformulieren(ActionEvent event) throws IOException {
+        taal languages = new taal();
+        String[] taal = languages.getLanguage();
         FYS fys = new FYS();
-        fys.changeToAnotherFXML("Vermiste bagage registreren", "bagageformulieren.fxml");
+        fys.changeToAnotherFXML(taal[95], "bagageformulieren.fxml");
     }
     
     @FXML
     private void handleGevondenBagageFormulier(ActionEvent event) throws IOException {
+        taal languages = new taal();
+        String[] taal = languages.getLanguage();
         FYS fys = new FYS();
-        fys.changeToAnotherFXML("Gevonden bagage registreren", "gevondenformulier.fxml");
+        fys.changeToAnotherFXML(taal[96], "gevondenformulier.fxml");
     }
     
     @FXML
     private void handleHome(ActionEvent event) throws IOException {
+        taal languages = new taal();
+        String[] taal = languages.getLanguage();        
         FYS fys = new FYS();
-        fys.changeToAnotherFXML("Home", "homepage.fxml");
+        fys.changeToAnotherFXML(taal[97], "homepage.fxml");
     }
     
     @FXML
     private void handleHomeAdmin(ActionEvent event) throws IOException {
+        taal languages = new taal();
+        String[] taal = languages.getLanguage();        
         FYS fys = new FYS();
-        fys.changeToAnotherFXML("Home", "homepageadmin.fxml");
+        fys.changeToAnotherFXML(taal[97], "homepageadmin.fxml");
     }
     
     @FXML
     private void handleAccounts(ActionEvent event) throws IOException {
+        taal languages = new taal();
+        String[] taal = languages.getLanguage();        
         FYS fys = new FYS();
-        fys.changeToAnotherFXML("Accounts", "accounts.fxml");
+        fys.changeToAnotherFXML(taal[98], "accounts.fxml");
     }
-    
-    @FXML
-    private void handleAccountsAdmin(ActionEvent event) throws IOException {
-        FYS fys = new FYS();
-        fys.changeToAnotherFXML("Accounts", "accounts.fxml");
-    }
-    
+   
     @FXML
     private void handleStaticsAdmin(ActionEvent event) throws IOException {
+        taal languages = new taal();
+        String[] taal = languages.getLanguage();        
         FYS fys = new FYS();
-        fys.changeToAnotherFXML("Statistieken", "statistieken.fxml");
+        fys.changeToAnotherFXML(taal[99], "statistieken.fxml");
     }
     
     @FXML
     private void handleBagagedatabase(ActionEvent event) throws IOException {
+        taal languages = new taal();
+        String[] taal = languages.getLanguage();        
         FYS fys = new FYS();
-        fys.changeToAnotherFXML("Bagage database", "bagagedatabase.fxml");
+        fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");
     }
     
     @FXML
     private void handleLogout(ActionEvent event) throws IOException {
+        taal languages = new taal();
+        String[] taal = languages.getLanguage();        
         FYS fys = new FYS();
-        fys.changeToAnotherFXML("Corendon-Login", "login.fxml");
+        fys.changeToAnotherFXML(taal[101], "login.fxml");
     }
     
     @FXML
     private void handleSettings(ActionEvent event) throws IOException {
+        taal languages = new taal();
+        String[] taal = languages.getLanguage();        
         FYS fys = new FYS();
-        fys.changeToAnotherFXML("Corendon-Instellingen", "instellingen.fxml");
+        fys.changeToAnotherFXML(taal[102], "instellingen.fxml");
     }
     
     @Override
@@ -108,11 +120,8 @@ public class NavigatiebalkController implements Initializable {
             luggageAdmin.setText(taal[2]);
             accountAdmin.setText(taal[3]);
             staticsAdmin.setText(taal[4]);            
-            
             HBoxAdmin.setVisible(true);
             HBoxSM.setVisible(false);
-          
-
             welcomeText.setText( taal[6] + " - " + taal[5] + "! " + name);
         } else{
             welcomeText.setText( taal[7] + " - " + taal[5] + "! " + name);

@@ -11,7 +11,10 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.BagagedatabaseController">
     <children>
+        <Pane id="background" fx:id="background" layoutY="122.0" prefHeight="478.0" prefWidth="1000.0" stylesheets="@images/menu.css" />
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
+        <Pane layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0" style=" -fx-border-width:0 2 0 2; -fx-border-color:lightgrey; -fx-background-color: white;"/>
+
         <AnchorPane fx:id="database_pane" prefHeight="600.0" prefWidth="1000.0" visible="true" disable="false">
             <children>
                 <TableView fx:id="table" layoutX="323.0" layoutY="157.0" prefHeight="384.0" prefWidth="673.0">

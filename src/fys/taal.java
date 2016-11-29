@@ -15,7 +15,7 @@ import java.sql.Statement;
  * @author Paras
  */
 public class taal {
-    private final int amountOfLanguageFields = 100;
+    private final int amountOfLanguageFields = 200;
     private int language = 0;
     
     public String[] getLanguage(){
@@ -44,9 +44,9 @@ public class taal {
         }
         
         if(language == 0){ // Engels
-            languagefields[0] = "REGISTER MISSING BAGGAGE";
-            languagefields[1] = "REGISTER FOUND BAGGAGE";
-            languagefields[2] = "BAGGAGE DATABASE";
+            languagefields[0] = "REGISTER MISSING LUGGAGE";
+            languagefields[1] = "REGISTER FOUND LUGGAGE";
+            languagefields[2] = "LUGGAGE DATABASE";
             languagefields[3] = "ACCOUNTS";
             languagefields[4] = "STATISTICS";
             languagefields[5] = "Welcome";
@@ -70,12 +70,12 @@ public class taal {
             languagefields[23] = "Characterize";
             languagefields[24] = "Picture";
             languagefields[25] = "Select airport";
-            languagefields[26] = "Select the type of baggage";
+            languagefields[26] = "Select the type of luggage";
             languagefields[27] = "Suitcase";
             languagefields[28] = "Sportsbag";
             languagefields[29] = "Handbag";
             languagefields[30] = "Backpack";
-            languagefields[31] = "Select the color of the baggage";
+            languagefields[31] = "Select the color of the luggage";
             languagefields[32] = "Brown";
             languagefields[33] = "Beige";
             languagefields[34] = "Red";
@@ -137,6 +137,16 @@ public class taal {
             languagefields[90] = "Password";
             languagefields[91] = "E-mailaddress";
             languagefields[92] = "Save";
+            languagefields[93] = "Fields are left blank!";
+            languagefields[94] = "E-mail already exists!"; 
+            languagefields[95] = "Register missing luggage";   
+            languagefields[96] = "Register found luggage";   
+            languagefields[97] = "Home";   
+            languagefields[98] = "Accounts";   
+            languagefields[99] = "Statistics";   
+            languagefields[100] = "Luggage database";   
+            languagefields[101] = "Login";   
+            languagefields[102] = "Settings";   
         } else if(language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
@@ -231,7 +241,17 @@ public class taal {
             languagefields[89] = "dec";
             languagefields[90] = "Wachtwoord";
             languagefields[91] = "E-mailadres";
-            languagefields[92] = "Opslaan";          
+            languagefields[92] = "Opslaan";    
+            languagefields[93] = "Velden zijn leeggelaten!";
+            languagefields[94] = "E-mailadres bestaat al!"; 
+            languagefields[95] = "Vermiste bagage registreren";   
+            languagefields[96] = "Gevonden bagage registreren";   
+            languagefields[97] = "Home";   
+            languagefields[98] = "Accounts";   
+            languagefields[99] = "Statistieken";   
+            languagefields[100] = "Bagage database";   
+            languagefields[101] = "Login";   
+            languagefields[102] = "Instellingen";   
         } else if(language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";
@@ -335,7 +355,16 @@ public class taal {
             languagefields[91] = "Correo electrónico";
             
             languagefields[92] = "Tienda";   
-            
+            languagefields[93] = "Los campos se dejan en blanco!";  
+            languagefields[94] = "Correo electrónico ya existe!";    
+            languagefields[95] = "Registro equipaje perdido";   
+            languagefields[96] = "Registro encontró equipaje";   
+            languagefields[97] = "Casa";   
+            languagefields[98] = "Cuentas";   
+            languagefields[99] = "Estadística";   
+            languagefields[100] = "Base de datos de equipaje";   
+            languagefields[101] = "Login";   
+            languagefields[102] = "Ajustes";   
         } else { //Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
@@ -431,6 +460,16 @@ public class taal {
             languagefields[90] = "Şifre";
             languagefields[91] = "Posta";
             languagefields[92] = "Mağaza";       
+            languagefields[93] = "Alanlar boş bırakılır!";  
+            languagefields[94] = "Posta zaten var!";       
+            languagefields[95] = "Kayıt kayıp bagaj";   
+            languagefields[96] = "Kayıt bagaj bulundu";   
+            languagefields[97] = "Ev";   
+            languagefields[98] = "Hesapları";   
+            languagefields[99] = "Istatistik";   
+            languagefields[100] = "Bagaj veritabanı";   
+            languagefields[101] = "Giriş";   
+            languagefields[102] = "Ayarlar";   
         }
         return languagefields;
     }

@@ -10,15 +10,19 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.StatistiekenController">
     <children>
+        <Pane id="background" fx:id="background" layoutY="122.0" prefHeight="478.0" prefWidth="1000.0" stylesheets="@images/menu.css" />
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
-      <PieChart id="piechart" fx:id="piechart" layoutX="486.0" layoutY="156.0" />
-      <LineChart id="linechart" fx:id="linechart" layoutX="14.0" layoutY="156.0" prefHeight="430.0" prefWidth="500.0">
-        <xAxis>
-          <CategoryAxis side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis side="LEFT" />
-        </yAxis>
-      </LineChart>
+        <Pane layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0" style=" -fx-border-width:0 2 0 2; -fx-border-color:lightgrey; -fx-background-color: white;">
+         <children>
+              <PieChart id="piechart" fx:id="piechart" layoutX="399.0" prefHeight="400.0" prefWidth="401.0" />
+              <LineChart id="linechart" fx:id="linechart" prefHeight="430.0" prefWidth="388.0">
+                  <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                  </xAxis>
+                  <yAxis>
+                      <NumberAxis side="LEFT" />
+                  </yAxis>
+              </LineChart>
+         </children></Pane>
     </children>
 </AnchorPane>

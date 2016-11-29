@@ -7,7 +7,9 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.HomepageadminController">
-   <children>
-       <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
-   </children>
+    <children>
+        <Pane id="background" fx:id="background" layoutY="122.0" prefHeight="478.0" prefWidth="1000.0" stylesheets="@images/menu.css" />
+        <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
+        <Pane style=" -fx-border-width:0 2 0 2; -fx-border-color:lightgrey; -fx-background-color: white;" layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0"/>
+    </children>
 </AnchorPane>

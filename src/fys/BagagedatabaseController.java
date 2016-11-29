@@ -242,10 +242,24 @@ public class BagagedatabaseController implements Initializable {
         int selectedIndex
                 = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
+            int dr_id = (table.getSelectionModel().getSelectedItem().id).getValue();
             String dr_status = (table.getSelectionModel().getSelectedItem().status).getValue();
+            /*String dr_airport = (table.getSelectionModel().getSelectedItem().airport).getValue();
+            String dr_name = (table.getSelectionModel().getSelectedItem().name).surnamecolor).getValue();
+            String dr_adress = (table.getSelectionModel().getSelectedItem().adress).getValue();
+            String dr_residence = (table.getSelectionModel().getSelectedItem().residence).getValue();
+            String dr_zipcode = (table.getSelectionModel().getSelectedItem().zipcode).getValue();
+            String dr_country = (table.getSelectionModel().getSelectedItem().country).getValue();
+            String dr_phone = (table.getSelectionModel().getSelectedItem().phone).getValue();
+            String dr_mail = (table.getSelectionModel().getSelectedItem().mail).getValue();
+            String dr_label = (table.getSelectionModel().getSelectedItem().label).getValue();
+            String dr_flight = (table.getSelectionModel().getSelectedItem().flight).getValue();
+            String dr_destination = (table.getSelectionModel().getSelectedItem().destination).getValue();*/
             String dr_type = (table.getSelectionModel().getSelectedItem().type).getValue();
-            String dr_merk = (table.getSelectionModel().getSelectedItem().brand).getValue();
-            doNext(dr_status, dr_type, dr_merk);
+            String dr_brand = (table.getSelectionModel().getSelectedItem().brand).getValue();
+            String dr_color = (table.getSelectionModel().getSelectedItem().color).getValue();
+            
+            doNext(dr_id, dr_status, dr_type, dr_brand);
             /* Vervolgens moet, waarschijnlijk via een andere methode, alle gegevens
             die al in de database staan ingevuld worden in de velden van het volgende
             scherm (net als met de bedrijfscursus). Vervolgens kan de gebruiker
@@ -265,7 +279,7 @@ public class BagagedatabaseController implements Initializable {
     }
     
     @FXML
-    public void doNext(String dr_status, String dr_type, String dr_merk){
+    public void doNext(int dr_id, String dr_status, String dr_type, String dr_brand){
         database_pane.setDisable(true);
         database_pane.setVisible(false);
         wijzig_pane.setDisable(false);
@@ -273,6 +287,6 @@ public class BagagedatabaseController implements Initializable {
         
         status_combo.setValue(dr_status);
         type_combo.setValue(dr_type);
-        brand_input.setText(dr_merk);
+        brand_input.setText(dr_brand);
     }
 }

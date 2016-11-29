@@ -58,7 +58,7 @@ public class BagagedatabaseController implements Initializable {
             brand_input, characteristics_input;
     @FXML private CheckBox account_checkbox;
     @FXML private Button picture_button, send_button;
-    @FXML private Label id_label;
+    @FXML private Label id_label, personId_label, lafId_label, tableFrom_label;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -231,6 +231,9 @@ public class BagagedatabaseController implements Initializable {
                 = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             int dr_id = (table.getSelectionModel().getSelectedItem().getRealid());
+            int dr_personId = (table.getSelectionModel().getSelectedItem().getPersonid());
+            int dr_lafId = (table.getSelectionModel().getSelectedItem().getLost_and_found_id());
+            int dr_tableFrom = (table.getSelectionModel().getSelectedItem().getTableFrom());
             String dr_status = (table.getSelectionModel().getSelectedItem().getStatus());
             String dr_airport = (table.getSelectionModel().getSelectedItem().getAirport());
             String dr_name = (table.getSelectionModel().getSelectedItem().getFirst_name());
@@ -249,7 +252,7 @@ public class BagagedatabaseController implements Initializable {
             String dr_color = (table.getSelectionModel().getSelectedItem().getColor());
             String dr_characteristics = (table.getSelectionModel().getSelectedItem().getInformation());
             
-            doNext(dr_id, dr_status, dr_airport, dr_name, dr_surname, dr_address,
+            doNext(dr_id, dr_personId, dr_lafId, dr_tableFrom, dr_status, dr_airport, dr_name, dr_surname, dr_address,
                     dr_residence, dr_zipcode, dr_country, dr_phone, dr_mail,
                     dr_label, dr_flight, dr_destination, dr_type, dr_brand,
                     dr_color, dr_characteristics);
@@ -262,7 +265,7 @@ public class BagagedatabaseController implements Initializable {
     }
     
     @FXML
-    public void doNext(int dr_id, String dr_status, String dr_airport, String dr_name,
+    public void doNext(int dr_id, int dr_personId, int dr_lafId, int dr_tableFrom, String dr_status, String dr_airport, String dr_name,
             String dr_surname, String dr_address, String dr_residence, String dr_zipcode, 
             String dr_country, String dr_phone, String dr_mail, String dr_label, 
             String dr_flight, String dr_destination, String dr_type, String dr_brand, 
@@ -274,6 +277,9 @@ public class BagagedatabaseController implements Initializable {
         wijzig_pane.setVisible(true);
         
         id_label.setText(String.valueOf(dr_id));
+        personId_label.setText(String.valueOf(dr_personId));
+        lafId_label.setText(String.valueOf(dr_lafId));
+        tableFrom_label.setText(String.valueOf(dr_tableFrom));
         status_combo.setValue(dr_status);
         airport_combo.setValue(dr_airport);
         name_input.setText(dr_name);
@@ -310,7 +316,7 @@ public class BagagedatabaseController implements Initializable {
         )){
             System.out.println("U heeft niet alles ingevuld!");
         } else{            
-            sendToDatabase(Integer.parseInt(id_label.getText()), fys.getStatusString(status_combo.getValue().toString()), airport_combo.getValue().toString(), name_input.getText(), 
+            sendToDatabase(Integer.parseInt(id_label.getText()), Integer.parseInt(personId_label.getText()), Integer.parseInt(lafId_label.getText()), Integer.parseInt(tableFrom_label.getText()), fys.getStatusString(status_combo.getValue().toString()), airport_combo.getValue().toString(), name_input.getText(), 
                     surname_input.getText(), address_input.getText(), residence_input.getText(), 
                     zipcode_input.getText(), country_input.getText(), phone_input.getText(), 
                     mail_input.getText(), labelnumber_input.getText(), 
@@ -320,7 +326,7 @@ public class BagagedatabaseController implements Initializable {
         }
     }
     
-    private void sendToDatabase(int dr_id, int status, String airport, String frontname, String surname, 
+    private void sendToDatabase(int dr_id, int dr_personId, int dr_lafId, int tableFrom, int status, String airport, String frontname, String surname, 
             String address, String residence, String zipcode, String country, 
             String phone, String mail, String labelnumber, 
             String flightnumber, String destination, int type, String brand, 
@@ -336,62 +342,79 @@ public class BagagedatabaseController implements Initializable {
             stmt = conn.createStatement();
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            /*String sql_person = "UPDATE bagagedatabase.person_table SET first_name='" + frontname + "',"
+            String sql_person = "UPDATE bagagedatabase.person_table SET first_name='" + frontname + "',"
                     + "surname='" + surname + "', address='" + address + "',"
                     + "residence='" + residence + "', zip_code='" + zipcode + "',"
                     + "country='" + country + "', phone='" + phone + "',"
-                    + "mail='" + mail + "')"; 
+                    + "mail='" + mail + "'"
+                    + "WHERE person_id='" + dr_personId + "'"; 
                         
             stmt.executeUpdate(sql_person);
             
-            String sql_airport = "INSERT INTO bagagedatabase.airport_table (date, "
-                    + "time, airport_lost, label_number, flight_number, destination) "
-                    + "VALUES ('" + date + "', '" + time + "', '" + airport + "', "
-                    + "'" + labelnumber + "', '" + flightnumber + "', '" + destination + "')";
-            
-            stmt.executeUpdate(sql_airport);
-            
-            String sql_personID = "SELECT person_id, lost_and_found_id FROM person_table, airport_table WHERE "
-                    + "person_table.first_name = '" + frontname + "'AND person_table.surname = '" + surname + "' "
-                    + "AND person_table.address = '" + address + "' AND person_table.residence = '" + residence + "' "
-                    + "AND person_table.zip_code = '" + zipcode + "' AND person_table.country = '" + country + "' "
-                    + "AND person_table.phone = '" + phone + "' AND person_table.mail = '" + mail + "' "
-                    + "AND airport_table.date = '" + date + "' AND airport_table.time = '" + time + "' "
-                    + "AND airport_table.airport_lost = '" + airport + "' AND airport_table.label_number = '" 
-                    + labelnumber + "' AND airport_table.flight_number = '" + flightnumber + "' "
-                    + "AND airport_table.destination = '" + destination + "'";
-            
-            ResultSet id_rs = stmt.executeQuery(sql_personID);
-            String personIdStr = null, lostAndFoundIdStr = null;
-            int personId = -1, lostAndFoundId = -1;
-            while (id_rs.next()) {
-                String strA = id_rs.getString("person_id");
-                personIdStr = strA.replace("\n", ",");
-                personId = Integer.parseInt(personIdStr);
-                System.out.println(personId);
-                
-                String strB = id_rs.getString("lost_and_found_id");
-                lostAndFoundIdStr = strB.replace("\n", ",");
-                lostAndFoundId = Integer.parseInt(lostAndFoundIdStr);
-                System.out.println(lostAndFoundIdStr);
-            }   
-            
-            String sql_lost = "INSERT INTO bagagedatabase.lost_table (type, brand, color, "
-                    + "characteristics, status, person_id, lost_and_found_id) VALUES ('" + type + "', "
-                    + "'" + brand + "', '" + color + "', '" + characteristics + "', 1, "
-                    + "'" + personId + "', '" + lostAndFoundId + "')";*/
-            
             String sql_lost = "";
-            if(status==0){
+            String sql_airport = "";
+            System.out.println(status);
+            if(tableFrom==0){   //0 = bagagedatabase.lost_table
+                sql_lost = "UPDATE bagagedatabase.found_table SET status='" + status + "',"
+                        + "type='" + type + "', brand='" + brand + "',"
+                        + "color='" + color + "', characteristics='" + characteristics + "'"
+                        + "WHERE id='" + dr_id + "'";
                 
+                switch (status){
+                    //case 0: Gaat van lost_table naar status Gevonden
+                    case 0: sql_airport = "UPDATE bagagedatabase.airport_table SET airport_found='" + airport + "',"
+                            + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
+                            + "destination='" + destination + "'"
+                            + "WHERE lost_and_found_id='" + dr_lafId + "'";
+                            break;
+                    //case 3: Gaat van lost_table naar status Afgehandeld
+                    case 3: sql_airport = "UPDATE bagagedatabase.airport_table SET airport_found='" + airport + "',"
+                            + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
+                            + "destination='" + destination + "'"
+                            + "WHERE lost_and_found_id='" + dr_lafId + "'";
+                            break;
+                    //default: Gaat van lost_table naar status Vermist, Vernietigd, Nooit Gevonden of Depot 
+                    default: sql_airport = "UPDATE bagagedatabase.airport_table SET airport_lost='" + airport + "',"
+                            + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
+                            + "destination='" + destination + "'"
+                            + "WHERE lost_and_found_id='" + dr_lafId + "'";
+                            break;
+                }         
             }
-            else if(status==1){
+            else if(tableFrom==1){  //1 = bagagedatabase.found_table
                 sql_lost = "UPDATE bagagedatabase.lost_table SET status='" + status + "',"
                         + "type='" + type + "', brand='" + brand + "',"
                         + "color='" + color + "', characteristics='" + characteristics + "'"
                         + "WHERE id='" + dr_id + "'";
+                
+                switch (status) {
+                    //case 1: Gaat van found_table naar status Vermist
+                    case 1: sql_airport = "UPDATE bagagedatabase.airport_table SET airport_lost='" + airport + "',"
+                            + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
+                            + "destination='" + destination + "'"
+                            + "WHERE lost_and_found_id='" + dr_lafId + "'";
+                            break;
+                    //case 3: Gaat van found_table naar status Afgehandeld
+                    case 3: sql_airport = "UPDATE bagagedatabase.airport_table SET airport_lost='" + airport + "',"
+                            + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
+                            + "destination='" + destination + "'"
+                            + "WHERE lost_and_found_id='" + dr_lafId + "'";
+                            break;
+                    //default: Gaat van found_table naar status Gevonden, Vernietigd, Nooit gevonden, Depot 
+                    default: sql_airport = "UPDATE bagagedatabase.airport_table SET airport_found='" + airport + "',"
+                            + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
+                            + "destination='" + destination + "'"
+                            + "WHERE lost_and_found_id='" + dr_lafId + "'";
+                            break;
+                }
             }
             stmt.executeUpdate(sql_lost);
+            stmt.executeUpdate(sql_airport);
+            
+            if(status==3){
+                //TODO maak DHL-shipment formulier.
+            }
+            
             taal languages = new taal();
             String[] taal = languages.getLanguage(); 
             fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");

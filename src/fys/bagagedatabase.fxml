@@ -153,6 +153,9 @@
                     </children>
                 </GridPane>
                 <Label fx:id="id_label" prefHeight="30.0" prefWidth="126.0" visible="false" />
+                <Label fx:id="tableFrom_label" prefHeight="30.0" prefWidth="126.0" visible="false" />
+                <Label fx:id="personId_label" prefHeight="30.0" prefWidth="126.0" visible="false" />
+                <Label fx:id="lafId_label" prefHeight="30.0" prefWidth="126.0" visible="false" />
                 <Button fx:id="send_button" layoutX="110.0" layoutY="432.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleSendToDatabase" prefHeight="35.0" prefWidth="779.0" text="Verzenden" /> 
             </children>
         </AnchorPane>

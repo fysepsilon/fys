@@ -11,6 +11,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -58,6 +61,7 @@ public class BagagedatabaseController implements Initializable {
             brand_input, characteristics_input;
     @FXML private CheckBox account_checkbox;
     @FXML private Button picture_button, send_button;
+    @FXML private Label id_label;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -242,9 +246,10 @@ public class BagagedatabaseController implements Initializable {
         if (selectedIndex >= 0) {
             int dr_id = (table.getSelectionModel().getSelectedItem().id).getValue();
             String dr_status = (table.getSelectionModel().getSelectedItem().status).getValue();
-            /*String dr_airport = (table.getSelectionModel().getSelectedItem().airport).getValue();
-            String dr_name = (table.getSelectionModel().getSelectedItem().name).surnamecolor).getValue();
-            String dr_adress = (table.getSelectionModel().getSelectedItem().adress).getValue();
+            String dr_airport = (table.getSelectionModel().getSelectedItem().airport).getValue();
+            String dr_name = (table.getSelectionModel().getSelectedItem().name).getValue();
+            String dr_surname = (table.getSelectionModel().getSelectedItem().surname).getValue();
+            String dr_address = (table.getSelectionModel().getSelectedItem().adress).getValue();
             String dr_residence = (table.getSelectionModel().getSelectedItem().residence).getValue();
             String dr_zipcode = (table.getSelectionModel().getSelectedItem().zipcode).getValue();
             String dr_country = (table.getSelectionModel().getSelectedItem().country).getValue();
@@ -252,22 +257,16 @@ public class BagagedatabaseController implements Initializable {
             String dr_mail = (table.getSelectionModel().getSelectedItem().mail).getValue();
             String dr_label = (table.getSelectionModel().getSelectedItem().label).getValue();
             String dr_flight = (table.getSelectionModel().getSelectedItem().flight).getValue();
-            String dr_destination = (table.getSelectionModel().getSelectedItem().destination).getValue();*/
+            String dr_destination = (table.getSelectionModel().getSelectedItem().destination).getValue();
             String dr_type = (table.getSelectionModel().getSelectedItem().type).getValue();
             String dr_brand = (table.getSelectionModel().getSelectedItem().brand).getValue();
             String dr_color = (table.getSelectionModel().getSelectedItem().color).getValue();
+            String dr_characteristics = (table.getSelectionModel().getSelectedItem().information).getValue();
             
-            doNext(dr_id, dr_status, dr_type, dr_brand);
-            /* Vervolgens moet, waarschijnlijk via een andere methode, alle gegevens
-            die al in de database staan ingevuld worden in de velden van het volgende
-            scherm (net als met de bedrijfscursus). Vervolgens kan de gebruiker
-            deze gegevens aanpassen en verzenden waarna de gegevens in de 
-            database worden bijgewerkt.
-            
-            Het veranderen van de tekst van de input- en combovelden in het volgende
-            FXML scherm (wijzigFormulier.fxml) lukt nog niet.
-                -Lucas
-            */   
+            doNext(dr_id, dr_status, dr_airport, dr_name, dr_surname, dr_address,
+                    dr_residence, dr_zipcode, dr_country, dr_phone, dr_mail,
+                    dr_label, dr_flight, dr_destination, dr_type, dr_brand,
+                    dr_color, dr_characteristics);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Wijzigen van gegevens");
@@ -277,14 +276,142 @@ public class BagagedatabaseController implements Initializable {
     }
     
     @FXML
-    public void doNext(int dr_id, String dr_status, String dr_type, String dr_brand){
+    public void doNext(int dr_id, String dr_status, String dr_airport, String dr_name,
+            String dr_surname, String dr_address, String dr_residence, String dr_zipcode, 
+            String dr_country, String dr_phone, String dr_mail, String dr_label, 
+            String dr_flight, String dr_destination, String dr_type, String dr_brand, 
+            String dr_color, String dr_characteristics){
+        
         database_pane.setDisable(true);
         database_pane.setVisible(false);
         wijzig_pane.setDisable(false);
         wijzig_pane.setVisible(true);
         
+        id_label.setText(String.valueOf(dr_id));
         status_combo.setValue(dr_status);
+        airport_combo.setValue(dr_airport);
+        name_input.setText(dr_name);
+        surname_input.setText(dr_surname);
+        address_input.setText(dr_address);
+        residence_input.setText(dr_residence);
+        zipcode_input.setText(dr_zipcode);
+        country_input.setText(dr_country);
+        phone_input.setText(dr_phone);
+        mail_input.setText(dr_mail);
+        labelnumber_input.setText(dr_label);
+        flightnumber_input.setText(dr_flight);
+        destination_input.setText(dr_destination);
         type_combo.setValue(dr_type);
         brand_input.setText(dr_brand);
+        color_combo.setValue(dr_color);
+        characteristics_input.setText(dr_characteristics);
+    }
+    
+    @FXML
+    private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
+        FYS fys = new FYS();
+        
+        if((name_input.getText() == null || name_input.getText().trim().isEmpty())
+                || (surname_input.getText() == null || surname_input.getText().trim().isEmpty())
+                || (airport_combo.getValue() == null) || (status_combo.getValue() == null)
+                || (address_input.getText() == null || address_input.getText().trim().isEmpty())
+                || (residence_input.getText() == null || residence_input.getText().trim().isEmpty())
+                || (zipcode_input.getText() == null || zipcode_input.getText().trim().isEmpty())
+                || (mail_input.getText() == null || mail_input.getText().trim().isEmpty())
+                || (type_combo.getValue() == null)
+                || (brand_input.getText() == null || brand_input.getText().trim().isEmpty())
+                || (color_combo.getValue() == null
+        )){
+            System.out.println("U heeft niet alles ingevuld!");
+        } else{            
+            sendToDatabase(fys.getStatusString(status_combo.getValue().toString()), airport_combo.getValue().toString(), name_input.getText(), 
+                    surname_input.getText(), address_input.getText(), residence_input.getText(), 
+                    zipcode_input.getText(), country_input.getText(), phone_input.getText(), 
+                    mail_input.getText(), labelnumber_input.getText(), 
+                    flightnumber_input.getText(), destination_input.getText(), 
+                    fys.getBaggageTypeString(type_combo.getValue().toString()), brand_input.getText(), fys.getColorString(color_combo.getValue().toString()), 
+                    characteristics_input.getText());
+        }
+    }
+    
+    private void sendToDatabase(int status, String airport, String frontname, String surname, 
+            String address, String residence, String zipcode, String country, 
+            String phone, String mail, String labelnumber, 
+            String flightnumber, String destination, int type, String brand, 
+            Integer color, String characteristics) 
+            throws IOException, SQLException {
+        FYS fys = new FYS();
+        
+        try {
+            Statement stmt = null;
+            Connection conn = null;
+
+            conn = fys.connectToDatabase(conn);
+            stmt = conn.createStatement();
+
+            //connectToDatabase(conn, stmt, "test", "root", "root");
+            /*String sql_person = "UPDATE bagagedatabase.person_table SET first_name='" + frontname + "',"
+                    + "surname='" + surname + "', address='" + address + "',"
+                    + "residence='" + residence + "', zip_code='" + zipcode + "',"
+                    + "country='" + country + "', phone='" + phone + "',"
+                    + "mail='" + mail + "')"; 
+                        
+            stmt.executeUpdate(sql_person);
+            
+            String sql_airport = "INSERT INTO bagagedatabase.airport_table (date, "
+                    + "time, airport_lost, label_number, flight_number, destination) "
+                    + "VALUES ('" + date + "', '" + time + "', '" + airport + "', "
+                    + "'" + labelnumber + "', '" + flightnumber + "', '" + destination + "')";
+            
+            stmt.executeUpdate(sql_airport);
+            
+            String sql_personID = "SELECT person_id, lost_and_found_id FROM person_table, airport_table WHERE "
+                    + "person_table.first_name = '" + frontname + "'AND person_table.surname = '" + surname + "' "
+                    + "AND person_table.address = '" + address + "' AND person_table.residence = '" + residence + "' "
+                    + "AND person_table.zip_code = '" + zipcode + "' AND person_table.country = '" + country + "' "
+                    + "AND person_table.phone = '" + phone + "' AND person_table.mail = '" + mail + "' "
+                    + "AND airport_table.date = '" + date + "' AND airport_table.time = '" + time + "' "
+                    + "AND airport_table.airport_lost = '" + airport + "' AND airport_table.label_number = '" 
+                    + labelnumber + "' AND airport_table.flight_number = '" + flightnumber + "' "
+                    + "AND airport_table.destination = '" + destination + "'";
+            
+            ResultSet id_rs = stmt.executeQuery(sql_personID);
+            String personIdStr = null, lostAndFoundIdStr = null;
+            int personId = -1, lostAndFoundId = -1;
+            while (id_rs.next()) {
+                String strA = id_rs.getString("person_id");
+                personIdStr = strA.replace("\n", ",");
+                personId = Integer.parseInt(personIdStr);
+                System.out.println(personId);
+                
+                String strB = id_rs.getString("lost_and_found_id");
+                lostAndFoundIdStr = strB.replace("\n", ",");
+                lostAndFoundId = Integer.parseInt(lostAndFoundIdStr);
+                System.out.println(lostAndFoundIdStr);
+            }   
+            
+            String sql_lost = "INSERT INTO bagagedatabase.lost_table (type, brand, color, "
+                    + "characteristics, status, person_id, lost_and_found_id) VALUES ('" + type + "', "
+                    + "'" + brand + "', '" + color + "', '" + characteristics + "', 1, "
+                    + "'" + personId + "', '" + lostAndFoundId + "')";*/
+            
+            String sql_lost = "";
+            if(status==0){
+                
+            }
+            else if(status==1){
+                sql_lost = "UPDATE bagagedatabase.lost_table SET status='" + status + "',"
+                        + "type='" + type + "', brand='" + brand + "',"
+                        + "color='" + color + "', characteristics='" + characteristics + "'"
+                        + "WHERE id=
+            }
+            stmt.executeUpdate(sql_lost);
+            conn.close();
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
     }
 }

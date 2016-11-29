@@ -188,7 +188,8 @@
                         </ComboBox>
                     </children>
                 </GridPane>
-                <Button fx:id="send_button" layoutX="14.0" layoutY="432.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="972.0" text="Verzenden" /> 
+                <Label fx:id="id_label" prefHeight="30.0" prefWidth="126.0" visible="false" />
+                <Button fx:id="send_button" layoutX="14.0" layoutY="432.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleSendToDatabase" prefHeight="35.0" prefWidth="972.0" text="Verzenden" /> 
             </children>
         </AnchorPane>
     </children>

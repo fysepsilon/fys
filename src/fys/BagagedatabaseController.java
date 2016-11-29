@@ -226,7 +226,8 @@ public class BagagedatabaseController implements Initializable {
             String dr_status = (table.getSelectionModel().getSelectedItem().getStatus());
             String dr_airport = (table.getSelectionModel().getSelectedItem().getAirport());
             String dr_name = (table.getSelectionModel().getSelectedItem().getFirst_name());
-            String dr_adress = (table.getSelectionModel().getSelectedItem().getAddress());
+            String dr_surname = (table.getSelectionModel().getSelectedItem().getSurname());
+            String dr_address = (table.getSelectionModel().getSelectedItem().getAddress());
             String dr_residence = (table.getSelectionModel().getSelectedItem().getResidence());
             String dr_zipcode = (table.getSelectionModel().getSelectedItem().getZipcode());
             String dr_country = (table.getSelectionModel().getSelectedItem().getCountry());
@@ -238,6 +239,7 @@ public class BagagedatabaseController implements Initializable {
             String dr_type = (table.getSelectionModel().getSelectedItem().getType());
             String dr_brand = (table.getSelectionModel().getSelectedItem().getBrand());
             String dr_color = (table.getSelectionModel().getSelectedItem().getColor());
+            String dr_characteristics = (table.getSelectionModel().getSelectedItem().getInformation());
             
             doNext(dr_id, dr_status, dr_airport, dr_name, dr_surname, dr_address,
                     dr_residence, dr_zipcode, dr_country, dr_phone, dr_mail,
@@ -300,7 +302,7 @@ public class BagagedatabaseController implements Initializable {
         )){
             System.out.println("U heeft niet alles ingevuld!");
         } else{            
-            sendToDatabase(fys.getStatusString(status_combo.getValue().toString()), airport_combo.getValue().toString(), name_input.getText(), 
+            sendToDatabase(Integer.parseInt(id_label.getText()), fys.getStatusString(status_combo.getValue().toString()), airport_combo.getValue().toString(), name_input.getText(), 
                     surname_input.getText(), address_input.getText(), residence_input.getText(), 
                     zipcode_input.getText(), country_input.getText(), phone_input.getText(), 
                     mail_input.getText(), labelnumber_input.getText(), 
@@ -310,7 +312,7 @@ public class BagagedatabaseController implements Initializable {
         }
     }
     
-    private void sendToDatabase(int status, String airport, String frontname, String surname, 
+    private void sendToDatabase(int dr_id, int status, String airport, String frontname, String surname, 
             String address, String residence, String zipcode, String country, 
             String phone, String mail, String labelnumber, 
             String flightnumber, String destination, int type, String brand, 
@@ -379,7 +381,7 @@ public class BagagedatabaseController implements Initializable {
                 sql_lost = "UPDATE bagagedatabase.lost_table SET status='" + status + "',"
                         + "type='" + type + "', brand='" + brand + "',"
                         + "color='" + color + "', characteristics='" + characteristics + "'"
-                        + "WHERE id=
+                        + "WHERE id='" + dr_id + "')";
             }
             stmt.executeUpdate(sql_lost);
             conn.close();

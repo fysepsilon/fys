@@ -240,10 +240,11 @@ public class BagagedatabaseController implements Initializable {
         int selectedIndex
                 = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
+            int dr_id = (table.getSelectionModel().getSelectedItem().id).getValue();
             String dr_status = (table.getSelectionModel().getSelectedItem().status).getValue();
             String dr_type = (table.getSelectionModel().getSelectedItem().type).getValue();
             String dr_merk = (table.getSelectionModel().getSelectedItem().brand).getValue();
-            doNext(dr_status, dr_type, dr_merk);
+            doNext(dr_id, dr_status, dr_type, dr_merk);
             /* Vervolgens moet, waarschijnlijk via een andere methode, alle gegevens
             die al in de database staan ingevuld worden in de velden van het volgende
             scherm (net als met de bedrijfscursus). Vervolgens kan de gebruiker
@@ -263,7 +264,7 @@ public class BagagedatabaseController implements Initializable {
     }
     
     @FXML
-    public void doNext(String dr_status, String dr_type, String dr_merk){
+    public void doNext(int dr_id, String dr_status, String dr_type, String dr_merk){
         database_pane.setDisable(true);
         database_pane.setVisible(false);
         wijzig_pane.setDisable(false);

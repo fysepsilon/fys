@@ -105,16 +105,16 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Label fx:id="mail_label" prefHeight="30.0" prefWidth="126.0" text="E-mail:" GridPane.rowIndex="8" />
-                        <Label fx:id="phone_label" prefHeight="30.0" prefWidth="126.0" text="Telefoon:" GridPane.rowIndex="7" />
-                        <Label fx:id="country_label" prefHeight="30.0" prefWidth="126.0" text="Land:" GridPane.rowIndex="6" />
-                        <Label fx:id="zipcode_label" prefHeight="30.0" prefWidth="126.0" text="Postcode:" GridPane.rowIndex="5" />
-                        <Label fx:id="residence_label" prefHeight="30.0" prefWidth="126.0" text="Woonplaats:" GridPane.rowIndex="4" />
-                        <Label fx:id="address_label" prefHeight="30.0" prefWidth="126.0" text="Adres:" GridPane.rowIndex="3" />
-                        <Label fx:id="surname_label" prefHeight="30.0" prefWidth="126.0" text="Achternaam:" GridPane.rowIndex="2" />
-                        <Label fx:id="name_label" prefHeight="30.0" prefWidth="126.0" text="Voornaam:" GridPane.rowIndex="1" />
-                        <Label fx:id="airport_label" prefHeight="30.0" prefWidth="126.0" text="Luchthaven:" />
-                        <ComboBox fx:id="airport_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" promptText="Kies hier uw luchthaven" GridPane.columnIndex="1">
+                        <Label fx:id="mail_label" prefHeight="30.0" prefWidth="126.0" text="E-mail:" GridPane.columnIndex="3" />
+                        <Label fx:id="phone_label" prefHeight="30.0" prefWidth="126.0" text="Telefoon:" GridPane.rowIndex="8" />
+                        <Label fx:id="country_label" prefHeight="30.0" prefWidth="126.0" text="Land:" GridPane.rowIndex="7" />
+                        <Label fx:id="zipcode_label" prefHeight="30.0" prefWidth="126.0" text="Postcode:" GridPane.rowIndex="6" />
+                        <Label fx:id="residence_label" prefHeight="30.0" prefWidth="126.0" text="Woonplaats:" GridPane.rowIndex="5" />
+                        <Label fx:id="address_label" prefHeight="30.0" prefWidth="126.0" text="Adres:" GridPane.rowIndex="4" />
+                        <Label fx:id="surname_label" prefHeight="30.0" prefWidth="126.0" text="Achternaam:" GridPane.rowIndex="3" />
+                        <Label fx:id="name_label" prefHeight="30.0" prefWidth="126.0" text="Voornaam:" GridPane.rowIndex="2" />
+                        <Label fx:id="airport_label" prefHeight="30.0" prefWidth="126.0" text="Luchthaven:" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="airport_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" promptText="Kies hier uw luchthaven" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
                                     <String fx:value="Alanya-Gazipasa" />
@@ -123,44 +123,69 @@
                                 </FXCollections>
                             </items>
                         </ComboBox>
-                        <TextField fx:id="name_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="surname_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField fx:id="address_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <TextField fx:id="residence_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField fx:id="zipcode_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <TextField fx:id="country_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <TextField fx:id="phone_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <TextField fx:id="mail_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="184.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                        <Label fx:id="label_label" prefHeight="30.0" prefWidth="126.0" text="Labelnummer:" GridPane.columnIndex="3" />
-                        <Label fx:id="flight_label" prefHeight="30.0" prefWidth="126.0" text="Vluchtnummer:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                        <Label fx:id="destination_label" prefHeight="30.0" prefWidth="126.0" text="Bestemming:" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                        <Label fx:id="type_label2" prefHeight="30.0" prefWidth="126.0" text="Type:" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                        <Label fx:id="brand_label2" prefHeight="30.0" prefWidth="126.0" text="Merk:" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                        <Label fx:id="color_label2" prefHeight="30.0" prefWidth="126.0" text="Kleur:" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                        <Label fx:id="characteristics_label" prefHeight="30.0" prefWidth="126.0" text="Kenmerken:" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                        <Label fx:id="picture_label" prefHeight="30.0" prefWidth="126.0" text="Afbeelding:" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-                        <TextField fx:id="labelnumber_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="104.0" GridPane.columnIndex="4" />
-                        <TextField fx:id="flightnumber_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                        <TextField fx:id="destination_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                        <ComboBox fx:id="type_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" promptText="Kies hier uw type bagage" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                        <TextField fx:id="name_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="surname_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="address_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="residence_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField fx:id="zipcode_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <TextField fx:id="country_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <TextField fx:id="phone_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <TextField fx:id="mail_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="184.0" GridPane.columnIndex="4" />
+                        <Label fx:id="label_label" prefHeight="30.0" prefWidth="126.0" text="Labelnummer:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Label fx:id="flight_label" prefHeight="30.0" prefWidth="126.0" text="Vluchtnummer:" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <Label fx:id="destination_label" prefHeight="30.0" prefWidth="126.0" text="Bestemming:" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <Label fx:id="type_label2" prefHeight="30.0" prefWidth="126.0" text="Type:" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <Label fx:id="brand_label2" prefHeight="30.0" prefWidth="126.0" text="Merk:" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                        <Label fx:id="color_label2" prefHeight="30.0" prefWidth="126.0" text="Kleur:" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                        <Label fx:id="characteristics_label" prefHeight="30.0" prefWidth="126.0" text="Kenmerken:" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                        <Label fx:id="picture_label" prefHeight="30.0" prefWidth="126.0" text="Afbeelding:" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+                        <TextField fx:id="labelnumber_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="104.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                        <TextField fx:id="flightnumber_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                        <TextField fx:id="destination_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="type_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" promptText="Kies hier uw type bagage" GridPane.columnIndex="4" GridPane.rowIndex="4">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Koffer" />
+                                    <String fx:value="Sporttas" />
+                                    <String fx:value="Handtas" />
+                                    <String fx:value="Rugzak" />
                                 </FXCollections>
                             </items>
                         </ComboBox>
-                        <TextField fx:id="brand_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                        <ComboBox fx:id="color_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" promptText="Kies hier de kleur van de bagage" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                        <TextField fx:id="brand_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="color_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" promptText="Kies hier de kleur van de bagage" GridPane.columnIndex="4" GridPane.rowIndex="6">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Bruin" />
+                                    <String fx:value="Beige" />
+                                    <String fx:value="Rood" />
+                                    <String fx:value="Oranje" />
+                                    <String fx:value="Geel" />
+                                    <String fx:value="Groen" />
+                                    <String fx:value="Blauw" />
+                                    <String fx:value="Paars" />
+                                    <String fx:value="Roze" />
+                                    <String fx:value="Zwart" />
+                                    <String fx:value="Grijs" />
+                                    <String fx:value="Wit" />        
                                 </FXCollections>
                             </items>
                         </ComboBox>
-                        <TextField fx:id="characteristics_input" alignment="TOP_LEFT" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-                        <Button fx:id="picture_button" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="318.0" text="Klik hier om een afbeelding toe te voegen" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-                        <CheckBox fx:id="account_checkbox" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="193.0" text="Aanmaken account" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+                        <TextField fx:id="characteristics_input" alignment="TOP_LEFT" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+                        <Button fx:id="picture_button" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="318.0" text="Klik hier om een afbeelding toe te voegen" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+                        <Label fx:id="status_label2" prefHeight="30.0" prefWidth="126.0" text="Status:" />
+                        <ComboBox fx:id="status_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Alanya-Gazipasa" />
+                                    <String fx:value="Schiphol" />
+                                    <String fx:value="Malta Airport" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
                     </children>
                 </GridPane>
-                <Button fx:id="send_button" layoutX="14.0" layoutY="557.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="972.0" text="Verzenden" />
+                <Button fx:id="send_button" layoutX="14.0" layoutY="557.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="972.0" text="Verzenden" /> 
             </children>
         </AnchorPane>
     </children>

@@ -51,13 +51,13 @@ public class BagagedatabaseController implements Initializable {
     @FXML private Button filter;
     @FXML private Text status_label, color_label, type_label, brand_label, date_label, extraInfo_label;
     
-    /*@FXML private ComboBox status_combo, airport_combo, type_combo, color_combo;
+    @FXML private ComboBox status_combo, airport_combo, type_combo, color_combo;
     @FXML private TextField name_input, surname_input, address_input, 
             residence_input, zipcode_input, country_input, phone_input, 
             mail_input, labelnumber_input, flightnumber_input, destination_input,
             brand_input, characteristics_input;
     @FXML private CheckBox account_checkbox;
-    @FXML private Button picture_button, send_button;*/
+    @FXML private Button picture_button, send_button;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -238,9 +238,12 @@ public class BagagedatabaseController implements Initializable {
     
     public void handleChange(ActionEvent event) throws IOException {
         int selectedIndex
-                = (table).getSelectionModel().getSelectedIndex();
+                = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            doNext();
+            String dr_status = (table.getSelectionModel().getSelectedItem().status).getValue();
+            String dr_type = (table.getSelectionModel().getSelectedItem().type).getValue();
+            String dr_merk = (table.getSelectionModel().getSelectedItem().brand).getValue();
+            doNext(dr_status, dr_type, dr_merk);
             /* Vervolgens moet, waarschijnlijk via een andere methode, alle gegevens
             die al in de database staan ingevuld worden in de velden van het volgende
             scherm (net als met de bedrijfscursus). Vervolgens kan de gebruiker
@@ -260,10 +263,14 @@ public class BagagedatabaseController implements Initializable {
     }
     
     @FXML
-    public void doNext(){
+    public void doNext(String dr_status, String dr_type, String dr_merk){
         database_pane.setDisable(true);
         database_pane.setVisible(false);
         wijzig_pane.setDisable(false);
         wijzig_pane.setVisible(true);
+        
+        status_combo.setValue(dr_status);
+        type_combo.setValue(dr_type);
+        brand_input.setText(dr_merk);
     }
 }

@@ -52,6 +52,8 @@ public class NieuwaccountaanmakenController implements Initializable {
     private void handleAction(ActionEvent event) throws IOException, SQLException {
         FYS fys = new FYS();
         String password = fys.encrypt(generateRandomPassword(8));
+        taal languages = new taal();
+        String[] taal = languages.getLanguage();
         String email = "";
         Statement stmt = null;
         Connection conn = null;
@@ -69,7 +71,7 @@ public class NieuwaccountaanmakenController implements Initializable {
                 || (language_combo.getValue() == null)
                 || (type_combo.getValue() == null)) {
             // Foutmelding
-            loginerror.setText("U heeft niet alles ingevuld!");
+            loginerror.setText(taal[93]);
             loginerror.setVisible(true);
 
         } else {
@@ -165,7 +167,7 @@ public class NieuwaccountaanmakenController implements Initializable {
                             + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
                     break;
             }
-            loginerror.setText("Het account is gemaakt en de e-mail is verstuurd!");
+            loginerror.setText(taal[103]);
             loginerror.setStyle("-fx-text-fill: green;");
             loginerror.setVisible(true);
             loginerror.setDisable(false);

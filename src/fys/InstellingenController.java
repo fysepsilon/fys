@@ -104,7 +104,7 @@ public class InstellingenController implements Initializable {
                         + "' WHERE person_id = " + id + ";";
                 stmt.executeUpdate(sql);
                 conn.close();
-                fys.changeToAnotherFXML(taal[95], "bagageformulieren.fxml");
+                fys.changeToAnotherFXML(taal[102], "instellingen.fxml");
                 login.setEmail(username.getText());
             } catch (SQLException ex) {
                 // handle any errors

@@ -112,7 +112,7 @@ public class taal {
             languagefields[65] = "Administrator";
             languagefields[66] = "Customer";
             languagefields[67] = "Edit";
-            languagefields[68] = "Delete";
+            languagefields[68] = "Language";
             languagefields[69] = "English";
             languagefields[70] = "Dutch";
             languagefields[71] = "Spanish";
@@ -150,7 +150,8 @@ public class taal {
             languagefields[103] = "The account is created and the e-mail is sent!";
             languagefields[104] = "Change data";
             languagefields[105] = "First, select a row in the table to change something";
-            languagefields[106] = "Latest luggage";        
+            languagefields[106] = "Latest luggage";    
+            languagefields[107] = "Time";
         } else if(language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
@@ -259,7 +260,8 @@ public class taal {
             languagefields[103] = "Het account is gemaakt en de e-mail is verstuurd!";
             languagefields[104] = "Wijzigen van gegevens";
             languagefields[105] = "Selecteer eerst een rij in de tabel om deze te wijzigen";
-            languagefields[106] = "Meest recente bagage";         
+            languagefields[106] = "Meest recente bagage";       
+            languagefields[107] = "Tijd";
         } else if(language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";
@@ -376,7 +378,8 @@ public class taal {
             languagefields[103] = "La cuenta se crea y se envía el e-mail!";
             languagefields[104] = "Cambio de datos";
             languagefields[105] = "En primer lugar, seleccione una fila de la tabla para cambiar esta";
-            languagefields[106] = "Última equipaje";      
+            languagefields[106] = "Última equipaje";   
+            languagefields[107] = "Tiempo";
         } else { //Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
@@ -486,6 +489,7 @@ public class taal {
             languagefields[104] = "Değişim verileri";
             languagefields[105] = "İlk olarak, bu değiştirmek için tablodaki bir satır seçin";
             languagefields[106] = "Son bagaj";     
+            languagefields[107] = "Zaman";            
         }
         return languagefields;
     }

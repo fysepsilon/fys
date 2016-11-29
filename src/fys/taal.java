@@ -137,7 +137,7 @@ public class taal {
             languagefields[90] = "Password";
             languagefields[91] = "E-mailaddress";
             languagefields[92] = "Save";
-            languagefields[93] = "Fields are left blank!";
+            languagefields[93] = "Some fields are left blank!";
             languagefields[94] = "E-mail already exists!"; 
             languagefields[95] = "Register missing luggage";   
             languagefields[96] = "Register found luggage";   
@@ -146,7 +146,11 @@ public class taal {
             languagefields[99] = "Statistics";   
             languagefields[100] = "Luggage database";   
             languagefields[101] = "Login";   
-            languagefields[102] = "Settings";   
+            languagefields[102] = "Settings";  
+            languagefields[103] = "The account is created and the e-mail is sent!";
+            languagefields[104] = "Change data";
+            languagefields[105] = "First, select a row in the table to change something";
+            languagefields[106] = "Latest luggage";        
         } else if(language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
@@ -242,7 +246,7 @@ public class taal {
             languagefields[90] = "Wachtwoord";
             languagefields[91] = "E-mailadres";
             languagefields[92] = "Opslaan";    
-            languagefields[93] = "Velden zijn leeggelaten!";
+            languagefields[93] = "Er zijn velden zijn leeg gelaten!";          
             languagefields[94] = "E-mailadres bestaat al!"; 
             languagefields[95] = "Vermiste bagage registreren";   
             languagefields[96] = "Gevonden bagage registreren";   
@@ -252,6 +256,10 @@ public class taal {
             languagefields[100] = "Bagage database";   
             languagefields[101] = "Login";   
             languagefields[102] = "Instellingen";   
+            languagefields[103] = "Het account is gemaakt en de e-mail is verstuurd!";
+            languagefields[104] = "Wijzigen van gegevens";
+            languagefields[105] = "Selecteer eerst een rij in de tabel om deze te wijzigen";
+            languagefields[106] = "Meest recente bagage";         
         } else if(language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";
@@ -355,7 +363,7 @@ public class taal {
             languagefields[91] = "Correo electrónico";
             
             languagefields[92] = "Tienda";   
-            languagefields[93] = "Los campos se dejan en blanco!";  
+            languagefields[93] = "Hay campos se dejan en blanco!";  
             languagefields[94] = "Correo electrónico ya existe!";    
             languagefields[95] = "Registro equipaje perdido";   
             languagefields[96] = "Registro encontró equipaje";   
@@ -365,6 +373,10 @@ public class taal {
             languagefields[100] = "Base de datos de equipaje";   
             languagefields[101] = "Login";   
             languagefields[102] = "Ajustes";   
+            languagefields[103] = "La cuenta se crea y se envía el e-mail!";
+            languagefields[104] = "Cambio de datos";
+            languagefields[105] = "En primer lugar, seleccione una fila de la tabla para cambiar esta";
+            languagefields[106] = "Última equipaje";      
         } else { //Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
@@ -460,7 +472,7 @@ public class taal {
             languagefields[90] = "Şifre";
             languagefields[91] = "Posta";
             languagefields[92] = "Mağaza";       
-            languagefields[93] = "Alanlar boş bırakılır!";  
+            languagefields[93] = "Boş bırakılan alanlar vardır!";  
             languagefields[94] = "Posta zaten var!";       
             languagefields[95] = "Kayıt kayıp bagaj";   
             languagefields[96] = "Kayıt bagaj bulundu";   
@@ -470,6 +482,10 @@ public class taal {
             languagefields[100] = "Bagaj veritabanı";   
             languagefields[101] = "Giriş";   
             languagefields[102] = "Ayarlar";   
+            languagefields[103] = "Hesabı oluşturulur ve e-posta gönderilir!";
+            languagefields[104] = "Değişim verileri";
+            languagefields[105] = "İlk olarak, bu değiştirmek için tablodaki bir satır seçin";
+            languagefields[106] = "Son bagaj";     
         }
         return languagefields;
     }

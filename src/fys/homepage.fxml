@@ -23,7 +23,7 @@
                 <RowConstraints maxHeight="320.0" minHeight="10.0" prefHeight="306.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label alignment="CENTER" prefHeight="27.0" prefWidth="294.0" text="Verloren" GridPane.columnIndex="1">
+                  <Label fx:id="lostlabel" id="lostlabel" alignment="CENTER" prefHeight="27.0" prefWidth="294.0" GridPane.columnIndex="1">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -42,14 +42,14 @@
                         <TableColumn id="brand1" fx:id="brand1" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Merk" />
                      </columns>
                   </TableView>
-                  <Label alignment="CENTER" prefHeight="27.0" prefWidth="291.0" text="Gevonden" textAlignment="CENTER">
+                  <Label fx:id="foundlabel" id="foundlabel" alignment="CENTER" prefHeight="27.0" prefWidth="291.0" textAlignment="CENTER">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                </children>
             </GridPane>
-            <Label alignment="CENTER" layoutX="110.0" layoutY="32.0" prefHeight="53.0" prefWidth="580.0" text="Meest recente bagage">
+            <Label fx:id="recentlabel" id="recentlabel" alignment="CENTER" layoutX="110.0" layoutY="32.0" prefHeight="53.0" prefWidth="580.0" >
                <font>
                   <Font size="24.0" />
                </font>

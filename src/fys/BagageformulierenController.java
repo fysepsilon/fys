@@ -30,7 +30,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author Paras
  */
-public class BagageformulierenController implements Initializable {        
+public class BagageformulierenController implements Initializable {
     @FXML private ComboBox airport_combo, type_combo, color_combo;
     @FXML private TextField name_input, surname_input, address_input, 
             residence_input, zipcode_input, country_input, phone_input, 
@@ -188,5 +188,5 @@ public class BagageformulierenController implements Initializable {
         picture_button.setText(taal[44]);
         account_checkbox.setText(taal[45]);
         send_button.setText(taal[46]);
-    }       
+    }
 }

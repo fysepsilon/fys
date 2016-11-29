@@ -46,6 +46,8 @@ public class BagageformulierenController implements Initializable {
     @FXML
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
         FYS fys = new FYS();
+        taal language = new taal();
+        String[] taal = language.getLanguage();
         
         if((name_input.getText() == null || name_input.getText().trim().isEmpty())
                 || (surname_input.getText() == null || surname_input.getText().trim().isEmpty())
@@ -58,7 +60,7 @@ public class BagageformulierenController implements Initializable {
                 || (brand_input.getText() == null || brand_input.getText().trim().isEmpty())
                 || (color_combo.getValue() == null
         )){
-            System.out.println("U heeft niet alles ingevuld!");
+            System.out.println(taal[93]);
         } else{
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date date = new Date();

@@ -237,6 +237,8 @@ public class BagagedatabaseController implements Initializable {
     }
     
     public void handleChange(ActionEvent event) throws IOException {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
         int selectedIndex
                 = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -256,8 +258,8 @@ public class BagagedatabaseController implements Initializable {
             */   
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Wijzigen van gegevens");
-            alert.setContentText("Selecteer eerst een rij in de tabel om deze te wijzigen");
+            alert.setHeaderText(taal[104]);
+            alert.setContentText(taal[105]);
             alert.showAndWait();
         }
     }

@@ -48,6 +48,7 @@ public class StatistiekenController implements Initializable {
             new PieChart.Data(taal[54], 0), new PieChart.Data(taal[55], 0),
             new PieChart.Data(taal[56], 0), new PieChart.Data(taal[57], 0),
             new PieChart.Data(taal[58], 0), new PieChart.Data(taal[59], 0));
+    @FXML private XYChart.Series series = new XYChart.Series<>(); 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -132,9 +133,9 @@ public class StatistiekenController implements Initializable {
         linechart.setTitle(taal[76]);
         linechart.setAnimated(true);
         linechart.getXAxis().setAutoRanging(true); 
-        linechart.getYAxis().setAutoRanging(true); 
+        linechart.getYAxis().setAutoRanging(true);
         
-        XYChart.Series series = new XYChart.Series<>(); 
+        
         series.setName(taal[77]);
         series.getData().add(new XYChart.Data<>(taal[78], 0)); 
         series.getData().add(new XYChart.Data(taal[79], 0));
@@ -161,7 +162,7 @@ public class StatistiekenController implements Initializable {
                     + "UNION ALL "
                     + "SELECT status, date FROM found_table, airport_table WHERE status = 4 "
                     + "AND found_table.lost_and_found_id = airport_table.lost_and_found_id) x "
-                    + "WHERE status = 4 and date LIKE '%' GROUP BY x.status, x.date";
+                    + "WHERE status = 4 GROUP BY x.status, x.date";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name
@@ -205,11 +206,13 @@ public class StatistiekenController implements Initializable {
     
     @FXML
     private void handleFilterAction(ActionEvent event) throws IOException {
-        System.out.println(year.getSelectionModel().getSelectedItem().toString());
-        System.out.println(month.getSelectionModel().getSelectedItem().toString());
+        //PIECHART
         int luggage = 0, foundAmount = 0, lostAmount = 0, destroyAmount = 0, settleAmount = 0, 
                 neverFoundAmount = 0, depotAmount = 0;
+        int jan = 0, feb = 0, mar = 0, apr = 0, mei = 0, jun = 0, jul = 0, aug = 0,
+                sep = 0, okt = 0, nov = 0, dec = 0;
         total = 0;
+        series.getData().clear();
         pieChartData = FXCollections.observableArrayList();
         try {
             conn = fys.connectToDatabase(conn);
@@ -223,7 +226,6 @@ public class StatistiekenController implements Initializable {
                     + "WHERE YEAR(x.date) LIKE \"%" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
                     + "AND MONTH(x.date) LIKE \"%" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
                     + "GROUP BY x.status";
-            System.out.println(sql);
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     luggage++;
@@ -260,6 +262,59 @@ public class StatistiekenController implements Initializable {
                         (total == 0 || (int) data.getPieValue() == 0) ? 0 : (int) (data.getPieValue() / total * 100), "%"
                 )
         ));
+        
+        //LINECHART
+        try {
+            conn = fys.connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT x.status, x.date, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
+                    + "FROM (SELECT status, date FROM lost_table, airport_table "
+                    + "WHERE status = 4 AND lost_table.lost_and_found_id = airport_table.lost_and_found_id "
+                    + "UNION ALL "
+                    + "SELECT status, date FROM found_table, airport_table "
+                    + "WHERE status = 4 AND found_table.lost_and_found_id = airport_table.lost_and_found_id) x "
+                    + "WHERE status = 4 AND YEAR(x.date) LIKE \"%" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
+                    + "AND MONTH(x.date) LIKE \"%" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
+                    + "GROUP BY x.status, x.date";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                //Retrieve by column name
+                String str[] = rs.getString("date").split("-");
+                int month = Integer.parseInt(str[1]);
+                jan = (month == 1 ? jan += rs.getInt("Count") : jan);
+                feb = (month == 2 ? feb += rs.getInt("Count") : feb);
+                mar = (month == 3 ? mar += rs.getInt("Count") : mar);
+                apr = (month == 4 ? apr += rs.getInt("Count") : apr);
+                mei = (month == 5 ? jan += rs.getInt("Count") : mei);
+                jun = (month == 6 ? jun += rs.getInt("Count") : jun);
+                jul = (month == 7 ? jul += rs.getInt("Count") : jul);
+                aug = (month == 8 ? aug += rs.getInt("Count") : aug);
+                sep = (month == 9 ? sep += rs.getInt("Count") : sep);
+                okt = (month == 10 ? okt += rs.getInt("Count") : okt);
+                nov = (month == 11 ? nov += rs.getInt("Count") : nov);
+                dec = (month == 12 ? dec += rs.getInt("Count") : dec);
+            }
+            rs.close();
+            conn.close();
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        System.out.println(series.getData());
+        series.getData().add(new XYChart.Data<>(taal[78], jan));
+        series.getData().add(new XYChart.Data(taal[79], feb));
+        series.getData().add(new XYChart.Data<>(taal[80], mar));
+        series.getData().add(new XYChart.Data(taal[81], apr));
+        series.getData().add(new XYChart.Data<>(taal[82], mei));
+        series.getData().add(new XYChart.Data(taal[83], jun));
+        series.getData().add(new XYChart.Data<>(taal[84], jul));
+        series.getData().add(new XYChart.Data(taal[85], aug));
+        series.getData().add(new XYChart.Data<>(taal[86], sep));
+        series.getData().add(new XYChart.Data(taal[87], okt));
+        series.getData().add(new XYChart.Data<>(taal[88], nov));
+        series.getData().add(new XYChart.Data(taal[89], dec));
     }
     
     

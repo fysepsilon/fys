@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -88,11 +89,11 @@ public class InstellingenController implements Initializable {
             error.setText(taal[94]);
             error.setStyle("-fx-text-fill: red;");
             error.setVisible(true);
-        } /*else if(!fys.isValidEmailAddress(username.getText())){
+        } else if(!fys.isValidEmailAddress(username.getText())){
             error.setText("E-mailadres is niet geldig!");
             error.setStyle("-fx-text-fill: red;");
             error.setVisible(true);
-        }*/ else{
+        } else{
             Statement stmt = null;
             Connection conn = null;
             try {
@@ -104,8 +105,14 @@ public class InstellingenController implements Initializable {
                         + "' WHERE person_id = " + id + ";";
                 stmt.executeUpdate(sql);
                 conn.close();
-                fys.changeToAnotherFXML(taal[102], "instellingen.fxml");
                 login.setEmail(username.getText());
+                languages.setLanguage(fys.getUserLanguageString(language.getSelectionModel().getSelectedItem().toString()));
+                taal = languages.getLanguage();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText(taal[122]);
+                alert.setContentText(taal[123]);
+                alert.showAndWait();
+                fys.changeToAnotherFXML(taal[102], "instellingen.fxml");
             } catch (SQLException ex) {
                 // handle any errors
                 System.out.println("SQLException: " + ex.getMessage());

@@ -352,6 +352,9 @@ public class FYS extends Application {
         try {
             // Create a default MimeMessage object.
             Message message = new MimeMessage(session);
+            
+            //Set unicode UTF-8
+            message.setHeader("Content-Type", "text/html; charset=UTF-8");
 
             // Set From: header field of the header.
             message.setFrom(new InternetAddress(from, "Corendon"));
@@ -365,7 +368,7 @@ public class FYS extends Application {
             message.setSubject(subject);
 
             // Now set the actual message
-            message.setContent(content, "text/html");
+            message.setContent(content, "text/html; charset=UTF-8");
 
             // Send message
             Transport.send(message);

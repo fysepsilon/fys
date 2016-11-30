@@ -35,6 +35,7 @@ public class loginController implements Initializable {
     @FXML private Label label;
     @FXML private Label loginerror;
     @FXML private static int usertype;
+    @FXML private static int userlanguage;
     @FXML private static String usersname;
     @FXML private static String email;
     @FXML private Button logInButton;
@@ -45,6 +46,14 @@ public class loginController implements Initializable {
 
     public void setUsertype(int userType) {
         this.usertype = userType;
+    }
+    
+    public int getUserlanguage() {
+        return userlanguage;
+    }
+
+    public void setUserlanguage(int userLanguage) {
+        this.userlanguage = userLanguage;
     }
     
     public String getEmail() {

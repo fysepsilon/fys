@@ -73,13 +73,14 @@ public class BagageformulierenController implements Initializable {
                 || (color_combo.getValue() == null)) {
             loginerror.setText(taal[93]);
             loginerror.setVisible(true);
-        } else if (account_checkbox.isSelected()) {
-            if (fys.checkEmailExists(mail_input.getText())) {
-                //Foutmelding
-                loginerror.setText(taal[121]);
-                loginerror.setVisible(true);
-            }
         } else {
+            if (account_checkbox.isSelected()) {
+                if (fys.checkEmailExists(mail_input.getText())) {
+                    //Foutmelding
+                    loginerror.setText(taal[121]);
+                    loginerror.setVisible(true);
+                }
+            }
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date date = new Date();
             String dateTimeString = dateFormat.format(date);

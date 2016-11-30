@@ -41,12 +41,16 @@ import javax.imageio.ImageIO;
  */
 public class NieuwaccountaanmakenController implements Initializable {
 
-    @FXML private TextField name_input, surname_input, address_input, residence_input, 
+    @FXML
+    private TextField name_input, surname_input, address_input, residence_input,
             zipcode_input, country_input, phone_input, mail_input;
-    @FXML private ComboBox language_combo, type_combo;
-    @FXML private Label loginerror, surname_label, name_label, type_label, address_label, residence_label,
+    @FXML
+    private ComboBox language_combo, type_combo;
+    @FXML
+    private Label loginerror, surname_label, name_label, type_label, address_label, residence_label,
             zipcode_label, country_label, phone_label, mail_label, language_label;
-    @FXML private Button SendNewAccount;
+    @FXML
+    private Button SendNewAccount;
 
     @FXML
     private void handleAction(ActionEvent event) throws IOException, SQLException {
@@ -59,7 +63,7 @@ public class NieuwaccountaanmakenController implements Initializable {
         Connection conn = null;
         conn = fys.connectToDatabase(conn);
         stmt = conn.createStatement();
-        
+
         if ((name_input.getText() == null || name_input.getText().trim().isEmpty())
                 || (surname_input.getText() == null || surname_input.getText().trim().isEmpty())
                 || (address_input.getText() == null || address_input.getText().trim().isEmpty())
@@ -100,10 +104,12 @@ public class NieuwaccountaanmakenController implements Initializable {
             }
 
             String[] mailInformation = new String[3];
+            int[] language = new int[1];
             int[] type = new int[1];
+            
             try {
                 //connectToDatabase(conn, stmt, "test", "root", "root");
-                String sql = "SELECT type, first_name, surname, password FROM person_table WHERE mail='" + mail_input.getText() + "'";
+                String sql = "SELECT type, language, first_name, surname, password FROM person_table WHERE mail='" + mail_input.getText() + "'";
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {
                     //Retrieve by column name
@@ -111,7 +117,7 @@ public class NieuwaccountaanmakenController implements Initializable {
                     mailInformation[1] = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
                     mailInformation[2] = fys.decrypt(rs.getString("password"));
                     type[0] = rs.getInt("type");
-
+                    language[0] = rs.getInt("language");
                     //Display values
                     //System.out.print("username: " + email);
                 }
@@ -124,54 +130,189 @@ public class NieuwaccountaanmakenController implements Initializable {
                 System.out.println("VendorError: " + ex.getErrorCode());
             }
 
-            switch (type[0]) {
-                case 0:
-                    // Mail voor klant (type = 0)
-                    fys.sendEmail(mail_input.getText(), "Corendon - Inloggegevens", "Gewaardeerde klant, "
-                            + "<br><br>Er is door een van onze medewerkers een account voor u aangemaakt."
-                            + "<br>U kunt met dit account inloggen op onze webapplicatie om de status van uw koffer te bekijken."
-                            + "<br>U heeft de volgende gegevens nodig om in te kunnen loggen:"
-                            + "<br>Gebruikersnaam: <i>" + mail_input.getText()
-                            + "</i><br>Wachtwoord: <i>" + mailInformation[2]
-                            + "</i><br><br>U kunt uw wachtwoord wijzigen in de webapplicatie."
-                            + "<br>Wij hopen u hiermee voldoende te hebben geinformeerd."
-                            + "<br><br>Met vriendelijke groet,"
-                            + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
-                    break;
-                case 1:
-                    // Mail voor servicemedewerker (type = 1)
-                    fys.sendEmail(mail_input.getText(), "Corendon - Inloggegevens", "Beste "
-                            + mailInformation[0] + " " + mailInformation[1] + ", "
-                            + "<br><br>Er is door een van uw collega's een account voor u aangemaakt als 'Servicemedewerker'."
-                            + "<br>U kunt met dit account inloggen in het bagage systeem."
-                            + "<br>U heeft de volgende gegevens nodig om in te kunnen loggen:"
-                            + "<br>Gebruikersnaam: <i>" + mail_input.getText()
-                            + "</i><br>Wachtwoord: <i>" + mailInformation[2]
-                            + "</i><br><br>U kunt uw wachtwoord wijzigen in de applicatie."
-                            + "<br>Wij hopen u hiermee voldoende te hebben geinformeerd."
-                            + "<br><br>Met vriendelijke groet,"
-                            + "<br><br><b>Het Corendon Team</b><img src='@images/corendon_logo.png'/>", "Sent message successfully....");
-                    break;
-                default:
-                    // Mail voor administrator (type = 2)
-                    fys.sendEmail(mail_input.getText(), "Corendon - Inloggegevens", "Beste "
-                            + mailInformation[0] + " " + mailInformation[1] + ", "
-                            + "<br><br>Er is door een van uw collega's een account voor u aangemaakt als 'Administrator'."
-                            + "<br>U kunt met dit account inloggen in het bagage systeem."
-                            + "<br>U heeft de volgende gegevens nodig om in te kunnen loggen:"
-                            + "<br>Gebruikersnaam: <i>" + mail_input.getText()
-                            + "</i><br>Wachtwoord: <i>" + mailInformation[2]
-                            + "</i><br><br>U kunt uw wachtwoord wijzigen in de applicatie."
-                            + "<br>Wij hopen u hiermee voldoende te hebben geinformeerd."
-                            + "<br><br>Met vriendelijke groet,"
-                            + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
-                    break;
+            if (language[0] == 0) { // English emails
+                switch (type[0]) {
+                    case 0:
+                        // Mail voor klant (type = 0)
+                        fys.sendEmail(mail_input.getText(), "Corendon - Logindata", "Valued customer, "
+                                + "<br><br>There is an account created for you by one of our employees."
+                                + "<br>You can log in to this account on our web application to view the status of your case."
+                                + "<br>You will need the following data to log in:"
+                                + "<br>Username: <i>" + mail_input.getText()
+                                + "</i><br>Password: <i>" + mailInformation[2]
+                                + "</i><br><br>You can change your password in the web application."
+                                + "<br>We hope to have informed you sufficiently."
+                                + "<br><br>Sincerely,"
+                                + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
+                        break;
+                    case 1:
+                        // Mail voor servicemedewerker (type = 1)
+                        fys.sendEmail(mail_input.getText(), "Corendon - Logindata", "Valued "
+                                + mailInformation[0] + " " + mailInformation[1] + ", "
+                                + "<br><br>One of your colleagues created an account for you as 'Service Employee'."
+                                + "<br>You can log in to this account in the baggage system."
+                                + "<br>You will need the following data to log in:"
+                                + "<br>Username: <i>" + mail_input.getText()
+                                + "</i><br>Password: <i>" + mailInformation[2]
+                                + "</i><br><br>You can change your password in the application."
+                                + "<br>We hope to have informed you sufficiently."
+                                + "<br><br>Sincerely,"
+                                + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
+                        break;
+                    default:
+                        // Mail voor administrator (type = 2)
+                        fys.sendEmail(mail_input.getText(), "Corendon - Logindata", "Valued "
+                                + mailInformation[0] + " " + mailInformation[1] + ", "
+                                + "<br><br>One of your colleagues created an account for you as 'Administrator'."
+                                + "<br>You can log in to this account in the baggage system."
+                                + "<br>You will need the following data to log in:"
+                                + "<br>Username: <i>" + mail_input.getText()
+                                + "</i><br>Password: <i>" + mailInformation[2]
+                                + "</i><br><br>You can change your password in the application."
+                                + "<br>We hope to have informed you sufficiently."
+                                + "<br><br>Sincerely,"
+                                + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
+                        break;
+                }
+            } else if (language[0] == 1) { // Dutch emails
+                switch (type[0]) {
+                    case 0:
+                        // Mail voor klant (type = 0)
+                        fys.sendEmail(mail_input.getText(), "Corendon - Inloggegevens", "Gewaardeerde klant, "
+                                + "<br><br>Er is door een van onze medewerkers een account voor u aangemaakt."
+                                + "<br>U kunt met dit account inloggen op onze webapplicatie om de status van uw koffer te bekijken."
+                                + "<br>U heeft de volgende gegevens nodig om in te kunnen loggen:"
+                                + "<br>Gebruikersnaam: <i>" + mail_input.getText()
+                                + "</i><br>Wachtwoord: <i>" + mailInformation[2]
+                                + "</i><br><br>U kunt uw wachtwoord wijzigen in de webapplicatie."
+                                + "<br>Wij hopen u hiermee voldoende te hebben geïnformeerd."
+                                + "<br><br>Met vriendelijke groet,"
+                                + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
+                        break;
+                    case 1:
+                        // Mail voor servicemedewerker (type = 1)
+                        fys.sendEmail(mail_input.getText(), "Corendon - Inloggegevens", "Beste "
+                                + mailInformation[0] + " " + mailInformation[1] + ", "
+                                + "<br><br>Er is door een van uw collega's een account voor u aangemaakt als 'Servicemedewerker'."
+                                + "<br>U kunt met dit account inloggen in het bagage systeem."
+                                + "<br>U heeft de volgende gegevens nodig om in te kunnen loggen:"
+                                + "<br>Gebruikersnaam: <i>" + mail_input.getText()
+                                + "</i><br>Wachtwoord: <i>" + mailInformation[2]
+                                + "</i><br><br>U kunt uw wachtwoord wijzigen in de applicatie."
+                                + "<br>Wij hopen u hiermee voldoende te hebben geïnformeerd."
+                                + "<br><br>Met vriendelijke groet,"
+                                + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
+                        break;
+                    default:
+                        // Mail voor administrator (type = 2)
+                        fys.sendEmail(mail_input.getText(), "Corendon - Inloggegevens", "Beste "
+                                + mailInformation[0] + " " + mailInformation[1] + ", "
+                                + "<br><br>Er is door een van uw collega's een account voor u aangemaakt als 'Administrator'."
+                                + "<br>U kunt met dit account inloggen in het bagage systeem."
+                                + "<br>U heeft de volgende gegevens nodig om in te kunnen loggen:"
+                                + "<br>Gebruikersnaam: <i>" + mail_input.getText()
+                                + "</i><br>Wachtwoord: <i>" + mailInformation[2]
+                                + "</i><br><br>U kunt uw wachtwoord wijzigen in de applicatie."
+                                + "<br>Wij hopen u hiermee voldoende te hebben geïnformeerd."
+                                + "<br><br>Met vriendelijke groet,"
+                                + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
+                        break;
+                }
+            } else if (language[0] == 2) { // Spanish emails
+                switch (type[0]) {
+                    case 0:
+                        // Mail voor klant (type = 0)
+                        fys.sendEmail(mail_input.getText(), "Corendon - Logindatos", "Estimado cliente, "
+                                + "<br><br>Hay una cuenta creada para usted por uno de nuestros empleados."
+                                + "<br>Puede iniciar sesión con la cuenta en nuestra aplicación web para ver el estado de su caso."
+                                + "<br>Necesitará la siguiente información para iniciar sesión:"
+                                + "<br>Nombre de usuario: <i>" + mail_input.getText()
+                                + "</i><br>Contraseña: <i>" + mailInformation[2]
+                                + "</i><br><br>Puede cambiar su contraseña en la aplicación web."
+                                + "<br>Esperamos que te han informado lo suficiente."
+                                + "<br><br>Atentamente,"
+                                + "<br><br><b>El equipo de Corendon</b>", "Sent message successfully....");
+                        break;
+                    case 1:
+                        // Mail voor servicemedewerker (type = 1)
+                        fys.sendEmail(mail_input.getText(), "Corendon - Logindatos", "Mejor "
+                                + mailInformation[0] + " " + mailInformation[1] + ", "
+                                + "<br><br>Hay uno de sus colegas crearon una cuenta para usted como 'Servicio del empleado'."
+                                + "<br>Puede iniciar sesión en la cuenta en el sistema de equipajes."
+                                + "<br>Necesitará la siguiente información para iniciar sesión:"
+                                + "<br>Nombre de usuario: <i>" + mail_input.getText()
+                                + "</i><br>Contraseña: <i>" + mailInformation[2]
+                                + "</i><br><br>Puede cambiar su contraseña en la aplicación."
+                                + "<br>Esperamos que te han informado lo suficiente."
+                                + "<br><br>Atentamente,"
+                                + "<br><br><b>El equipo de Corendon</b>", "Sent message successfully....");
+                        break;
+                    default:
+                        // Mail voor administrator (type = 2)
+                        fys.sendEmail(mail_input.getText(), "Corendon - Logindatos", "Mejor "
+                                + mailInformation[0] + " " + mailInformation[1] + ", "
+                                + "<br><br>Hay uno de sus colegas crearon una cuenta para usted como un 'Administrador'."
+                                + "<br>Puede iniciar sesión en la cuenta en el sistema de equipajes."
+                                + "<br>Necesitará la siguiente información para iniciar sesión:"
+                                + "<br>Nombre de usuario: <i>" + mail_input.getText()
+                                + "</i><br>Contraseña: <i>" + mailInformation[2]
+                                + "</i><br><br>Puede cambiar su contraseña en la aplicación."
+                                + "<br>Esperamos que te han informado lo suficiente."
+                                + "<br><br>Atentamente,"
+                                + "<br><br><b>El equipo de Corendon</b>", "Sent message successfully....");
+                        break;
+                }
+            } else { // Turkisch emails
+                switch (type[0]) {
+                    case 0:
+                        // Mail voor klant (type = 0)
+                        fys.sendEmail(mail_input.getText(), "Corendon - Giriş", "Değerli müşterimiz, "
+                                + "<br><br>Çalışanlarımızın biri tarafından sizin için oluşturulan bir hesap vardır."
+                                + "<br>Sen davanın durumunu görüntülemek için web uygulamasında bu hesaba giriş yapabilirsiniz."
+                                + "<br>Oturum açmak için aşağıdaki bilgilere ihtiyacınız olacaktır:"
+                                + "<br>Kullanıcı adı: <i>" + mail_input.getText()
+                                + "</i><br>Şifre: <i>" + mailInformation[2]
+                                + "</i><br><br>Bu web uygulamasında şifrenizi değiştirebilirsiniz."
+                                + "<br>Biz yeterince sizi haberdar etmek istedik."
+                                + "<br><br>Saygılarımızla,"
+                                + "<br><br><b>Corendon Takımı</b>", "Sent message successfully....");
+                        break;
+                    case 1:
+                        // Mail voor servicemedewerker (type = 1)
+                        fys.sendEmail(mail_input.getText(), "Corendon - Giriş", "En iyi "
+                                + mailInformation[0] + " " + mailInformation[1] + ", "
+                                + "<br><br>Senin meslektaşlarımdan biri 'Hizmet Çalışan' olarak sizin için bir hesap oluşturmuş var."
+                                + "<br>Sen bagaj sisteminde bu hesaba giriş yapabilirsiniz."
+                                + "<br>Oturum açmak için aşağıdaki bilgilere ihtiyacınız olacaktır:"
+                                + "<br>Kullanıcı adı: <i>" + mail_input.getText()
+                                + "</i><br>Şifre: <i>" + mailInformation[2]
+                                + "</i><br><br>Sen uygulamasına şifrenizi değiştirebilirsiniz."
+                                + "<br>Biz yeterince sizi haberdar etmek istedik."
+                                + "<br><br>Saygılarımızla,"
+                                + "<br><br><b>Corendon Takımı</b>", "Sent message successfully....");
+                        break;
+                    default:
+                        // Mail voor administrator (type = 2)
+                        fys.sendEmail(mail_input.getText(), "Corendon - Giriş", "En iyi "
+                                + mailInformation[0] + " " + mailInformation[1] + ", "
+                                + "<br><br>Senin meslektaşlarımdan biri, bir 'Yönetici' olarak sizin için bir hesap oluşturmuş var."
+                                + "<br>Sen bagaj sisteminde bu hesaba giriş yapabilirsiniz."
+                                + "<br>Oturum açmak için aşağıdaki bilgilere ihtiyacınız olacaktır:"
+                                + "<br>Kullanıcı adı: <i>" + mail_input.getText()
+                                + "</i><br>Şifre: <i>" + mailInformation[2]
+                                + "</i><br><br>Sen uygulamasına şifrenizi değiştirebilirsiniz."
+                                + "<br>Biz yeterince sizi haberdar etmek istedik."
+                                + "<br><br>Saygılarımızla,"
+                                + "<br><br><b>Corendon Takımı</b>", "Sent message successfully....");
+                        break;
+                }
             }
+
             loginerror.setText(taal[103]);
             loginerror.setStyle("-fx-text-fill: green;");
             loginerror.setVisible(true);
             loginerror.setDisable(false);
-            
+
             name_input.setText("");
             surname_input.setText("");
             address_input.setText("");
@@ -194,7 +335,7 @@ public class NieuwaccountaanmakenController implements Initializable {
 
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-            
+
             type = fys.getUserFunctionString(type).toString();
             language = fys.getUserLanguageString(language).toString();
 

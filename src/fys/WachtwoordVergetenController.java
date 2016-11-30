@@ -75,7 +75,7 @@ public class WachtwoordVergetenController implements Initializable {
                 }
 
                 if ((email == null || email.trim().isEmpty())) {
-                    sendPasswordMessage.setText("This username does unfortunately not exists!");
+                    sendPasswordMessage.setText("This username unfortunately does not exists!");
                     sendPasswordMessage.setStyle("-fx-text-fill: red;");
                     sendPasswordMessage.setVisible(true);
                     sendNewPasswordButton.setDisable(false);
@@ -101,22 +101,22 @@ public class WachtwoordVergetenController implements Initializable {
                         System.out.println("SQLState: " + ex.getSQLState());
                         System.out.println("VendorError: " + ex.getErrorCode());
                     }
-                    fys.sendEmail(username.getText(), "Corendon - Wachtwoord", "Beste "
+                    fys.sendEmail(username.getText(), "Corendon - Password", "Valued "
                             + mailInformation[0] + " " + mailInformation[1] + ", "
-                            + "<br><br>U heeft aangegeven dat u het wachtwoord van uw account wilt opvragen."
-                            + "<br>Bij deze uw wachtwoord: <i>" + mailInformation[2]
-                            + "</i><br><br> Wij hopen hopen u hiermee goed te hebben geholpen."
-                            + "<br>Als u uw wachtwoord niet heeft opgevraagd kunt u deze e-mail verwijderen."
-                            + "<br><br>Met vriendelijke groet,"
-                            + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
-                    sendPasswordMessage.setText("Uw wachtwoord is verstuurd naar: " + username.getText() + "!");
+                            + "<br><br>You have indicated that you want to retrieve the password of your account."
+                            + "<br>Your password is: <i>" + mailInformation[2]
+                            + "</i><br><br>We hope that we helped you enough."
+                            + "<br>If you did not request your password, you can delete this email."
+                            + "<br><br>Sincerely,"
+                            + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
+                    sendPasswordMessage.setText("Your password has been sent to: " + username.getText() + "!");
                     sendPasswordMessage.setStyle("-fx-text-fill: green;");
                     sendPasswordMessage.setVisible(true);
                     username.setText("");
                     sendNewPasswordButton.setDisable(false);
                 }
             } else{
-                sendPasswordMessage.setText("Please fill a correct e-mailaddress in!");
+                sendPasswordMessage.setText("Please enter a valid email address!");
                 sendPasswordMessage.setStyle("-fx-text-fill: red;");
                 sendPasswordMessage.setVisible(true);
                 sendNewPasswordButton.setDisable(false);

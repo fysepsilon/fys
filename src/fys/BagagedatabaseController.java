@@ -29,6 +29,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
 
 /**
  * FXML Controller class
@@ -374,6 +376,7 @@ public class BagagedatabaseController implements Initializable {
                     + "country='" + country + "', phone='" + phone + "',"
                     + "mail='" + mail + "'"
                     + "WHERE person_id='" + dr_personId + "'"; 
+            System.out.println("DIT IS DE PERSON ID: " + dr_personId);
                         
             stmt.executeUpdate(sql_person);
             
@@ -438,7 +441,9 @@ public class BagagedatabaseController implements Initializable {
             stmt.executeUpdate(sql_airport);
             
             if(status==3){
-                //TODO maak DHL-shipment formulier.
+                PDDocument document = new PDDocument();
+                PDPage page = new PDPage();
+                document.addPage( page );
             }
             
             taal languages = new taal();

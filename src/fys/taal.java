@@ -172,6 +172,7 @@ public class taal {
             languagefields[121] = "This e-mail address already exists.";
             languagefields[122] = "Changing";
             languagefields[123] = "Your data has been changed."; 
+            languagefields[124] = "The data has been added.";
         } else if(language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
@@ -298,6 +299,7 @@ public class taal {
             languagefields[121] = "Dit email adres bestaat al.";
             languagefields[122] = "Aanpassingen";
             languagefields[123] = "Uw gegevens zijn gewijzigd.";
+            languagefields[124] = "De gegevens zijn toegevoegd.";
         } else if(language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";
@@ -432,6 +434,7 @@ public class taal {
             languagefields[121] = "Esta dirección de correo electrónico ya existe.";
             languagefields[122] = "Ajustes";
             languagefields[123] = "Se cambia sus datos.";
+            languagefields[124] = "Los datos se han añadido.";
         } else { //Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
@@ -558,6 +561,7 @@ public class taal {
             languagefields[121] = "Bu e-posta adresi zaten var.";
             languagefields[122] = "Ayarlamalar";
             languagefields[123] = "Verileriniz değiştirilir.";
+            languagefields[124] = "Veri eklendi.";
         }
         return languagefields;
     }

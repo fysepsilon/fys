@@ -5,6 +5,7 @@
  */
 package fys;
 
+import static fys.FYS.generateRandomPassword;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -54,6 +55,7 @@ public class BagageformulierenController implements Initializable {
         FYS fys = new FYS();
         taal language = new taal();
         String[] taal = language.getLanguage();
+        String password = fys.encrypt(generateRandomPassword(8));        
         String[] mailInformation = new String[3];
         int[] language_user = new int[1];
         Statement stmt = null;
@@ -73,14 +75,15 @@ public class BagageformulierenController implements Initializable {
                 || (color_combo.getValue() == null)) {
             loginerror.setText(taal[93]);
             loginerror.setVisible(true);
-        } else {
-            if (account_checkbox.isSelected()) {
-                if (fys.checkEmailExists(mail_input.getText())) {
+        } else if (account_checkbox.isSelected() && fys.checkEmailExists(mail_input.getText())) {
                     //Foutmelding
                     loginerror.setText(taal[121]);
                     loginerror.setVisible(true);
-                }
-            }
+        } else {
+            loginerror.setText(taal[124]);
+            loginerror.setStyle("-fx-text-fill: green;");
+            loginerror.setVisible(true);
+            
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date date = new Date();
             String dateTimeString = dateFormat.format(date);
@@ -97,7 +100,7 @@ public class BagageformulierenController implements Initializable {
                     mail_input.getText(), account_checkbox.isSelected(), labelnumber_input.getText(),
                     flightnumber_input.getText(), destination_input.getText(),
                     fys.getBaggageTypeString(type_combo.getValue().toString()), brand_input.getText(), fys.getColorString(color_combo.getValue().toString()),
-                    characteristics_input.getText(), dateString, timeString);
+                    characteristics_input.getText(), dateString, timeString, password);
 
             try {
                 //connectToDatabase(conn, stmt, "test", "root", "root");
@@ -140,7 +143,8 @@ public class BagageformulierenController implements Initializable {
             String address, String residence, String zipcode, String country,
             String phone, String mail, Boolean checkBox, String labelnumber,
             String flightnumber, String destination, int type, String brand,
-            Integer color, String characteristics, String date, String time)
+            Integer color, String characteristics, String date, String time,
+            String password)
             throws IOException, SQLException {
         FYS fys = new FYS();
 
@@ -196,7 +200,7 @@ public class BagageformulierenController implements Initializable {
 
             stmt.executeUpdate(sql_lost);
             if (checkBox) {
-                String sql_account = "UPDATE bagagedatabase.person_table SET password = '33225ecb58b9218a' "
+                String sql_account = "UPDATE bagagedatabase.person_table SET password = '" + password + "'"
                         + "WHERE person_id = '" + personId + "'";
 
                 stmt.executeUpdate(sql_account);

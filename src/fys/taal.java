@@ -152,6 +152,19 @@ public class taal {
             languagefields[105] = "First, select a row in the table to change something";
             languagefields[106] = "Latest luggage";    
             languagefields[107] = "Time";
+            languagefields[108] = "Insuranceclaim";
+            languagefields[109] = "January";
+            languagefields[110] = "February";
+            languagefields[111] = "March";
+            languagefields[112] = "April";
+            languagefields[113] = "May";
+            languagefields[114] = "June";
+            languagefields[115] = "July";
+            languagefields[116] = "August";
+            languagefields[117] = "September";
+            languagefields[118] = "October";
+            languagefields[119] = "November";
+            languagefields[120] = "December";
         } else if(language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
@@ -262,6 +275,19 @@ public class taal {
             languagefields[105] = "Selecteer eerst een rij in de tabel om deze te wijzigen";
             languagefields[106] = "Meest recente bagage";       
             languagefields[107] = "Tijd";
+            languagefields[108] = "Schadeclaim";
+            languagefields[109] = "januari";
+            languagefields[110] = "februari";
+            languagefields[111] = "maart";
+            languagefields[112] = "april";
+            languagefields[113] = "mei";
+            languagefields[114] = "juni";
+            languagefields[115] = "july";
+            languagefields[116] = "augustus";
+            languagefields[117] = "september";
+            languagefields[118] = "oktober";
+            languagefields[119] = "november";
+            languagefields[120] = "december";
         } else if(language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";
@@ -380,6 +406,19 @@ public class taal {
             languagefields[105] = "En primer lugar, seleccione una fila de la tabla para cambiar esta";
             languagefields[106] = "Última equipaje";   
             languagefields[107] = "Tiempo";
+            languagefields[108] = "Reclamación de seguro";
+            languagefields[109] = "enero";
+            languagefields[110] = "febrero";
+            languagefields[111] = "marzo";
+            languagefields[112] = "abril";
+            languagefields[113] = "mayo";
+            languagefields[114] = "junio";
+            languagefields[115] = "julio";
+            languagefields[116] = "agosto";
+            languagefields[117] = "septiembre";
+            languagefields[118] = "octubre";
+            languagefields[119] = "noviembre";
+            languagefields[120] = "diciembre";
         } else { //Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
@@ -489,7 +528,20 @@ public class taal {
             languagefields[104] = "Değişim verileri";
             languagefields[105] = "İlk olarak, bu değiştirmek için tablodaki bir satır seçin";
             languagefields[106] = "Son bagaj";     
-            languagefields[107] = "Zaman";            
+            languagefields[107] = "Zaman";
+            languagefields[108] = "Sigorta tazminat talebi";
+            languagefields[109] = "Ocak";
+            languagefields[110] = "Şubat";
+            languagefields[111] = "Mart";
+            languagefields[112] = "Nisan";
+            languagefields[113] = "Mayıs";
+            languagefields[114] = "Haziran";
+            languagefields[115] = "Temmuz";
+            languagefields[116] = "Ağustos";
+            languagefields[117] = "Eylül";
+            languagefields[118] = "Ekim";
+            languagefields[119] = "Kasım";
+            languagefields[120] = "Aralık";
         }
         return languagefields;
     }

@@ -153,6 +153,8 @@ public class FYS extends Application {
                 return taal[58];
             case 5:
                 return taal[59];
+            case 6:
+                return taal[108];
             default:
                 break;
         }
@@ -172,9 +174,42 @@ public class FYS extends Application {
             return 4;
         } else if(status.equals(taal[59])){
             return 5;
+        }  else if(status.equals(taal[108])){
+            return 6;
         } else {
             return 0;
         }
+    }
+    
+    public String getMonthNumber(String month) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        if (month.equals(taal[109])) {
+            return "01";
+        } else if (month.equals(taal[110])) {
+            return "02";
+        } else if (month.equals(taal[111])) {
+            return "03";
+        } else if (month.equals(taal[112])) {
+            return "04";
+        } else if (month.equals(taal[113])) {
+            return "05";
+        } else if (month.equals(taal[114])) {
+            return "06";
+        } else if (month.equals(taal[115])) {
+            return "07";
+        } else if (month.equals(taal[116])) {
+            return "08";
+        } else if (month.equals(taal[117])) {
+            return "09";
+        } else if (month.equals(taal[118])) {
+            return "10";
+        } else if (month.equals(taal[119])) {
+            return "11";
+        } else if (month.equals(taal[120])) {
+            return "12";
+        }
+        return "";
     }
     
     public String getColor(int color) {

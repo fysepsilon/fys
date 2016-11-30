@@ -7,6 +7,7 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.StatistiekenController">
     <children>
@@ -14,8 +15,8 @@
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
         <Pane layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0" style=" -fx-border-width:0 2 0 2; -fx-border-color:lightgrey; -fx-background-color: white;">
          <children>
-              <PieChart id="piechart" fx:id="piechart" layoutX="399.0" prefHeight="400.0" prefWidth="401.0" />
-              <LineChart id="linechart" fx:id="linechart" prefHeight="430.0" prefWidth="388.0">
+              <PieChart id="piechart" fx:id="piechart" layoutX="376.0" layoutY="41.0" prefHeight="400.0" prefWidth="424.0" />
+              <LineChart id="linechart" fx:id="linechart" layoutY="41.0" prefHeight="430.0" prefWidth="388.0">
                   <xAxis>
                       <CategoryAxis side="BOTTOM" />
                   </xAxis>
@@ -23,6 +24,28 @@
                       <NumberAxis side="LEFT" />
                   </yAxis>
               </LineChart>
+            <ComboBox fx:id="month" layoutX="14.0" layoutY="14.0" prefHeight="31.0" prefWidth="168.0" >
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="" />
+                    </FXCollections>
+                </items>
+                <value>
+                    <String fx:value="" />
+                </value>
+            </ComboBox>
+            <ComboBox fx:id="year" layoutX="208.0" layoutY="14.0" prefHeight="31.0" prefWidth="168.0" >
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="" />
+                    </FXCollections>
+                </items>
+                <value>
+                    <String fx:value="" />
+                </value>
+            </ComboBox>
+            <Button fx:id="exportToPDF" layoutX="617.0" layoutY="14.0" mnemonicParsing="false" text="Exporteren naar PDF" />
+            <Button fx:id="filter" layoutX="432.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" onAction="#handleFilterAction" prefWidth="155.0" text="Filteren" />
          </children></Pane>
     </children>
 </AnchorPane>

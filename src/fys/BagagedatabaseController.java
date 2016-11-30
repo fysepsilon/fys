@@ -449,7 +449,7 @@ public class BagagedatabaseController implements Initializable {
             stmt.executeUpdate(sql_airport);
             
             if(status==3){
-                File pdfdoc = new File("C:/Users/lucas/Documents/NetBeansProjects/fys/dhltemplate.pdf");
+                File pdfdoc = new File("src/fys/dhltemplate.pdf");
                 PDDocument document;
                 document = PDDocument.load(pdfdoc);
                 
@@ -459,8 +459,8 @@ public class BagagedatabaseController implements Initializable {
 
                 // set the text in the form-field <-- does work
                 for (PDField field : fields) {
-                    if (field.getFullyQualifiedName().equals("address")) {
-                        field.setValue("Test-String");
+                    if (field.getFullyQualifiedName().equals("shipper_field")) {
+                        field.setValue("Corendon");
                     }
                 }
                 

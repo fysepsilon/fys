@@ -12,20 +12,7 @@
         <Pane id="background" fx:id="background" layoutY="122.0" prefHeight="478.0" prefWidth="1000.0" stylesheets="@images/menu.css" />
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
         <Pane layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0" style=" -fx-border-width:0 2 0 2; -fx-border-color:lightgrey; -fx-background-color: white;">
-            <children>
-                  <TableView fx:id="table" layoutX="418.0" layoutY="73.0" prefHeight="391.0" prefWidth="368.0">
-                      <columns>
-                          <TableColumn id="week" fx:id="week" maxWidth="150.0" minWidth="85.0" prefWidth="85.0" text="Datum" />
-                          <TableColumn id="status" fx:id="status" maxWidth="150.0" minWidth="60.0" prefWidth="60.0" text="Tijd" />                            
-                          <TableColumn id="aantal" fx:id="aantal" maxWidth="182.0" minWidth="0.0" prefWidth="87.0" text="Kleur" />
-                      </columns>
-                  </TableView>
-                  <Label id="recentlabel" fx:id="recentlabel" alignment="CENTER" layoutX="418.0" layoutY="38.0" prefHeight="27.0" prefWidth="368.0" textAlignment="CENTER">
-                      <font>
-                          <Font size="18.0" />
-                      </font>
-                  </Label>
-            </children>
+            
         </Pane>    
     </children>
 </AnchorPane>

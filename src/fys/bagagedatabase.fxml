@@ -39,7 +39,7 @@
                         <TableColumn id="destination" fx:id="destination" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Bestemming" />
                         <TableColumn id="airportFound" fx:id="airportFound" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Luchthaven gevonden" />
                         <TableColumn id="airportLost" fx:id="airportLost" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Luchthaven verloren" />
-                        <TableColumn id="tableFrom" fx:id="tableFrom" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Table" />
+                        <TableColumn id="tableFrom" fx:id="tableFrom" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Table" visible="false" />
                         <TableColumn id="lostAndFoundID" fx:id="lostAndFoundID" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="realid" visible="false" />
                         <TableColumn id="personID" fx:id="personID" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="realid" visible="false" />
                         <TableColumn id="realid" fx:id="realid" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="realid" visible="false" />

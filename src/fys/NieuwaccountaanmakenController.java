@@ -98,7 +98,7 @@ public class NieuwaccountaanmakenController implements Initializable {
             loginerror.setText(taal[93]);
             loginerror.setVisible(true);
             
-        } else if(email == mail_input.getText()) {
+        } else if(fys.checkEmailExists(mail_input.getText())) {
             //Foutmelding
             loginerror.setText(taal[121]);
             loginerror.setVisible(true);

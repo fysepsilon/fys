@@ -205,8 +205,7 @@ public class StatistiekenController implements Initializable {
     
     @FXML
     private void handleFilterAction(ActionEvent event) throws IOException {
-        System.out.println(year.getSelectionModel().getSelectedItem().toString());
-        System.out.println(month.getSelectionModel().getSelectedItem().toString());
+        //PIECHART
         int luggage = 0, foundAmount = 0, lostAmount = 0, destroyAmount = 0, settleAmount = 0, 
                 neverFoundAmount = 0, depotAmount = 0;
         total = 0;
@@ -223,7 +222,6 @@ public class StatistiekenController implements Initializable {
                     + "WHERE YEAR(x.date) LIKE \"%" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
                     + "AND MONTH(x.date) LIKE \"%" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
                     + "GROUP BY x.status";
-            System.out.println(sql);
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     luggage++;
@@ -260,6 +258,57 @@ public class StatistiekenController implements Initializable {
                         (total == 0 || (int) data.getPieValue() == 0) ? 0 : (int) (data.getPieValue() / total * 100), "%"
                 )
         ));
+        
+        //LINECHART
+//        try {
+//            conn = fys.connectToDatabase(conn);
+//            stmt = conn.createStatement();
+//            String sql = "SELECT x.status, x.date, COUNT(x.status) AS Count FROM "
+//                    + "(SELECT status, date FROM lost_table, airport_table WHERE status = 4 "
+//                    + "AND lost_table.lost_and_found_id = airport_table.lost_and_found_id "
+//                    + "UNION ALL "
+//                    + "SELECT status, date FROM found_table, airport_table WHERE status = 4 "
+//                    + "AND found_table.lost_and_found_id = airport_table.lost_and_found_id) x "
+//                    + "WHERE status = 4 and date LIKE '%' GROUP BY x.status, x.date";
+//            ResultSet rs = stmt.executeQuery(sql);
+//            while (rs.next()) {
+//                //Retrieve by column name
+//                String str[] = rs.getString("date").split("-");
+//                int month = Integer.parseInt(str[1]);
+//                jan = (month == 1 ? jan += rs.getInt("Count") : jan);
+//                feb = (month == 2 ? feb += rs.getInt("Count") : feb);
+//                mar = (month == 3 ? mar += rs.getInt("Count") : mar);
+//                apr = (month == 4 ? apr += rs.getInt("Count") : apr);
+//                mei = (month == 5 ? jan += rs.getInt("Count") : mei);
+//                jun = (month == 6 ? jun += rs.getInt("Count") : jun);
+//                jul = (month == 7 ? jul += rs.getInt("Count") : jul);
+//                aug = (month == 8 ? aug += rs.getInt("Count") : aug);
+//                sep = (month == 9 ? sep += rs.getInt("Count") : sep);
+//                okt = (month == 10 ? okt += rs.getInt("Count") : okt);
+//                nov = (month == 11 ? nov += rs.getInt("Count") : nov);
+//                dec = (month == 12 ? dec += rs.getInt("Count") : dec);
+//            }
+//            rs.close();
+//            conn.close();
+//        } catch (SQLException ex) {
+//            // handle any errors
+//            System.out.println("SQLException: " + ex.getMessage());
+//            System.out.println("SQLState: " + ex.getSQLState());
+//            System.out.println("VendorError: " + ex.getErrorCode());
+//        }
+//
+//        series.getData().set(0, new XYChart.Data<>(taal[78], jan));
+//        series.getData().set(1, new XYChart.Data(taal[79], feb));
+//        series.getData().set(2, new XYChart.Data<>(taal[80], mar));
+//        series.getData().set(3, new XYChart.Data(taal[81], apr));
+//        series.getData().set(4, new XYChart.Data<>(taal[82], mei));
+//        series.getData().set(5, new XYChart.Data(taal[83], jun));
+//        series.getData().set(6, new XYChart.Data<>(taal[84], jul));
+//        series.getData().set(7, new XYChart.Data(taal[85], aug));
+//        series.getData().set(8, new XYChart.Data<>(taal[86], sep));
+//        series.getData().set(9, new XYChart.Data(taal[87], okt));
+//        series.getData().set(10, new XYChart.Data<>(taal[88], nov));
+//        series.getData().set(11, new XYChart.Data(taal[89], dec));
     }
     
     

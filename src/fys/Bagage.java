@@ -15,33 +15,17 @@ import javafx.fxml.FXML;
  */
 public class Bagage {
 
-        @FXML private final SimpleIntegerProperty id;
-        @FXML private final SimpleStringProperty status;
-        @FXML private final SimpleStringProperty type;
-        @FXML private final SimpleStringProperty color;
-        @FXML private final SimpleStringProperty brand;
-        @FXML private final SimpleStringProperty date;
-        @FXML private final SimpleStringProperty information;
-        @FXML private SimpleStringProperty first_name;
-        @FXML private SimpleStringProperty surname;
-        @FXML private SimpleStringProperty address;
-        @FXML private SimpleStringProperty residence;
-        @FXML private SimpleStringProperty zipcode;
-        @FXML private SimpleStringProperty country;
-        @FXML private SimpleStringProperty phone;
-        @FXML private SimpleStringProperty mail;
-        @FXML private SimpleStringProperty labelnumber;
-        @FXML private SimpleStringProperty flightnumber;
-        @FXML private SimpleStringProperty destination;
-        @FXML private SimpleStringProperty airport;
-        @FXML private SimpleIntegerProperty realid;
+    @FXML private final SimpleIntegerProperty id, realid, lostAndFoundID, personID;
+    @FXML private final SimpleStringProperty status, type, color, brand, date, information, 
+                first_name, surname, address, residence, zipcode, country, phone, mail, labelnumber, 
+                flightnumber, destination, airportFound, airportLost, tableFrom;
         
-        
-        public Bagage(Integer idname, String statusname, String typename, String colorname, 
+    public Bagage(Integer idname, String statusname, String typename, String colorname, 
                 String brandname, String datename, String informationname, String firstnamename,
                  String surnamename, String addressname, String residencename, String zipcodename, 
                  String countryname, String phonename, String mailname, String labelnumbername, 
-                 String flightnumbername, String destinationname, String airportname, Integer realidname) {
+                 String flightnumbername, String destinationname, String airportFoundname, String airportLostname,
+                  String tablefromname, Integer lostandfoundidname, Integer personidname, Integer realidname) {
             this.id = new SimpleIntegerProperty(idname);
             this.status = new SimpleStringProperty(statusname);
             this.type = new SimpleStringProperty(typename);
@@ -60,7 +44,11 @@ public class Bagage {
             this.labelnumber = new SimpleStringProperty(labelnumbername);
             this.flightnumber = new SimpleStringProperty(flightnumbername);
             this.destination = new SimpleStringProperty(destinationname);
-            this.airport = new SimpleStringProperty(airportname);
+            this.airportFound = new SimpleStringProperty(airportFoundname);
+            this.airportLost = new SimpleStringProperty(airportLostname);
+            this.tableFrom = new SimpleStringProperty(tablefromname);
+            this.lostAndFoundID = new SimpleIntegerProperty(lostandfoundidname);
+            this.personID = new SimpleIntegerProperty(personidname);
             this.realid = new SimpleIntegerProperty(realidname);
         }
 
@@ -275,20 +263,6 @@ public class Bagage {
         }
 
         /**
-         * @return the airport
-         */
-        public String getAirport() {
-            return airport.get();
-        }
-
-        /**
-         * @param airport the airport to set
-         */
-        public void setAirport(String airportname) {
-            airport.set(airportname);
-        }
-
-        /**
          * @return the realid
          */
         public Integer getRealid() {
@@ -301,4 +275,74 @@ public class Bagage {
         public void setRealid(Integer realidname) {
             realid.set(realidname);
         }      
+
+        /**
+         * @return the lostAndFoundID
+         */
+        public Integer getLostAndFoundID() {
+            return lostAndFoundID.get();
+        }
+
+        /**
+         * @param lostAndFoundID the lostAndFoundID to set
+         */
+        public void setLostAndFoundID(Integer lostandfoundidname) {
+            lostAndFoundID.set(lostandfoundidname);
+        }
+
+        /**
+         * @return the personID
+         */
+        public Integer getPersonID() {
+            return personID.get();
+        }
+
+        /**
+         * @param personID the personID to set
+         */
+        public void setPersonID(Integer personidname) {
+            personID.set(personidname);
+        }
+
+    /**
+     * @return the airportFound
+     */
+    public String getAirportFound() {
+        return airportFound.get();
     }
+
+    /**
+     * @param airportFound the airportFound to set
+     */
+    public void setAirportFound(String airportFoundname) {
+        airportFound.set(airportFoundname);
+    }
+
+    /**
+     * @return the airportLost
+     */
+    public String getAirportLost() {
+        return airportLost.get();
+    }
+
+    /**
+     * @param airportLost the airportLost to set
+     */
+    public void setAirportLost(String airportLostname) {
+        airportLost.set(airportLostname);
+    }
+
+    /**
+     * @return the tableFrom
+     */
+    public String getTableFrom() {
+        return tableFrom.get();
+    }
+
+    /**
+     * @param tableFrom the tableFrom to set
+     */
+    public void setTableFrom(String tablefromname) {
+        tableFrom.set(tablefromname);
+    }
+}

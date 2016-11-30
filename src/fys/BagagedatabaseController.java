@@ -11,12 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.ResourceBundle;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,6 +29,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
 
 /**
  * FXML Controller class
@@ -49,7 +46,8 @@ public class BagagedatabaseController implements Initializable {
     //@FXML private TableView<Person> table;
     @FXML private TableColumn id, status, type, color, brand, date, information, 
     first_name, surname, address, residence, zipcode, country, phone, mail, 
-    labelnumber, flightnumber, destination, airport;
+    labelnumber, flightnumber, destination, airportFound, airportLost, tableFrom, lostAndFoundID,
+             personID, realid;
     @FXML private TextField colorfilter, brandfilter, datefilter;
     @FXML private ComboBox statusfilter, typefilter;
     @FXML private TextArea characteristicsfilter;
@@ -63,15 +61,13 @@ public class BagagedatabaseController implements Initializable {
             brand_input, characteristics_input;
     @FXML private CheckBox account_checkbox;
     @FXML private Button picture_button, send_button;
-    @FXML private Label id_label;
+    @FXML private Label id_label, personId_label, lafId_label, tableFrom_label;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         taal language = new taal();
         String[] taal = language.getLanguage();
         filter.setText(taal[47]);
-        statusfilter.setPromptText(taal[48]);
-        typefilter.setPromptText(taal[50]);
         colorfilter.setPromptText(taal[49]);
         brandfilter.setPromptText(taal[51]);
         datefilter.setPromptText(taal[52]);
@@ -93,7 +89,8 @@ public class BagagedatabaseController implements Initializable {
         labelnumber.setText(taal[17]);
         flightnumber.setText(taal[18]);
         destination.setText(taal[19]);
-        airport.setText(taal[8]);
+        airportFound.setText(taal[8] + " " + taal[54]);
+        airportLost.setText(taal[8] + " " + taal[55]);
         statusfilter.getItems().addAll(
                 "",
                 taal[54],
@@ -101,7 +98,8 @@ public class BagagedatabaseController implements Initializable {
                 taal[56],
                 taal[57],
                 taal[58],
-                taal[59]);
+                taal[59],
+                taal[108]);
         typefilter.getItems().addAll(taal[27], taal[28], taal[29], taal[30]);
         type_combo.setPromptText(taal[26]);
         color_combo.setPromptText(taal[31]);
@@ -115,7 +113,8 @@ public class BagagedatabaseController implements Initializable {
                 taal[56],
                 taal[57],
                 taal[58],
-                taal[59]);
+                taal[59],
+                taal[108]);
         getLuggageData();
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -135,7 +134,12 @@ public class BagagedatabaseController implements Initializable {
         labelnumber.setCellValueFactory(new PropertyValueFactory<>("labelnumber"));
         flightnumber.setCellValueFactory(new PropertyValueFactory<>("flightnumber"));
         destination.setCellValueFactory(new PropertyValueFactory<>("destination"));
-        airport.setCellValueFactory(new PropertyValueFactory<>("airport"));
+        airportFound.setCellValueFactory(new PropertyValueFactory<>("airportFound"));
+        airportLost.setCellValueFactory(new PropertyValueFactory<>("airportLost"));
+        tableFrom.setCellValueFactory(new PropertyValueFactory<>("tableFrom"));
+        lostAndFoundID.setCellValueFactory(new PropertyValueFactory<>("lostAndFoundID"));
+        personID.setCellValueFactory(new PropertyValueFactory<>("personID"));
+        realid.setCellValueFactory(new PropertyValueFactory<>("realid"));
         id.setStyle("-fx-alignment: CENTER;");
         status.setStyle("-fx-alignment: CENTER;");
         type.setStyle("-fx-alignment: CENTER;");
@@ -144,6 +148,19 @@ public class BagagedatabaseController implements Initializable {
         date.setStyle("-fx-alignment: CENTER;");
         information.setStyle("-fx-alignment: CENTER;");
         first_name.setStyle("-fx-alignment: CENTER;");
+        surname.setStyle("-fx-alignment: CENTER;");
+        address.setStyle("-fx-alignment: CENTER;");
+        residence.setStyle("-fx-alignment: CENTER;");
+        zipcode.setStyle("-fx-alignment: CENTER;");
+        country.setStyle("-fx-alignment: CENTER;");
+        phone.setStyle("-fx-alignment: CENTER;");
+        mail.setStyle("-fx-alignment: CENTER;");
+        labelnumber.setStyle("-fx-alignment: CENTER;");
+        flightnumber.setStyle("-fx-alignment: CENTER;");
+        destination.setStyle("-fx-alignment: CENTER;");
+        airportFound.setStyle("-fx-alignment: CENTER;");
+        airportLost.setStyle("-fx-alignment: CENTER;");
+        tableFrom.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
     }
     
@@ -164,7 +181,8 @@ public class BagagedatabaseController implements Initializable {
                         data.get(i).getDate(), data.get(i).getInformation(), data.get(i).getFirst_name(),
                  data.get(i).getSurname(), data.get(i).getAddress(), data.get(i).getResidence(), data.get(i).getZipcode(), 
                 data.get(i).getCountry(), data.get(i).getPhone(), data.get(i).getMail(), data.get(i).getLabelnumber(), 
-                data.get(i).getFlightnumber(), data.get(i).getDestination(), data.get(i).getAirport(), data.get(i).getRealid()));
+                data.get(i).getFlightnumber(), data.get(i).getDestination(), data.get(i).getAirportFound(), data.get(i).getAirportLost(), 
+                        data.get(i).getTableFrom(), data.get(i).getLostAndFoundID(), data.get(i).getPersonID(), data.get(i).getRealid()));
             }
         }
         table.setItems(datafilter);
@@ -179,16 +197,18 @@ public class BagagedatabaseController implements Initializable {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
             //connectToDatabase(conn, stmt, "test", "root", "root");           
-            String sql = "SELECT found_table.*, airport_table.date, airport_table.airport_found AS airport, "
+            String sql = "SELECT found_table.*, airport_table.date, airport_table.airport_found, airport_table.airport_lost, "
                     + "airport_table.label_number, airport_table.flight_number, airport_table.destination, "
-                    + "person_table.first_name, person_table.surname, person_table.address, person_table.zip_code,"
-                    + "person_table.residence, person_table.country, person_table.phone, person_table.mail "
-                    + "FROM found_table, airport_table, person_table WHERE found_table.lost_and_found_id = airport_table.lost_and_found_id "
+                    + "person_table.first_name, person_table.surname, person_table.address, person_table.zip_code, "
+                    + "person_table.residence, person_table.country, person_table.phone, person_table.mail, 1 as tablefrom "
+                    + "FROM found_table, airport_table, person_table "
+                    + "WHERE found_table.lost_and_found_id = airport_table.lost_and_found_id "
                     + "AND found_table.person_id = person_table.person_id "
-                    + "UNION SELECT lost_table.*, airport_table.date, airport_table.airport_lost AS airport, airport_table.label_number, "
-                    + "airport_table.flight_number, airport_table.destination, person_table.first_name, person_table.surname, "
-                    + "person_table.address, person_table.zip_code, person_table.residence, person_table.country, person_table.phone, person_table.mail "
-                    + "FROM lost_table, airport_table, person_table WHERE lost_table.lost_and_found_id = airport_table.lost_and_found_id "
+                    + "UNION SELECT lost_table.*, airport_table.date, airport_table.airport_found, airport_table.airport_lost, "
+                    + "airport_table.label_number, airport_table.flight_number, airport_table.destination, "
+                    + "person_table.first_name, person_table.surname, person_table.address, person_table.zip_code, person_table.residence, "
+                    + "person_table.country, person_table.phone, person_table.mail, 0 as tablefrom FROM lost_table, airport_table, person_table "
+                    + "WHERE lost_table.lost_and_found_id = airport_table.lost_and_found_id "
                     + "AND lost_table.person_id = person_table.person_id "
                     + "ORDER BY status";
             ResultSet rs = stmt.executeQuery(sql);
@@ -213,11 +233,15 @@ public class BagagedatabaseController implements Initializable {
                 String labelnumber = rs.getString("label_number");
                 String flightnumber = rs.getString("flight_number");
                 String destination = rs.getString("destination");
-                String airport = rs.getString("airport");
-
+                String airportfound = rs.getString("airport_found");
+                String airportlost = rs.getString("airport_lost");
+                String tablefrom = rs.getString("tablefrom");
+                int lostAndFoundID = rs.getInt("lost_and_found_id");
+                int personID = rs.getInt("person_id");
+                
                 data.add(new Bagage(luggage, status, type, color, brand, date, characteristics, firstname,
                  surname, address, residence, zipcode, country, phone, mail, labelnumber, flightnumber, destination,
-                 airport, id));
+                 airportfound, airportlost, tablefrom, lostAndFoundID, personID, id));
             }
             rs.close();
             conn.close();
@@ -236,8 +260,11 @@ public class BagagedatabaseController implements Initializable {
                 = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             int dr_id = (table.getSelectionModel().getSelectedItem().getRealid());
+            int dr_personId = (table.getSelectionModel().getSelectedItem().getPersonID());
+            int dr_lafId = (table.getSelectionModel().getSelectedItem().getLostAndFoundID());
+            int dr_tableFrom = Integer.parseInt((table.getSelectionModel().getSelectedItem().getTableFrom()));
             String dr_status = (table.getSelectionModel().getSelectedItem().getStatus());
-            String dr_airport = (table.getSelectionModel().getSelectedItem().getAirport());
+            String dr_airport = (table.getSelectionModel().getSelectedItem().getAirportFound());
             String dr_name = (table.getSelectionModel().getSelectedItem().getFirst_name());
             String dr_surname = (table.getSelectionModel().getSelectedItem().getSurname());
             String dr_address = (table.getSelectionModel().getSelectedItem().getAddress());
@@ -254,7 +281,7 @@ public class BagagedatabaseController implements Initializable {
             String dr_color = (table.getSelectionModel().getSelectedItem().getColor());
             String dr_characteristics = (table.getSelectionModel().getSelectedItem().getInformation());
             
-            doNext(dr_id, dr_status, dr_airport, dr_name, dr_surname, dr_address,
+            doNext(dr_id, dr_personId, dr_lafId, dr_tableFrom, dr_status, dr_airport, dr_name, dr_surname, dr_address,
                     dr_residence, dr_zipcode, dr_country, dr_phone, dr_mail,
                     dr_label, dr_flight, dr_destination, dr_type, dr_brand,
                     dr_color, dr_characteristics);
@@ -267,18 +294,20 @@ public class BagagedatabaseController implements Initializable {
     }
     
     @FXML
-    public void doNext(int dr_id, String dr_status, String dr_airport, String dr_name,
+    public void doNext(int dr_id, int dr_personId, int dr_lafId, int dr_tableFrom, String dr_status, String dr_airport, String dr_name,
             String dr_surname, String dr_address, String dr_residence, String dr_zipcode, 
             String dr_country, String dr_phone, String dr_mail, String dr_label, 
             String dr_flight, String dr_destination, String dr_type, String dr_brand, 
             String dr_color, String dr_characteristics){
-        
         database_pane.setDisable(true);
         database_pane.setVisible(false);
         wijzig_pane.setDisable(false);
         wijzig_pane.setVisible(true);
         
         id_label.setText(String.valueOf(dr_id));
+        personId_label.setText(String.valueOf(dr_personId));
+        lafId_label.setText(String.valueOf(dr_lafId));
+        tableFrom_label.setText(String.valueOf(dr_tableFrom));
         status_combo.setValue(dr_status);
         airport_combo.setValue(dr_airport);
         name_input.setText(dr_name);
@@ -315,7 +344,7 @@ public class BagagedatabaseController implements Initializable {
         )){
             System.out.println("U heeft niet alles ingevuld!");
         } else{            
-            sendToDatabase(Integer.parseInt(id_label.getText()), fys.getStatusString(status_combo.getValue().toString()), airport_combo.getValue().toString(), name_input.getText(), 
+            sendToDatabase(Integer.parseInt(id_label.getText()), Integer.parseInt(personId_label.getText()), Integer.parseInt(lafId_label.getText()), Integer.parseInt(tableFrom_label.getText()), fys.getStatusString(status_combo.getValue().toString()), airport_combo.getValue().toString(), name_input.getText(), 
                     surname_input.getText(), address_input.getText(), residence_input.getText(), 
                     zipcode_input.getText(), country_input.getText(), phone_input.getText(), 
                     mail_input.getText(), labelnumber_input.getText(), 
@@ -325,7 +354,7 @@ public class BagagedatabaseController implements Initializable {
         }
     }
     
-    private void sendToDatabase(int dr_id, int status, String airport, String frontname, String surname, 
+    private void sendToDatabase(int dr_id, int dr_personId, int dr_lafId, int tableFrom, int status, String airport, String frontname, String surname, 
             String address, String residence, String zipcode, String country, 
             String phone, String mail, String labelnumber, 
             String flightnumber, String destination, int type, String brand, 
@@ -341,62 +370,85 @@ public class BagagedatabaseController implements Initializable {
             stmt = conn.createStatement();
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            /*String sql_person = "UPDATE bagagedatabase.person_table SET first_name='" + frontname + "',"
+            String sql_person = "UPDATE bagagedatabase.person_table SET first_name='" + frontname + "',"
                     + "surname='" + surname + "', address='" + address + "',"
                     + "residence='" + residence + "', zip_code='" + zipcode + "',"
                     + "country='" + country + "', phone='" + phone + "',"
-                    + "mail='" + mail + "')"; 
+                    + "mail='" + mail + "'"
+                    + "WHERE person_id='" + dr_personId + "'"; 
+            System.out.println("DIT IS DE PERSON ID: " + dr_personId);
                         
             stmt.executeUpdate(sql_person);
             
-            String sql_airport = "INSERT INTO bagagedatabase.airport_table (date, "
-                    + "time, airport_lost, label_number, flight_number, destination) "
-                    + "VALUES ('" + date + "', '" + time + "', '" + airport + "', "
-                    + "'" + labelnumber + "', '" + flightnumber + "', '" + destination + "')";
-            
-            stmt.executeUpdate(sql_airport);
-            
-            String sql_personID = "SELECT person_id, lost_and_found_id FROM person_table, airport_table WHERE "
-                    + "person_table.first_name = '" + frontname + "'AND person_table.surname = '" + surname + "' "
-                    + "AND person_table.address = '" + address + "' AND person_table.residence = '" + residence + "' "
-                    + "AND person_table.zip_code = '" + zipcode + "' AND person_table.country = '" + country + "' "
-                    + "AND person_table.phone = '" + phone + "' AND person_table.mail = '" + mail + "' "
-                    + "AND airport_table.date = '" + date + "' AND airport_table.time = '" + time + "' "
-                    + "AND airport_table.airport_lost = '" + airport + "' AND airport_table.label_number = '" 
-                    + labelnumber + "' AND airport_table.flight_number = '" + flightnumber + "' "
-                    + "AND airport_table.destination = '" + destination + "'";
-            
-            ResultSet id_rs = stmt.executeQuery(sql_personID);
-            String personIdStr = null, lostAndFoundIdStr = null;
-            int personId = -1, lostAndFoundId = -1;
-            while (id_rs.next()) {
-                String strA = id_rs.getString("person_id");
-                personIdStr = strA.replace("\n", ",");
-                personId = Integer.parseInt(personIdStr);
-                System.out.println(personId);
-                
-                String strB = id_rs.getString("lost_and_found_id");
-                lostAndFoundIdStr = strB.replace("\n", ",");
-                lostAndFoundId = Integer.parseInt(lostAndFoundIdStr);
-                System.out.println(lostAndFoundIdStr);
-            }   
-            
-            String sql_lost = "INSERT INTO bagagedatabase.lost_table (type, brand, color, "
-                    + "characteristics, status, person_id, lost_and_found_id) VALUES ('" + type + "', "
-                    + "'" + brand + "', '" + color + "', '" + characteristics + "', 1, "
-                    + "'" + personId + "', '" + lostAndFoundId + "')";*/
-            
             String sql_lost = "";
-            if(status==0){
-                
-            }
-            else if(status==1){
+            String sql_airport = "";
+            if(tableFrom==0){   //0 = bagagedatabase.lost_table
                 sql_lost = "UPDATE bagagedatabase.lost_table SET status='" + status + "',"
                         + "type='" + type + "', brand='" + brand + "',"
                         + "color='" + color + "', characteristics='" + characteristics + "'"
-                        + "WHERE id='" + dr_id + "')";
+                        + "WHERE id='" + dr_id + "'";
+                
+                switch (status){
+                    //case 0: Gaat van lost_table naar status Gevonden
+                    case 0: sql_airport = "UPDATE bagagedatabase.airport_table SET airport_found='" + airport + "',"
+                            + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
+                            + "destination='" + destination + "'"
+                            + "WHERE lost_and_found_id='" + dr_lafId + "'";
+                        System.out.println(sql_airport);
+                            break;
+                    //case 3: Gaat van lost_table naar status Afgehandeld
+                    case 3: sql_airport = "UPDATE bagagedatabase.airport_table SET airport_found='" + airport + "',"
+                            + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
+                            + "destination='" + destination + "'"
+                            + "WHERE lost_and_found_id='" + dr_lafId + "'";
+                            break;
+                    //default: Gaat van lost_table naar status Vermist, Vernietigd, Nooit Gevonden of Depot 
+                    default: sql_airport = "UPDATE bagagedatabase.airport_table SET airport_lost='" + airport + "',"
+                            + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
+                            + "destination='" + destination + "'"
+                            + "WHERE lost_and_found_id='" + dr_lafId + "'";
+                            break;
+                }         
+            }
+            else if(tableFrom==1){  //1 = bagagedatabase.found_table
+                sql_lost = "UPDATE bagagedatabase.found_table SET status='" + status + "',"
+                        + "type='" + type + "', brand='" + brand + "',"
+                        + "color='" + color + "', characteristics='" + characteristics + "'"
+                        + "WHERE id='" + dr_id + "'";
+                
+                switch (status) {
+                    //case 1: Gaat van found_table naar status Vermist
+                    case 1: sql_airport = "UPDATE bagagedatabase.airport_table SET airport_lost='" + airport + "',"
+                            + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
+                            + "destination='" + destination + "'"
+                            + "WHERE lost_and_found_id='" + dr_lafId + "'";
+                            break;
+                    //case 3: Gaat van found_table naar status Afgehandeld
+                    case 3: sql_airport = "UPDATE bagagedatabase.airport_table SET airport_lost='" + airport + "',"
+                            + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
+                            + "destination='" + destination + "'"
+                            + "WHERE lost_and_found_id='" + dr_lafId + "'";
+                            break;
+                    //default: Gaat van found_table naar status Gevonden, Vernietigd, Nooit gevonden, Depot 
+                    default: sql_airport = "UPDATE bagagedatabase.airport_table SET airport_found='" + airport + "',"
+                            + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
+                            + "destination='" + destination + "'"
+                            + "WHERE lost_and_found_id='" + dr_lafId + "'";
+                            break;
+                }
             }
             stmt.executeUpdate(sql_lost);
+            stmt.executeUpdate(sql_airport);
+            
+            if(status==3){
+                PDDocument document = new PDDocument();
+                PDPage page = new PDPage();
+                document.addPage( page );
+            }
+            
+            taal languages = new taal();
+            String[] taal = languages.getLanguage(); 
+            fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");
             conn.close();
         } catch (SQLException ex) {
             // handle any errors

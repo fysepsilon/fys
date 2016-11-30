@@ -5,12 +5,14 @@
  */
 package fys;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,6 +33,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
+import org.apache.pdfbox.pdmodel.interactive.form.PDField;
+import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
 
 /**
  * FXML Controller class
@@ -441,9 +449,23 @@ public class BagagedatabaseController implements Initializable {
             stmt.executeUpdate(sql_airport);
             
             if(status==3){
-                PDDocument document = new PDDocument();
-                PDPage page = new PDPage();
-                document.addPage( page );
+                File pdfdoc = new File("C:/Users/lucas/Documents/NetBeansProjects/fys/dhltemplate.pdf");
+                PDDocument document;
+                document = PDDocument.load(pdfdoc);
+                
+                PDAcroForm acroForm = document.getDocumentCatalog().getAcroForm();
+                
+                List<PDField> fields = acroForm.getFields();
+
+                // set the text in the form-field <-- does work
+                for (PDField field : fields) {
+                    if (field.getFullyQualifiedName().equals("address")) {
+                        field.setValue("Test-String");
+                    }
+                }
+                
+                document.save("Piemel.pdf");
+                document.close();
             }
             
             taal languages = new taal();

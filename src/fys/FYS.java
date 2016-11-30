@@ -324,7 +324,7 @@ public class FYS extends Application {
     
     //Conect to database.
     public Connection connectToDatabase(Connection conn) throws SQLException {
-        conn = DriverManager.getConnection("jdbc:mysql://localhost/bagagedatabase?user=root&password=root");
+        conn = DriverManager.getConnection("jdbc:mysql://localhost/bagagedatabase?user=root&password=root&useSSL=false");
         return conn;
     }
         

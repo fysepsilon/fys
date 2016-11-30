@@ -25,7 +25,7 @@ public class Bagage {
                  String surnamename, String addressname, String residencename, String zipcodename, 
                  String countryname, String phonename, String mailname, String labelnumbername, 
                  String flightnumbername, String destinationname, String airportFoundname, String airportLostname,
-                  String tablefromname, Integer personidname, Integer lostandfoundidname, Integer realidname) {
+                  String tablefromname, Integer lostandfoundidname, Integer personidname, Integer realidname) {
             this.id = new SimpleIntegerProperty(idname);
             this.status = new SimpleStringProperty(statusname);
             this.type = new SimpleStringProperty(typename);

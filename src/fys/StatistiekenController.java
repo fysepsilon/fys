@@ -5,20 +5,25 @@
  */
 package fys;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ComboBox;
 
 /**
  * FXML Controller class
@@ -27,39 +32,61 @@ import javafx.scene.chart.XYChart;
  */
 public class StatistiekenController implements Initializable {
 
-    @FXML
-    private PieChart piechart;
-    private int total = 0;
-    private int foundAmount, lostAmount, destroyAmount, settleAmount, neverFoundAmount, depotAmount = 0;
-    private int jan, feb, mar, apr, mei, jun, jul, aug, sep, okt, nov, dec = 0;
-    
-    @FXML
-    private LineChart<Number, Number> linechart;
+    @FXML private PieChart piechart;
+    @FXML private LineChart<Number, Number> linechart;
+    @FXML private int total = 0;
+    @FXML private int foundAmount, lostAmount, destroyAmount, settleAmount, neverFoundAmount, depotAmount = 0;
+    @FXML private int jan, feb, mar, apr, mei, jun, jul, aug, sep, okt, nov, dec = 0;
+    @FXML private ComboBox year, month;
+    @FXML private ArrayList<String> years = new ArrayList<String>();
+    @FXML private Connection conn = null; 
+    @FXML private Statement stmt = null; 
+    @FXML private FYS fys = new FYS();
+    @FXML private taal language = new taal();
+    @FXML private String[] taal = language.getLanguage();
+    @FXML private ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+            new PieChart.Data(taal[54], 0), new PieChart.Data(taal[55], 0),
+            new PieChart.Data(taal[56], 0), new PieChart.Data(taal[57], 0),
+            new PieChart.Data(taal[58], 0), new PieChart.Data(taal[59], 0));
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        taal language = new taal();
-        String[] taal = language.getLanguage();
-        ObservableList<PieChart.Data> pieChartData
-                = FXCollections.observableArrayList(
-                        new PieChart.Data(taal[54], 0),
-                        new PieChart.Data(taal[55], 0),
-                        new PieChart.Data(taal[56], 0),
-                        new PieChart.Data(taal[57], 0),
-                        new PieChart.Data(taal[58], 0),
-                        new PieChart.Data(taal[59], 0));
+        try {
+            conn = fys.connectToDatabase(conn);
+            stmt = conn.createStatement();
+            //connectToDatabase(conn, stmt, "test", "root", "root");           
+            String sql = "SELECT DISTINCT YEAR(STR_TO_DATE(date, \"%Y-%m-%d\")) as date "
+                    + "from bagagedatabase.airport_table";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                //Retrieve by column name
+                years.add(rs.getString("date"));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        
+        for (int i = 0; i < years.size(); i++) {
+            year.getItems().add(years.get(i));
+        }
+        month.getItems().addAll(
+                taal[109], taal[110], taal[111], taal[112], taal[113], taal[114],
+                taal[115], taal[116], taal[117], taal[118], taal[119], taal[120]);
+        
+        
 
         piechart.setTitle(taal[75]);
         piechart.setData(pieChartData);
-        FYS fys = new FYS();
-        Statement stmt = null;
-        Connection conn = null;
         int luggage = 0;
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
             //connectToDatabase(conn, stmt, "test", "root", "root");           
-            String sql = "  SELECT x.status, COUNT(x.status) AS Count FROM "
+            String sql = "SELECT x.status, COUNT(x.status) AS Count FROM "
                     + "(SELECT status FROM lost_table "
                     + "UNION ALL "
                     + "SELECT status FROM found_table) x "
@@ -174,6 +201,65 @@ public class StatistiekenController implements Initializable {
         series.getData().set(9, new XYChart.Data(taal[87], okt)); 
         series.getData().set(10, new XYChart.Data<>(taal[88], nov)); 
         series.getData().set(11, new XYChart.Data(taal[89], dec));
+    }
+    
+    @FXML
+    private void handleFilterAction(ActionEvent event) throws IOException {
+        System.out.println(year.getSelectionModel().getSelectedItem().toString());
+        System.out.println(month.getSelectionModel().getSelectedItem().toString());
+        int luggage = 0, foundAmount = 0, lostAmount = 0, destroyAmount = 0, settleAmount = 0, 
+                neverFoundAmount = 0, depotAmount = 0;
+        total = 0;
+        pieChartData = FXCollections.observableArrayList();
+        try {
+            conn = fys.connectToDatabase(conn);
+            stmt = conn.createStatement();
+            //connectToDatabase(conn, stmt, "test", "root", "root");           
+            String sql = "SELECT x.status, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
+                    + "FROM (SELECT status, date FROM lost_table, airport_table "
+                    + "WHERE lost_table.lost_and_found_id = airport_table.lost_and_found_id "
+                    + "UNION ALL SELECT status, date FROM found_table, airport_table "
+                    + "WHERE found_table.lost_and_found_id = airport_table.lost_and_found_id) x "
+                    + "WHERE YEAR(x.date) LIKE \"%" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
+                    + "AND MONTH(x.date) LIKE \"%" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
+                    + "GROUP BY x.status";
+            System.out.println(sql);
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    luggage++;
+                    //System.out.println(rs.getString("status") + " " + rs.getInt("Count"));
+                    //Retrieve by column name
+                    foundAmount = (rs.getInt("status") == 0 ? rs.getInt("Count") : foundAmount);
+                    lostAmount = (rs.getInt("status") == 1 ? rs.getInt("Count") : lostAmount);
+                    destroyAmount = (rs.getInt("status") == 2 ? rs.getInt("Count") : destroyAmount);
+                    settleAmount = (rs.getInt("status") == 3 ? rs.getInt("Count") : settleAmount);
+                    neverFoundAmount = (rs.getInt("status") == 4 ? rs.getInt("Count") : neverFoundAmount);
+                    depotAmount = (rs.getInt("status") == 5 ? rs.getInt("Count") : depotAmount);
+                }
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        
+        pieChartData = FXCollections.observableArrayList(
+                new PieChart.Data(taal[54], foundAmount), new PieChart.Data(taal[55], lostAmount),
+                new PieChart.Data(taal[56], destroyAmount), new PieChart.Data(taal[57], settleAmount),
+                new PieChart.Data(taal[58], neverFoundAmount), new PieChart.Data(taal[59], depotAmount));
+        piechart.setData(pieChartData);
+
+        for (PieChart.Data d : piechart.getData()) {
+            total += d.getPieValue();
+        }
+
+        pieChartData.forEach(data -> data.nameProperty().bind(
+                Bindings.concat(
+                        (int) data.getPieValue(), " ", data.getName(), ": ",
+                        (total == 0 || (int) data.getPieValue() == 0) ? 0 : (int) (data.getPieValue() / total * 100), "%"
+                )
+        ));
     }
     
     

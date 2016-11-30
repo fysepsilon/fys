@@ -64,6 +64,25 @@ public class NieuwaccountaanmakenController implements Initializable {
         conn = fys.connectToDatabase(conn);
         stmt = conn.createStatement();
 
+        
+        try {
+                //connectToDatabase(conn, stmt, "test", "root", "root");
+                 String sql_email = "SELECT mail FROM person_table";
+                ResultSet rs = stmt.executeQuery(sql_email);
+                while (rs.next()) {
+                    //Retrieve by column name
+                    email = rs.getString("mail");
+                    //Display values
+                    //System.out.print("username: " + email);
+                }
+                rs.close();
+            } catch (SQLException ex) {
+                // handle any errors
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
+        
         if ((name_input.getText() == null || name_input.getText().trim().isEmpty())
                 || (surname_input.getText() == null || surname_input.getText().trim().isEmpty())
                 || (address_input.getText() == null || address_input.getText().trim().isEmpty())
@@ -74,11 +93,16 @@ public class NieuwaccountaanmakenController implements Initializable {
                 || (mail_input.getText() == null || mail_input.getText().trim().isEmpty())
                 || (language_combo.getValue() == null)
                 || (type_combo.getValue() == null)) {
+            
             // Foutmelding
             loginerror.setText(taal[93]);
             loginerror.setVisible(true);
-
-        } else {
+            
+        } else if(email == mail_input.getText()) {
+            //Foutmelding
+            loginerror.setText(taal[121]);
+            loginerror.setVisible(true);
+        }else {
             sendToDatabase(name_input.getText(), surname_input.getText(),
                     address_input.getText(), residence_input.getText(), zipcode_input.getText(),
                     country_input.getText(), phone_input.getText(), mail_input.getText(),

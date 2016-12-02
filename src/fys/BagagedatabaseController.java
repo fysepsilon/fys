@@ -59,17 +59,20 @@ public class BagagedatabaseController implements Initializable {
     @FXML private TextField colorfilter, brandfilter, datefilter;
     @FXML private ComboBox statusfilter, typefilter;
     @FXML private TextArea characteristicsfilter;
-    @FXML private Button filter;
-    @FXML private Text status_label, color_label, type_label, brand_label, date_label, extraInfo_label;
-    
+    @FXML private Button filter;    
     @FXML private ComboBox status_combo, airport_combo, type_combo, color_combo;
     @FXML private TextField name_input, surname_input, address_input, 
             residence_input, zipcode_input, country_input, phone_input, 
             mail_input, labelnumber_input, flightnumber_input, destination_input,
             brand_input, characteristics_input;
     @FXML private CheckBox account_checkbox;
-    @FXML private Button picture_button, send_button;
-    @FXML private Label id_label, personId_label, lafId_label, tableFrom_label;
+    @FXML private Button picture_button, send_button, cancel_button, change_button;
+    @FXML private Label mail_label, phone_label, country_label, zipcode_label, 
+            residence_label, address_label, surname_label, name_label, id_label,
+            airport_label, label_label, flight_label, destination_label, 
+            type_label, brand_label, color_label, characteristics_label,
+            picture_label, status_label, personId_label, lafId_label, 
+            tableFrom_label, loginerror;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -97,6 +100,32 @@ public class BagagedatabaseController implements Initializable {
         labelnumber.setText(taal[17]);
         flightnumber.setText(taal[18]);
         destination.setText(taal[19]);
+        
+        send_button.setText(taal[46]);
+        cancel_button.setText(taal[127]);
+        change_button.setText(taal[67]);
+        
+        airport_label.setText(taal[8] + ":");
+        name_label.setText(taal[9] + ":");
+        surname_label.setText(taal[10] + ":");
+        address_label.setText(taal[11] + ":");
+        residence_label.setText(taal[12] + ":");
+        zipcode_label.setText(taal[13] + ":");
+        country_label.setText(taal[14] + ":");
+        phone_label.setText(taal[15] + ":");
+        mail_label.setText(taal[16] + ":");
+        label_label.setText(taal[17] + ":");
+        flight_label.setText(taal[18] + ":");
+        destination_label.setText(taal[19] + ":");
+        characteristics_label.setText(taal[23] + ":");
+        picture_label.setText(taal[24] + ":");
+        status_label.setText(taal[48] + ":");
+        color_label.setText(taal[49] + ":");
+        type_label.setText(taal[50] + ":");
+        brand_label.setText(taal[51] + ":");    
+        airport_combo.setPromptText(taal[25]);
+        picture_button.setText(taal[44]);
+        
         airportFound.setText(taal[8] + " " + taal[54]);
         airportLost.setText(taal[8] + " " + taal[55]);
         statusfilter.getItems().addAll(
@@ -170,6 +199,14 @@ public class BagagedatabaseController implements Initializable {
         airportLost.setStyle("-fx-alignment: CENTER;");
         tableFrom.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
+    }
+    
+    @FXML
+    private void handleCancel(ActionEvent event) throws IOException {
+        database_pane.setDisable(false);
+        database_pane.setVisible(true);
+        wijzig_pane.setDisable(true);
+        wijzig_pane.setVisible(false);
     }
     
     @FXML
@@ -338,6 +375,8 @@ public class BagagedatabaseController implements Initializable {
     @FXML
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
         FYS fys = new FYS();
+        taal language = new taal();
+        String[] taal = language.getLanguage();
         
         if((name_input.getText() == null || name_input.getText().trim().isEmpty())
                 || (surname_input.getText() == null || surname_input.getText().trim().isEmpty())
@@ -348,9 +387,11 @@ public class BagagedatabaseController implements Initializable {
                 || (mail_input.getText() == null || mail_input.getText().trim().isEmpty())
                 || (type_combo.getValue() == null)
                 || (brand_input.getText() == null || brand_input.getText().trim().isEmpty())
-                || (color_combo.getValue() == null
-        )){
-            System.out.println("U heeft niet alles ingevuld!");
+                || (color_combo.getValue() == null)
+        ){
+             // Foutmelding
+            loginerror.setText(taal[93]);
+            loginerror.setVisible(true);
         } else{            
             sendToDatabase(Integer.parseInt(id_label.getText()), Integer.parseInt(personId_label.getText()), Integer.parseInt(lafId_label.getText()), Integer.parseInt(tableFrom_label.getText()), fys.getStatusString(status_combo.getValue().toString()), airport_combo.getValue().toString(), name_input.getText(), 
                     surname_input.getText(), address_input.getText(), residence_input.getText(), 
@@ -383,9 +424,7 @@ public class BagagedatabaseController implements Initializable {
                     + "residence='" + residence + "', zip_code='" + zipcode + "',"
                     + "country='" + country + "', phone='" + phone + "',"
                     + "mail='" + mail + "'"
-                    + "WHERE person_id='" + dr_personId + "'"; 
-            System.out.println("DIT IS DE PERSON ID: " + dr_personId);
-                        
+                    + "WHERE person_id='" + dr_personId + "'";                         
             stmt.executeUpdate(sql_person);
             
             String sql_lost = "";
@@ -402,7 +441,6 @@ public class BagagedatabaseController implements Initializable {
                             + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
                             + "destination='" + destination + "'"
                             + "WHERE lost_and_found_id='" + dr_lafId + "'";
-                        System.out.println(sql_airport);
                             break;
                     //case 3: Gaat van lost_table naar status Afgehandeld
                     case 3: sql_airport = "UPDATE bagagedatabase.airport_table SET airport_found='" + airport + "',"

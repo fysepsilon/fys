@@ -124,7 +124,7 @@ public class HomepageController implements Initializable {
             //connectToDatabase(conn, stmt, "test", "root", "root");           
             String sql = "SELECT found_table.*, airport_table.date,time FROM found_table, airport_table "
                     + "WHERE found_table.lost_and_found_id = airport_table.lost_and_found_id "
-                    + "ORDER BY date ASC";
+                    + "ORDER BY date DESC";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 luggage++;
@@ -157,7 +157,7 @@ public class HomepageController implements Initializable {
             //connectToDatabase(conn, stmt, "test", "root", "root");           
             String sql = "SELECT lost_table.*, airport_table.date,time FROM lost_table, airport_table "
                     + "WHERE lost_table.lost_and_found_id = airport_table.lost_and_found_id "
-                    + "ORDER BY date ASC";
+                    + "ORDER BY date DESC";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 luggage++;

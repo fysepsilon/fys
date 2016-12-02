@@ -41,8 +41,6 @@ public class BagageformulierenController implements Initializable {
             mail_input, labelnumber_input, flightnumber_input, destination_input,
             brand_input, characteristics_input;
     @FXML
-    private CheckBox account_checkbox;
-    @FXML
     private Button picture_button, send_button;
     @FXML
     private Label surname_label, name_label, airport_label, label_label,
@@ -55,7 +53,7 @@ public class BagageformulierenController implements Initializable {
         FYS fys = new FYS();
         taal language = new taal();
         String[] taal = language.getLanguage();
-        String password = fys.encrypt(generateRandomPassword(8));        
+        String password = fys.encrypt(generateRandomPassword(8));
         String[] mailInformation = new String[3];
         int[] language_user = new int[1];
         Statement stmt = null;
@@ -73,17 +71,22 @@ public class BagageformulierenController implements Initializable {
                 || (type_combo.getValue() == null)
                 || (brand_input.getText() == null || brand_input.getText().trim().isEmpty())
                 || (color_combo.getValue() == null)) {
+            loginerror.setVisible(false);
             loginerror.setText(taal[93]);
+            loginerror.setStyle("-fx-text-fill: red;");
             loginerror.setVisible(true);
-        } else if (account_checkbox.isSelected() && fys.checkEmailExists(mail_input.getText())) {
-                    //Foutmelding
-                    loginerror.setText(taal[121]);
-                    loginerror.setVisible(true);
+        } else if (fys.checkEmailExists(mail_input.getText())) {
+            //Foutmelding
+            loginerror.setVisible(false);
+            loginerror.setText(taal[121]);
+            loginerror.setStyle("-fx-text-fill: red;");
+            loginerror.setVisible(true);
         } else {
+            loginerror.setVisible(false);
             loginerror.setText(taal[124]);
             loginerror.setStyle("-fx-text-fill: green;");
             loginerror.setVisible(true);
-            
+
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date date = new Date();
             String dateTimeString = dateFormat.format(date);
@@ -97,51 +100,50 @@ public class BagageformulierenController implements Initializable {
             sendToDatabase(airport_combo.getValue().toString(), name_input.getText(),
                     surname_input.getText(), address_input.getText(), residence_input.getText(),
                     zipcode_input.getText(), country_input.getText(), phone_input.getText(),
-                    mail_input.getText(), account_checkbox.isSelected(), labelnumber_input.getText(),
+                    mail_input.getText(), labelnumber_input.getText(),
                     flightnumber_input.getText(), destination_input.getText(),
                     fys.getBaggageTypeString(type_combo.getValue().toString()), brand_input.getText(), fys.getColorString(color_combo.getValue().toString()),
                     characteristics_input.getText(), dateString, timeString, password);
 
-            try {
-                //connectToDatabase(conn, stmt, "test", "root", "root");
-                String sql = "SELECT type, language, first_name, surname, password FROM person_table WHERE mail='" + mail_input.getText() + "'";
-                ResultSet rs = stmt.executeQuery(sql);
-                while (rs.next()) {
-                    //Retrieve by column name
-                    mailInformation[0] = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
-                    mailInformation[1] = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
-                    mailInformation[2] = fys.decrypt(rs.getString("password"));
-                    language_user[0] = rs.getInt("language");
-                    //Display values
-                    //System.out.print("username: " + email);
-                }
-                rs.close();
-                conn.close();
-            } catch (SQLException ex) {
-                // handle any errors
-                System.out.println("SQLException: " + ex.getMessage());
-                System.out.println("SQLState: " + ex.getSQLState());
-                System.out.println("VendorError: " + ex.getErrorCode());
-            }
 
-            if (language_user[0] == 0) { // Mail voor klant (type = 0)
-                        fys.sendEmail(mail_input.getText(), "Corendon - Logindata", "Valued customer, "
-                                + "<br><br>There is an account created for you by one of our employees."
-                                + "<br>You can log in to this account on our web application to view the status of your case."
-                                + "<br>You will need the following data to log in:"
-                                + "<br>Username: <i>" + mail_input.getText()
-                                + "</i><br>Password: <i>" + mailInformation[2]
-                                + "</i><br><br>You can change your password in the web application."
-                                + "<br>We hope to have informed you sufficiently."
-                                + "<br><br>Sincerely,"
-                                + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
-            }
+                try {
+                    //connectToDatabase(conn, stmt, "test", "root", "root");
+                    String sql = "SELECT type, language, first_name, surname, password FROM person_table WHERE mail='" + mail_input.getText() + "'";
+                    ResultSet rs = stmt.executeQuery(sql);
+                    while (rs.next()) {
+                        //Retrieve by column name
+                        mailInformation[0] = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
+                        mailInformation[1] = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
+                        mailInformation[2] = fys.decrypt(rs.getString("password"));
+                        language_user[0] = rs.getInt("language");
+                    }
+                    rs.close();
+                    conn.close();
+                } catch (SQLException ex) {
+                    // handle any errors
+                    System.out.println("SQLException: " + ex.getMessage());
+                    System.out.println("SQLState: " + ex.getSQLState());
+                    System.out.println("VendorError: " + ex.getErrorCode());
+                }
+
+                if (language_user[0] == 0) { // Mail voor klant (type = 0)
+                    fys.sendEmail(mail_input.getText(), "Corendon - Logindata", "Dear valued customer, "
+                            + "<br><br>There is an account created for you by one of our employees."
+                            + "<br>You can login to this account on our web application to view the status of your case."
+                            + "<br>You will need the following data to log in:"
+                            + "<br>Username: <i>" + mail_input.getText()
+                            + "</i><br>Password: <i>" + mailInformation[2]
+                            + "</i><br><br>You can change your password in the web application."
+                            + "<br>We hope to have informed you sufficiently."
+                            + "<br><br>Sincerely,"
+                            + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
+                }
         }
     }
 
     private void sendToDatabase(String airport, String frontname, String surname,
             String address, String residence, String zipcode, String country,
-            String phone, String mail, Boolean checkBox, String labelnumber,
+            String phone, String mail, String labelnumber,
             String flightnumber, String destination, int type, String brand,
             Integer color, String characteristics, String date, String time,
             String password)
@@ -157,9 +159,9 @@ public class BagageformulierenController implements Initializable {
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
             String sql_person = "INSERT INTO bagagedatabase.person_table (type, language, first_name, surname, address, residence, "
-                    + "zip_code, country, phone, mail) VALUES ('0', '0', '" + frontname + "', '" + surname + "', '" + address + "', "
+                    + "zip_code, country, phone, mail, password) VALUES ('0', '0', '" + frontname + "', '" + surname + "', '" + address + "', "
                     + "'" + residence + "', '" + zipcode + "', '" + country + "', '" + phone + "', "
-                    + "'" + mail + "')";
+                    + "'" + mail + "', '" + password + "')";
 
             stmt.executeUpdate(sql_person);
 
@@ -199,12 +201,7 @@ public class BagageformulierenController implements Initializable {
                     + "'" + personId + "', '" + lostAndFoundId + "')";
 
             stmt.executeUpdate(sql_lost);
-            if (checkBox) {
-                String sql_account = "UPDATE bagagedatabase.person_table SET password = '" + password + "'"
-                        + "WHERE person_id = '" + personId + "'";
-
-                stmt.executeUpdate(sql_account);
-            }
+            
             id_rs.close();
             conn.close();
         } catch (SQLException ex) {
@@ -243,9 +240,8 @@ public class BagageformulierenController implements Initializable {
         color_combo.getItems().addAll(
                 taal[32], taal[33], taal[34], taal[35], taal[36],
                 taal[37], taal[38], taal[39], taal[40], taal[41], taal[42], taal[43]);
-        type_combo.getItems().addAll(taal[27], taal[28], taal[29], taal[30]);
+        type_combo.getItems().addAll(taal[29], taal[27], taal[30], taal[125], taal[28]);
         picture_button.setText(taal[44]);
-        account_checkbox.setText(taal[45]);
         send_button.setText(taal[46]);
     }
 }

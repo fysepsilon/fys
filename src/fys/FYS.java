@@ -18,6 +18,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -52,6 +53,7 @@ public class FYS extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Corendon-Login");
+        stage.getIcons().add(new Image("http://www.corendon.com/favicon.png"));
         stage.show();  
     }
     
@@ -97,6 +99,19 @@ public class FYS extends Application {
         return 0;
     }
     
+     public String getUserLanguage(int type) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        if (type == 1) {
+            return taal[70];
+        } else if (type == 2) {
+            return taal[71];
+        } else if (type == 3) {
+            return taal[72];
+        }
+        return taal[69];
+    }
+     
     public Integer getUserLanguageString(String type) {
         taal language = new taal();
         String[] taal = language.getLanguage();

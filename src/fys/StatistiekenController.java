@@ -302,7 +302,6 @@ public class StatistiekenController implements Initializable {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-        System.out.println(series.getData());
         series.getData().add(new XYChart.Data<>(taal[78], jan));
         series.getData().add(new XYChart.Data(taal[79], feb));
         series.getData().add(new XYChart.Data<>(taal[80], mar));

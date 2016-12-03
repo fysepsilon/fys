@@ -19,13 +19,14 @@ public class Bagage {
     @FXML private final SimpleStringProperty status, type, color, brand, date, information, 
                 first_name, surname, address, residence, zipcode, country, phone, mail, labelnumber, 
                 flightnumber, destination, airportFound, airportLost, tableFrom;
+    @FXML private SimpleStringProperty time;
         
     public Bagage(Integer idname, String statusname, String typename, String colorname, 
                 String brandname, String datename, String informationname, String firstnamename,
-                 String surnamename, String addressname, String residencename, String zipcodename, 
-                 String countryname, String phonename, String mailname, String labelnumbername, 
-                 String flightnumbername, String destinationname, String airportFoundname, String airportLostname,
-                  String tablefromname, Integer lostandfoundidname, Integer personidname, Integer realidname) {
+                String surnamename, String addressname, String residencename, String zipcodename, 
+                String countryname, String phonename, String mailname, String labelnumbername, 
+                String flightnumbername, String destinationname, String airportFoundname, String airportLostname,
+                String tablefromname, Integer lostandfoundidname, Integer personidname, Integer realidname) {
             this.id = new SimpleIntegerProperty(idname);
             this.status = new SimpleStringProperty(statusname);
             this.type = new SimpleStringProperty(typename);
@@ -50,6 +51,35 @@ public class Bagage {
             this.lostAndFoundID = new SimpleIntegerProperty(lostandfoundidname);
             this.personID = new SimpleIntegerProperty(personidname);
             this.realid = new SimpleIntegerProperty(realidname);
+        }
+    
+        public Bagage(String datename, String timename, String colorname, String brandname) {
+            this.id = new SimpleIntegerProperty(0);
+            this.realid = new SimpleIntegerProperty(0);
+            this.lostAndFoundID = new SimpleIntegerProperty(0);
+            this.personID = new SimpleIntegerProperty(0);
+            this.status = new SimpleStringProperty("");
+            this.type = new SimpleStringProperty("");
+            this.information = new SimpleStringProperty("");
+            this.first_name = new SimpleStringProperty("");
+            this.surname = new SimpleStringProperty("");
+            this.address = new SimpleStringProperty("");
+            this.residence = new SimpleStringProperty("");
+            this.zipcode = new SimpleStringProperty("");
+            this.country = new SimpleStringProperty("");
+            this.phone = new SimpleStringProperty("");
+            this.mail = new SimpleStringProperty("");
+            this.labelnumber = new SimpleStringProperty("");
+            this.flightnumber = new SimpleStringProperty("");
+            this.destination = new SimpleStringProperty("");
+            this.airportFound = new SimpleStringProperty("");
+            this.airportLost = new SimpleStringProperty("");
+            this.tableFrom = new SimpleStringProperty("");
+
+            this.date = new SimpleStringProperty(datename);
+            this.time = new SimpleStringProperty(timename);
+            this.color = new SimpleStringProperty(colorname);
+            this.brand = new SimpleStringProperty(brandname);
         }
 
         public Integer getId() {
@@ -98,6 +128,14 @@ public class Bagage {
 
         public void setDate(String datename) {
             date.set(datename);
+        }
+        
+        public String getTime() {
+        return time.get();
+        }
+
+        public void setTime(String timename) {
+            time.set(timename);
         }
         
         public String getInformation() {

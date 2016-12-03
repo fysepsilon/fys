@@ -39,11 +39,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class HomepageController implements Initializable {
 
     //@FXML private final TableView<Person> table = new TableView<>();
-    @FXML private TableView<HomepageController.Bagage> table;
-    @FXML private ObservableList<HomepageController.Bagage> data = FXCollections.observableArrayList(), datafilter = FXCollections.observableArrayList();
-    @FXML private TableView<HomepageController.Bagage1> table1;
-    @FXML private ObservableList<HomepageController.Bagage1> data1 = FXCollections.observableArrayList();
-    @FXML private ObservableList<HomepageController.Bagage1> datafilter1 = FXCollections.observableArrayList();
+    @FXML private TableView<Bagage> table;
+    @FXML private ObservableList<Bagage> data = FXCollections.observableArrayList(), datafilter = FXCollections.observableArrayList();
+    @FXML private TableView<Bagage> table1;
+    @FXML private ObservableList<Bagage> data1 = FXCollections.observableArrayList();
     @FXML private TableColumn date, color, brand, time, date1, color1, brand1, time1;
     @FXML private Label recentlabel, lostlabel, foundlabel;
     @FXML private FYS fys = new FYS();
@@ -80,10 +79,10 @@ public class HomepageController implements Initializable {
         table.setItems(data);
       
         getLuggageData1();
-        date1.setCellValueFactory(new PropertyValueFactory<>("date1"));
-        time1.setCellValueFactory(new PropertyValueFactory<>("time1"));
-        color1.setCellValueFactory(new PropertyValueFactory<>("color1"));
-        brand1.setCellValueFactory(new PropertyValueFactory<>("brand1"));
+        date1.setCellValueFactory(new PropertyValueFactory<>("date"));
+        time1.setCellValueFactory(new PropertyValueFactory<>("time"));
+        color1.setCellValueFactory(new PropertyValueFactory<>("color"));
+        brand1.setCellValueFactory(new PropertyValueFactory<>("brand"));
         date1.setStyle("-fx-alignment: CENTER;");
         time1.setStyle("-fx-alignment: CENTER;");        
         color1.setStyle("-fx-alignment: CENTER;");
@@ -120,7 +119,7 @@ public class HomepageController implements Initializable {
                 String color = fys.getColor(rs.getInt("color"));
                 String brand = rs.getString("brand");
 
-                data.add(new HomepageController.Bagage(date, time, color, brand));
+                data.add(new Bagage(date, time, color, brand));
             }
             rs.close();
             conn.close();
@@ -150,7 +149,7 @@ public class HomepageController implements Initializable {
                 String color1 = fys.getColor(rs.getInt("color"));
                 String brand1 = rs.getString("brand");
 
-                data1.add(new HomepageController.Bagage1(date1, time1, color1, brand1));
+                data1.add(new Bagage(date1, time1, color1, brand1));
             }
             rs.close();
             conn.close();
@@ -160,92 +159,5 @@ public class HomepageController implements Initializable {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-    }
-
-    public static class Bagage {
-        @FXML private final SimpleStringProperty date, time, color, brand;
-
-        private Bagage(String datename, String timename, String colorname, String brandname) {
-            this.date = new SimpleStringProperty(datename);
-            this.time = new SimpleStringProperty(timename);
-            this.color = new SimpleStringProperty(colorname);
-            this.brand = new SimpleStringProperty(brandname);
-        }
-
-        public String getDate() {
-            return date.get();
-        }
-
-        public void setDate(String datename) {
-            date.set(datename);
-        }
-        
-        public String getTime() {
-            return time.get();
-        }
-
-        public void setTime(String timename) {
-            time.set(timename);
-        }
-
-        public String getColor() {
-            return color.get();
-        }
-
-        public void setCijfer(String colorname) {
-            color.set(colorname);
-        }
-
-        public String getBrand() {
-            return brand.get();
-        }
-
-        public void setBrand(String brandname) {
-            brand.set(brandname);
-        }
-    }
-    
-    public static class Bagage1 {
-        @FXML private final SimpleStringProperty date1, time1, color1, brand1;
-
-        private Bagage1(String datename1, String timename1, String colorname1, String brandname1) {
-            this.date1 = new SimpleStringProperty(datename1);
-            this.time1 = new SimpleStringProperty(timename1);
-            this.color1 = new SimpleStringProperty(colorname1);
-            this.brand1 = new SimpleStringProperty(brandname1);
-        }
-
-        public String getDate1() {
-            return date1.get();
-        }
-
-        public void setDate1(String datename1) {
-            date1.set(datename1);
-        }
-        
-        public String getTime1() {
-            return time1.get();
-        }
-
-        public void setTime1(String timename1) {
-            time1.set(timename1);
-        }
-        
-        public String getColor1() {
-            return color1.get();
-        }
-
-        public void setCijfer1(String colorname1) {
-            color1.set(colorname1);
-        }
-
-        public String getBrand1() {
-            return brand1.get();
-        }
-
-        public void setBrand1(String brandname1) {
-            brand1.set(brandname1);
-        }
-    }
-    
+    }    
 }

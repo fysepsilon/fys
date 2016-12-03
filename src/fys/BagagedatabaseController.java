@@ -524,7 +524,7 @@ public class BagagedatabaseController implements Initializable {
             stmt.executeUpdate(sql_airport);
 
             if (status == 3) {
-                File pdfdoc = new File("src/fys/dhltemplate.pdf");
+                File pdfdoc = new File("src/fys/templates/dhltemplate.pdf");
                 PDDocument document;
                 document = PDDocument.load(pdfdoc);
 
@@ -539,7 +539,7 @@ public class BagagedatabaseController implements Initializable {
                     }
                 }
 
-                document.save("Piemel.pdf");
+                document.save("formulieren/Piemel.pdf");
                 document.close();
             }
             fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");

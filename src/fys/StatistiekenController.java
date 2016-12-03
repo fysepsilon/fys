@@ -57,7 +57,7 @@ public class StatistiekenController implements Initializable {
             stmt = conn.createStatement();
             //connectToDatabase(conn, stmt, "test", "root", "root");           
             String sql = "SELECT DISTINCT YEAR(STR_TO_DATE(date, \"%Y-%m-%d\")) as date "
-                    + "from bagagedatabase.airport_table";
+                    + "from bagagedatabase.airport";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name
@@ -85,12 +85,11 @@ public class StatistiekenController implements Initializable {
         int luggage = 0;
         try {
             conn = fys.connectToDatabase(conn);
-            stmt = conn.createStatement();
-            //connectToDatabase(conn, stmt, "test", "root", "root");           
+            stmt = conn.createStatement();          
             String sql = "SELECT x.status, COUNT(x.status) AS Count FROM "
-                    + "(SELECT status FROM lost_table "
+                    + "(SELECT status FROM lost "
                     + "UNION ALL "
-                    + "SELECT status FROM found_table) x "
+                    + "SELECT status FROM found) x "
                     + "GROUP BY x.status";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -156,13 +155,7 @@ public class StatistiekenController implements Initializable {
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();        
-            String sql = "SELECT x.status, x.date, COUNT(x.status) AS Count FROM "
-                    + "(SELECT status, date FROM lost_table, airport_table WHERE status = 4 "
-                    + "AND lost_table.lost_and_found_id = airport_table.lost_and_found_id "
-                    + "UNION ALL "
-                    + "SELECT status, date FROM found_table, airport_table WHERE status = 4 "
-                    + "AND found_table.lost_and_found_id = airport_table.lost_and_found_id) x "
-                    + "WHERE status = 4 GROUP BY x.status, x.date";
+            String sql = "SELECT date, COUNT(date) as Count FROM bagagedatabase.insurance_claim;";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name
@@ -219,10 +212,10 @@ public class StatistiekenController implements Initializable {
             stmt = conn.createStatement();
             //connectToDatabase(conn, stmt, "test", "root", "root");           
             String sql = "SELECT x.status, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
-                    + "FROM (SELECT status, date FROM lost_table, airport_table "
-                    + "WHERE lost_table.lost_and_found_id = airport_table.lost_and_found_id "
-                    + "UNION ALL SELECT status, date FROM found_table, airport_table "
-                    + "WHERE found_table.lost_and_found_id = airport_table.lost_and_found_id) x "
+                    + "FROM (SELECT status, date FROM lost, airport "
+                    + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
+                    + "UNION ALL SELECT status, date FROM found, airport "
+                    + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
                     + "WHERE YEAR(x.date) LIKE \"%" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
                     + "AND MONTH(x.date) LIKE \"%" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
                     + "GROUP BY x.status";
@@ -267,32 +260,37 @@ public class StatistiekenController implements Initializable {
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-            String sql = "SELECT x.status, x.date, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
-                    + "FROM (SELECT status, date FROM lost_table, airport_table "
-                    + "WHERE status = 4 AND lost_table.lost_and_found_id = airport_table.lost_and_found_id "
+            String sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM insurance_claim "
+                    + "WHERE YEAR(date) LIKE \"%" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
+                    + "AND MONTH(date) LIKE \"%" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" ";
+            /*String sql = "SELECT x.status, x.date, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
+                    + "FROM (SELECT status, date FROM lost, airport "
+                    + "WHERE status = 4 AND lost.lost_and_found_id = airport.lost_and_found_id "
                     + "UNION ALL "
-                    + "SELECT status, date FROM found_table, airport_table "
-                    + "WHERE status = 4 AND found_table.lost_and_found_id = airport_table.lost_and_found_id) x "
+                    + "SELECT status, date FROM found, airport "
+                    + "WHERE status = 4 AND found.lost_and_found_id = airport.lost_and_found_id) x "
                     + "WHERE status = 4 AND YEAR(x.date) LIKE \"%" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
                     + "AND MONTH(x.date) LIKE \"%" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
-                    + "GROUP BY x.status, x.date";
+                    + "GROUP BY x.status, x.date";*/
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name
-                String str[] = rs.getString("date").split("-");
-                int month = Integer.parseInt(str[1]);
-                jan = (month == 1 ? jan += rs.getInt("Count") : jan);
-                feb = (month == 2 ? feb += rs.getInt("Count") : feb);
-                mar = (month == 3 ? mar += rs.getInt("Count") : mar);
-                apr = (month == 4 ? apr += rs.getInt("Count") : apr);
-                mei = (month == 5 ? jan += rs.getInt("Count") : mei);
-                jun = (month == 6 ? jun += rs.getInt("Count") : jun);
-                jul = (month == 7 ? jul += rs.getInt("Count") : jul);
-                aug = (month == 8 ? aug += rs.getInt("Count") : aug);
-                sep = (month == 9 ? sep += rs.getInt("Count") : sep);
-                okt = (month == 10 ? okt += rs.getInt("Count") : okt);
-                nov = (month == 11 ? nov += rs.getInt("Count") : nov);
-                dec = (month == 12 ? dec += rs.getInt("Count") : dec);
+                if(rs.getString("date") != null){
+                    String str[] = rs.getString("date").split("-");
+                    int month = Integer.parseInt(str[1]);
+                    jan = (month == 1 ? jan += rs.getInt("Count") : jan);
+                    feb = (month == 2 ? feb += rs.getInt("Count") : feb);
+                    mar = (month == 3 ? mar += rs.getInt("Count") : mar);
+                    apr = (month == 4 ? apr += rs.getInt("Count") : apr);
+                    mei = (month == 5 ? jan += rs.getInt("Count") : mei);
+                    jun = (month == 6 ? jun += rs.getInt("Count") : jun);
+                    jul = (month == 7 ? jul += rs.getInt("Count") : jul);
+                    aug = (month == 8 ? aug += rs.getInt("Count") : aug);
+                    sep = (month == 9 ? sep += rs.getInt("Count") : sep);
+                    okt = (month == 10 ? okt += rs.getInt("Count") : okt);
+                    nov = (month == 11 ? nov += rs.getInt("Count") : nov);
+                    dec = (month == 12 ? dec += rs.getInt("Count") : dec);
+                }
             }
             rs.close();
             conn.close();

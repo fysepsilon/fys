@@ -132,7 +132,7 @@ public class accountsController implements Initializable {
             String[] taal = languages.getLanguage();
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql_remove = "DELETE FROM bagagedatabase.person_table "
+            String sql_remove = "DELETE FROM bagagedatabase.person "
                     + "WHERE person_id='" + dr_personId + "'";
 
             stmt.executeUpdate(sql_remove);
@@ -235,7 +235,7 @@ public class accountsController implements Initializable {
             stmt = conn.createStatement();
             //connectToDatabase(conn, stmt, "test", "root", "root");
             if (loginController.getUsertype() == 2) { //SQL bij administrator (type = 2)
-                String sql = "SELECT * FROM bagagedatabase.person_table";
+                String sql = "SELECT * FROM bagagedatabase.person";
 
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
@@ -261,7 +261,7 @@ public class accountsController implements Initializable {
                     }
                 }
             } else { //SQL bij servicemedewerker (type = 1)
-                String sql = "SELECT * FROM bagagedatabase.person_table WHERE type = '0'";
+                String sql = "SELECT * FROM bagagedatabase.person WHERE type = '0'";
 
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
@@ -525,7 +525,7 @@ public class accountsController implements Initializable {
             String[] taal = languages.getLanguage();
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql_person = "UPDATE bagagedatabase.person_table SET "
+            String sql_person = "UPDATE bagagedatabase.person SET "
                     + "first_name='" + first_name + "',"
                     + "surname='" + surname + "', type='" + type_combo + "', "
                     + "mail='" + mail + "', address='" + address + "',"

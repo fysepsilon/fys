@@ -32,7 +32,7 @@ public class taal {
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-            String sql = "SELECT language FROM person_table WHERE type = '" + login.getUsertype() + "' AND mail='" + login.getEmail() + "'";
+            String sql = "SELECT language FROM person WHERE type = '" + login.getUsertype() + "' AND mail='" + login.getEmail() + "'";
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name

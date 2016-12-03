@@ -67,7 +67,7 @@ public class NieuwaccountaanmakenController implements Initializable {
         
         try {
                 //connectToDatabase(conn, stmt, "test", "root", "root");
-                 String sql_email = "SELECT mail FROM person_table";
+                 String sql_email = "SELECT mail FROM person";
                 ResultSet rs = stmt.executeQuery(sql_email);
                 while (rs.next()) {
                     //Retrieve by column name
@@ -111,7 +111,7 @@ public class NieuwaccountaanmakenController implements Initializable {
 
             try {
                 //connectToDatabase(conn, stmt, "test", "root", "root");
-                String sql = "SELECT mail FROM person_table WHERE mail='" + mail_input.getText() + "'";
+                String sql = "SELECT mail FROM person WHERE mail='" + mail_input.getText() + "'";
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {
                     //Retrieve by column name
@@ -133,7 +133,7 @@ public class NieuwaccountaanmakenController implements Initializable {
             
             try {
                 //connectToDatabase(conn, stmt, "test", "root", "root");
-                String sql = "SELECT type, language, first_name, surname, password FROM person_table WHERE mail='" + mail_input.getText() + "'";
+                String sql = "SELECT type, language, first_name, surname, password FROM person WHERE mail='" + mail_input.getText() + "'";
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {
                     //Retrieve by column name
@@ -364,7 +364,7 @@ public class NieuwaccountaanmakenController implements Initializable {
             language = fys.getUserLanguageString(language).toString();
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql_account = "INSERT INTO bagagedatabase.person_table (type, mail,"
+            String sql_account = "INSERT INTO bagagedatabase.person (type, mail,"
                     + "password, language, first_name, surname, address, residence, "
                     + "zip_code, country, phone) VALUES ('" + type + "', '" + mail + "', '" + password + "', '" + language + "', '" + firstname + "', "
                     + "'" + surname + "', '" + address + "', '" + residence + "', '" + zipcode + "', "

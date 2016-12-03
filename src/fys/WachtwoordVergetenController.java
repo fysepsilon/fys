@@ -58,7 +58,7 @@ public class WachtwoordVergetenController implements Initializable {
             if(fys.isValidEmailAddress(username.getText())){
                 try {
                     //connectToDatabase(conn, stmt, "test", "root", "root");
-                    String sql = "SELECT mail FROM person_table WHERE mail='" + username.getText() + "'";
+                    String sql = "SELECT mail FROM person WHERE mail='" + username.getText() + "'";
                     ResultSet rs = stmt.executeQuery(sql);
                     while (rs.next()) {
                         //Retrieve by column name
@@ -83,7 +83,7 @@ public class WachtwoordVergetenController implements Initializable {
                     String[] mailInformation = new String[3];
                     try {
                         //connectToDatabase(conn, stmt, "test", "root", "root");
-                        String sql = "SELECT first_name, surname, password FROM person_table WHERE type = '1' OR type = '2' AND mail='" + username.getText() + "'";
+                        String sql = "SELECT first_name, surname, password FROM person WHERE type = '1' OR type = '2' AND mail='" + username.getText() + "'";
                         ResultSet rs = stmt.executeQuery(sql);
                         while (rs.next()) {
                             //Retrieve by column name

@@ -295,7 +295,7 @@ public class FYS extends Application {
         try {
             conn = connectToDatabase(conn);
             stmt = conn.createStatement();
-            String sql = "SELECT * FROM person_table "
+            String sql = "SELECT * FROM person "
                     + "WHERE mail='" + email + "'";
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
@@ -319,7 +319,7 @@ public class FYS extends Application {
         try {
             conn = connectToDatabase(conn);
             stmt = conn.createStatement();
-            String sql = "SELECT * FROM person_table"
+            String sql = "SELECT * FROM person"
                     + " WHERE mail='" + email + "' AND mail not like '" + emailWas + "'";
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {

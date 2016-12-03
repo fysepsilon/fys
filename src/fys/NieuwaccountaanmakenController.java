@@ -41,29 +41,25 @@ import javax.imageio.ImageIO;
  */
 public class NieuwaccountaanmakenController implements Initializable {
 
-    @FXML
-    private TextField name_input, surname_input, address_input, residence_input,
+    @FXML private TextField name_input, surname_input, address_input, residence_input,
             zipcode_input, country_input, phone_input, mail_input;
-    @FXML
-    private ComboBox language_combo, type_combo;
-    @FXML
-    private Label loginerror, surname_label, name_label, type_label, address_label, residence_label,
+    @FXML private ComboBox language_combo, type_combo;
+    @FXML private Label loginerror, surname_label, name_label, type_label, address_label, residence_label,
             zipcode_label, country_label, phone_label, mail_label, language_label;
-    @FXML
-    private Button SendNewAccount;
+    @FXML private Button SendNewAccount;
+    @FXML private taal language = new taal();
+    @FXML private String[] taal = language.getLanguage();
+    @FXML private FYS fys = new FYS();
+    @FXML private Statement stmt = null;
+    @FXML private Connection conn = null;
+    @FXML private loginController loginController = new loginController();
 
     @FXML
     private void handleAction(ActionEvent event) throws IOException, SQLException {
-        FYS fys = new FYS();
         String password = fys.encrypt(generateRandomPassword(8));
-        taal languages = new taal();
-        String[] taal = languages.getLanguage();
         String email = "";
-        Statement stmt = null;
-        Connection conn = null;
         conn = fys.connectToDatabase(conn);
         stmt = conn.createStatement();
-
         
         try {
                 //connectToDatabase(conn, stmt, "test", "root", "root");
@@ -347,16 +343,16 @@ public class NieuwaccountaanmakenController implements Initializable {
             mail_input.setText("");
         }
     }
+    
+    @FXML
+    private void handleCancel(ActionEvent event) throws IOException {
+        fys.changeToAnotherFXML(taal[98], "accounts.fxml");
+    }
 
     @FXML
     private void sendToDatabase(String firstname, String surname, String address, String residence, String zipcode,
             String country, String phone, String mail, String password, String language, String type) throws IOException, SQLException {
-        FYS fys = new FYS();
-
         try {
-            Statement stmt = null;
-            Connection conn = null;
-
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
 
@@ -382,8 +378,6 @@ public class NieuwaccountaanmakenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        taal language = new taal();
-        String[] taal = language.getLanguage();
         name_label.setText(taal[9] + ":");
         surname_label.setText(taal[10] + ":");
         address_label.setText(taal[11] + ":");
@@ -397,10 +391,15 @@ public class NieuwaccountaanmakenController implements Initializable {
         SendNewAccount.setText(taal[46]);
         language_combo.setPromptText(taal[73]);
         type_combo.setPromptText(taal[74]);
-        type_combo.getItems().addAll(
-                taal[66],
-                taal[64],
-                taal[65]);
+        if (loginController.getUsertype() == 2) { //SQL bij administrator (type = 2)
+            type_combo.getItems().addAll(
+                    taal[66],
+                    taal[64],
+                    taal[65]);
+        } else {
+            type_combo.getItems().addAll(
+                    taal[66]);
+        }
         language_combo.getItems().addAll(
                 taal[69],
                 taal[70],

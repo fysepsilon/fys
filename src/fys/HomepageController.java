@@ -12,6 +12,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -36,45 +39,21 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class HomepageController implements Initializable {
 
     //@FXML private final TableView<Person> table = new TableView<>();
-    @FXML
-    private TableView<HomepageController.Bagage> table;
-    @FXML
-    private ObservableList<HomepageController.Bagage> data = FXCollections.observableArrayList();
-    @FXML
-    private ObservableList<HomepageController.Bagage> datafilter = FXCollections.observableArrayList();
-    @FXML
-    private TableView<HomepageController.Bagage1> table1;
-    @FXML
-    private ObservableList<HomepageController.Bagage1> data1 = FXCollections.observableArrayList();
-    @FXML
-    private ObservableList<HomepageController.Bagage1> datafilter1 = FXCollections.observableArrayList();
-    @FXML
-    private TableColumn date;
-    @FXML
-    private TableColumn color;
-    @FXML
-    private TableColumn brand;
-    @FXML
-    private TableColumn time;
-    @FXML
-    private TableColumn date1;
-    @FXML
-    private TableColumn color1;
-    @FXML
-    private TableColumn brand1;
-    @FXML
-    private TableColumn time1;
-    @FXML
-    private Label recentlabel;
-    @FXML
-    private Label lostlabel;
-    @FXML
-    private Label foundlabel;
+    @FXML private TableView<HomepageController.Bagage> table;
+    @FXML private ObservableList<HomepageController.Bagage> data = FXCollections.observableArrayList(), datafilter = FXCollections.observableArrayList();
+    @FXML private TableView<HomepageController.Bagage1> table1;
+    @FXML private ObservableList<HomepageController.Bagage1> data1 = FXCollections.observableArrayList();
+    @FXML private ObservableList<HomepageController.Bagage1> datafilter1 = FXCollections.observableArrayList();
+    @FXML private TableColumn date, color, brand, time, date1, color1, brand1, time1;
+    @FXML private Label recentlabel, lostlabel, foundlabel;
+    @FXML private FYS fys = new FYS();
+    @FXML private Statement stmt = null;
+    @FXML private Connection conn = null;
+    @FXML private taal language = new taal();
+    @FXML private String[] taal = language.getLanguage();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        taal language = new taal();
-        String[] taal = language.getLanguage();
         recentlabel.setText(taal[106]);
         lostlabel.setText(taal[55]);
         foundlabel.setText(taal[54]);
@@ -111,12 +90,19 @@ public class HomepageController implements Initializable {
         brand1.setStyle("-fx-alignment: CENTER;");
         table1.setItems(data1);
         
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date = new Date();
+        String dateTimeString = dateFormat.format(date);
+        String[] tokens = dateTimeString.split(" ");
+        if (tokens.length != 2) {
+            throw new IllegalArgumentException();
+        }
+        tokens = tokens[0].split("-");
+        String year = tokens[0];
+        String months = tokens[1];
     }
 
     public void getLuggageData() {
-        FYS fys = new FYS();
-        Statement stmt = null;
-        Connection conn = null;
         int luggage = 0;
         try {
             conn = fys.connectToDatabase(conn);
@@ -124,7 +110,7 @@ public class HomepageController implements Initializable {
             //connectToDatabase(conn, stmt, "test", "root", "root");           
             String sql = "SELECT found.*, airport.date,time FROM found, airport "
                     + "WHERE found.lost_and_found_id = airport.lost_and_found_id "
-                    + "ORDER BY date DESC";
+                    + "ORDER BY date DESC LIMIT 10";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 luggage++;
@@ -147,9 +133,6 @@ public class HomepageController implements Initializable {
     }
     
     public void getLuggageData1() {
-        FYS fys = new FYS();
-        Statement stmt = null;
-        Connection conn = null;
         int luggage = 0;
         try {
             conn = fys.connectToDatabase(conn);
@@ -157,7 +140,7 @@ public class HomepageController implements Initializable {
             //connectToDatabase(conn, stmt, "test", "root", "root");           
             String sql = "SELECT lost.*, airport.date,time FROM lost, airport "
                     + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
-                    + "ORDER BY date DESC";
+                    + "ORDER BY date DESC LIMIT 10";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 luggage++;
@@ -180,14 +163,7 @@ public class HomepageController implements Initializable {
     }
 
     public static class Bagage {
-        @FXML
-        private final SimpleStringProperty date;
-        @FXML
-        private final SimpleStringProperty time;
-        @FXML
-        private final SimpleStringProperty color;
-        @FXML
-        private final SimpleStringProperty brand;
+        @FXML private final SimpleStringProperty date, time, color, brand;
 
         private Bagage(String datename, String timename, String colorname, String brandname) {
             this.date = new SimpleStringProperty(datename);
@@ -230,14 +206,7 @@ public class HomepageController implements Initializable {
     }
     
     public static class Bagage1 {
-        @FXML
-        private final SimpleStringProperty date1;
-        @FXML
-        private final SimpleStringProperty time1;
-        @FXML
-        private final SimpleStringProperty color1;
-        @FXML
-        private final SimpleStringProperty brand1;
+        @FXML private final SimpleStringProperty date1, time1, color1, brand1;
 
         private Bagage1(String datename1, String timename1, String colorname1, String brandname1) {
             this.date1 = new SimpleStringProperty(datename1);

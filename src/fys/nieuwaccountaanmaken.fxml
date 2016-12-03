@@ -81,7 +81,8 @@
                     </ComboBox>
                </children>
             </GridPane>
-              <Button id="SendNewAccount" fx:id="SendNewAccount" layoutX="14.0" layoutY="425.0" mnemonicParsing="false" onAction="#handleAction" prefHeight="39.0" prefWidth="685.0" text="Verzenden" />
+              <Button id="SendNewAccount" fx:id="SendNewAccount" layoutX="464.0" layoutY="425.0" mnemonicParsing="false" onAction="#handleAction" prefHeight="39.0" prefWidth="282.0" text="Verzenden" />
+            <Button id="cancel" fx:id="cancel" layoutX="77.0" layoutY="425.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="39.0" prefWidth="282.0" text="Annuleer" />
          </children></Pane>
    </children>
 </AnchorPane>

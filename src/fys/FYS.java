@@ -227,6 +227,37 @@ public class FYS extends Application {
         return "";
     }
     
+    public String getMonthName(String month) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        if (month.equals("01")) {
+            return taal[109];
+        } else if (month.equals("02")) {
+            return taal[110];
+        } else if (month.equals("03")) {
+            return taal[111];
+        } else if (month.equals("04")) {
+            return taal[112];
+        } else if (month.equals("05")) {
+            return taal[113];
+        } else if (month.equals("06")) {
+            return taal[114];
+        } else if (month.equals("07")) {
+            return taal[115];
+        } else if (month.equals("08")) {
+            return taal[116];
+        } else if (month.equals("09")) {
+            return taal[117];
+        } else if (month.equals("10")) {
+            return taal[118];
+        } else if (month.equals("11")) {
+            return taal[119];
+        } else if (month.equals("12")) {
+            return taal[120];
+        }
+        return "";
+    }
+    
     public String getColor(int color) {
         taal language = new taal();
         String[] taal = language.getLanguage();
@@ -295,7 +326,7 @@ public class FYS extends Application {
         try {
             conn = connectToDatabase(conn);
             stmt = conn.createStatement();
-            String sql = "SELECT * FROM person_table "
+            String sql = "SELECT * FROM person "
                     + "WHERE mail='" + email + "'";
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
@@ -319,7 +350,7 @@ public class FYS extends Application {
         try {
             conn = connectToDatabase(conn);
             stmt = conn.createStatement();
-            String sql = "SELECT * FROM person_table"
+            String sql = "SELECT * FROM person"
                     + " WHERE mail='" + email + "' AND mail not like '" + emailWas + "'";
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {

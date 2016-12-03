@@ -56,15 +56,27 @@ public class accountsController implements Initializable {
     @FXML
     private ComboBox type_combo, language_combo;
     @FXML
-    private TextField first_name_input, surname_input, mail_input, address_input, residence_input, zip_code_input, country_input, phone_input;
+    private TextField first_name_input, surname_input, mail_input, address_input,
+            residence_input, zip_code_input, country_input, phone_input;
     @FXML
-    private Label loginerror, type_label, language_label, first_name_label, surname_label, address_label, residence_label, zip_code_label, country_label, phone_label, mail_label, personId_label;
+    private Label loginerror, type_label, language_label, first_name_label, surname_label,
+            address_label, residence_label, zip_code_label, country_label, phone_label, mail_label,
+            personId_label;
+    @FXML
+    private loginController loginController = new loginController();
+    @FXML
+    private FYS fys = new FYS();
+    @FXML
+    private taal languages = new taal();
+    @FXML
+    private String[] taal = languages.getLanguage();
+    @FXML
+    private Statement stmt = null;
+    @FXML
+    private Connection conn = null;
 
     @FXML
     private void handlenieuwaccount(ActionEvent event) throws IOException {
-        FYS fys = new FYS();
-        taal language = new taal();
-        String[] taal = language.getLanguage();
         fys.changeToAnotherFXML(taal[63], "nieuwaccountaanmaken.fxml");
     }
 
@@ -77,10 +89,7 @@ public class accountsController implements Initializable {
     }
 
     public void handleRemove(ActionEvent event) throws IOException {
-        taal language = new taal();
-        String[] taal = language.getLanguage();
-        int selectedIndex
-                = table.getSelectionModel().getSelectedIndex();
+        int selectedIndex = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             int dr_personId = (table.getSelectionModel().getSelectedItem().getPersonId());
             String dr_first_name = (table.getSelectionModel().getSelectedItem().getFirst_name());
@@ -117,22 +126,13 @@ public class accountsController implements Initializable {
         }
     }
 
-    private void sendToDatabase2(int dr_personId)
-            throws IOException, SQLException {
-        FYS fys = new FYS();
-
+    private void sendToDatabase2(int dr_personId) throws IOException, SQLException {
         try {
-            Statement stmt = null;
-            Connection conn = null;
-
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
 
-            taal languages = new taal();
-            String[] taal = languages.getLanguage();
-
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql_remove = "DELETE FROM bagagedatabase.person_table "
+            String sql_remove = "DELETE FROM bagagedatabase.person "
                     + "WHERE person_id='" + dr_personId + "'";
 
             stmt.executeUpdate(sql_remove);
@@ -150,9 +150,6 @@ public class accountsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        taal language = new taal();
-        String[] taal = language.getLanguage();
         first_name.setText(taal[9]);
         surname.setText(taal[10]);
         address.setText(taal[11]);
@@ -175,19 +172,19 @@ public class accountsController implements Initializable {
         phone_label.setText(taal[15] + ":");
         mail_label.setText(taal[16] + ":");
         language_label.setText(taal[68] + ":");
-        
+
         loginController loginController = new loginController();
         if (loginController.getUsertype() == 1) { // Service medewerker (ZONDER TYPE EDIT FUNCTIE)
             type_label.setVisible(false);
             type_combo.setVisible(false);
-        } 
-        
+        }
+
         type_label.setText(taal[20] + ":");
         type_combo.getItems().addAll(
                 taal[66],
                 taal[64],
                 taal[65]);
-        
+
         language_combo.setPromptText(taal[73]);
         language_combo.getItems().addAll(
                 taal[69],
@@ -223,26 +220,19 @@ public class accountsController implements Initializable {
     }
 
     public void getLuggageData() {
-        taal language = new taal();
-        String[] taal = language.getLanguage();
-        FYS fys = new FYS();
         String type_text;
         String language_text;
 
-        loginController loginController = new loginController();
         if (loginController.getUsertype() == 2) { //Show button bij administrator (type = 2)
             NewAccountButton.setVisible(true);
         }
-
-        Statement stmt = null;
-        Connection conn = null;
 
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
             //connectToDatabase(conn, stmt, "test", "root", "root");
             if (loginController.getUsertype() == 2) { //SQL bij administrator (type = 2)
-                String sql = "SELECT * FROM bagagedatabase.person_table";
+                String sql = "SELECT * FROM bagagedatabase.person";
 
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
@@ -268,7 +258,7 @@ public class accountsController implements Initializable {
                     }
                 }
             } else { //SQL bij servicemedewerker (type = 1)
-                String sql = "SELECT * FROM bagagedatabase.person_table WHERE type = '0'";
+                String sql = "SELECT * FROM bagagedatabase.person WHERE type = '0'";
 
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
@@ -304,140 +294,7 @@ public class accountsController implements Initializable {
         }
     }
 
-    public static class Accounts {
-
-        @FXML
-        private final SimpleStringProperty first_name;
-        @FXML
-        private final SimpleStringProperty surname;
-        @FXML
-        private final SimpleStringProperty type;
-        @FXML
-        private final SimpleStringProperty mail;
-        @FXML
-        private final SimpleStringProperty address;
-        @FXML
-        private final SimpleStringProperty residence;
-        @FXML
-        private final SimpleStringProperty zip_code;
-        @FXML
-        private final SimpleStringProperty country;
-        @FXML
-        private final SimpleStringProperty phone;
-        @FXML
-        private final SimpleStringProperty language_column;
-        @FXML
-        private final SimpleIntegerProperty personId;
-
-        private Accounts(String first_namename, String surnamename,
-                String typename, String mailname, String addressname,
-                String residencename, String zip_codename, String countryname,
-                String phonename, String language_columnname, int personidname) {
-            this.first_name = new SimpleStringProperty(first_namename);
-            this.surname = new SimpleStringProperty(surnamename);
-            this.type = new SimpleStringProperty(typename);
-            this.mail = new SimpleStringProperty(mailname);
-            this.address = new SimpleStringProperty(addressname);
-            this.residence = new SimpleStringProperty(residencename);
-            this.zip_code = new SimpleStringProperty(zip_codename);
-            this.country = new SimpleStringProperty(countryname);
-            this.phone = new SimpleStringProperty(phonename);
-            this.language_column = new SimpleStringProperty(language_columnname);
-            this.personId = new SimpleIntegerProperty(personidname);
-        }
-
-        public String getFirst_name() {
-            return first_name.get();
-        }
-
-        public void setFirst_name(String first_namename) {
-            first_name.set(first_namename);
-        }
-
-        public String getSurname() {
-            return surname.get();
-        }
-
-        public void setSurname(String surnamename) {
-            surname.set(surnamename);
-        }
-
-        public String getType() {
-            return type.get();
-        }
-
-        public void setType(String typename) {
-            type.set(typename);
-        }
-
-        public String getMail() {
-            return mail.get();
-        }
-
-        public void setMail(String mailname) {
-            mail.set(mailname);
-        }
-
-        public String getAddress() {
-            return address.get();
-        }
-
-        public void setAddress(String addressname) {
-            address.set(addressname);
-        }
-
-        public String getResidence() {
-            return residence.get();
-        }
-
-        public void setResidence(String residencename) {
-            residence.set(residencename);
-        }
-
-        public String getZip_code() {
-            return zip_code.get();
-        }
-
-        public void setZip_code(String zip_codename) {
-            zip_code.set(zip_codename);
-        }
-
-        public String getCountry() {
-            return country.get();
-        }
-
-        public void setCountry(String countryname) {
-            country.set(countryname);
-        }
-
-        public String getPhone() {
-            return phone.get();
-        }
-
-        public void setPhone(String phonename) {
-            phone.set(phonename);
-        }
-
-        public String getLanguage_column() {
-            return language_column.get();
-        }
-
-        public void setLanguagecolumn(String language_columnname) {
-            language_column.set(language_columnname);
-        }
-
-        public int getPersonId() {
-            return personId.get();
-        }
-
-        public void setPersonId(int personidname) {
-            personId.set(personidname);
-        }
-    }
-
     public void handleChange(ActionEvent event) throws IOException {
-        taal language = new taal();
-        String[] taal = language.getLanguage();
         int selectedIndex
                 = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -515,7 +372,7 @@ public class accountsController implements Initializable {
                 );
             }
         } else { // Service medewerker (ZONDER TYPE EDIT FUNCTIE)
-             if ((first_name_input.getText() == null || first_name_input.getText().trim().isEmpty())
+            if ((first_name_input.getText() == null || first_name_input.getText().trim().isEmpty())
                     || (surname_input.getText() == null || surname_input.getText().trim().isEmpty())
                     || (mail_input.getText() == null || mail_input.getText().trim().isEmpty())
                     || (address_input.getText() == null || address_input.getText().trim().isEmpty())
@@ -536,6 +393,29 @@ public class accountsController implements Initializable {
                         fys.getUserLanguageString(language_combo.getValue().toString())
                 );
             }
+            if ((first_name_input.getText() == null || first_name_input.getText().trim().isEmpty())
+                    || (surname_input.getText() == null || surname_input.getText().trim().isEmpty())
+                    || (type_combo.getValue() == null)
+                    || (mail_input.getText() == null || mail_input.getText().trim().isEmpty())
+                    || (address_input.getText() == null || address_input.getText().trim().isEmpty())
+                    || (residence_input.getText() == null || residence_input.getText().trim().isEmpty())
+                    || (zip_code_input.getText() == null || zip_code_input.getText().trim().isEmpty())
+                    || (country_input.getText() == null || country_input.getText().trim().isEmpty())
+                    || (phone_input.getText() == null || phone_input.getText().trim().isEmpty())
+                    || (language_combo.getValue() == null)) {
+                // Foutmelding
+                loginerror.setText(taal[93]);
+                loginerror.setVisible(true);
+            } else {
+                sendToDatabase_type(Integer.parseInt(personId_label.getText()),
+                        first_name_input.getText(), surname_input.getText(),
+                        fys.getUserFunctionString(type_combo.getValue().toString()),
+                        mail_input.getText(), address_input.getText(),
+                        residence_input.getText(), zip_code_input.getText(),
+                        country_input.getText(), phone_input.getText(),
+                        fys.getUserLanguageString(language_combo.getValue().toString())
+                );
+            }
         }
     }
 
@@ -544,20 +424,13 @@ public class accountsController implements Initializable {
             String residence, String zip_code, String country, String phone,
             int language_combo)
             throws IOException, SQLException {
-        FYS fys = new FYS();
 
         try {
-            Statement stmt = null;
-            Connection conn = null;
-
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
 
-            taal languages = new taal();
-            String[] taal = languages.getLanguage();
-
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql_person = "UPDATE bagagedatabase.person_table SET "
+            String sql_person = "UPDATE bagagedatabase.person SET "
                     + "first_name='" + first_name + "',"
                     + "surname='" + surname + "', type='" + type_combo + "', "
                     + "mail='" + mail + "', address='" + address + "',"
@@ -578,7 +451,7 @@ public class accountsController implements Initializable {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
     }
-    
+
     private void sendToDatabase(int dr_personId, String first_name,
             String surname, String mail, String address,
             String residence, String zip_code, String country, String phone,

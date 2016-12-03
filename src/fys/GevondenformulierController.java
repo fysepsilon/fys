@@ -86,24 +86,24 @@ public class GevondenformulierController implements Initializable {
             stmt = conn.createStatement();
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql_person = "INSERT INTO bagagedatabase.person_table (type, language, first_name, surname) "
+            String sql_person = "INSERT INTO bagagedatabase.person (type, language, first_name, surname) "
                     + "VALUES ('0', '0', '" + frontname + "', '" + surname + "')";
 
             stmt.executeUpdate(sql_person);
 
-            String sql_airport = "INSERT INTO bagagedatabase.airport_table (date, "
+            String sql_airport = "INSERT INTO bagagedatabase.airport (date, "
                     + "time, airport_found, label_number, flight_number, destination) "
                     + "VALUES ('" + date + "', '" + time + "', '" + airport + "', "
                     + "'" + labelnumber + "', '" + flightnumber + "', '" + destination + "')";
 
             stmt.executeUpdate(sql_airport);
 
-            String sql_personID = "SELECT person_id, lost_and_found_id FROM person_table, airport_table WHERE "
-                    + "person_table.first_name = '" + frontname + "'AND person_table.surname = '" + surname + "' "
-                    + "AND airport_table.date = '" + date + "' AND airport_table.time = '" + time + "' "
-                    + "AND airport_table.airport_found = '" + airport + "' AND airport_table.label_number = '"
-                    + labelnumber + "' AND airport_table.flight_number = '" + flightnumber + "' "
-                    + "AND airport_table.destination = '" + destination + "'";
+            String sql_personID = "SELECT person_id, lost_and_found_id FROM person, airport WHERE "
+                    + "person.first_name = '" + frontname + "'AND person.surname = '" + surname + "' "
+                    + "AND airport.date = '" + date + "' AND airport.time = '" + time + "' "
+                    + "AND airport.airport_found = '" + airport + "' AND airport.label_number = '"
+                    + labelnumber + "' AND airport.flight_number = '" + flightnumber + "' "
+                    + "AND airport.destination = '" + destination + "'";
 
             ResultSet id_rs = stmt.executeQuery(sql_personID);
             String personIdStr = null, lostAndFoundIdStr = null;
@@ -120,7 +120,7 @@ public class GevondenformulierController implements Initializable {
                 System.out.println(lostAndFoundIdStr);
             }
 
-            String sql_found = "INSERT INTO bagagedatabase.found_table (type, brand, color, "
+            String sql_found = "INSERT INTO bagagedatabase.found (type, brand, color, "
                     + "characteristics, status, person_id, lost_and_found_id) VALUES ('" + type + "', "
                     + "'" + brand + "', '" + color + "', '" + characteristics + "', 0, "
                     + "'" + personId + "', '" + lostAndFoundId + "')";

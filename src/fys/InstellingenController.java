@@ -56,7 +56,7 @@ public class InstellingenController implements Initializable {
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-            String sql = "SELECT person_id, mail, password, language FROM person_table WHERE type = '" + login.getUsertype() + "' AND mail='" + login.getEmail() + "'";
+            String sql = "SELECT person_id, mail, password, language FROM person WHERE type = '" + login.getUsertype() + "' AND mail='" + login.getEmail() + "'";
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
@@ -99,7 +99,7 @@ public class InstellingenController implements Initializable {
             try {
                 conn = fys.connectToDatabase(conn);
                 stmt = conn.createStatement();
-                String sql = "UPDATE person_table SET mail = '" + username.getText()
+                String sql = "UPDATE person SET mail = '" + username.getText()
                         + "', password = '" + fys.encrypt(password.getText()) + "', language = '"
                         + fys.getUserLanguageString(language.getSelectionModel().getSelectedItem().toString())
                         + "' WHERE person_id = " + id + ";";

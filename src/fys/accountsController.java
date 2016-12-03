@@ -32,6 +32,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -84,7 +85,6 @@ public class accountsController implements Initializable {
             int dr_personId = (table.getSelectionModel().getSelectedItem().getPersonId());
             String dr_first_name = (table.getSelectionModel().getSelectedItem().getFirst_name());
             String dr_surname = (table.getSelectionModel().getSelectedItem().getSurname());
-
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(taal[128]);
@@ -174,13 +174,20 @@ public class accountsController implements Initializable {
         country_label.setText(taal[14] + ":");
         phone_label.setText(taal[15] + ":");
         mail_label.setText(taal[16] + ":");
-        type_label.setText(taal[20] + ":");
         language_label.setText(taal[68] + ":");
-
+        
+        loginController loginController = new loginController();
+        if (loginController.getUsertype() == 1) { // Service medewerker (ZONDER TYPE EDIT FUNCTIE)
+            type_label.setVisible(false);
+            type_combo.setVisible(false);
+        } 
+        
+        type_label.setText(taal[20] + ":");
         type_combo.getItems().addAll(
                 taal[66],
                 taal[64],
                 taal[65]);
+        
         language_combo.setPromptText(taal[73]);
         language_combo.getItems().addAll(
                 taal[69],
@@ -481,33 +488,58 @@ public class accountsController implements Initializable {
         FYS fys = new FYS();
         taal languages = new taal();
         String[] taal = languages.getLanguage();
+        loginController loginController = new loginController();
 
-        if ((first_name_input.getText() == null || first_name_input.getText().trim().isEmpty())
-                || (surname_input.getText() == null || surname_input.getText().trim().isEmpty())
-                || (type_combo.getValue() == null)
-                || (mail_input.getText() == null || mail_input.getText().trim().isEmpty())
-                || (address_input.getText() == null || address_input.getText().trim().isEmpty())
-                || (residence_input.getText() == null || residence_input.getText().trim().isEmpty())
-                || (zip_code_input.getText() == null || zip_code_input.getText().trim().isEmpty())
-                || (country_input.getText() == null || country_input.getText().trim().isEmpty())
-                || (phone_input.getText() == null || phone_input.getText().trim().isEmpty())
-                || (language_combo.getValue() == null)) {
-            // Foutmelding
-            loginerror.setText(taal[93]);
-            loginerror.setVisible(true);
-        } else {
-            sendToDatabase(Integer.parseInt(personId_label.getText()),
-                    first_name_input.getText(), surname_input.getText(),
-                    fys.getUserFunctionString(type_combo.getValue().toString()),
-                    mail_input.getText(), address_input.getText(),
-                    residence_input.getText(), zip_code_input.getText(),
-                    country_input.getText(), phone_input.getText(),
-                    fys.getUserLanguageString(language_combo.getValue().toString())
-            );
+        if (loginController.getUsertype() == 2) { // Administrator (MET TYPE EDIT FUNCTIE)
+            if ((first_name_input.getText() == null || first_name_input.getText().trim().isEmpty())
+                    || (surname_input.getText() == null || surname_input.getText().trim().isEmpty())
+                    || (type_combo.getValue() == null)
+                    || (mail_input.getText() == null || mail_input.getText().trim().isEmpty())
+                    || (address_input.getText() == null || address_input.getText().trim().isEmpty())
+                    || (residence_input.getText() == null || residence_input.getText().trim().isEmpty())
+                    || (zip_code_input.getText() == null || zip_code_input.getText().trim().isEmpty())
+                    || (country_input.getText() == null || country_input.getText().trim().isEmpty())
+                    || (phone_input.getText() == null || phone_input.getText().trim().isEmpty())
+                    || (language_combo.getValue() == null)) {
+                // Foutmelding
+                loginerror.setText(taal[93]);
+                loginerror.setVisible(true);
+            } else {
+                sendToDatabase_type(Integer.parseInt(personId_label.getText()),
+                        first_name_input.getText(), surname_input.getText(),
+                        fys.getUserFunctionString(type_combo.getValue().toString()),
+                        mail_input.getText(), address_input.getText(),
+                        residence_input.getText(), zip_code_input.getText(),
+                        country_input.getText(), phone_input.getText(),
+                        fys.getUserLanguageString(language_combo.getValue().toString())
+                );
+            }
+        } else { // Service medewerker (ZONDER TYPE EDIT FUNCTIE)
+             if ((first_name_input.getText() == null || first_name_input.getText().trim().isEmpty())
+                    || (surname_input.getText() == null || surname_input.getText().trim().isEmpty())
+                    || (mail_input.getText() == null || mail_input.getText().trim().isEmpty())
+                    || (address_input.getText() == null || address_input.getText().trim().isEmpty())
+                    || (residence_input.getText() == null || residence_input.getText().trim().isEmpty())
+                    || (zip_code_input.getText() == null || zip_code_input.getText().trim().isEmpty())
+                    || (country_input.getText() == null || country_input.getText().trim().isEmpty())
+                    || (phone_input.getText() == null || phone_input.getText().trim().isEmpty())
+                    || (language_combo.getValue() == null)) {
+                // Foutmelding
+                loginerror.setText(taal[93]);
+                loginerror.setVisible(true);
+            } else {
+                sendToDatabase(Integer.parseInt(personId_label.getText()),
+                        first_name_input.getText(), surname_input.getText(),
+                        mail_input.getText(), address_input.getText(),
+                        residence_input.getText(), zip_code_input.getText(),
+                        country_input.getText(), phone_input.getText(),
+                        fys.getUserLanguageString(language_combo.getValue().toString())
+                );
+            }
         }
     }
 
-    private void sendToDatabase(int dr_personId, String first_name,
+    private void sendToDatabase_type(int dr_personId, String first_name,
             String surname, int type_combo, String mail, String address,
             String residence, String zip_code, String country, String phone,
             int language_combo)
@@ -528,6 +560,46 @@ public class accountsController implements Initializable {
             String sql_person = "UPDATE bagagedatabase.person_table SET "
                     + "first_name='" + first_name + "',"
                     + "surname='" + surname + "', type='" + type_combo + "', "
+                    + "mail='" + mail + "', address='" + address + "',"
+                    + "residence='" + residence + "', zip_code='" + zip_code + "',"
+                    + "country='" + country + "', phone='" + phone + "',"
+                    + "language='" + language_combo + "'"
+                    + "WHERE person_id='" + dr_personId + "'";
+
+            stmt.executeUpdate(sql_person);
+
+            fys.changeToAnotherFXML(taal[98], "accounts.fxml");
+
+            conn.close();
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+    }
+    
+    private void sendToDatabase(int dr_personId, String first_name,
+            String surname, String mail, String address,
+            String residence, String zip_code, String country, String phone,
+            int language_combo)
+            throws IOException, SQLException {
+        FYS fys = new FYS();
+
+        try {
+            Statement stmt = null;
+            Connection conn = null;
+
+            conn = fys.connectToDatabase(conn);
+            stmt = conn.createStatement();
+
+            taal languages = new taal();
+            String[] taal = languages.getLanguage();
+
+            //connectToDatabase(conn, stmt, "test", "root", "root");
+            String sql_person = "UPDATE bagagedatabase.person_table SET "
+                    + "first_name='" + first_name + "',"
+                    + "surname='" + surname + "',"
                     + "mail='" + mail + "', address='" + address + "',"
                     + "residence='" + residence + "', zip_code='" + zip_code + "',"
                     + "country='" + country + "', phone='" + phone + "',"

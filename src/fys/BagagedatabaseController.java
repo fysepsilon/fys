@@ -12,6 +12,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -456,15 +459,57 @@ public class BagagedatabaseController implements Initializable {
                 PDAcroForm acroForm = document.getDocumentCatalog().getAcroForm();
                 
                 List<PDField> fields = acroForm.getFields();
+                
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                Date date = new Date();
+                String dateTimeString = dateFormat.format(date);
+                String[] tokens = dateTimeString.split(" ");
+                if (tokens.length != 2) {
+                    throw new IllegalArgumentException();
+                }
+                String dateString = tokens[0];
 
                 // set the text in the form-field <-- does work
                 for (PDField field : fields) {
-                    if (field.getFullyQualifiedName().equals("shipper_field")) {
+                    if (field.getFullyQualifiedName().equals("companyName_field")) {
                         field.setValue("Corendon");
+                    }
+                    if (field.getFullyQualifiedName().equals("country_field")) {
+                        field.setValue(country);
+                    }
+                    if (field.getFullyQualifiedName().equals("address_field")) {
+                        field.setValue(address);
+                    }
+                    if (field.getFullyQualifiedName().equals("city_field")) {
+                        field.setValue(residence);
+                    }
+                    if (field.getFullyQualifiedName().equals("postcode_field")) {
+                        field.setValue(zipcode);
+                    }
+                    if (field.getFullyQualifiedName().equals("contactPerson_field")) {
+                        field.setValue(frontname + " " + surname);
+                    }
+                    if (field.getFullyQualifiedName().equals("phone_field")) {
+                        field.setValue(phone);
+                    }
+                    if (field.getFullyQualifiedName().equals("type_field")) {
+                        field.setValue("International NonDocument");
+                    }
+                    if (field.getFullyQualifiedName().equals("product_field")) {
+                        field.setValue("Express WorldWide");
+                    }
+                    if (field.getFullyQualifiedName().equals("notification_field")) {
+                        field.setValue("fysepsilon@gmail.com ");
+                    }
+                    if (field.getFullyQualifiedName().equals("content_field")) {
+                        field.setValue("");
+                    }
+                    if (field.getFullyQualifiedName().equals("date_field")) {
+                        field.setValue(dateString);
                     }
                 }
                 
-                document.save("Piemel.pdf");
+                document.save("testtetet.pdf");
                 document.close();
             }
             

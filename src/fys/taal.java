@@ -180,6 +180,7 @@ public class taal {
             languagefields[129] = "Are you sure you want the account named '";
             languagefields[130] = "' deleted?";
             languagefields[131] = "month";
+            languagefields[132] = "Amount";
         } else if(language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
@@ -314,6 +315,7 @@ public class taal {
             languagefields[129] = "Weet je zeker dat je het account met de naam '";
             languagefields[130] = "' wilt verwijderen?";
             languagefields[131] = "maand";
+            languagefields[132] = "Aantal";
 
         } else if(language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
@@ -449,6 +451,7 @@ public class taal {
             languagefields[129] = "Seguro que cuenta llamada '";
             languagefields[130] = "' para quitar?";
             languagefields[131] = "mes";
+            languagefields[132] = "Número";
         } else { //Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
@@ -583,6 +586,7 @@ public class taal {
             languagefields[129] = "Eğer adında hesabı emin misin '";
             languagefields[130] = "' kaldırmak için?";
             languagefields[131] = "ay";
+            languagefields[132] = "Sayı";
         }
         return languagefields;
     }

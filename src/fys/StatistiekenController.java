@@ -159,20 +159,22 @@ public class StatistiekenController implements Initializable {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name
-                String str[] = rs.getString("date").split("-");
-                int month = Integer.parseInt(str[1]);
-                jan = (month == 1 ? jan += rs.getInt("Count") : jan);
-                feb = (month == 2 ? feb += rs.getInt("Count") : feb);
-                mar = (month == 3 ? mar += rs.getInt("Count") : mar);
-                apr = (month == 4 ? apr += rs.getInt("Count") : apr);
-                mei = (month == 5 ? jan += rs.getInt("Count") : mei);
-                jun = (month == 6 ? jun += rs.getInt("Count") : jun);
-                jul = (month == 7 ? jul += rs.getInt("Count") : jul);
-                aug = (month == 8 ? aug += rs.getInt("Count") : aug);
-                sep = (month == 9 ? sep += rs.getInt("Count") : sep);
-                okt = (month == 10 ? okt += rs.getInt("Count") : okt);
-                nov = (month == 11 ? nov += rs.getInt("Count") : nov);
-                dec = (month == 12 ? dec += rs.getInt("Count") : dec);
+                if(rs.getString("date") != null){
+                    String str[] = rs.getString("date").split("-");
+                    int month = Integer.parseInt(str[1]);
+                    jan = (month == 1 ? jan += rs.getInt("Count") : jan);
+                    feb = (month == 2 ? feb += rs.getInt("Count") : feb);
+                    mar = (month == 3 ? mar += rs.getInt("Count") : mar);
+                    apr = (month == 4 ? apr += rs.getInt("Count") : apr);
+                    mei = (month == 5 ? jan += rs.getInt("Count") : mei);
+                    jun = (month == 6 ? jun += rs.getInt("Count") : jun);
+                    jul = (month == 7 ? jul += rs.getInt("Count") : jul);
+                    aug = (month == 8 ? aug += rs.getInt("Count") : aug);
+                    sep = (month == 9 ? sep += rs.getInt("Count") : sep);
+                    okt = (month == 10 ? okt += rs.getInt("Count") : okt);
+                    nov = (month == 11 ? nov += rs.getInt("Count") : nov);
+                    dec = (month == 12 ? dec += rs.getInt("Count") : dec);
+                }
             }
             rs.close();
             conn.close();

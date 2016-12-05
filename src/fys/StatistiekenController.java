@@ -155,7 +155,7 @@ public class StatistiekenController implements Initializable {
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();        
-            String sql = "SELECT date, COUNT(date) as Count FROM bagagedatabase.insurance_claim;";
+            String sql = "SELECT date, COUNT(date) as Count FROM bagagedatabase.insurance_claim GROUP BY date;";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name
@@ -218,8 +218,8 @@ public class StatistiekenController implements Initializable {
                     + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
                     + "UNION ALL SELECT status, date FROM found, airport "
                     + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
-                    + "WHERE YEAR(x.date) LIKE \"%" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
-                    + "AND MONTH(x.date) LIKE \"%" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
+                    + "WHERE YEAR(x.date) LIKE \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
+                    + "AND MONTH(x.date) LIKE \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
                     + "GROUP BY x.status";
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
@@ -263,8 +263,9 @@ public class StatistiekenController implements Initializable {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
             String sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM insurance_claim "
-                    + "WHERE YEAR(date) LIKE \"%" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
-                    + "AND MONTH(date) LIKE \"%" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" ";
+                    + "WHERE YEAR(date) LIKE \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
+                    + "AND MONTH(date) LIKE \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" GROUP BY date ";
+            System.out.println(sql);
             /*String sql = "SELECT x.status, x.date, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
                     + "FROM (SELECT status, date FROM lost, airport "
                     + "WHERE status = 4 AND lost.lost_and_found_id = airport.lost_and_found_id "

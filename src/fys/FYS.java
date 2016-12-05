@@ -200,23 +200,23 @@ public class FYS extends Application {
         taal language = new taal();
         String[] taal = language.getLanguage();
         if (month.equals(taal[109])) {
-            return "01";
+            return "1";
         } else if (month.equals(taal[110])) {
-            return "02";
+            return "2";
         } else if (month.equals(taal[111])) {
-            return "03";
+            return "3";
         } else if (month.equals(taal[112])) {
-            return "04";
+            return "4";
         } else if (month.equals(taal[113])) {
-            return "05";
+            return "5";
         } else if (month.equals(taal[114])) {
-            return "06";
+            return "6";
         } else if (month.equals(taal[115])) {
-            return "07";
+            return "7";
         } else if (month.equals(taal[116])) {
-            return "08";
+            return "8";
         } else if (month.equals(taal[117])) {
-            return "09";
+            return "9";
         } else if (month.equals(taal[118])) {
             return "10";
         } else if (month.equals(taal[119])) {

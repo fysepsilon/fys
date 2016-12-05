@@ -330,6 +330,9 @@ public class BagagedatabaseController implements Initializable {
             int drFrom = Integer.parseInt((table.getSelectionModel().getSelectedItem().getTableFrom()));
             String dr_status = (table.getSelectionModel().getSelectedItem().getStatus());
             String dr_airport = (table.getSelectionModel().getSelectedItem().getAirportFound());
+            if(dr_airport==null){
+                dr_airport = (table.getSelectionModel().getSelectedItem().getAirportLost());
+            }
             String dr_name = (table.getSelectionModel().getSelectedItem().getFirst_name());
             String dr_surname = (table.getSelectionModel().getSelectedItem().getSurname());
             String dr_address = (table.getSelectionModel().getSelectedItem().getAddress());
@@ -395,14 +398,7 @@ public class BagagedatabaseController implements Initializable {
     @FXML
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
 
-        if ((name_input.getText() == null || name_input.getText().trim().isEmpty())
-                || (surname_input.getText() == null || surname_input.getText().trim().isEmpty())
-                || (airport_combo.getValue() == null) || (status_combo.getValue() == null)
-                || (address_input.getText() == null || address_input.getText().trim().isEmpty())
-                || (residence_input.getText() == null || residence_input.getText().trim().isEmpty())
-                || (zipcode_input.getText() == null || zipcode_input.getText().trim().isEmpty())
-                || (mail_input.getText() == null || mail_input.getText().trim().isEmpty())
-                || (type_combo.getValue() == null)
+        if ((type_combo.getValue() == null)
                 || (brand_input.getText() == null || brand_input.getText().trim().isEmpty())
                 || (color_combo.getValue() == null)) {
             // Foutmelding
@@ -572,7 +568,7 @@ public class BagagedatabaseController implements Initializable {
                     }
                 }
 
-                document.save("formulieren/dhlFormulier.pdf");
+                document.save("src/fys/formulieren/dhlFormulier" + frontname + surname + dr_personId + ".pdf");
                 document.close();
             }
             fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");

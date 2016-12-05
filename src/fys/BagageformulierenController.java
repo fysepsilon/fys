@@ -114,7 +114,6 @@ public class BagageformulierenController implements Initializable {
                         language_user[0] = rs.getInt("language");
                     }
                     rs.close();
-                    conn.close();
                 } catch (SQLException ex) {
                     // handle any errors
                     System.out.println("SQLException: " + ex.getMessage());

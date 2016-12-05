@@ -141,7 +141,7 @@ public class taal {
             languagefields[90] = "Password";
             languagefields[91] = "E-mailaddress";
             languagefields[92] = "Save";
-            languagefields[93] = "Some fields are left blank!";
+            languagefields[93] = "Some required fields are left blank!";
             languagefields[94] = "E-mail already exists!"; 
             languagefields[95] = "Register missing luggage";   
             languagefields[96] = "Register found luggage";   
@@ -276,7 +276,7 @@ public class taal {
             languagefields[90] = "Wachtwoord";
             languagefields[91] = "E-mailadres";
             languagefields[92] = "Opslaan";    
-            languagefields[93] = "Er zijn velden zijn leeg gelaten!";          
+            languagefields[93] = "Er zijn benodigde velden zijn leeg gelaten!";          
             languagefields[94] = "E-mailadres bestaat al!"; 
             languagefields[95] = "Vermiste bagage registreren";   
             languagefields[96] = "Gevonden bagage registreren";   

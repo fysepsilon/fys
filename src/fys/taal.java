@@ -32,7 +32,7 @@ public class taal {
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-            String sql = "SELECT language FROM person_table WHERE type = '" + login.getUsertype() + "' AND mail='" + login.getEmail() + "'";
+            String sql = "SELECT language FROM person WHERE type = '" + login.getUsertype() + "' AND mail='" + login.getEmail() + "'";
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
@@ -156,7 +156,7 @@ public class taal {
             languagefields[105] = "First, select a row in the table to change something";
             languagefields[106] = "Latest luggage";    
             languagefields[107] = "Time";
-            languagefields[108] = "Insuranceclaim";
+            languagefields[108] = "Insurance claim";
             languagefields[109] = "January";
             languagefields[110] = "February";
             languagefields[111] = "March";
@@ -172,6 +172,15 @@ public class taal {
             languagefields[121] = "This e-mail address already exists.";
             languagefields[122] = "Changing";
             languagefields[123] = "Your data has been changed."; 
+            languagefields[124] = "The data has been added.";
+            languagefields[125] = "Shoulder bag";
+            languagefields[126] = "Change an account";
+            languagefields[127] = "Cancel";
+            languagefields[128] = "Remove Account";
+            languagefields[129] = "Are you sure you want the account named '";
+            languagefields[130] = "' deleted?";
+            languagefields[131] = "month";
+            languagefields[132] = "Amount";
         } else if(language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
@@ -201,7 +210,7 @@ public class taal {
             languagefields[25] = "Kies hier uw luchthaven";
             languagefields[26] = "Kies hier uw type bagage";
             languagefields[27] = "Koffer";
-            languagefields[28] = "Sporttas";
+            languagefields[28] = "Weekendtas";
             languagefields[29] = "Handtas";
             languagefields[30] = "Rugzak";
             languagefields[31] = "Kies hier de kleur van de bagage";
@@ -298,6 +307,16 @@ public class taal {
             languagefields[121] = "Dit email adres bestaat al.";
             languagefields[122] = "Aanpassingen";
             languagefields[123] = "Uw gegevens zijn gewijzigd.";
+            languagefields[124] = "De gegevens zijn toegevoegd."; 
+            languagefields[125] = "Schoudertas";
+            languagefields[126] = "Account wijzigen";
+            languagefields[127] = "Annuleren";
+            languagefields[128] = "Account verwijderen";
+            languagefields[129] = "Weet je zeker dat je het account met de naam '";
+            languagefields[130] = "' wilt verwijderen?";
+            languagefields[131] = "maand";
+            languagefields[132] = "Aantal";
+
         } else if(language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";
@@ -347,14 +366,12 @@ public class taal {
             languagefields[45] = "Crear una cuenta";
             languagefields[46] = "Barco";
             languagefields[47] = "Filtro";
-            languagefields[48] = "Estatus";
-                    
+            languagefields[48] = "Estatus";       
             languagefields[49] = "Color";
             languagefields[50] = "Tipo";
             languagefields[51] = "Marca";
             languagefields[52] = "Fecha";
-            languagefields[53] = "Característica";    
-            
+            languagefields[53] = "Característica";
             languagefields[54] = "Fundar";
             languagefields[55] = "Que falta";
             languagefields[56] = "Destruido";
@@ -365,10 +382,8 @@ public class taal {
             languagefields[61] = "Ajustes";
             languagefields[62] = "Cerrar sesión";
             languagefields[63] = "Crear nueva cuenta";
-            
             languagefields[64] = "Auxiliar de servicios";
             languagefields[65] = "Administrador";
-            
             languagefields[66] = "Cliente";        
             languagefields[67] = "Modificar";
             languagefields[68] = "Eliminar";
@@ -379,9 +394,7 @@ public class taal {
             languagefields[72] = "Turco";
             languagefields[73] = "Seleccionar el idioma";
             languagefields[74] = "Elige el papel";
-            
             languagefields[75] = "Estatus";
-            
             languagefields[76] = "Reclamaciones de seguros";
             languagefields[77] = "Número de reclamaciones";
             languagefields[78] = "ene";
@@ -397,9 +410,7 @@ public class taal {
             languagefields[88] = "nov";
             languagefields[89] = "dic";
             languagefields[90] = "Contraseña";
-            
             languagefields[91] = "Correo electrónico";
-            
             languagefields[92] = "Tienda";   
             languagefields[93] = "Hay campos se dejan en blanco!";  
             languagefields[94] = "Correo electrónico ya existe!";    
@@ -432,6 +443,15 @@ public class taal {
             languagefields[121] = "Esta dirección de correo electrónico ya existe.";
             languagefields[122] = "Ajustes";
             languagefields[123] = "Se cambia sus datos.";
+            languagefields[124] = "Los datos se han añadido.";
+            languagefields[125] = "Bolso de bandolera";            
+            languagefields[126] = "Cuenta de modificación";
+            languagefields[127] = "Cancelar";
+            languagefields[128] = "Eliminar cuenta";
+            languagefields[129] = "Seguro que cuenta llamada '";
+            languagefields[130] = "' para quitar?";
+            languagefields[131] = "mes";
+            languagefields[132] = "Número";
         } else { //Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
@@ -558,6 +578,15 @@ public class taal {
             languagefields[121] = "Bu e-posta adresi zaten var.";
             languagefields[122] = "Ayarlamalar";
             languagefields[123] = "Verileriniz değiştirilir.";
+            languagefields[124] = "Veri eklendi.";
+            languagefields[125] = "Omuz çantası";                        
+            languagefields[126] = "Değişim hesabı";
+            languagefields[127] = "Iptal";
+            languagefields[128] = "Hesabı silmek";
+            languagefields[129] = "Eğer adında hesabı emin misin '";
+            languagefields[130] = "' kaldırmak için?";
+            languagefields[131] = "ay";
+            languagefields[132] = "Sayı";
         }
         return languagefields;
     }

@@ -5,6 +5,7 @@
  */
 package fys;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -12,18 +13,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.WritableImage;
+import javafx.scene.layout.GridPane;
+import javafx.util.Pair;
+import javax.imageio.ImageIO;
 
 /**
  * FXML Controller class
@@ -48,7 +63,8 @@ public class StatistiekenController implements Initializable {
             new PieChart.Data(taal[54], 0), new PieChart.Data(taal[55], 0),
             new PieChart.Data(taal[56], 0), new PieChart.Data(taal[57], 0),
             new PieChart.Data(taal[58], 0), new PieChart.Data(taal[59], 0));
-    @FXML private XYChart.Series series = new XYChart.Series<>(); 
+    @FXML private XYChart.Series series = new XYChart.Series<>();
+    @FXML private String dateFromInput, dateToInput;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -212,15 +228,46 @@ public class StatistiekenController implements Initializable {
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-            //connectToDatabase(conn, stmt, "test", "root", "root");           
-            String sql = "SELECT x.status, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
-                    + "FROM (SELECT status, date FROM lost, airport "
-                    + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
-                    + "UNION ALL SELECT status, date FROM found, airport "
-                    + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
-                    + "WHERE YEAR(x.date) LIKE \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
-                    + "AND MONTH(x.date) LIKE \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
-                    + "GROUP BY x.status";
+            //connectToDatabase(conn, stmt, "test", "root", "root"); 
+            String sql = "";
+            if ((year.getSelectionModel().getSelectedItem().toString() == null || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())
+                    && (month.getSelectionModel().getSelectedItem().toString() == null || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty())) {
+                sql = "SELECT x.status, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
+                        + "FROM (SELECT status, date FROM lost, airport "
+                        + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
+                        + "UNION ALL SELECT status, date FROM found, airport "
+                        + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
+                        + "WHERE YEAR(x.date) LIKE \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
+                        + "AND MONTH(x.date) LIKE \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
+                        + "GROUP BY x.status";
+            } else if ((year.getSelectionModel().getSelectedItem().toString() == null || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())) {
+                sql = "SELECT x.status, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
+                        + "FROM (SELECT status, date FROM lost, airport "
+                        + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
+                        + "UNION ALL SELECT status, date FROM found, airport "
+                        + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
+                        + "WHERE YEAR(x.date) LIKE \"%%\" "
+                        + "AND MONTH(x.date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
+                        + "GROUP BY x.status";
+            } else if (month.getSelectionModel().getSelectedItem().toString() == null || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty()) {
+                sql = "SELECT x.status, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
+                        + "FROM (SELECT status, date FROM lost, airport "
+                        + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
+                        + "UNION ALL SELECT status, date FROM found, airport "
+                        + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
+                        + "WHERE YEAR(x.date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
+                        + "AND MONTH(x.date) LIKE \"%%\" "
+                        + "GROUP BY x.status";
+            } else {
+                sql = "SELECT x.status, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
+                        + "FROM (SELECT status, date FROM lost, airport "
+                        + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
+                        + "UNION ALL SELECT status, date FROM found, airport "
+                        + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
+                        + "WHERE YEAR(x.date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
+                        + "AND MONTH(x.date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
+                        + "GROUP BY x.status";
+            }
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     luggage++;
@@ -262,10 +309,25 @@ public class StatistiekenController implements Initializable {
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-            String sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM insurance_claim "
-                    + "WHERE YEAR(date) LIKE \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
-                    + "AND MONTH(date) LIKE \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" GROUP BY date ";
-            System.out.println(sql);
+            String sql = "";
+            if((year.getSelectionModel().getSelectedItem().toString() == null || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty()) && 
+                    (month.getSelectionModel().getSelectedItem().toString() == null || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty())){
+                sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM insurance_claim "
+                        + "WHERE YEAR(date) LIKE \"%%\" "
+                        + "AND MONTH(date) LIKE \"%%\" GROUP BY date ";
+            } else if((year.getSelectionModel().getSelectedItem().toString() == null || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())){
+                sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM insurance_claim "
+                        + "WHERE YEAR(date) LIKE \"%%\" "
+                        + "AND MONTH(date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "\" GROUP BY date ";
+            } else if(month.getSelectionModel().getSelectedItem().toString() == null || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty()){
+                sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM insurance_claim "
+                        + "WHERE YEAR(date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "\" "
+                        + "AND MONTH(date) LIKE \"%%\" GROUP BY date ";
+            } else{
+                sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM insurance_claim "
+                        + "WHERE YEAR(date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "\" "
+                        + "AND MONTH(date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "\" GROUP BY date ";
+            }
             /*String sql = "SELECT x.status, x.date, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
                     + "FROM (SELECT status, date FROM lost, airport "
                     + "WHERE status = 4 AND lost.lost_and_found_id = airport.lost_and_found_id "
@@ -315,7 +377,108 @@ public class StatistiekenController implements Initializable {
         series.getData().add(new XYChart.Data(taal[87], okt));
         series.getData().add(new XYChart.Data<>(taal[88], nov));
         series.getData().add(new XYChart.Data(taal[89], dec));
+//        savePieChartAsPng();
+//        saveLineChartAsPng();
     }
     
+    @FXML
+    private void handleExportToPDFAction(ActionEvent event) throws IOException {
+        // Create the custom dialog.
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("Exporteren naar PDF");
+        dialog.setHeaderText("Selecteer periode");
+
+// Set the button types.
+        ButtonType loginButtonType = new ButtonType("Exporteer", ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
+
+// Create the username and password labels and fields.
+        GridPane grid = new GridPane();
+        grid.setHgap(20);
+        grid.setVgap(20);
+
+        TextField dateFrom = new TextField();
+        dateFrom.setPromptText("1970-01-01");
+        TextField dateTo = new TextField();
+        dateTo.setPromptText("1970-12-31");
+
+        grid.add(new Label("Datum vanaf:"), 0, 0);
+        grid.add(dateFrom, 1, 0);
+        grid.add(new Label("Datum tot:"), 0, 1);
+        grid.add(dateTo, 1, 1);
+
+// Enable/Disable login button depending on whether a username was entered.
+        Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
+        loginButton.setDisable(true);
+
+// Do some validation (using the Java 8 lambda syntax).
+        dateFrom.textProperty().addListener((observable, oldValue, newValue) -> {
+            loginButton.setDisable(newValue.trim().isEmpty());
+        });
+
+        dialog.getDialogPane().setContent(grid);
+
+// Request focus on the username field by default.
+        Platform.runLater(() -> dateFrom.requestFocus());
+
+// Convert the result to a username-password-pair when the login button is clicked.
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == loginButtonType) {
+                if ((dateFrom.getText() == null || dateFrom.getText().trim().isEmpty()) || (dateTo.getText() == null || dateTo.getText().trim().isEmpty())) {
+                    return null;
+                } else {
+                    return new Pair<>(dateFrom.getText(), dateTo.getText());
+                }
+            }
+            return null;
+        });
+
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+
+        result.ifPresent(usernamePassword -> {
+            dateFromInput = usernamePassword.getKey();
+            dateToInput = usernamePassword.getKey();
+            System.out.println("Username=" + usernamePassword.getKey() + ", Password=" + usernamePassword.getValue());
+        });
+
+    }
     
+    public static void savePieChartToFile(ObservableList<PieChart.Data> pieChartData, String path) {
+        PieChart pieChart = new PieChart(pieChartData);
+        Scene sceneForChart = new Scene(pieChart, 800, 600);
+        WritableImage image = pieChart.snapshot(new SnapshotParameters(), null);
+        File file = new File(path);
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void savePieChartAsPng() {
+        piechart.setData(pieChartData);
+        WritableImage image = piechart.snapshot(new SnapshotParameters(), null);
+//        System.out.println(piechart.getData().get(0));
+        // TODO: probably use a file chooser here
+        File file = new File("test.png");
+
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+        } catch (IOException e) {
+            // TODO: handle exception here
+        }
+    }
+
+    public void saveLineChartAsPng() {
+        WritableImage image = linechart.snapshot(new SnapshotParameters(), null);
+
+        // TODO: probably use a file chooser here
+        File file = new File("chart.png");
+
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+        } catch (IOException e) {
+            // TODO: handle exception here
+        }
+    }
 }

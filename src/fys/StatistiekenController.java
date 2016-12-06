@@ -664,10 +664,6 @@ public class StatistiekenController implements Initializable {
 
     }
     
-    public void changeCharts(){
-        
-    }
-    
     public File savePieChartAsPng() {
         WritableImage image = piechart.snapshot(new SnapshotParameters(), null);
         // TODO: probably use a file chooser here

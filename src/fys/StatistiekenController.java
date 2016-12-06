@@ -8,13 +8,20 @@ package fys;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -39,6 +46,12 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 import javax.imageio.ImageIO;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
+import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
 /**
  * FXML Controller class
@@ -216,7 +229,7 @@ public class StatistiekenController implements Initializable {
     }
     
     @FXML
-    private void handleFilterAction(ActionEvent event) throws IOException {
+    private void handleFilterAction(ActionEvent event) throws IOException, InterruptedException {
         //PIECHART
         int luggage = 0, foundAmount = 0, lostAmount = 0, destroyAmount = 0, settleAmount = 0, 
                 neverFoundAmount = 0, depotAmount = 0;
@@ -293,7 +306,6 @@ public class StatistiekenController implements Initializable {
                 new PieChart.Data(taal[56], destroyAmount), new PieChart.Data(taal[57], settleAmount),
                 new PieChart.Data(taal[58], neverFoundAmount), new PieChart.Data(taal[59], depotAmount));
         piechart.setData(pieChartData);
-
         for (PieChart.Data d : piechart.getData()) {
             total += d.getPieValue();
         }
@@ -377,8 +389,6 @@ public class StatistiekenController implements Initializable {
         series.getData().add(new XYChart.Data(taal[87], okt));
         series.getData().add(new XYChart.Data<>(taal[88], nov));
         series.getData().add(new XYChart.Data(taal[89], dec));
-//        savePieChartAsPng();
-//        saveLineChartAsPng();
     }
     
     @FXML
@@ -435,50 +445,253 @@ public class StatistiekenController implements Initializable {
 
         Optional<Pair<String, String>> result = dialog.showAndWait();
 
-        result.ifPresent(usernamePassword -> {
-            dateFromInput = usernamePassword.getKey();
-            dateToInput = usernamePassword.getKey();
-            System.out.println("Username=" + usernamePassword.getKey() + ", Password=" + usernamePassword.getValue());
+        result.ifPresent(dates -> {
+            dateFromInput = dates.getKey();
+            dateToInput = dates.getValue();
+            linechart.setAnimated(false);
+            piechart.setAnimated(false);
+            //PIECHART
+            int luggage = 0, foundAmount = 0, lostAmount = 0, destroyAmount = 0, settleAmount = 0,
+                    neverFoundAmount = 0, depotAmount = 0;
+            int jan = 0, feb = 0, mar = 0, apr = 0, mei = 0, jun = 0, jul = 0, aug = 0,
+                    sep = 0, okt = 0, nov = 0, dec = 0;
+            total = 0;
+            series.getData().clear();
+            pieChartData = FXCollections.observableArrayList();
+            try {
+                conn = fys.connectToDatabase(conn);
+                stmt = conn.createStatement();
+                //connectToDatabase(conn, stmt, "test", "root", "root"); 
+                String sql = "SELECT x.status, x.date, COUNT(x.status) AS Count "
+                        + "FROM (SELECT status, date FROM lost, airport "
+                        + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
+                        + "UNION ALL SELECT status, date FROM found, airport "
+                        + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
+                        + "WHERE date BETWEEN \"" + dateFromInput + "\" AND \"" + dateToInput +"\" "
+                        + "GROUP BY x.status";
+                try (ResultSet rs = stmt.executeQuery(sql)) {
+                    while (rs.next()) {
+                        luggage++;
+                        //System.out.println(rs.getString("status") + " " + rs.getInt("Count"));
+                        //Retrieve by column name
+                        foundAmount = (rs.getInt("status") == 0 ? rs.getInt("Count") : foundAmount);
+                        lostAmount = (rs.getInt("status") == 1 ? rs.getInt("Count") : lostAmount);
+                        destroyAmount = (rs.getInt("status") == 2 ? rs.getInt("Count") : destroyAmount);
+                        settleAmount = (rs.getInt("status") == 3 ? rs.getInt("Count") : settleAmount);
+                        neverFoundAmount = (rs.getInt("status") == 4 ? rs.getInt("Count") : neverFoundAmount);
+                        depotAmount = (rs.getInt("status") == 5 ? rs.getInt("Count") : depotAmount);
+                    }
+                }
+            } catch (SQLException ex) {
+                // handle any errors
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
+
+            pieChartData = FXCollections.observableArrayList(
+                    new PieChart.Data(taal[54], foundAmount), new PieChart.Data(taal[55], lostAmount),
+                    new PieChart.Data(taal[56], destroyAmount), new PieChart.Data(taal[57], settleAmount),
+                    new PieChart.Data(taal[58], neverFoundAmount), new PieChart.Data(taal[59], depotAmount));
+            piechart.setData(pieChartData);
+            for (PieChart.Data d : piechart.getData()) {
+                total += d.getPieValue();
+            }
+
+            pieChartData.forEach(data -> data.nameProperty().bind(
+                    Bindings.concat(
+                            (int) data.getPieValue(), " ", data.getName(), ": ",
+                            (total == 0 || (int) data.getPieValue() == 0) ? 0 : (int) (data.getPieValue() / total * 100), "%"
+                    )
+            ));
+
+            //LINECHART
+            try {
+                conn = fys.connectToDatabase(conn);
+                stmt = conn.createStatement();
+                String sql = "SELECT date, COUNT(date) as Count FROM insurance_claim "
+                        + "WHERE date BETWEEN \"" + dateFromInput + "\" AND \"" + dateToInput + "\" "
+                        + "GROUP BY date";
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    //Retrieve by column name
+                    if (rs.getString("date") != null) {
+                        String str[] = rs.getString("date").split("-");
+                        int month = Integer.parseInt(str[1]);
+                        jan = (month == 1 ? jan += rs.getInt("Count") : jan);
+                        feb = (month == 2 ? feb += rs.getInt("Count") : feb);
+                        mar = (month == 3 ? mar += rs.getInt("Count") : mar);
+                        apr = (month == 4 ? apr += rs.getInt("Count") : apr);
+                        mei = (month == 5 ? jan += rs.getInt("Count") : mei);
+                        jun = (month == 6 ? jun += rs.getInt("Count") : jun);
+                        jul = (month == 7 ? jul += rs.getInt("Count") : jul);
+                        aug = (month == 8 ? aug += rs.getInt("Count") : aug);
+                        sep = (month == 9 ? sep += rs.getInt("Count") : sep);
+                        okt = (month == 10 ? okt += rs.getInt("Count") : okt);
+                        nov = (month == 11 ? nov += rs.getInt("Count") : nov);
+                        dec = (month == 12 ? dec += rs.getInt("Count") : dec);
+                    }
+                }
+                rs.close();
+                conn.close();
+            } catch (SQLException ex) {
+                // handle any errors
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
+            series.getData().add(new XYChart.Data<>(taal[78], jan));
+            series.getData().add(new XYChart.Data(taal[79], feb));
+            series.getData().add(new XYChart.Data<>(taal[80], mar));
+            series.getData().add(new XYChart.Data(taal[81], apr));
+            series.getData().add(new XYChart.Data<>(taal[82], mei));
+            series.getData().add(new XYChart.Data(taal[83], jun));
+            series.getData().add(new XYChart.Data<>(taal[84], jul));
+            series.getData().add(new XYChart.Data(taal[85], aug));
+            series.getData().add(new XYChart.Data<>(taal[86], sep));
+            series.getData().add(new XYChart.Data(taal[87], okt));
+            series.getData().add(new XYChart.Data<>(taal[88], nov));
+            series.getData().add(new XYChart.Data(taal[89], dec));
+            linechart.applyCss();
+            linechart.layout();
+            piechart.applyCss();
+            piechart.layout();
+            savePieChartAsPng();
+            saveLineChartAsPng();
+            try {
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = new Date();
+                String dateString = dateFormat.format(date);
+                File pdfdoc = new File("src/fys/templates/statisticstemplate.pdf");
+                PDDocument document = null;
+                document = PDDocument.load(pdfdoc);
+                PDAcroForm acroForm = document.getDocumentCatalog().getAcroForm();
+                List<PDField> fields = acroForm.getFields();
+
+                // set the text in the form-field <-- does work
+                for (PDField field : fields) {
+                    if (field.getFullyQualifiedName().equals("found")) {
+                        field.setValue(String.valueOf(foundAmount));
+                    }
+                    if (field.getFullyQualifiedName().equals("lost")) {
+                        field.setValue(String.valueOf(lostAmount));
+                    }
+                    if (field.getFullyQualifiedName().equals("destroyed")) {
+                        field.setValue(String.valueOf(destroyAmount));
+                    }
+                    if (field.getFullyQualifiedName().equals("completed")) {
+                        field.setValue(String.valueOf(settleAmount));
+                    }
+                    if (field.getFullyQualifiedName().equals("neverfound")) {
+                        field.setValue(String.valueOf(neverFoundAmount));
+                    }
+                    if (field.getFullyQualifiedName().equals("depot")) {
+                        field.setValue(String.valueOf(depotAmount));
+                    }
+                    
+                    if (field.getFullyQualifiedName().equals("jan")) {
+                        field.setValue(String.valueOf(jan));
+                    }
+                    if (field.getFullyQualifiedName().equals("feb")) {
+                        field.setValue(String.valueOf(feb));
+                    }
+                    if (field.getFullyQualifiedName().equals("mar")) {
+                        field.setValue(String.valueOf(mar));
+                    }
+                    if (field.getFullyQualifiedName().equals("apr")) {
+                        field.setValue(String.valueOf(apr));
+                    }
+                    if (field.getFullyQualifiedName().equals("may")) {
+                        field.setValue(String.valueOf(mei));
+                    }
+                    if (field.getFullyQualifiedName().equals("jun")) {
+                        field.setValue(String.valueOf(jun));
+                    }
+                    if (field.getFullyQualifiedName().equals("jul")) {
+                        field.setValue(String.valueOf(jul));
+                    }
+                    if (field.getFullyQualifiedName().equals("aug")) {
+                        field.setValue(String.valueOf(aug));
+                    }
+                    if (field.getFullyQualifiedName().equals("sep")) {
+                        field.setValue(String.valueOf(sep));
+                    }
+                    if (field.getFullyQualifiedName().equals("oct")) {
+                        field.setValue(String.valueOf(okt));
+                    }
+                    if (field.getFullyQualifiedName().equals("nov")) {
+                        field.setValue(String.valueOf(nov));
+                    }
+                    if (field.getFullyQualifiedName().equals("dec")) {
+                        field.setValue(String.valueOf(dec));
+                    }
+                    if (field.getFullyQualifiedName().equals("date")) {
+                        field.setValue(String.valueOf(dateString));
+                    }
+                    if (field.getFullyQualifiedName().equals("period")) {
+                        field.setValue(String.valueOf(dateFromInput + " | " + dateToInput));
+                    }
+                }
+                
+                //Retrieving the page
+                PDPage page = document.getPage(0);
+
+                //Creating PDImageXObject object
+                PDImageXObject pieChartImage = PDImageXObject.createFromFile("PieChart.png", document);
+                PDImageXObject lineChartImage = PDImageXObject.createFromFile("LineChart.png", document);
+
+                //creating the PDPageContentStream object
+                PDPageContentStream contents = new PDPageContentStream(document, page, true, true, true);
+
+                //Drawing the image in the PDF document
+                contents.drawImage(pieChartImage, 450, 0, 350, 300);
+                contents.drawImage(lineChartImage, 50, 0, 350, 300);
+
+                System.out.println("Image inserted");
+
+                //Closing the PDPageContentStream object
+                contents.close();
+                
+                document.save("src/fys/formulieren/statistics" + dateFromInput + dateToInput + ".pdf");
+                document.close();
+                savePieChartAsPng().delete();
+                saveLineChartAsPng().delete();
+                System.out.println("Username=" + dateFromInput + ", Password=" + dateToInput);
+            } catch (IOException ex) {
+                Logger.getLogger(StatistiekenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
 
     }
     
-    public static void savePieChartToFile(ObservableList<PieChart.Data> pieChartData, String path) {
-        PieChart pieChart = new PieChart(pieChartData);
-        Scene sceneForChart = new Scene(pieChart, 800, 600);
-        WritableImage image = pieChart.snapshot(new SnapshotParameters(), null);
-        File file = new File(path);
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void changeCharts(){
+        
     }
-
-    public void savePieChartAsPng() {
-        piechart.setData(pieChartData);
+    
+    public File savePieChartAsPng() {
         WritableImage image = piechart.snapshot(new SnapshotParameters(), null);
-//        System.out.println(piechart.getData().get(0));
         // TODO: probably use a file chooser here
-        File file = new File("test.png");
+        File file = new File("PieChart.png");
 
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
         } catch (IOException e) {
             // TODO: handle exception here
         }
+        return file;
     }
 
-    public void saveLineChartAsPng() {
+    public File saveLineChartAsPng() {
         WritableImage image = linechart.snapshot(new SnapshotParameters(), null);
 
         // TODO: probably use a file chooser here
-        File file = new File("chart.png");
+        File file = new File("LineChart.png");
 
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
         } catch (IOException e) {
             // TODO: handle exception here
         }
+        return file;
     }
 }

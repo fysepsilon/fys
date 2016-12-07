@@ -20,7 +20,34 @@ public class Bagage {
                 first_name, surname, address, residence, zipcode, country, phone, mail, labelnumber, 
                 flightnumber, destination, airportFound, airportLost, tableFrom;
     @FXML private SimpleStringProperty time;
-        
+    
+    /**
+     * 
+     * @param idname set value to id.
+     * @param statusname set value to status.
+     * @param typename set value to type.
+     * @param colorname set value to color.
+     * @param brandname set value to brand.
+     * @param datename set value to date.
+     * @param informationname set value to information.
+     * @param firstnamename set value to first name.
+     * @param surnamename set value to surname.
+     * @param addressname set value to address.
+     * @param residencename set value to residence.
+     * @param zipcodename set value to zip code.
+     * @param countryname set value to country.
+     * @param phonename set value to phone.
+     * @param mailname set value to mail.
+     * @param labelnumbername set value to label number.
+     * @param flightnumbername set value to flight number.
+     * @param destinationname set value to destination.
+     * @param airportFoundname set value to airport found.
+     * @param airportLostname set value to airport lost.
+     * @param tablefromname set value to table from.
+     * @param lostandfoundidname set value to lost and found id.
+     * @param personidname set value to person id.
+     * @param realidname  set value to real id.
+     */
     public Bagage(Integer idname, String statusname, String typename, String colorname, 
                 String brandname, String datename, String informationname, String firstnamename,
                 String surnamename, String addressname, String residencename, String zipcodename, 
@@ -52,7 +79,15 @@ public class Bagage {
             this.personID = new SimpleIntegerProperty(personidname);
             this.realid = new SimpleIntegerProperty(realidname);
         }
-    
+        
+        /**
+         * 
+         * @param datename set value to date. 
+         * @param timename set value to time.
+         * @param colorname set value to color.
+         * @param brandname set value to brand.
+         * Make other variables empty.
+         */
         public Bagage(String datename, String timename, String colorname, String brandname) {
             this.id = new SimpleIntegerProperty(0);
             this.realid = new SimpleIntegerProperty(0);
@@ -81,67 +116,131 @@ public class Bagage {
             this.color = new SimpleStringProperty(colorname);
             this.brand = new SimpleStringProperty(brandname);
         }
-
+        
+        /**
+         * 
+         * @return the value of id.
+         */
         public Integer getId() {
             return id.get();
         }
-
+        
+        /**
+         * 
+         * @param idname set value to id.
+         */
         public void setId(Integer idname) {
             id.set(idname);
         }
-
+        
+        /**
+         * 
+         * @return the value of status.
+         */
         public String getStatus() {
             return status.get();
         }
-
+        
+        /**
+         * 
+         * @param statusname set value to status.
+         */
         public void setStatus(String statusname) {
             status.set(statusname);
         }
-
+        
+        /**
+         * 
+         * @return the value of type.
+         */
         public String getType() {
             return type.get();
         }
-
+        
+        /**
+         * 
+         * @param typename set value to studentid.
+         */
         public void setStudentid(String typename) {
             type.set(typename);
         }
-
+        
+        /**
+         * 
+         * @return value of color.
+         */
         public String getColor() {
             return color.get();
         }
-
+        
+        /**
+         * 
+         * @param colorname set value to color. 
+         */
         public void setCijfer(String colorname) {
             color.set(colorname);
         }
-
+        
+        /**
+         * 
+         * @return value of brand.
+         */
         public String getBrand() {
             return brand.get();
         }
-
+        
+        /**
+         * 
+         * @param brandname set value of brand.
+         */
         public void setBrand(String brandname) {
             brand.set(brandname);
         }
         
+        /**
+         * 
+         * @return value of date.
+         */
         public String getDate() {
             return date.get();
         }
-
+        
+        /**
+         * 
+         * @param datename set value to date.
+         */
         public void setDate(String datename) {
             date.set(datename);
         }
         
+        /**
+         * 
+         * @return value of time.
+         */
         public String getTime() {
         return time.get();
         }
-
+        
+        /**
+         * 
+         * @param timename set value to time
+         */
         public void setTime(String timename) {
             time.set(timename);
         }
         
+        /**
+         * 
+         * @return the value of information.
+         */
         public String getInformation() {
             return information.get();
         }
-
+        
+        /**
+         * 
+         * @param informationname set value to information.
+         */
         public void setInformation(String informationname) {
             information.set(informationname);
         }

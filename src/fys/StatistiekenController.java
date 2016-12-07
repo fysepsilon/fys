@@ -644,8 +644,8 @@ public class StatistiekenController implements Initializable {
                 PDPageContentStream contents = new PDPageContentStream(document, page, true, true, true);
 
                 //Drawing the image in the PDF document
-                contents.drawImage(pieChartImage, 450, 0, 350, 300);
-                contents.drawImage(lineChartImage, 50, 0, 350, 300);
+                contents.drawImage(pieChartImage, 75, 0, 350, 300);
+                contents.drawImage(lineChartImage, 425, 0, 350, 300);
 
                 System.out.println("Image inserted");
 

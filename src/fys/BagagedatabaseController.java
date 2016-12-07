@@ -561,7 +561,7 @@ public class BagagedatabaseController implements Initializable {
                         field.setValue("fysepsilon@gmail.com ");
                     }
                     if (field.getFullyQualifiedName().equals("content_field")) {
-                        field.setValue("");
+                        field.setValue(fys.getBaggageType(type));
                     }
                     if (field.getFullyQualifiedName().equals("date_field")) {
                         field.setValue(dateString);

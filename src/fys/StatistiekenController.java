@@ -8,7 +8,6 @@ package fys;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,7 +30,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
@@ -60,8 +58,8 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDField;
  */
 public class StatistiekenController implements Initializable {
 
-    @FXML private PieChart piechart;
-    @FXML private LineChart<Number, Number> linechart;
+    @FXML private PieChart pieChart;
+    @FXML private LineChart<Number, Number> lineChart;
     @FXML private int total = 0;
     @FXML private int foundAmount, lostAmount, destroyAmount, settleAmount, neverFoundAmount, depotAmount = 0;
     @FXML private int jan, feb, mar, apr, mei, jun, jul, aug, sep, okt, nov, dec = 0;
@@ -81,15 +79,17 @@ public class StatistiekenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        /**
+         * Krijg alle unieke jaren vanuit de database. Wanneer de bagage geregistreerd zijn als vermist of gevonden.
+         */
         try {
             conn = fys.connectToDatabase(conn);
-            stmt = conn.createStatement();
-            //connectToDatabase(conn, stmt, "test", "root", "root");           
+            stmt = conn.createStatement();           
             String sql = "SELECT DISTINCT YEAR(STR_TO_DATE(date, \"%Y-%m-%d\")) as date "
                     + "from bagagedatabase.airport";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                //Retrieve by column name
+                //voeg alle jaren in de array van years.
                 years.add(rs.getString("date"));
             }
             rs.close();
@@ -100,6 +100,7 @@ public class StatistiekenController implements Initializable {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         
+        //Voeg alle jaren en maanden vanuit array naar combobox.
         for (int i = 0; i < years.size(); i++) {
             year.getItems().add(years.get(i));
         }
@@ -108,10 +109,14 @@ public class StatistiekenController implements Initializable {
                 taal[115], taal[116], taal[117], taal[118], taal[119], taal[120]);
         
         
-
-        piechart.setTitle(taal[75]);
-        piechart.setData(pieChartData);
+        //PIECHART
+        //Begin met het zetten van de titel van de pieChart.
+        //Voeg vervolgens lege data toe aan de pieChart.
+        pieChart.setTitle(taal[75]);
+        pieChart.setData(pieChartData);
         int luggage = 0;
+        
+        //Krijg alle data van de bagages vanuit de database en voeg de aantal toe aan de aantallen van die status.
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();          
@@ -123,8 +128,7 @@ public class StatistiekenController implements Initializable {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 luggage++;
-                //System.out.println(rs.getString("status") + " " + rs.getInt("Count"));
-                //Retrieve by column name
+                //Voeg per status de aantallen toe.
                 foundAmount = (rs.getInt("status") == 0 ? rs.getInt("Count") : foundAmount);
                 lostAmount = (rs.getInt("status") == 1 ? rs.getInt("Count") : lostAmount);
                 destroyAmount = (rs.getInt("status") == 2 ? rs.getInt("Count") : destroyAmount);
@@ -139,6 +143,8 @@ public class StatistiekenController implements Initializable {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
+        
+        //Voeg per status de aantal toe in de data array.
         pieChartData.get(0).setPieValue(foundAmount);
         pieChartData.get(1).setPieValue(lostAmount);
         pieChartData.get(2).setPieValue(destroyAmount);
@@ -146,10 +152,12 @@ public class StatistiekenController implements Initializable {
         pieChartData.get(4).setPieValue(neverFoundAmount);
         pieChartData.get(5).setPieValue(depotAmount);
         
-        for (PieChart.Data d : piechart.getData()) {
+        //Voor elke aantal tel ze met elkaar op en sla het op bij total.
+        for (PieChart.Data d : pieChart.getData()) {
             total += d.getPieValue();
         }
         
+        //Verander de tekst van elke piechartdata. naar: (aantal statusnaam: percentage).
         pieChartData.forEach(data -> data.nameProperty().bind(
                 Bindings.concat(
                         (int) data.getPieValue(), " ", data.getName(), ": ", 
@@ -158,12 +166,12 @@ public class StatistiekenController implements Initializable {
         ));
         
         //LINECHART
-        linechart.setTitle(taal[76]);
-        linechart.setAnimated(true);
-        linechart.getXAxis().setAutoRanging(true); 
-        linechart.getYAxis().setAutoRanging(true);
+        lineChart.setTitle(taal[76]);
+        lineChart.setAnimated(true);
+        lineChart.getXAxis().setAutoRanging(true); 
+        lineChart.getYAxis().setAutoRanging(true);
         
-        
+        //Voeg de lege data toe aan de piechart en zet alvast de namen van de x en y as.
         series.setName(taal[77]);
         series.getData().add(new XYChart.Data<>(taal[78], 0)); 
         series.getData().add(new XYChart.Data(taal[79], 0));
@@ -178,9 +186,11 @@ public class StatistiekenController implements Initializable {
         series.getData().add(new XYChart.Data<>(taal[88], 0)); 
         series.getData().add(new XYChart.Data(taal[89], 0));
         
-        linechart.setCreateSymbols(true);
-        linechart.getData().add(series); 
+        //Voeg de lege data toe aan de linechart.
+        lineChart.setCreateSymbols(true);
+        lineChart.getData().add(series); 
         
+        //Krijg alle gegevens van deaangevraagde schadeclaims en voeg ze toe aan variablen.
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();        
@@ -189,8 +199,11 @@ public class StatistiekenController implements Initializable {
             while (rs.next()) {
                 //Retrieve by column name
                 if(rs.getString("date") != null){
+                    //Krijg van elke date record de maand eruit.
                     String str[] = rs.getString("date").split("-");
                     int month = Integer.parseInt(str[1]);
+                    
+                    //Zet per maand de aantallen toe in de variable.
                     jan = (month == 1 ? jan += rs.getInt("Count") : jan);
                     feb = (month == 2 ? feb += rs.getInt("Count") : feb);
                     mar = (month == 3 ? mar += rs.getInt("Count") : mar);
@@ -214,6 +227,7 @@ public class StatistiekenController implements Initializable {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         
+        //Update de waarden die in de linechart zijn toegevoegd. 
         series.getData().set(0, new XYChart.Data<>(taal[78], jan));
         series.getData().set(1, new XYChart.Data(taal[79], feb));
         series.getData().set(2, new XYChart.Data<>(taal[80], mar)); 
@@ -231,6 +245,7 @@ public class StatistiekenController implements Initializable {
     @FXML
     private void handleFilterAction(ActionEvent event) throws IOException, InterruptedException {
         //PIECHART
+        //Maak alle variablen weer leeg.
         int luggage = 0, foundAmount = 0, lostAmount = 0, destroyAmount = 0, settleAmount = 0, 
                 neverFoundAmount = 0, depotAmount = 0;
         int jan = 0, feb = 0, mar = 0, apr = 0, mei = 0, jun = 0, jul = 0, aug = 0,
@@ -305,8 +320,8 @@ public class StatistiekenController implements Initializable {
                 new PieChart.Data(taal[54], foundAmount), new PieChart.Data(taal[55], lostAmount),
                 new PieChart.Data(taal[56], destroyAmount), new PieChart.Data(taal[57], settleAmount),
                 new PieChart.Data(taal[58], neverFoundAmount), new PieChart.Data(taal[59], depotAmount));
-        piechart.setData(pieChartData);
-        for (PieChart.Data d : piechart.getData()) {
+        pieChart.setData(pieChartData);
+        for (PieChart.Data d : pieChart.getData()) {
             total += d.getPieValue();
         }
 
@@ -448,8 +463,8 @@ public class StatistiekenController implements Initializable {
         result.ifPresent(dates -> {
             dateFromInput = dates.getKey();
             dateToInput = dates.getValue();
-            linechart.setAnimated(false);
-            piechart.setAnimated(false);
+            lineChart.setAnimated(false);
+            pieChart.setAnimated(false);
             //PIECHART
             int luggage = 0, foundAmount = 0, lostAmount = 0, destroyAmount = 0, settleAmount = 0,
                     neverFoundAmount = 0, depotAmount = 0;
@@ -493,8 +508,8 @@ public class StatistiekenController implements Initializable {
                     new PieChart.Data(taal[54], foundAmount), new PieChart.Data(taal[55], lostAmount),
                     new PieChart.Data(taal[56], destroyAmount), new PieChart.Data(taal[57], settleAmount),
                     new PieChart.Data(taal[58], neverFoundAmount), new PieChart.Data(taal[59], depotAmount));
-            piechart.setData(pieChartData);
-            for (PieChart.Data d : piechart.getData()) {
+            pieChart.setData(pieChartData);
+            for (PieChart.Data d : pieChart.getData()) {
                 total += d.getPieValue();
             }
 
@@ -552,10 +567,10 @@ public class StatistiekenController implements Initializable {
             series.getData().add(new XYChart.Data(taal[87], okt));
             series.getData().add(new XYChart.Data<>(taal[88], nov));
             series.getData().add(new XYChart.Data(taal[89], dec));
-            linechart.applyCss();
-            linechart.layout();
-            piechart.applyCss();
-            piechart.layout();
+            lineChart.applyCss();
+            lineChart.layout();
+            pieChart.applyCss();
+            pieChart.layout();
             savePieChartAsPng();
             saveLineChartAsPng();
             try {
@@ -665,7 +680,7 @@ public class StatistiekenController implements Initializable {
     }
     
     public File savePieChartAsPng() {
-        WritableImage image = piechart.snapshot(new SnapshotParameters(), null);
+        WritableImage image = pieChart.snapshot(new SnapshotParameters(), null);
         // TODO: probably use a file chooser here
         File file = new File("PieChart.png");
 
@@ -678,7 +693,7 @@ public class StatistiekenController implements Initializable {
     }
 
     public File saveLineChartAsPng() {
-        WritableImage image = linechart.snapshot(new SnapshotParameters(), null);
+        WritableImage image = lineChart.snapshot(new SnapshotParameters(), null);
 
         // TODO: probably use a file chooser here
         File file = new File("LineChart.png");

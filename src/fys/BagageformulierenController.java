@@ -219,8 +219,10 @@ public class BagageformulierenController implements Initializable {
     @FXML
     public void handleFileSelector(ActionEvent event){
         File file = fys.fileChooser();
-        String fileRaw = file.getAbsolutePath();
-        filePath = fileRaw.replace("\\","\\\\");
+        //String fileRaw = file.getAbsolutePath();
+        filePath = "fys/luggageImages/" + file.getName();
+        System.out.println(filePath);
+        //filePath = fileRaw.replace("\\","\\\\");
         picture_button.setText(file.getName());
     }
 

@@ -49,8 +49,6 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
  * @author Paras
  */
 public class BagagedatabaseController implements Initializable {
-
-    //@FXML private final TableView<Person> table = new TableView<>();
     @FXML
     private AnchorPane database_pane, wijzig_pane;
     @FXML
@@ -59,7 +57,6 @@ public class BagagedatabaseController implements Initializable {
     private ObservableList<Bagage> data = FXCollections.observableArrayList();
     @FXML
     private ObservableList<Bagage> datafilter = FXCollections.observableArrayList();
-    //@FXML private TableView<Person> table;
     @FXML
     private TableColumn id, status, type, color, brand, date, information,
             first_name, surname, address, residence, zipcode, country, phone, mail,
@@ -105,6 +102,7 @@ public class BagagedatabaseController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //Zet alle labels, buttons, tabellen in de taal die is geinstalleerd.
         filter.setText(taal[47]);
         colorfilter.setPromptText(taal[49]);
         brandfilter.setPromptText(taal[51]);
@@ -239,7 +237,10 @@ public class BagagedatabaseController implements Initializable {
 
     @FXML
     private void handleFilterAction(ActionEvent event) throws IOException {
+        //Altijd wanneer de filter button wordt geklikt maak de array leeg.
         datafilter = FXCollections.observableArrayList();
+        
+        //Controleer voor elk veld of het gelijk is met de filter velden.
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i).getColor().toLowerCase().contains(colorfilter.getText().toLowerCase())
                     && data.get(i).getBrand().toLowerCase().contains(brandfilter.getText().toLowerCase())
@@ -258,11 +259,14 @@ public class BagagedatabaseController implements Initializable {
                         data.get(i).getTableFrom(), data.get(i).getLostAndFoundID(), data.get(i).getPersonID(), data.get(i).getRealid()));
             }
         }
+        
+        //Update de tabel met gegevens die is gevraagd.
         table.setItems(datafilter);
     }
 
     public void getLuggageData() {
         int luggage = 0;
+        //Krijg alle bagages vanuit de database.
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
@@ -281,39 +285,41 @@ public class BagagedatabaseController implements Initializable {
                     + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
                     + "AND lost.person_id = person.person_id "
                     + "ORDER BY status";
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                luggage++;
-                //Retrieve by column name
-                int id = rs.getInt("id");
-                String status = fys.getStatus(rs.getInt("status"));
-                String type = fys.getBaggageType(rs.getInt("type"));
-                String color = fys.getColor(rs.getInt("color"));
-                String brand = rs.getString("brand");
-                String date = rs.getString("date");
-                String characteristics = rs.getString("characteristics");
-                String firstname = rs.getString("first_name");
-                String surname = rs.getString("surname");
-                String address = rs.getString("address");
-                String residence = rs.getString("residence");
-                String zipcode = rs.getString("zip_code");
-                String country = rs.getString("country");
-                String phone = rs.getString("phone");
-                String mail = rs.getString("mail");
-                String labelnumber = rs.getString("label_number");
-                String flightnumber = rs.getString("flight_number");
-                String destination = rs.getString("destination");
-                String airportfound = rs.getString("airport_found");
-                String airportlost = rs.getString("airport_lost");
-                String tablefrom = rs.getString("tablefrom");
-                int lostAndFoundID = rs.getInt("lost_and_found_id");
-                int personID = rs.getInt("person_id");
-
-                data.add(new Bagage(luggage, status, type, color, brand, date, characteristics, firstname,
-                        surname, address, residence, zipcode, country, phone, mail, labelnumber, flightnumber, destination,
-                        airportfound, airportlost, tablefrom, lostAndFoundID, personID, id));
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    luggage++;
+                    //Retrieve by column name
+                    //zet voor elke veld in verschillende variables.
+                    int id = rs.getInt("id");
+                    String status = fys.getStatus(rs.getInt("status"));
+                    String type = fys.getBaggageType(rs.getInt("type"));
+                    String color = fys.getColor(rs.getInt("color"));
+                    String brand = rs.getString("brand");
+                    String date = rs.getString("date");
+                    String characteristics = rs.getString("characteristics");
+                    String firstname = rs.getString("first_name");
+                    String surname = rs.getString("surname");
+                    String address = rs.getString("address");
+                    String residence = rs.getString("residence");
+                    String zipcode = rs.getString("zip_code");
+                    String country = rs.getString("country");
+                    String phone = rs.getString("phone");
+                    String mail = rs.getString("mail");
+                    String labelnumber = rs.getString("label_number");
+                    String flightnumber = rs.getString("flight_number");
+                    String destination = rs.getString("destination");
+                    String airportfound = rs.getString("airport_found");
+                    String airportlost = rs.getString("airport_lost");
+                    String tablefrom = rs.getString("tablefrom");
+                    int lostAndFoundID = rs.getInt("lost_and_found_id");
+                    int personID = rs.getInt("person_id");
+                    
+                    //Voeg de gegegevens toe in de data array.
+                    data.add(new Bagage(luggage, status, type, color, brand, date, characteristics, firstname,
+                            surname, address, residence, zipcode, country, phone, mail, labelnumber, flightnumber, destination,
+                            airportfound, airportlost, tablefrom, lostAndFoundID, personID, id));
+                }
             }
-            rs.close();
             conn.close();
         } catch (SQLException ex) {
             // handle any errors

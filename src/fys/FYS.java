@@ -307,23 +307,23 @@ public class FYS extends Application {
         } else if (color.equals(taal[34])){
             return 2;
         } else if (color.equals(taal[35])){
-            return 2;
+            return 3;
         } else if (color.equals(taal[36])){
-            return 2;
+            return 4;
         } else if (color.equals(taal[37])){
-            return 2;
+            return 5;
         } else if (color.equals(taal[38])){
-            return 2;
+            return 6;
         } else if (color.equals(taal[39])){
-            return 2;
+            return 7;
         } else if (color.equals(taal[40])){
-            return 2;
+            return 8;
         } else if (color.equals(taal[41])){
-            return 2;
+            return 9;
         } else if (color.equals(taal[42])){
-            return 2;
+            return 10;
         } else if (color.equals(taal[43])){
-            return 2;
+            return 11;
         } else {
             return 0;
         }

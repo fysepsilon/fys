@@ -37,11 +37,16 @@ public class InstellingenController implements Initializable {
     @FXML private Button save;
     @FXML private Label error;
     @FXML private Text email_label, password_label, language_label;
+    @FXML private final taal languages = new taal();
+    @FXML private String[] taal = languages.getLanguage();
+    @FXML private final FYS fys = new FYS();
+    @FXML private final loginController login = new loginController();
+    @FXML private Statement stmt = null;
+    @FXML private Connection conn = null;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        taal languages = new taal();
-        String[] taal = languages.getLanguage();
+        //Zet alle labels, buttons en combobox op de instellingen pagina naar de taal die is ingesteld. 
         email_label.setText(taal[91] + ":");
         password_label.setText(taal[90] + ":");
         language_label.setText(taal[68] + ":");
@@ -49,10 +54,9 @@ public class InstellingenController implements Initializable {
         save.setDefaultButton(true);
         language.getItems().addAll(
                 taal[69],taal[70], taal[71], taal[72]);
-        FYS fys = new FYS();
-        loginController login = new loginController();
-        Statement stmt = null;
-        Connection conn = null;
+        
+        //Krijg de gegevens van de gebruiker die ingelogd is.
+        //Vul de textfields in met gegevens die zijn opgehaald.
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
@@ -77,30 +81,29 @@ public class InstellingenController implements Initializable {
     
     @FXML
     private void handleSaveAction(ActionEvent event) throws IOException {
-        FYS fys = new FYS();
-        taal languages = new taal();
-        String[] taal = languages.getLanguage();
-        loginController login = new loginController();
+        
+        //Als gebruikersnaam en wachtwoord leeg is laat een error zien.
         if((username.getText() == null || username.getText().trim().isEmpty()) || (password.getText() == null || password.getText().trim().isEmpty())){
             error.setText(taal[93]);
             error.setStyle("-fx-text-fill: red;");
             error.setVisible(true);
+        //Als de gebruikersnaam al bestaat laat een error zien.
         } else if(fys.checkEmailExistsOnChange(username.getText(), login.getEmail())){
             error.setText(taal[94]);
             error.setStyle("-fx-text-fill: red;");
             error.setVisible(true);
-        } else if(!fys.isValidEmailAddress(username.getText())){
+        //Als de emailadres niet geldig is volgens de regels dan wordt er een error getoond.
+        } else if(!FYS.isValidEmailAddress(username.getText())){
             error.setText("E-mailadres is niet geldig!");
             error.setStyle("-fx-text-fill: red;");
             error.setVisible(true);
+        //Anders update de gegevens in de database.    
         } else{
-            Statement stmt = null;
-            Connection conn = null;
             try {
                 conn = fys.connectToDatabase(conn);
                 stmt = conn.createStatement();
                 String sql = "UPDATE person SET mail = '" + username.getText()
-                        + "', password = '" + fys.encrypt(password.getText()) + "', language = '"
+                        + "', password = '" + FYS.encrypt(password.getText()) + "', language = '"
                         + fys.getUserLanguageString(language.getSelectionModel().getSelectedItem().toString())
                         + "' WHERE person_id = " + id + ";";
                 stmt.executeUpdate(sql);
@@ -108,6 +111,8 @@ public class InstellingenController implements Initializable {
                 login.setEmail(username.getText());
                 languages.setLanguage(fys.getUserLanguageString(language.getSelectionModel().getSelectedItem().toString()));
                 taal = languages.getLanguage();
+                
+                //Geef een melding in de taal die is geinstalleerd dat de gegevens zijn aangepast.
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText(taal[122]);
                 alert.setContentText(taal[123]);

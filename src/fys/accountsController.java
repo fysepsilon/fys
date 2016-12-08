@@ -43,7 +43,7 @@ import javafx.scene.layout.AnchorPane;
 public class accountsController implements Initializable {
 
     @FXML
-    private Button NewAccountButton, change_button;
+    private Button NewAccountButton, change_button, remove_button;
     @FXML
     private TableView<Accounts> table;
     @FXML
@@ -162,7 +162,7 @@ public class accountsController implements Initializable {
         language_column.setText(taal[68]);
         NewAccountButton.setText(taal[63]);
         change_button.setText(taal[126]);
-
+        remove_button.setText(taal[128]);
         first_name_label.setText(taal[9] + ":");
         surname_label.setText(taal[10] + ":");
         address_label.setText(taal[11] + ":");

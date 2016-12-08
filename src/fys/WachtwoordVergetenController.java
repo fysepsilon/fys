@@ -49,51 +49,52 @@ public class WachtwoordVergetenController implements Initializable {
         conn = fys.connectToDatabase(conn);
         stmt = conn.createStatement();
         
+        //Controleer of de velden gebruikersnaam of wachtwoord leeg zijn. Anders laat een error zien.
         if ((username.getText() == null || username.getText().trim().isEmpty())) {
             sendPasswordMessage.setText("Username is empty!");
             sendPasswordMessage.setStyle("-fx-text-fill: red;");
             sendPasswordMessage.setVisible(true);
             sendNewPasswordButton.setDisable(false);
         } else {
-            if(fys.isValidEmailAddress(username.getText())){
+            //Als de emailadres niet klopt volgens de regels dan wordt een error getoond.
+            if(FYS.isValidEmailAddress(username.getText())){
+                //Haal de mail die is ingevuld.
                 try {
-                    //connectToDatabase(conn, stmt, "test", "root", "root");
                     String sql = "SELECT mail FROM person WHERE mail='" + username.getText() + "'";
-                    ResultSet rs = stmt.executeQuery(sql);
-                    while (rs.next()) {
-                        //Retrieve by column name
-                        email = rs.getString("mail");
-                        //Display values
-                        //System.out.print("username: " + email);
+                    try (ResultSet rs = stmt.executeQuery(sql)) {
+                        while (rs.next()) {
+                            //Retrieve by column name
+                            email = rs.getString("mail");
+                            //Display values
+                        }
                     }
-                    rs.close();
                 } catch (SQLException ex) {
                     // handle any errors
                     System.out.println("SQLException: " + ex.getMessage());
                     System.out.println("SQLState: " + ex.getSQLState());
                     System.out.println("VendorError: " + ex.getErrorCode());
                 }
-
+                
+                //Controleer of de ingevulde veld leeg is. Laat dan een error zien.
                 if ((email == null || email.trim().isEmpty())) {
                     sendPasswordMessage.setText("This username unfortunately does not exists!");
                     sendPasswordMessage.setStyle("-fx-text-fill: red;");
                     sendPasswordMessage.setVisible(true);
                     sendNewPasswordButton.setDisable(false);
                 } else{
+                    //Als de emailadres bestaat stuur dan een mail naar die gebruiker.
                     String[] mailInformation = new String[3];
                     try {
-                        //connectToDatabase(conn, stmt, "test", "root", "root");
                         String sql = "SELECT first_name, surname, password FROM person WHERE type = '1' OR type = '2' AND mail='" + username.getText() + "'";
-                        ResultSet rs = stmt.executeQuery(sql);
-                        while (rs.next()) {
-                            //Retrieve by column name
-                            mailInformation[0] = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
-                            mailInformation[1] = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
-                            mailInformation[2] = fys.decrypt(rs.getString("password"));
-                            //Display values
-                            //System.out.print("username: " + email);
+                        try (ResultSet rs = stmt.executeQuery(sql)) {
+                            while (rs.next()) {
+                                //Retrieve by column name
+                                mailInformation[0] = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
+                                mailInformation[1] = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
+                                mailInformation[2] = fys.decrypt(rs.getString("password"));
+                                //Display values
+                            }
                         }
-                        rs.close();
                         conn.close();
                     } catch (SQLException ex) {
                         // handle any errors
@@ -101,6 +102,8 @@ public class WachtwoordVergetenController implements Initializable {
                         System.out.println("SQLState: " + ex.getSQLState());
                         System.out.println("VendorError: " + ex.getErrorCode());
                     }
+                    
+                    //verstuur de mail in het engels.
                     fys.sendEmail(username.getText(), "Corendon - Password", "Valued "
                             + mailInformation[0] + " " + mailInformation[1] + ", "
                             + "<br><br>You have indicated that you want to retrieve the password of your account."

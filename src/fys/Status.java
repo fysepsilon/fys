@@ -14,8 +14,8 @@ import javafx.fxml.FXML;
  * @author Paras
  */
 public class Status {
-    @FXML private SimpleStringProperty statusName;
-    @FXML private SimpleIntegerProperty amount;
+    @FXML private final SimpleStringProperty statusName;
+    @FXML private final SimpleIntegerProperty amount;
     
     public Status(String status, int amount){
         this.statusName = new SimpleStringProperty(status);
@@ -30,7 +30,7 @@ public class Status {
     }
 
     /**
-     * @param statusName the statusName to set
+     * @param statusNames the statusName to set
      */
     public void setStatusName(String statusNames) {
         statusName.set(statusNames);
@@ -44,7 +44,7 @@ public class Status {
     }
 
     /**
-     * @param amount the amount to set
+     * @param amounts the amount to set
      */
     public void setAmount(Integer amounts) {
         amount.set(amounts);

@@ -15,8 +15,8 @@
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
         <Pane layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0" style=" -fx-border-width:0 2 0 2; -fx-border-color:lightgrey; -fx-background-color: white;">
          <children>
-              <PieChart id="piechart" fx:id="piechart" layoutX="376.0" layoutY="41.0" prefHeight="400.0" prefWidth="424.0" />
-              <LineChart id="linechart" fx:id="linechart" layoutY="41.0" prefHeight="430.0" prefWidth="388.0">
+              <PieChart id="pieChart" fx:id="pieChart" layoutX="376.0" layoutY="41.0" prefHeight="400.0" prefWidth="424.0" />
+              <LineChart id="lineChart" fx:id="lineChart" layoutY="41.0" prefHeight="430.0" prefWidth="388.0">
                   <xAxis>
                       <CategoryAxis side="BOTTOM" />
                   </xAxis>
@@ -44,7 +44,7 @@
                     <String fx:value="" />
                 </value>
             </ComboBox>
-            <Button fx:id="exportToPDF" layoutX="617.0" layoutY="14.0" mnemonicParsing="false" text="Exporteren naar PDF" />
+            <Button fx:id="exportToPDF" layoutX="617.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleExportToPDFAction" text="Exporteren naar PDF" />
             <Button fx:id="filter" layoutX="432.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" onAction="#handleFilterAction" prefWidth="155.0" text="Filteren" />
          </children></Pane>
     </children>

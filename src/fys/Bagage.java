@@ -15,332 +15,433 @@ import javafx.fxml.FXML;
  */
 public class Bagage {
 
-    @FXML private final SimpleIntegerProperty id, realid, lostAndFoundID, personID;
-    @FXML private final SimpleStringProperty status, type, color, brand, date, information, 
-                first_name, surname, address, residence, zipcode, country, phone, mail, labelnumber, 
-                flightnumber, destination, airportFound, airportLost, tableFrom;
-    @FXML private SimpleStringProperty time;
-        
-    public Bagage(Integer idname, String statusname, String typename, String colorname, 
-                String brandname, String datename, String informationname, String firstnamename,
-                String surnamename, String addressname, String residencename, String zipcodename, 
-                String countryname, String phonename, String mailname, String labelnumbername, 
-                String flightnumbername, String destinationname, String airportFoundname, String airportLostname,
-                String tablefromname, Integer lostandfoundidname, Integer personidname, Integer realidname) {
-            this.id = new SimpleIntegerProperty(idname);
-            this.status = new SimpleStringProperty(statusname);
-            this.type = new SimpleStringProperty(typename);
-            this.color = new SimpleStringProperty(colorname);
-            this.brand = new SimpleStringProperty(brandname);
-            this.date = new SimpleStringProperty(datename);
-            this.information = new SimpleStringProperty(informationname);
-            this.first_name = new SimpleStringProperty(firstnamename);
-            this.surname = new SimpleStringProperty(surnamename);
-            this.address = new SimpleStringProperty(addressname);
-            this.residence = new SimpleStringProperty(residencename);
-            this.zipcode = new SimpleStringProperty(zipcodename);
-            this.country = new SimpleStringProperty(countryname);
-            this.phone = new SimpleStringProperty(phonename);
-            this.mail = new SimpleStringProperty(mailname);
-            this.labelnumber = new SimpleStringProperty(labelnumbername);
-            this.flightnumber = new SimpleStringProperty(flightnumbername);
-            this.destination = new SimpleStringProperty(destinationname);
-            this.airportFound = new SimpleStringProperty(airportFoundname);
-            this.airportLost = new SimpleStringProperty(airportLostname);
-            this.tableFrom = new SimpleStringProperty(tablefromname);
-            this.lostAndFoundID = new SimpleIntegerProperty(lostandfoundidname);
-            this.personID = new SimpleIntegerProperty(personidname);
-            this.realid = new SimpleIntegerProperty(realidname);
-        }
-    
-        public Bagage(String datename, String timename, String colorname, String brandname) {
-            this.id = new SimpleIntegerProperty(0);
-            this.realid = new SimpleIntegerProperty(0);
-            this.lostAndFoundID = new SimpleIntegerProperty(0);
-            this.personID = new SimpleIntegerProperty(0);
-            this.status = new SimpleStringProperty("");
-            this.type = new SimpleStringProperty("");
-            this.information = new SimpleStringProperty("");
-            this.first_name = new SimpleStringProperty("");
-            this.surname = new SimpleStringProperty("");
-            this.address = new SimpleStringProperty("");
-            this.residence = new SimpleStringProperty("");
-            this.zipcode = new SimpleStringProperty("");
-            this.country = new SimpleStringProperty("");
-            this.phone = new SimpleStringProperty("");
-            this.mail = new SimpleStringProperty("");
-            this.labelnumber = new SimpleStringProperty("");
-            this.flightnumber = new SimpleStringProperty("");
-            this.destination = new SimpleStringProperty("");
-            this.airportFound = new SimpleStringProperty("");
-            this.airportLost = new SimpleStringProperty("");
-            this.tableFrom = new SimpleStringProperty("");
+    @FXML
+    private final SimpleIntegerProperty id, realId, lostAndFoundID, personID;
+    @FXML
+    private final SimpleStringProperty status, type, color, brand, date, information,
+            firstName, surName, address, residence, zipcode, country, phone, mail,
+            labelNumber, flightNumber, destination, airportFound, airportLost, tableFrom;
+    @FXML
+    private SimpleStringProperty time;
 
-            this.date = new SimpleStringProperty(datename);
-            this.time = new SimpleStringProperty(timename);
-            this.color = new SimpleStringProperty(colorname);
-            this.brand = new SimpleStringProperty(brandname);
-        }
+    /**
+     *
+     * @param idValue set value to id.
+     * @param statusValue set value to status.
+     * @param typeValue set value to type.
+     * @param colorValue set value to color.
+     * @param brandValue set value to brand.
+     * @param dateValue set value to date.
+     * @param informationValue set value to information.
+     * @param firstNameValue set value to first name.
+     * @param surNameValue set value to surName.
+     * @param addressValue set value to address.
+     * @param residenceValue set value to residence.
+     * @param zipcodeValue set value to zip code.
+     * @param countryValue set value to country.
+     * @param phoneValue set value to phone.
+     * @param mailValue set value to mail.
+     * @param labelNumberValue set value to label number.
+     * @param flightNumberValue set value to flight number.
+     * @param destinationValue set value to destination.
+     * @param airportFoundValue set value to airport found.
+     * @param airportLostValue set value to airport lost.
+     * @param tableFromValue set value to table from.
+     * @param lostAndFoundIdValue set value to lost and found id.
+     * @param personIdValue set value to person id.
+     * @param realIdValue set value to real id.
+     */
+    public Bagage(Integer idValue, String statusValue, String typeValue, String colorValue,
+            String brandValue, String dateValue, String informationValue, String firstNameValue,
+            String surNameValue, String addressValue, String residenceValue, String zipcodeValue,
+            String countryValue, String phoneValue, String mailValue, String labelNumberValue,
+            String flightNumberValue, String destinationValue, String airportFoundValue, String airportLostValue,
+            String tableFromValue, Integer lostAndFoundIdValue, Integer personIdValue, Integer realIdValue) {
+        this.id = new SimpleIntegerProperty(idValue);
+        this.status = new SimpleStringProperty(statusValue);
+        this.type = new SimpleStringProperty(typeValue);
+        this.color = new SimpleStringProperty(colorValue);
+        this.brand = new SimpleStringProperty(brandValue);
+        this.date = new SimpleStringProperty(dateValue);
+        this.information = new SimpleStringProperty(informationValue);
+        this.firstName = new SimpleStringProperty(firstNameValue);
+        this.surName = new SimpleStringProperty(surNameValue);
+        this.address = new SimpleStringProperty(addressValue);
+        this.residence = new SimpleStringProperty(residenceValue);
+        this.zipcode = new SimpleStringProperty(zipcodeValue);
+        this.country = new SimpleStringProperty(countryValue);
+        this.phone = new SimpleStringProperty(phoneValue);
+        this.mail = new SimpleStringProperty(mailValue);
+        this.labelNumber = new SimpleStringProperty(labelNumberValue);
+        this.flightNumber = new SimpleStringProperty(flightNumberValue);
+        this.destination = new SimpleStringProperty(destinationValue);
+        this.airportFound = new SimpleStringProperty(airportFoundValue);
+        this.airportLost = new SimpleStringProperty(airportLostValue);
+        this.tableFrom = new SimpleStringProperty(tableFromValue);
+        this.lostAndFoundID = new SimpleIntegerProperty(lostAndFoundIdValue);
+        this.personID = new SimpleIntegerProperty(personIdValue);
+        this.realId = new SimpleIntegerProperty(realIdValue);
+    }
 
-        public Integer getId() {
-            return id.get();
-        }
+    /**
+     *
+     * @param dateValue set value to date.
+     * @param timeValue set value to time.
+     * @param colorValue set value to color.
+     * @param brandValue set value to brand. Make other variables empty.
+     */
+    public Bagage(String dateValue, String timeValue, String colorValue, String brandValue) {
+        this.id = new SimpleIntegerProperty(0);
+        this.realId = new SimpleIntegerProperty(0);
+        this.lostAndFoundID = new SimpleIntegerProperty(0);
+        this.personID = new SimpleIntegerProperty(0);
+        this.status = new SimpleStringProperty("");
+        this.type = new SimpleStringProperty("");
+        this.information = new SimpleStringProperty("");
+        this.firstName = new SimpleStringProperty("");
+        this.surName = new SimpleStringProperty("");
+        this.address = new SimpleStringProperty("");
+        this.residence = new SimpleStringProperty("");
+        this.zipcode = new SimpleStringProperty("");
+        this.country = new SimpleStringProperty("");
+        this.phone = new SimpleStringProperty("");
+        this.mail = new SimpleStringProperty("");
+        this.labelNumber = new SimpleStringProperty("");
+        this.flightNumber = new SimpleStringProperty("");
+        this.destination = new SimpleStringProperty("");
+        this.airportFound = new SimpleStringProperty("");
+        this.airportLost = new SimpleStringProperty("");
+        this.tableFrom = new SimpleStringProperty("");
 
-        public void setId(Integer idname) {
-            id.set(idname);
-        }
+        this.date = new SimpleStringProperty(dateValue);
+        this.time = new SimpleStringProperty(timeValue);
+        this.color = new SimpleStringProperty(colorValue);
+        this.brand = new SimpleStringProperty(brandValue);
+    }
 
-        public String getStatus() {
-            return status.get();
-        }
+    /**
+     *
+     * @return the value of id.
+     */
+    public Integer getId() {
+        return id.get();
+    }
 
-        public void setStatus(String statusname) {
-            status.set(statusname);
-        }
+    /**
+     *
+     * @param idValue set value to id.
+     */
+    public void setId(Integer idValue) {
+        id.set(idValue);
+    }
 
-        public String getType() {
-            return type.get();
-        }
+    /**
+     *
+     * @return the value of status.
+     */
+    public String getStatus() {
+        return status.get();
+    }
 
-        public void setStudentid(String typename) {
-            type.set(typename);
-        }
+    /**
+     *
+     * @param statusValue set value to status.
+     */
+    public void setStatus(String statusValue) {
+        status.set(statusValue);
+    }
 
-        public String getColor() {
-            return color.get();
-        }
+    /**
+     *
+     * @return the value of type.
+     */
+    public String getType() {
+        return type.get();
+    }
 
-        public void setCijfer(String colorname) {
-            color.set(colorname);
-        }
+    /**
+     *
+     * @param typeValue set value to studentid.
+     */
+    public void setStudentid(String typeValue) {
+        type.set(typeValue);
+    }
 
-        public String getBrand() {
-            return brand.get();
-        }
+    /**
+     *
+     * @return value of color.
+     */
+    public String getColor() {
+        return color.get();
+    }
 
-        public void setBrand(String brandname) {
-            brand.set(brandname);
-        }
-        
-        public String getDate() {
-            return date.get();
-        }
+    /**
+     *
+     * @param colorValue set value to color.
+     */
+    public void setCijfer(String colorValue) {
+        color.set(colorValue);
+    }
 
-        public void setDate(String datename) {
-            date.set(datename);
-        }
-        
-        public String getTime() {
+    /**
+     *
+     * @return value of brand.
+     */
+    public String getBrand() {
+        return brand.get();
+    }
+
+    /**
+     *
+     * @param brandValue set value of brand.
+     */
+    public void setBrand(String brandValue) {
+        brand.set(brandValue);
+    }
+
+    /**
+     *
+     * @return value of date.
+     */
+    public String getDate() {
+        return date.get();
+    }
+
+    /**
+     *
+     * @param dateValue set value to date.
+     */
+    public void setDate(String dateValue) {
+        date.set(dateValue);
+    }
+
+    /**
+     *
+     * @return value of time.
+     */
+    public String getTime() {
         return time.get();
-        }
+    }
 
-        public void setTime(String timename) {
-            time.set(timename);
-        }
-        
-        public String getInformation() {
-            return information.get();
-        }
+    /**
+     *
+     * @param timeValue set value to time
+     */
+    public void setTime(String timeValue) {
+        time.set(timeValue);
+    }
 
-        public void setInformation(String informationname) {
-            information.set(informationname);
-        }
+    /**
+     *
+     * @return the value of information.
+     */
+    public String getInformation() {
+        return information.get();
+    }
 
-        /**
-         * @return the first_name
-         */
-        public String getFirst_name() {
-            return first_name.get();
-        }
+    /**
+     *
+     * @param informationValue set value to information.
+     */
+    public void setInformation(String informationValue) {
+        information.set(informationValue);
+    }
 
-        /**
-         * @param first_name the first_name to set
-         */
-        public void setFirst_name(String first_namename) {
-            first_name.set(first_namename);
-        }
+    /**
+     * @return the firstName
+     */
+    public String getFirstName() {
+        return firstName.get();
+    }
 
-        /**
-         * @return the surname
-         */
-        public String getSurname() {
-            return surname.get();
-        }
+    /**
+     * @param firstNameValue the firstName to set
+     */
+    public void setFirstName(String firstNameValue) {
+        firstName.set(firstNameValue);
+    }
 
-        /**
-         * @param surname the surname to set
-         */
-        public void setSurname(String surnamename) {
-            surname.set(surnamename);
-        }
+    /**
+     * @return the surName
+     */
+    public String getSurName() {
+        return surName.get();
+    }
 
-        /**
-         * @return the address
-         */
-        public String getAddress() {
-            return address.get();
-        }
+    /**
+     * @param surNameValue the surName to set
+     */
+    public void setSurName(String surNameValue) {
+        surName.set(surNameValue);
+    }
 
-        /**
-         * @param address the address to set
-         */
-        public void setAddress(String addressname) {
-            address.set(addressname);
-        }
+    /**
+     * @return the address
+     */
+    public String getAddress() {
+        return address.get();
+    }
 
-        /**
-         * @return the residence
-         */
-        public String getResidence() {
-            return residence.get();
-        }
+    /**
+     * @param addressValue the address to set
+     */
+    public void setAddress(String addressValue) {
+        address.set(addressValue);
+    }
 
-        /**
-         * @param residence the residence to set
-         */
-        public void setResidence(String residencename) {
-            residence.set(residencename);
-        }
+    /**
+     * @return the residence
+     */
+    public String getResidence() {
+        return residence.get();
+    }
 
-        /**
-         * @return the zipcode
-         */
-        public String getZipcode() {
-            return zipcode.get();
-        }
+    /**
+     * @param residenceValue the residence to set
+     */
+    public void setResidence(String residenceValue) {
+        residence.set(residenceValue);
+    }
 
-        /**
-         * @param zipcode the zipcode to set
-         */
-        public void setZipcode(String zipcodename) {
-            zipcode.set(zipcodename);
-        }
+    /**
+     * @return the zipcode
+     */
+    public String getZipcode() {
+        return zipcode.get();
+    }
 
-        /**
-         * @return the country
-         */
-        public String getCountry() {
-            return country.get();
-        }
+    /**
+     * @param zipcodeValue the zipcode to set
+     */
+    public void setZipcode(String zipcodeValue) {
+        zipcode.set(zipcodeValue);
+    }
 
-        /**
-         * @param country the country to set
-         */
-        public void setCountry(String countryname) {
-            country.set(countryname);
-        }
+    /**
+     * @return the country
+     */
+    public String getCountry() {
+        return country.get();
+    }
 
-        /**
-         * @return the phone
-         */
-        public String getPhone() {
-            return phone.get();
-        }
+    /**
+     * @param countryValue the country to set
+     */
+    public void setCountry(String countryValue) {
+        country.set(countryValue);
+    }
 
-        /**
-         * @param phone the phone to set
-         */
-        public void setPhone(String phonename) {
-            phone.set(phonename);
-        }
+    /**
+     * @return the phone
+     */
+    public String getPhone() {
+        return phone.get();
+    }
 
-        /**
-         * @return the mail
-         */
-        public String getMail() {
-            return mail.get();
-        }
+    /**
+     * @param phoneValue the phone to set
+     */
+    public void setPhone(String phoneValue) {
+        phone.set(phoneValue);
+    }
 
-        /**
-         * @param mail the mail to set
-         */
-        public void setMail(String mailname) {
-            mail.set(mailname);
-        }
+    /**
+     * @return the mail
+     */
+    public String getMail() {
+        return mail.get();
+    }
 
-        /**
-         * @return the labelnumber
-         */
-        public String getLabelnumber() {
-            return labelnumber.get();
-        }
+    /** 
+     * @param mailValue the mail to set
+     */
+    public void setMail(String mailValue) {
+        mail.set(mailValue);
+    }
 
-        /**
-         * @param labelnumber the labelnumber to set
-         */
-        public void setLabelnumber(String labelnumbername) {
-            labelnumber.set(labelnumbername);
-        }
+    /**
+     * @return the labelnumber
+     */
+    public String getLabelNumber() {
+        return labelNumber.get();
+    }
 
-        /**
-         * @return the flightnumber
-         */
-        public String getFlightnumber() {
-            return flightnumber.get();
-        }
+    /**
+     * @param labelNumberValue the labelnumber to set
+     */
+    public void setLabelNumber(String labelNumberValue) {
+        labelNumber.set(labelNumberValue);
+    }
 
-        /**
-         * @param flightnumber the flightnumber to set
-         */
-        public void setFlightnumber(String flightnumbername) {
-            flightnumber.set(flightnumbername);
-        }
+    /**
+     * @return the flightnumber
+     */
+    public String getFlightNumber() {
+        return flightNumber.get();
+    }
 
-        /**
-         * @return the destination
-         */
-        public String getDestination() {
-            return destination.get();
-        }
+    /**
+     * @param flightNumberValue the flightnumber to set
+     */
+    public void setFlightNumber(String flightNumberValue) {
+        flightNumber.set(flightNumberValue);
+    }
 
-        /**
-         * @param destination the destination to set
-         */
-        public void setDestination(String destinationname) {
-            destination.set(destinationname);
-        }
+    /**
+     * @return the destination
+     */
+    public String getDestination() {
+        return destination.get();
+    }
 
-        /**
-         * @return the realid
-         */
-        public Integer getRealid() {
-            return realid.get();
-        }
+    /**
+     * @param destinationValue the destination to set
+     */
+    public void setDestination(String destinationValue) {
+        destination.set(destinationValue);
+    }
 
-        /**
-         * @param realid the realid to set
-         */
-        public void setRealid(Integer realidname) {
-            realid.set(realidname);
-        }      
+    /**
+     * @return the realid
+     */
+    public Integer getRealid() {
+        return realId.get();
+    }
 
-        /**
-         * @return the lostAndFoundID
-         */
-        public Integer getLostAndFoundID() {
-            return lostAndFoundID.get();
-        }
+    /**
+     * @param realIdValue the realid to set
+     */
+    public void setRealid(Integer realIdValue) {
+        realId.set(realIdValue);
+    }
 
-        /**
-         * @param lostAndFoundID the lostAndFoundID to set
-         */
-        public void setLostAndFoundID(Integer lostandfoundidname) {
-            lostAndFoundID.set(lostandfoundidname);
-        }
+    /**
+     * @return the lostAndFoundID
+     */
+    public Integer getLostAndFoundID() {
+        return lostAndFoundID.get();
+    }
 
-        /**
-         * @return the personID
-         */
-        public Integer getPersonID() {
-            return personID.get();
-        }
+    /**
+     * @param lostAndFoundIdValue the lostAndFoundID to set
+     */
+    public void setLostAndFoundID(Integer lostAndFoundIdValue) {
+        lostAndFoundID.set(lostAndFoundIdValue);
+    }
 
-        /**
-         * @param personID the personID to set
-         */
-        public void setPersonID(Integer personidname) {
-            personID.set(personidname);
-        }
+    /**
+     * @return the personID
+     */
+    public Integer getPersonID() {
+        return personID.get();
+    }
+
+    /**
+     * @param personIdValue the personID to set
+     */
+    public void setPersonID(Integer personIdValue) {
+        personID.set(personIdValue);
+    }
 
     /**
      * @return the airportFound
@@ -350,10 +451,10 @@ public class Bagage {
     }
 
     /**
-     * @param airportFound the airportFound to set
+     * @param airportFoundValue the airportFound to set
      */
-    public void setAirportFound(String airportFoundname) {
-        airportFound.set(airportFoundname);
+    public void setAirportFound(String airportFoundValue) {
+        airportFound.set(airportFoundValue);
     }
 
     /**
@@ -364,10 +465,10 @@ public class Bagage {
     }
 
     /**
-     * @param airportLost the airportLost to set
+     * @param airportLostValuet the airportLost to set
      */
-    public void setAirportLost(String airportLostname) {
-        airportLost.set(airportLostname);
+    public void setAirportLost(String airportLostValue) {
+        airportLost.set(airportLostValue);
     }
 
     /**
@@ -378,9 +479,9 @@ public class Bagage {
     }
 
     /**
-     * @param tableFrom the tableFrom to set
+     * @param tableFromValue the tableFrom to set
      */
-    public void setTableFrom(String tablefromname) {
-        tableFrom.set(tablefromname);
+    public void setTableFrom(String tableFromValue) {
+        tableFrom.set(tableFromValue);
     }
 }

@@ -85,12 +85,16 @@ public class NavigatiebalkController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //genereer de welkom naam.
         loginController loginController = new loginController();
         String name = loginController.getUsersName().replaceAll("null", "");
         name = name.replaceAll("  ", " ");
         taal language = new taal();
         String[] taal = language.getLanguage();
+        //Controleer of een admin of systeembeheerder is ingelogd.
+        //Laat box zien als het admin is.
         if(loginController.getUsertype() == 2){
+            //Zet alle woorden in de taal die is geinstalleerd.
             missingAdmin.setText(taal[0]);
             foundAdmin.setText(taal[1]);
             luggageAdmin.setText(taal[2]);
@@ -100,6 +104,7 @@ public class NavigatiebalkController implements Initializable {
             HBoxSM.setVisible(false);
             welcomeText.setText( taal[6] + " - " + taal[5] + "! " + name);
         } else{
+            //Zet alle woorden in de taal die is geinstalleerd.
             welcomeText.setText( taal[7] + " - " + taal[5] + "! " + name);
             missing.setText(taal[0]);
             found.setText(taal[1]);

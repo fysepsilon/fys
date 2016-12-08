@@ -190,7 +190,7 @@ public class StatistiekenController implements Initializable {
         lineChart.setCreateSymbols(true);
         lineChart.getData().add(series); 
         
-        //Krijg alle gegevens van deaangevraagde schadeclaims en voeg ze toe aan variablen.
+        //Krijg alle gegevens van de aangevraagde schadeclaims en voeg ze toe aan variablen.
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();        

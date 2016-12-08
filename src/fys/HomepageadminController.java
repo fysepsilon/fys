@@ -50,14 +50,11 @@ public class HomepageadminController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //Krijg de datum van vandaag terug en split het in jaar en maand.
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date = new Date();
         String dateTimeString = dateFormat.format(date);
-        String[] tokens = dateTimeString.split(" ");
-        if (tokens.length != 2) {
-            throw new IllegalArgumentException();
-        }
-        tokens = dateTimeString.split("-");
+        String[] tokens = dateTimeString.split("-");
         String year = tokens[0];
         String months = tokens[1];
        
@@ -67,6 +64,7 @@ public class HomepageadminController implements Initializable {
         linechart.getXAxis().setAutoRanging(true); 
         linechart.getYAxis().setAutoRanging(true); 
         
+        //Voeg de lege data toe aan de piechart en zet alvast de namen van de x en y as.
         XYChart.Series series = new XYChart.Series<>(); 
         series.setName(taal[77]);
         series.getData().add(new XYChart.Data<>(taal[78], 0)); 
@@ -82,9 +80,11 @@ public class HomepageadminController implements Initializable {
         series.getData().add(new XYChart.Data<>(taal[88], 0)); 
         series.getData().add(new XYChart.Data(taal[89], 0));
         
+        //Voeg de lege data toe aan de linechart.
         linechart.setCreateSymbols(true);
         linechart.getData().add(series); 
         
+        //Krijg alle gegevens van deze maand van de aangevraagde schadeclaims en voeg ze toe aan variablen.
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();        
@@ -95,8 +95,11 @@ public class HomepageadminController implements Initializable {
             while (rs.next()) {
                 if(rs.getString("date") != null){
                     //Retrieve by column name
+                    //Krijg van elke date record de maand eruit.
                     String str[] = rs.getString("date").split("-");
                     int month = Integer.parseInt(str[1]);
+
+                    //Zet per maand de aantallen toe in de variable.
                     jan = (month == 1 ? jan += rs.getInt("Count") : jan);
                     feb = (month == 2 ? feb += rs.getInt("Count") : feb);
                     mar = (month == 3 ? mar += rs.getInt("Count") : mar);
@@ -120,6 +123,7 @@ public class HomepageadminController implements Initializable {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         
+        //Update de waarden die in de linechart zijn toegevoegd. 
         series.getData().set(0, new XYChart.Data<>(taal[78], jan));
         series.getData().set(1, new XYChart.Data(taal[79], feb));
         series.getData().set(2, new XYChart.Data<>(taal[80], mar)); 
@@ -133,6 +137,7 @@ public class HomepageadminController implements Initializable {
         series.getData().set(10, new XYChart.Data<>(taal[88], nov)); 
         series.getData().set(11, new XYChart.Data(taal[89], dec));
         
+        //Voeg de aantal 0 toe in de tabel en de namen van de statussen.
         tableTitle.setText(taal[48] + " " + fys.getMonthName(months ) +" " + year);
         status.setText(taal[48]);
         amount.setText(taal[132]);
@@ -144,7 +149,13 @@ public class HomepageadminController implements Initializable {
         table.setItems(data);
     }
     
+    /**
+     * 
+     * @param year set the value of year.
+     * @param months set the value of month.
+     */
     public void getStatusData(String year, String months) {
+        //Krijg de aantallen van deze maand en voeg ze toe in de tabel.
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
@@ -162,6 +173,7 @@ public class HomepageadminController implements Initializable {
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
+                    //Voeg de aantallen toe aan de variables.
                     foundAmount = (rs.getInt("status") == 0 ? rs.getInt("Count") : foundAmount);
                     lostAmount = (rs.getInt("status") == 1 ? rs.getInt("Count") : lostAmount);
                     destroyAmount = (rs.getInt("status") == 2 ? rs.getInt("Count") : destroyAmount);
@@ -170,6 +182,8 @@ public class HomepageadminController implements Initializable {
                     depotAmount = (rs.getInt("status") == 5 ? rs.getInt("Count") : depotAmount);
                 }
             }
+            
+            //Update de tabel met de aantallen.
             data.get(0).setAmount(foundAmount);
             data.get(1).setAmount(lostAmount);
             data.get(2).setAmount(destroyAmount);

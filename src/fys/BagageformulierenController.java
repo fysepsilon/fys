@@ -31,22 +31,31 @@ import javafx.scene.control.TextField;
  * @author Team Epsilon
  */
 public class BagageformulierenController implements Initializable {
+
     //Alle inputvelden initialiseren
-    @FXML private ComboBox airport_combo, type_combo, color_combo;
-    @FXML private TextField name_input, surname_input, address_input,
-            residence_input, zipcode_input, country_input, phone_input,
-            mail_input, labelnumber_input, flightnumber_input, destination_input,
-            brand_input, characteristics_input;
-    @FXML private Button picture_button, send_button;
-    @FXML private Label surname_label, name_label, airport_label, label_label,
+    @FXML
+    private ComboBox airport_combo, type_combo, color_combo, destination_combo;
+    @FXML
+    private TextField name_input, surname_input, address_input, residence_input,
+            zipcode_input, country_input, phone_input, mail_input, labelnumber_input,
+            flightnumber_input, brand_input, characteristics_input;
+    @FXML
+    private Button picture_button, send_button;
+    @FXML
+    private Label surname_label, name_label, airport_label, label_label,
             flight_label, destination_label, type_label, brand_label, color_label,
             characteristics_label, picture_label, address_label, residence_label,
             zipcode_label, country_label, phone_label, mail_label, loginerror;
-    @FXML private FYS fys = new FYS();
-    @FXML private taal language = new taal();
-    @FXML private String[] taal = language.getLanguage();
-    @FXML private Statement stmt = null;
-    @FXML private Connection conn = null;
+    @FXML
+    private FYS fys = new FYS();
+    @FXML
+    private taal language = new taal();
+    @FXML
+    private String[] taal = language.getLanguage();
+    @FXML
+    private Statement stmt = null;
+    @FXML
+    private Connection conn = null;
     public String filePath = null;
 
     //Methode om ingevulde data van virmiste bagage naar de database te sturen
@@ -61,12 +70,11 @@ public class BagageformulierenController implements Initializable {
         //Controleren of alles wat ingevuld moet worden is ingevuld
         if ((name_input.getText() == null || name_input.getText().trim().isEmpty())
                 || (surname_input.getText() == null || surname_input.getText().trim().isEmpty())
-                || (airport_combo.getValue() == null)
-                || (address_input.getText() == null || address_input.getText().trim().isEmpty())
-                || (residence_input.getText() == null || residence_input.getText().trim().isEmpty())
-                || (zipcode_input.getText() == null || zipcode_input.getText().trim().isEmpty())
-                || (mail_input.getText() == null || mail_input.getText().trim().isEmpty())
-                || (type_combo.getValue() == null)
+                || (airport_combo.getValue() == null) || (address_input.getText() == null
+                || address_input.getText().trim().isEmpty()) || (residence_input.getText() == null
+                || residence_input.getText().trim().isEmpty()) || (zipcode_input.getText() == null
+                || zipcode_input.getText().trim().isEmpty()) || (mail_input.getText() == null
+                || mail_input.getText().trim().isEmpty()) || (type_combo.getValue() == null)
                 || (brand_input.getText() == null || brand_input.getText().trim().isEmpty())
                 || (color_combo.getValue() == null)) {
             //Indien niet alles correct is ingevuld foutmelding geven
@@ -103,42 +111,45 @@ public class BagageformulierenController implements Initializable {
                     surname_input.getText(), address_input.getText(), residence_input.getText(),
                     zipcode_input.getText(), country_input.getText(), phone_input.getText(),
                     mail_input.getText(), labelnumber_input.getText(), filePath,
-                    flightnumber_input.getText(), destination_input.getText(),
-                    fys.getBaggageTypeString(type_combo.getValue().toString()), brand_input.getText(), fys.getColorString(color_combo.getValue().toString()),
+                    flightnumber_input.getText(), destination_combo.getValue().toString(),
+                    fys.getBaggageTypeString(type_combo.getValue().toString()),
+                    brand_input.getText(), fys.getColorString(color_combo.getValue().toString()),
                     characteristics_input.getText(), dateString, timeString, password);
 
-
-                try {
-                    //Mail sturen naar klant met zijn/haar inloggegevens
-                    String sql = "SELECT type, language, first_name, surname, password FROM person WHERE mail='" + mail_input.getText() + "'";
-                    ResultSet rs = stmt.executeQuery(sql);
-                    while (rs.next()) {
-                        //Retrieve by column name
-                        mailInformation[0] = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
-                        mailInformation[1] = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
-                        mailInformation[2] = fys.decrypt(rs.getString("password"));
-                        language_user[0] = rs.getInt("language");
-                    }
-                    rs.close();
-                } catch (SQLException ex) {
-                    // handle any errors
-                    System.out.println("SQLException: " + ex.getMessage());
-                    System.out.println("SQLState: " + ex.getSQLState());
-                    System.out.println("VendorError: " + ex.getErrorCode());
+            try {
+                //Mail sturen naar klant met zijn/haar inloggegevens
+                String sql = "SELECT type, language, first_name, surname, "
+                        + "password FROM person WHERE mail='" + mail_input.getText() + "'";
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    //Retrieve by column name
+                    mailInformation[0] = rs.getString("first_name").substring(0, 1).toUpperCase()
+                            + rs.getString("first_name").substring(1);
+                    mailInformation[1] = rs.getString("surname").substring(0, 1).toUpperCase()
+                            + rs.getString("surname").substring(1);
+                    mailInformation[2] = fys.decrypt(rs.getString("password"));
+                    language_user[0] = rs.getInt("language");
                 }
+                rs.close();
+            } catch (SQLException ex) {
+                // handle any errors
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
 
-                if (language_user[0] == 0) { // Mail voor klant (type = 0)
-                    fys.sendEmail(mail_input.getText(), "Corendon - Logindata", "Dear valued customer, "
-                            + "<br><br>There is an account created for you by one of our employees."
-                            + "<br>You can login to this account on our web application to view the status of your case."
-                            + "<br>You will need the following data to log in:"
-                            + "<br>Username: <i>" + mail_input.getText()
-                            + "</i><br>Password: <i>" + mailInformation[2]
-                            + "</i><br><br>You can change your password in the web application."
-                            + "<br>We hope to have informed you sufficiently."
-                            + "<br><br>Sincerely,"
-                            + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
-                }
+            if (language_user[0] == 0) { // Mail voor klant (type = 0)
+                fys.sendEmail(mail_input.getText(), "Corendon - Logindata", "Dear valued customer, "
+                        + "<br><br>There is an account created for you by one of our employees."
+                        + "<br>You can login to this account on our web application to view the status of your case."
+                        + "<br>You will need the following data to log in:"
+                        + "<br>Username: <i>" + mail_input.getText()
+                        + "</i><br>Password: <i>" + mailInformation[2]
+                        + "</i><br><br>You can change your password in the web application."
+                        + "<br>We hope to have informed you sufficiently."
+                        + "<br><br>Sincerely,"
+                        + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
+            }
         }
     }
 
@@ -156,11 +167,12 @@ public class BagageformulierenController implements Initializable {
             stmt = conn.createStatement();
 
             //Query om klant toe te voegen aan de database
-            String sql_person = "INSERT INTO bagagedatabase.person (type, language, first_name, surname, address, residence, "
-                    + "zip_code, country, phone, mail, password) VALUES ('0', '0', '" + frontname + "', '" + surname + "', '" + address + "', "
-                    + "'" + residence + "', '" + zipcode + "', '" + country + "', '" + phone + "', "
+            String sql_person = "INSERT INTO bagagedatabase.person (type, language, "
+                    + "first_name, surname, address, residence, zip_code, country, "
+                    + "phone, mail, password) VALUES ('0', '0', '" + frontname + "', "
+                    + "'" + surname + "', '" + address + "', '" + residence + "', "
+                    + "'" + zipcode + "', '" + country + "', '" + phone + "', "
                     + "'" + mail + "', '" + password + "')";
-
             stmt.executeUpdate(sql_person);
 
             //Query om gegevens van de luchthaven toe te voegen aan de database
@@ -168,7 +180,6 @@ public class BagageformulierenController implements Initializable {
                     + "time, airport_lost, label_number, flight_number, destination) "
                     + "VALUES ('" + date + "', '" + time + "', '" + airport + "', "
                     + "'" + labelnumber + "', '" + flightnumber + "', '" + destination + "')";
-
             stmt.executeUpdate(sql_airport);
 
             /*Query om de ID van de klant en luchthaven op te vragen zodat deze
@@ -201,10 +212,9 @@ public class BagageformulierenController implements Initializable {
             String sql_lost = "INSERT INTO bagagedatabase.lost (type, brand, color, "
                     + "characteristics, status, picture, person_id, lost_and_found_id) VALUES ('" + type + "', "
                     + "'" + brand + "', '" + color + "', '" + characteristics + "', 1, "
-                    + "'" + filePath + "', '"+ personId + "', '" + lostAndFoundId + "')";
-
+                    + "'" + filePath + "', '" + personId + "', '" + lostAndFoundId + "')";
             stmt.executeUpdate(sql_lost);
-            
+
             id_rs.close();
             conn.close();
         } catch (SQLException ex) {
@@ -213,15 +223,14 @@ public class BagageformulierenController implements Initializable {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-
     }
-    
+
+    //Fileselector aanroepen wanneer iemand een afbeelding wil toevoegen
     @FXML
-    public void handleFileSelector(ActionEvent event){
+    public void handleFileSelector(ActionEvent event) {
         File file = fys.fileChooser();
         //String fileRaw = file.getAbsolutePath();
         filePath = "fys/luggageImages/" + file.getName();
-        System.out.println(filePath);
         //filePath = fileRaw.replace("\\","\\\\");
         picture_button.setText(file.getName());
     }

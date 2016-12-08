@@ -47,8 +47,32 @@
                           <items>
                               <FXCollections fx:factory="observableArrayList">
                                   <String fx:value="Alanya-Gazipasa" />
-                                  <String fx:value="Schiphol" />
-                                  <String fx:value="Malta Airport" />
+                                  <String fx:value="Amsterdam" />
+                                  <String fx:value="Antalya" />
+                                  <String fx:value="Banjul" />
+                                  <String fx:value="Bodrum" />
+                                  <String fx:value="Bourgas" />
+                                  <String fx:value="Corfu" />
+                                  <String fx:value="Dalaman" />
+                                  <String fx:value="Dubai" />
+                                  <String fx:value="Eindhoven" />
+                                  <String fx:value="Faro" />
+                                  <String fx:value="Fuerteventura" />
+                                  <String fx:value="Gran Canaria Palmas" />
+                                  <String fx:value="Heraklion" />
+                                  <String fx:value="Hurghada" />
+                                  <String fx:value="Izmir" />
+                                  <String fx:value="Kos" />
+                                  <String fx:value="Lanzarote" />
+                                  <String fx:value="Malaga" />
+                                  <String fx:value="Marrakech" />
+                                  <String fx:value="Mytilene" />
+                                  <String fx:value="Nicosia-Ercan" />
+                                  <String fx:value="Ohrid" />
+                                  <String fx:value="Palma Majorca" />
+                                  <String fx:value="Rhodes" />
+                                  <String fx:value="Tenrife" />
+                                  <String fx:value="Zkynthos" />
                               </FXCollections>
                           </items>
                       </ComboBox>
@@ -70,7 +94,39 @@
                       <Label fx:id="picture_label" prefHeight="30.0" prefWidth="126.0" text="Afbeelding:" GridPane.columnIndex="3" GridPane.rowIndex="7" />
                       <TextField fx:id="labelnumber_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="104.0" GridPane.columnIndex="4" />
                       <TextField fx:id="flightnumber_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                      <TextField fx:id="destination_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                      <ComboBox fx:id="destination_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" promptText="Kies hier uw luchthaven" GridPane.columnIndex="4" GridPane.rowIndex="2" >
+                          <items>
+                              <FXCollections fx:factory="observableArrayList">
+                                  <String fx:value="Alanya-Gazipasa" />
+                                  <String fx:value="Amsterdam" />
+                                  <String fx:value="Antalya" />
+                                  <String fx:value="Banjul" />
+                                  <String fx:value="Bodrum" />
+                                  <String fx:value="Bourgas" />
+                                  <String fx:value="Corfu" />
+                                  <String fx:value="Dalaman" />
+                                  <String fx:value="Dubai" />
+                                  <String fx:value="Eindhoven" />
+                                  <String fx:value="Faro" />
+                                  <String fx:value="Fuerteventura" />
+                                  <String fx:value="Gran Canaria Palmas" />
+                                  <String fx:value="Heraklion" />
+                                  <String fx:value="Hurghada" />
+                                  <String fx:value="Izmir" />
+                                  <String fx:value="Kos" />
+                                  <String fx:value="Lanzarote" />
+                                  <String fx:value="Malaga" />
+                                  <String fx:value="Marrakech" />
+                                  <String fx:value="Mytilene" />
+                                  <String fx:value="Nicosia-Ercan" />
+                                  <String fx:value="Ohrid" />
+                                  <String fx:value="Palma Majorca" />
+                                  <String fx:value="Rhodes" />
+                                  <String fx:value="Tenrife" />
+                                  <String fx:value="Zkynthos" />
+                              </FXCollections>
+                          </items>
+                      </ComboBox>
                       <ComboBox fx:id="type_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" promptText="Kies hier uw type bagage" GridPane.columnIndex="4" GridPane.rowIndex="3">
                           <items>
                               <FXCollections fx:factory="observableArrayList">

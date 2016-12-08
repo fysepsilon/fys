@@ -31,27 +31,33 @@ import javafx.scene.control.TextField;
  * @author Team Epsilon
  */
 public class GevondenformulierController implements Initializable {
+
     //Alle inputvelden initialiseren
-    @FXML private ComboBox airport_combo, color_combo, type_combo;
-    @FXML private TextField name_input, surname_input, labelnumber_input, 
-            flightnumber_input, destination_input, brand_input, 
+    @FXML
+    private ComboBox airport_combo, color_combo, type_combo, destination_combo;
+    @FXML
+    private TextField name_input, surname_input, labelnumber_input,
+            flightnumber_input, brand_input,
             characteristics_input;
     private CheckBox account_checkbox;
-    @FXML private Button picture_button;
-    @FXML private Label surname_label, name_label, airport_label, label_label, 
+    @FXML
+    private Button picture_button;
+    @FXML
+    private Label surname_label, name_label, airport_label, label_label,
             flight_label, destination_label, type_label, brand_label, color_label,
             characteristics_label, picture_label, loginerror;
-    @FXML private Button send_button;
-    @FXML private FYS fys = new FYS();
+    @FXML
+    private Button send_button;
+    @FXML
+    private FYS fys = new FYS();
     public String filePath = null;
-    
+
     //Methode om ingevulde data van gevonden bagage naar de database te sturen
     @FXML
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
-        FYS fys = new FYS();
         taal language = new taal();
         String[] taal = language.getLanguage();
-        
+
         //Controleren of alles wat ingevuld moet worden is ingevuld
         if ((airport_combo.getValue() == null) || (type_combo.getValue() == null)
                 || (brand_input.getText() == null || brand_input.getText().trim().isEmpty())
@@ -73,18 +79,17 @@ public class GevondenformulierController implements Initializable {
 
             sendToDatabase(airport_combo.getValue().toString(), name_input.getText(),
                     surname_input.getText(), labelnumber_input.getText(), filePath,
-                    flightnumber_input.getText(), destination_input.getText(), 
-                    fys.getBaggageTypeString(type_combo.getValue().toString()), brand_input.getText(), 
-                    fys.getColorString(color_combo.getValue().toString()), characteristics_input.getText(), 
-                    dateString, timeString);
+                    flightnumber_input.getText(), destination_combo.getValue().toString(),
+                    fys.getBaggageTypeString(type_combo.getValue().toString()), 
+                    brand_input.getText(), fys.getColorString(color_combo.getValue().toString()), 
+                    characteristics_input.getText(), dateString, timeString);
         }
     }
-    
+
     private void sendToDatabase(String airport, String frontname, String surname,
-            String labelnumber, String filePath, String flightnumber, String destination, int type, 
-            String brand, Integer color, String characteristics, String date, 
+            String labelnumber, String filePath, String flightnumber, String destination,
+            int type, String brand, Integer color, String characteristics, String date,
             String time) throws IOException, SQLException {
-        FYS fys = new FYS();
 
         try {
             Statement stmt = null;
@@ -94,16 +99,14 @@ public class GevondenformulierController implements Initializable {
             stmt = conn.createStatement();
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql_person = "INSERT INTO bagagedatabase.person (type, language, first_name, surname) "
-                    + "VALUES ('0', '0', '" + frontname + "', '" + surname + "')";
-
+            String sql_person = "INSERT INTO bagagedatabase.person (type, language, first_name, "
+                    + "surname) VALUES ('0', '0', '" + frontname + "', '" + surname + "')";
             stmt.executeUpdate(sql_person);
 
             String sql_airport = "INSERT INTO bagagedatabase.airport (date, "
                     + "time, airport_found, label_number, flight_number, destination) "
                     + "VALUES ('" + date + "', '" + time + "', '" + airport + "', "
                     + "'" + labelnumber + "', '" + flightnumber + "', '" + destination + "')";
-
             stmt.executeUpdate(sql_airport);
 
             String sql_personID = "SELECT person_id, lost_and_found_id FROM person, airport WHERE "
@@ -120,12 +123,10 @@ public class GevondenformulierController implements Initializable {
                 String strA = id_rs.getString("person_id");
                 personIdStr = strA.replace("\n", ",");
                 personId = Integer.parseInt(personIdStr);
-                System.out.println(personId);
 
                 String strB = id_rs.getString("lost_and_found_id");
                 lostAndFoundIdStr = strB.replace("\n", ",");
                 lostAndFoundId = Integer.parseInt(lostAndFoundIdStr);
-                System.out.println(lostAndFoundIdStr);
             }
 
             String sql_found = "INSERT INTO bagagedatabase.found (type, brand, color, "
@@ -143,17 +144,17 @@ public class GevondenformulierController implements Initializable {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
     }
-    
+
+    //Fileselector aanroepen wanneer iemand een afbeelding wil toevoegen
     @FXML
-    public void handleFileSelector(ActionEvent event){
+    public void handleFileSelector(ActionEvent event) {
         File file = fys.fileChooser();
         //String fileRaw = file.getAbsolutePath();
         filePath = "fys/luggageImages/" + file.getName();
-        System.out.println(filePath);
         //filePath = fileRaw.replace("\\","\\\\");
         picture_button.setText(file.getName());
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         taal language = new taal();
@@ -178,5 +179,5 @@ public class GevondenformulierController implements Initializable {
         type_combo.getItems().addAll(taal[29], taal[27], taal[30], taal[125], taal[28]);
         picture_button.setText(taal[44]);
         send_button.setText(taal[46]);
-    }   
+    }
 }

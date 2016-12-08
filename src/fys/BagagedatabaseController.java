@@ -351,10 +351,10 @@ public class BagagedatabaseController implements Initializable {
             String dr_color = (table.getSelectionModel().getSelectedItem().getColor());
             String dr_characteristics = (table.getSelectionModel().getSelectedItem().getInformation());
 
-            doNext(dr_id, dr_personId, dr_lafId, drFrom, dr_status, dr_airport, dr_name, dr_surname, dr_address,
-                    dr_residence, dr_zipcode, dr_country, dr_phone, dr_mail,
-                    dr_label, dr_flight, dr_destination, dr_type, dr_brand,
-                    dr_color, dr_characteristics);
+            doNext(dr_id, dr_personId, dr_lafId, drFrom, dr_status, dr_airport, 
+                    dr_name, dr_surname, dr_address, dr_residence, dr_zipcode, 
+                    dr_country, dr_phone, dr_mail, dr_label, dr_flight, dr_destination, 
+                    dr_type, dr_brand, dr_color, dr_characteristics);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(taal[104]);
@@ -364,11 +364,11 @@ public class BagagedatabaseController implements Initializable {
     }
 
     @FXML
-    public void doNext(int dr_id, int dr_personId, int dr_lafId, int drFrom, String dr_status, String dr_airport, String dr_name,
-            String dr_surname, String dr_address, String dr_residence, String dr_zipcode,
-            String dr_country, String dr_phone, String dr_mail, String dr_label,
-            String dr_flight, String dr_destination, String dr_type, String dr_brand,
-            String dr_color, String dr_characteristics) {
+    public void doNext(int dr_id, int dr_personId, int dr_lafId, int drFrom, String dr_status, 
+            String dr_airport, String dr_name, String dr_surname, String dr_address, 
+            String dr_residence, String dr_zipcode, String dr_country, String dr_phone, 
+            String dr_mail, String dr_label, String dr_flight, String dr_destination, 
+            String dr_type, String dr_brand, String dr_color, String dr_characteristics) {
         database_pane.setDisable(true);
         database_pane.setVisible(false);
         wijzig_pane.setDisable(false);
@@ -407,21 +407,23 @@ public class BagagedatabaseController implements Initializable {
             loginerror.setText(taal[93]);
             loginerror.setVisible(true);
         } else {
-            sendToDatabase(Integer.parseInt(id_label.getText()), Integer.parseInt(personId_label.getText()), Integer.parseInt(lafId_label.getText()), Integer.parseInt(tableFrom_label.getText()), fys.getStatusString(status_combo.getValue().toString()), airport_combo.getValue().toString(), name_input.getText(),
-                    surname_input.getText(), address_input.getText(), residence_input.getText(),
-                    zipcode_input.getText(), country_input.getText(), phone_input.getText(),
-                    mail_input.getText(), labelnumber_input.getText(), filePath,
-                    flightnumber_input.getText(), destination_input.getText(),
-                    fys.getBaggageTypeString(type_combo.getValue().toString()), brand_input.getText(), fys.getColorString(color_combo.getValue().toString()),
-                    characteristics_input.getText());
+            sendToDatabase(Integer.parseInt(id_label.getText()), Integer.parseInt(personId_label.getText()), 
+                    Integer.parseInt(lafId_label.getText()), Integer.parseInt(tableFrom_label.getText()), 
+                    fys.getStatusString(status_combo.getValue().toString()), airport_combo.getValue().toString(), 
+                    name_input.getText(), surname_input.getText(), address_input.getText(), 
+                    residence_input.getText(), zipcode_input.getText(), country_input.getText(), 
+                    phone_input.getText(), mail_input.getText(), labelnumber_input.getText(), 
+                    filePath, flightnumber_input.getText(), destination_input.getText(),
+                    fys.getBaggageTypeString(type_combo.getValue().toString()), brand_input.getText(), 
+                    fys.getColorString(color_combo.getValue().toString()), characteristics_input.getText());
         }
     }
 
-    private void sendToDatabase(int dr_id, int dr_personId, int dr_lafId, int tableFrom, int status, String airport, String frontname, String surname,
-            String address, String residence, String zipcode, String country,
-            String phone, String mail, String labelnumber, String filePath,
-            String flightnumber, String destination, int type, String brand,
-            Integer color, String characteristics)
+    private void sendToDatabase(int dr_id, int dr_personId, int dr_lafId, int tableFrom, 
+            int status, String airport, String frontname, String surname, String address, 
+            String residence, String zipcode, String country, String phone, String mail,
+            String labelnumber, String filePath, String flightnumber, String destination,
+            int type, String brand, Integer color, String characteristics)
             throws IOException, SQLException {
 
         try {
@@ -472,7 +474,8 @@ public class BagagedatabaseController implements Initializable {
                         break;
                     //case 6: registreer schadeclaim de status zal niet veranderen.    
                     case 6:
-                        sql_airport = "INSERT INTO insurance_claim VALUES(" + dr_id + ", '" + dateString + "', '" + timeString + "', 0);";
+                        sql_airport = "INSERT INTO insurance_claim VALUES(" + dr_id + ", '" + dateString + "', "
+                                + "'" + timeString + "', 0);";
                         break;
                     //default: Gaat van lost naar status Vermist, Vernietigd, Nooit Gevonden of Depot 
                     default:
@@ -505,7 +508,8 @@ public class BagagedatabaseController implements Initializable {
                         break;
                     //case 6: registreer schadeclaim de status zal niet veranderen.     
                     case 6:
-                        sql_airport = "INSERT INTO insurance_claim VALUES(" + dr_id + ", '" + dateString + "', '" + timeString + "', 1);";
+                        sql_airport = "INSERT INTO insurance_claim VALUES(" + dr_id + ", '" + dateString + "', "
+                                + "'" + timeString + "', 1);";
                         break;
                     //default: Gaat van found naar status Gevonden, Vernietigd, Nooit gevonden, Depot 
                     default:
@@ -521,16 +525,24 @@ public class BagagedatabaseController implements Initializable {
             }
             stmt.executeUpdate(sql_airport);
 
+            /*Indien de status wordt veranderd naar afgehandeld wordt er een DHL-
+            formulier gemaakt. DISCLAIMER: Het DHL-formulier dat gemaakt wordt is
+            gebaseerd op het officiële DHL-emailshipment formulier dat is te vinden
+            op 'http://www.dhl.com/en/express/resource_center/emailship.html'.
+            Het formulier is gekopieerd en aangepast d.m.v. Adobe Acrobat DC en is 
+            louter bedoeld voor demonstratieve doeleinden.
+            */
             if (status == 3) {
+                //Maak nieuwe PDF-document aan de hand van de template
                 File pdfdoc = new File("src/fys/templates/dhltemplate.pdf");
                 PDDocument document;
                 document = PDDocument.load(pdfdoc);
 
+                //Laad alle inputvelden op het formulier
                 PDAcroForm acroForm = document.getDocumentCatalog().getAcroForm();
-
                 List<PDField> fields = acroForm.getFields();
 
-                // set the text in the form-field <-- does work
+                //Vul alle inputvelden in met de waardes uit de database
                 for (PDField field : fields) {
                     if (field.getFullyQualifiedName().equals("companyName_field")) {
                         field.setValue("Corendon");
@@ -570,6 +582,7 @@ public class BagagedatabaseController implements Initializable {
                     }
                 }
 
+                //Sla het document op
                 document.save("src/fys/formulieren/dhlFormulier" + frontname + surname + dr_personId + ".pdf");
                 document.close();
             }
@@ -584,6 +597,7 @@ public class BagagedatabaseController implements Initializable {
         }
     }
     
+    //Fileselector aanroepen wanneer iemand een afbeelding wil toevoegen
     @FXML
     public void handleFileSelector(ActionEvent event) {
         File file = fys.fileChooser();

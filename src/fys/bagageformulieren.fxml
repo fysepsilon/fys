@@ -85,7 +85,7 @@
                           </items>
                       </ComboBox>
                       <TextField fx:id="characteristics_input" alignment="TOP_LEFT" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-                      <Button fx:id="picture_button" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="318.0" text="Klik hier om een afbeelding toe te voegen" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+                      <Button fx:id="picture_button" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleFileSelector" prefHeight="30.0" prefWidth="318.0" text="Klik hier om een afbeelding toe te voegen" GridPane.columnIndex="4" GridPane.rowIndex="7" />
                   </children>
               </GridPane>
               <Button fx:id="send_button" layoutX="16.0" layoutY="443.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleSendToDatabase" prefHeight="35.0" prefWidth="744.0" text="Verzenden" />

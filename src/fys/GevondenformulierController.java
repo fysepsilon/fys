@@ -5,6 +5,7 @@
  */
 package fys;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -23,14 +24,14 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
  *
- * @author Lucas Lageweg
+ * @author Team Epsilon
  */
 public class GevondenformulierController implements Initializable {
+    //Alle inputvelden initialiseren
     @FXML private ComboBox airport_combo, color_combo, type_combo;
     @FXML private TextField name_input, surname_input, labelnumber_input, 
             flightnumber_input, destination_input, brand_input, 
@@ -39,19 +40,26 @@ public class GevondenformulierController implements Initializable {
     @FXML private Button picture_button;
     @FXML private Label surname_label, name_label, airport_label, label_label, 
             flight_label, destination_label, type_label, brand_label, color_label,
-            characteristics_label, picture_label;
+            characteristics_label, picture_label, loginerror;
     @FXML private Button send_button;
+    @FXML private FYS fys = new FYS();
+    public String filePath = null;
     
+    //Methode om ingevulde data van gevonden bagage naar de database te sturen
     @FXML
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
         FYS fys = new FYS();
         taal language = new taal();
         String[] taal = language.getLanguage();
         
+        //Controleren of alles wat ingevuld moet worden is ingevuld
         if ((airport_combo.getValue() == null) || (type_combo.getValue() == null)
                 || (brand_input.getText() == null || brand_input.getText().trim().isEmpty())
                 || (color_combo.getValue() == null)) {
-            System.out.println(taal[93]);
+            loginerror.setVisible(false);
+            loginerror.setText(taal[93]);
+            loginerror.setStyle("-fx-text-fill: red;");
+            loginerror.setVisible(true);
         } else {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date date = new Date();
@@ -64,7 +72,7 @@ public class GevondenformulierController implements Initializable {
             String timeString = tokens[1];
 
             sendToDatabase(airport_combo.getValue().toString(), name_input.getText(),
-                    surname_input.getText(), labelnumber_input.getText(), 
+                    surname_input.getText(), labelnumber_input.getText(), filePath,
                     flightnumber_input.getText(), destination_input.getText(), 
                     fys.getBaggageTypeString(type_combo.getValue().toString()), brand_input.getText(), 
                     fys.getColorString(color_combo.getValue().toString()), characteristics_input.getText(), 
@@ -73,7 +81,7 @@ public class GevondenformulierController implements Initializable {
     }
     
     private void sendToDatabase(String airport, String frontname, String surname,
-            String labelnumber, String flightnumber, String destination, int type, 
+            String labelnumber, String filePath, String flightnumber, String destination, int type, 
             String brand, Integer color, String characteristics, String date, 
             String time) throws IOException, SQLException {
         FYS fys = new FYS();
@@ -121,9 +129,9 @@ public class GevondenformulierController implements Initializable {
             }
 
             String sql_found = "INSERT INTO bagagedatabase.found (type, brand, color, "
-                    + "characteristics, status, person_id, lost_and_found_id) VALUES ('" + type + "', "
+                    + "characteristics, status, picture, person_id, lost_and_found_id) VALUES ('" + type + "', "
                     + "'" + brand + "', '" + color + "', '" + characteristics + "', 0, "
-                    + "'" + personId + "', '" + lostAndFoundId + "')";
+                    + "'" + filePath + "', '" + personId + "', '" + lostAndFoundId + "')";
 
             stmt.executeUpdate(sql_found);
             id_rs.close();
@@ -134,6 +142,14 @@ public class GevondenformulierController implements Initializable {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
+    }
+    
+    @FXML
+    public void handleFileSelector(ActionEvent event){
+        File file = fys.fileChooser();
+        String fileRaw = file.getAbsolutePath();
+        filePath = fileRaw.replace("\\","\\\\");
+        picture_button.setText(file.getName());
     }
     
     @Override

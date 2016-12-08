@@ -55,7 +55,7 @@ public class taal {
             languagefields[4] = "STATISTICS";
             languagefields[5] = "Welcome";
             languagefields[6] = "Administrator";
-            languagefields[7] = "Service employ";
+            languagefields[7] = "Service employee";
             languagefields[8] = "Airport";
             languagefields[9] = "Name";
             languagefields[10] = "Surname";
@@ -111,7 +111,7 @@ public class taal {
             languagefields[60] = "Actions";
             languagefields[61] = "Settings";
             languagefields[62] = "Log out";
-            languagefields[63] = "Make a new account";
+            languagefields[63] = "Create a new account";
             languagefields[64] = "Service-employee";
             languagefields[65] = "Administrator";
             languagefields[66] = "Customer";
@@ -151,7 +151,7 @@ public class taal {
             languagefields[100] = "Luggage database";   
             languagefields[101] = "Login";   
             languagefields[102] = "Settings";  
-            languagefields[103] = "The account is created and the e-mail is sent!";
+            languagefields[103] = "The account is created and an e-mail has been sent!";
             languagefields[104] = "Change data";
             languagefields[105] = "First, select a row in the table to change something";
             languagefields[106] = "Latest luggage";    
@@ -276,7 +276,7 @@ public class taal {
             languagefields[90] = "Wachtwoord";
             languagefields[91] = "E-mailadres";
             languagefields[92] = "Opslaan";    
-            languagefields[93] = "Er zijn benodigde velden zijn leeg gelaten!";          
+            languagefields[93] = "Er zijn benodigde velden leeg gelaten!";          
             languagefields[94] = "E-mailadres bestaat al!"; 
             languagefields[95] = "Vermiste bagage registreren";   
             languagefields[96] = "Gevonden bagage registreren";   
@@ -286,7 +286,7 @@ public class taal {
             languagefields[100] = "Bagage database";   
             languagefields[101] = "Login";   
             languagefields[102] = "Instellingen";   
-            languagefields[103] = "Het account is gemaakt en de e-mail is verstuurd!";
+            languagefields[103] = "Het account is gemaakt en een e-mail is verstuurd!";
             languagefields[104] = "Wijzigen van gegevens";
             languagefields[105] = "Selecteer eerst een rij in de tabel om deze te wijzigen";
             languagefields[106] = "Meest recente bagage";       

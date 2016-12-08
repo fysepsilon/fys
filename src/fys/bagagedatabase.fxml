@@ -146,7 +146,7 @@
                             </items>
                         </ComboBox>
                         <TextField fx:id="characteristics_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-                        <Button fx:id="picture_button" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="318.0" text="Klik hier om een afbeelding toe te voegen" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+                        <Button fx:id="picture_button" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleFileSelector" prefHeight="30.0" prefWidth="318.0" text="Klik hier om een afbeelding toe te voegen" GridPane.columnIndex="4" GridPane.rowIndex="8" />
                         <Label fx:id="status_label" prefHeight="30.0" prefWidth="126.0" text="Status:" />
                         <ComboBox fx:id="status_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="1">
                             <items>

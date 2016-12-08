@@ -5,6 +5,7 @@
  */
 package fys;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
@@ -15,9 +16,12 @@ import java.sql.Statement;
 import java.util.Properties;
 import java.util.Random;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javax.crypto.Cipher;
@@ -33,6 +37,11 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -491,7 +500,30 @@ public class FYS extends Application {
             hexString.append(plainText);
         }
         return hexString.toString();
-    } 
+    }
+    
+    public File fileChooser(){
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+        }
+        JPanel frame = new JPanel();
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "JPG & GIF Images", "jpg", "gif");
+        fileChooser.setFileFilter(filter);
+        int result = fileChooser.showOpenDialog(frame);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            return selectedFile;
+            //picture_button.setText(selectedFile.getName());
+            //System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+        } else{
+            return null;
+        }
+    }
 
     /**
      * @param args the command line arguments

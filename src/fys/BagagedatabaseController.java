@@ -101,6 +101,7 @@ public class BagagedatabaseController implements Initializable {
     private Statement stmt = null;
     @FXML
     private Connection conn = null;
+    public String filePath = null;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -229,6 +230,7 @@ public class BagagedatabaseController implements Initializable {
 
     @FXML
     private void handleCancel(ActionEvent event) throws IOException {
+        picture_button.setText("Klik hier om een afbeelding toe te voegen");
         database_pane.setDisable(false);
         database_pane.setVisible(true);
         wijzig_pane.setDisable(true);
@@ -408,7 +410,7 @@ public class BagagedatabaseController implements Initializable {
             sendToDatabase(Integer.parseInt(id_label.getText()), Integer.parseInt(personId_label.getText()), Integer.parseInt(lafId_label.getText()), Integer.parseInt(tableFrom_label.getText()), fys.getStatusString(status_combo.getValue().toString()), airport_combo.getValue().toString(), name_input.getText(),
                     surname_input.getText(), address_input.getText(), residence_input.getText(),
                     zipcode_input.getText(), country_input.getText(), phone_input.getText(),
-                    mail_input.getText(), labelnumber_input.getText(),
+                    mail_input.getText(), labelnumber_input.getText(), filePath,
                     flightnumber_input.getText(), destination_input.getText(),
                     fys.getBaggageTypeString(type_combo.getValue().toString()), brand_input.getText(), fys.getColorString(color_combo.getValue().toString()),
                     characteristics_input.getText());
@@ -417,7 +419,7 @@ public class BagagedatabaseController implements Initializable {
 
     private void sendToDatabase(int dr_id, int dr_personId, int dr_lafId, int tableFrom, int status, String airport, String frontname, String surname,
             String address, String residence, String zipcode, String country,
-            String phone, String mail, String labelnumber,
+            String phone, String mail, String labelnumber, String filePath,
             String flightnumber, String destination, int type, String brand,
             Integer color, String characteristics)
             throws IOException, SQLException {
@@ -449,7 +451,7 @@ public class BagagedatabaseController implements Initializable {
 
             if (tableFrom == 0) {   //0 = bagagedatabase.lost
                 sql_lost = "UPDATE bagagedatabase.lost SET status='" + status + "',"
-                        + "type='" + type + "', brand='" + brand + "',"
+                        + "picture='" + filePath + "', type='" + type + "', brand='" + brand + "',"
                         + "color='" + color + "', characteristics='" + characteristics + "'"
                         + "WHERE id='" + dr_id + "'";
 
@@ -458,14 +460,14 @@ public class BagagedatabaseController implements Initializable {
                     case 0:
                         sql_airport = "UPDATE bagagedatabase.airport SET airport_found='" + airport + "',"
                                 + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
-                                + "destination='" + destination + "'"
+                                + "picture='" + filePath + "', destination='" + destination + "'"
                                 + "WHERE lost_and_found_id='" + dr_lafId + "'";
                         break;
                     //case 3: Gaat van lost naar status Afgehandeld
                     case 3:
                         sql_airport = "UPDATE bagagedatabase.airport SET airport_found='" + airport + "',"
                                 + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
-                                + "destination='" + destination + "'"
+                                + "picture='" + filePath + "', destination='" + destination + "'"
                                 + "WHERE lost_and_found_id='" + dr_lafId + "'";
                         break;
                     //case 6: registreer schadeclaim de status zal niet veranderen.    
@@ -476,13 +478,13 @@ public class BagagedatabaseController implements Initializable {
                     default:
                         sql_airport = "UPDATE bagagedatabase.airport SET airport_lost='" + airport + "',"
                                 + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
-                                + "destination='" + destination + "'"
+                                + "picture='" + filePath + "', destination='" + destination + "'"
                                 + "WHERE lost_and_found_id='" + dr_lafId + "'";
                         break;
                 }
             } else if (tableFrom == 1) {  //1 = bagagedatabase.found
                 sql_lost = "UPDATE bagagedatabase.found SET status='" + status + "',"
-                        + "type='" + type + "', brand='" + brand + "',"
+                        + "picture='" + filePath + "', type='" + type + "', brand='" + brand + "',"
                         + "color='" + color + "', characteristics='" + characteristics + "'"
                         + "WHERE id='" + dr_id + "'";
 
@@ -491,14 +493,14 @@ public class BagagedatabaseController implements Initializable {
                     case 1:
                         sql_airport = "UPDATE bagagedatabase.airport SET airport_lost='" + airport + "',"
                                 + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
-                                + "destination='" + destination + "'"
+                                + "picture='" + filePath + "', destination='" + destination + "'"
                                 + "WHERE lost_and_found_id='" + dr_lafId + "'";
                         break;
                     //case 3: Gaat van found naar status Afgehandeld
                     case 3:
                         sql_airport = "UPDATE bagagedatabase.airport SET airport_lost='" + airport + "',"
                                 + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
-                                + "destination='" + destination + "'"
+                                + "picture='" + filePath + "', destination='" + destination + "'"
                                 + "WHERE lost_and_found_id='" + dr_lafId + "'";
                         break;
                     //case 6: registreer schadeclaim de status zal niet veranderen.     
@@ -509,7 +511,7 @@ public class BagagedatabaseController implements Initializable {
                     default:
                         sql_airport = "UPDATE bagagedatabase.airport SET airport_found='" + airport + "',"
                                 + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
-                                + "destination='" + destination + "'"
+                                + "picture='" + filePath + "', destination='" + destination + "'"
                                 + "WHERE lost_and_found_id='" + dr_lafId + "'";
                         break;
                 }
@@ -571,6 +573,7 @@ public class BagagedatabaseController implements Initializable {
                 document.save("src/fys/formulieren/dhlFormulier" + frontname + surname + dr_personId + ".pdf");
                 document.close();
             }
+            picture_button.setText("Klik hier om een afbeelding toe te voegen");
             fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");
             conn.close();
         } catch (SQLException ex) {
@@ -579,5 +582,13 @@ public class BagagedatabaseController implements Initializable {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
+    }
+    
+    @FXML
+    public void handleFileSelector(ActionEvent event) {
+        File file = fys.fileChooser();
+        String fileRaw = file.getAbsolutePath();
+        filePath = fileRaw.replace("\\", "\\\\");
+        picture_button.setText(file.getName());
     }
 }

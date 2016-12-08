@@ -245,7 +245,7 @@ public class StatistiekenController implements Initializable {
     @FXML
     private void handleFilterAction(ActionEvent event) throws IOException, InterruptedException {
         //PIECHART
-        //Maak alle variablen weer leeg.
+        //Maak alle variablen en arrays weer leeg.
         int luggage = 0, foundAmount = 0, lostAmount = 0, destroyAmount = 0, settleAmount = 0, 
                 neverFoundAmount = 0, depotAmount = 0;
         int jan = 0, feb = 0, mar = 0, apr = 0, mei = 0, jun = 0, jul = 0, aug = 0,
@@ -253,49 +253,40 @@ public class StatistiekenController implements Initializable {
         total = 0;
         series.getData().clear();
         pieChartData = FXCollections.observableArrayList();
+        
+        //Krijg alle data voor die piechart waar het jaar en maand gelijk is aan het geselecteerde jaar en maand.
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-            //connectToDatabase(conn, stmt, "test", "root", "root"); 
-            String sql = "";
-            if ((year.getSelectionModel().getSelectedItem().toString() == null || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())
-                    && (month.getSelectionModel().getSelectedItem().toString() == null || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty())) {
-                sql = "SELECT x.status, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
+            String sql = "SELECT x.status, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
                         + "FROM (SELECT status, date FROM lost, airport "
                         + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
                         + "UNION ALL SELECT status, date FROM found, airport "
-                        + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
-                        + "WHERE YEAR(x.date) LIKE \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
+                        + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x ";
+            if ((year.getSelectionModel().getSelectedItem().toString() == null || 
+                    year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())
+                    && (month.getSelectionModel().getSelectedItem().toString() == null || 
+                    month.getSelectionModel().getSelectedItem().toString().trim().isEmpty())) {
+                sql += "WHERE YEAR(x.date) LIKE \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
                         + "AND MONTH(x.date) LIKE \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
                         + "GROUP BY x.status";
-            } else if ((year.getSelectionModel().getSelectedItem().toString() == null || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())) {
-                sql = "SELECT x.status, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
-                        + "FROM (SELECT status, date FROM lost, airport "
-                        + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
-                        + "UNION ALL SELECT status, date FROM found, airport "
-                        + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
-                        + "WHERE YEAR(x.date) LIKE \"%%\" "
+            } else if ((year.getSelectionModel().getSelectedItem().toString() == null || 
+                    year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())) {
+                sql += "WHERE YEAR(x.date) LIKE \"%%\" "
                         + "AND MONTH(x.date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
                         + "GROUP BY x.status";
-            } else if (month.getSelectionModel().getSelectedItem().toString() == null || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty()) {
-                sql = "SELECT x.status, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
-                        + "FROM (SELECT status, date FROM lost, airport "
-                        + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
-                        + "UNION ALL SELECT status, date FROM found, airport "
-                        + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
-                        + "WHERE YEAR(x.date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
+            } else if (month.getSelectionModel().getSelectedItem().toString() == null || 
+                    month.getSelectionModel().getSelectedItem().toString().trim().isEmpty()) {
+                sql += "WHERE YEAR(x.date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
                         + "AND MONTH(x.date) LIKE \"%%\" "
                         + "GROUP BY x.status";
             } else {
-                sql = "SELECT x.status, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
-                        + "FROM (SELECT status, date FROM lost, airport "
-                        + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
-                        + "UNION ALL SELECT status, date FROM found, airport "
-                        + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
-                        + "WHERE YEAR(x.date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
+                sql += "WHERE YEAR(x.date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
                         + "AND MONTH(x.date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
                         + "GROUP BY x.status";
             }
+            
+            //Voeg de aantallen van de statussen toe aan de variablen. 
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     luggage++;
@@ -316,15 +307,21 @@ public class StatistiekenController implements Initializable {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         
+        //Voeg de data toe aan de piechart array aan de juiste status. 
         pieChartData = FXCollections.observableArrayList(
                 new PieChart.Data(taal[54], foundAmount), new PieChart.Data(taal[55], lostAmount),
                 new PieChart.Data(taal[56], destroyAmount), new PieChart.Data(taal[57], settleAmount),
                 new PieChart.Data(taal[58], neverFoundAmount), new PieChart.Data(taal[59], depotAmount));
+        
+        //Update de gegevens van de piechart.
         pieChart.setData(pieChartData);
+        
+        //Voor elke aantal tel ze met elkaar op en sla het op bij total.
         for (PieChart.Data d : pieChart.getData()) {
             total += d.getPieValue();
         }
-
+        
+        //Verander de tekst van elke piechartdata. naar: (aantal statusnaam: percentage).
         pieChartData.forEach(data -> data.nameProperty().bind(
                 Bindings.concat(
                         (int) data.getPieValue(), " ", data.getName(), ": ",
@@ -336,38 +333,29 @@ public class StatistiekenController implements Initializable {
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-            String sql = "";
+            //Krijg alle schadeclaims voor de linechart waar het jaar en maand gelijk is aan het geselecteerde jaar en maand.
+            String sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM insurance_claim ";
             if((year.getSelectionModel().getSelectedItem().toString() == null || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty()) && 
                     (month.getSelectionModel().getSelectedItem().toString() == null || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty())){
-                sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM insurance_claim "
-                        + "WHERE YEAR(date) LIKE \"%%\" "
+                sql += "WHERE YEAR(date) LIKE \"%%\" "
                         + "AND MONTH(date) LIKE \"%%\" GROUP BY date ";
             } else if((year.getSelectionModel().getSelectedItem().toString() == null || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())){
-                sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM insurance_claim "
-                        + "WHERE YEAR(date) LIKE \"%%\" "
+                sql += "WHERE YEAR(date) LIKE \"%%\" "
                         + "AND MONTH(date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "\" GROUP BY date ";
             } else if(month.getSelectionModel().getSelectedItem().toString() == null || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty()){
-                sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM insurance_claim "
-                        + "WHERE YEAR(date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "\" "
+                sql += "WHERE YEAR(date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "\" "
                         + "AND MONTH(date) LIKE \"%%\" GROUP BY date ";
             } else{
-                sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM insurance_claim "
-                        + "WHERE YEAR(date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "\" "
+                sql += "WHERE YEAR(date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "\" "
                         + "AND MONTH(date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "\" GROUP BY date ";
             }
-            /*String sql = "SELECT x.status, x.date, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
-                    + "FROM (SELECT status, date FROM lost, airport "
-                    + "WHERE status = 4 AND lost.lost_and_found_id = airport.lost_and_found_id "
-                    + "UNION ALL "
-                    + "SELECT status, date FROM found, airport "
-                    + "WHERE status = 4 AND found.lost_and_found_id = airport.lost_and_found_id) x "
-                    + "WHERE status = 4 AND YEAR(x.date) LIKE \"%" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
-                    + "AND MONTH(x.date) LIKE \"%" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
-                    + "GROUP BY x.status, x.date";*/
+            
+            //Voeg de aantal schadeclaims per maand toe aan variablen.
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name
                 if(rs.getString("date") != null){
+                    //Krijg van elke date record de maand eruit.
                     String str[] = rs.getString("date").split("-");
                     int month = Integer.parseInt(str[1]);
                     jan = (month == 1 ? jan += rs.getInt("Count") : jan);
@@ -392,6 +380,8 @@ public class StatistiekenController implements Initializable {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
+        
+        //Update de linechart naar de waardes die gewenst is.
         series.getData().add(new XYChart.Data<>(taal[78], jan));
         series.getData().add(new XYChart.Data(taal[79], feb));
         series.getData().add(new XYChart.Data<>(taal[80], mar));
@@ -413,11 +403,11 @@ public class StatistiekenController implements Initializable {
         dialog.setTitle("Exporteren naar PDF");
         dialog.setHeaderText("Selecteer periode");
 
-// Set the button types.
+        // Set the button types.
         ButtonType loginButtonType = new ButtonType("Exporteer", ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
 
-// Create the username and password labels and fields.
+        // Create the datefrom and dateto labels and fields.
         GridPane grid = new GridPane();
         grid.setHgap(20);
         grid.setVgap(20);
@@ -432,21 +422,20 @@ public class StatistiekenController implements Initializable {
         grid.add(new Label("Datum tot:"), 0, 1);
         grid.add(dateTo, 1, 1);
 
-// Enable/Disable login button depending on whether a username was entered.
+        // Enable/Disable export button depending on whether a datefrom was entered.
         Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
         loginButton.setDisable(true);
 
-// Do some validation (using the Java 8 lambda syntax).
         dateFrom.textProperty().addListener((observable, oldValue, newValue) -> {
             loginButton.setDisable(newValue.trim().isEmpty());
         });
 
         dialog.getDialogPane().setContent(grid);
 
-// Request focus on the username field by default.
+        // Request focus on the datefrom field by default.
         Platform.runLater(() -> dateFrom.requestFocus());
 
-// Convert the result to a username-password-pair when the login button is clicked.
+        // Convert the result to a datefrom-dateto-pair when the export button is clicked.
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == loginButtonType) {
                 if ((dateFrom.getText() == null || dateFrom.getText().trim().isEmpty()) || (dateTo.getText() == null || dateTo.getText().trim().isEmpty())) {
@@ -459,13 +448,15 @@ public class StatistiekenController implements Initializable {
         });
 
         Optional<Pair<String, String>> result = dialog.showAndWait();
-
+        
+        //Doe dit alleen wanneer er waardes zijn ingevuld.
         result.ifPresent(dates -> {
             dateFromInput = dates.getKey();
             dateToInput = dates.getValue();
             lineChart.setAnimated(false);
             pieChart.setAnimated(false);
             //PIECHART
+            //Maak alle data en aantallen weer leeg.
             int luggage = 0, foundAmount = 0, lostAmount = 0, destroyAmount = 0, settleAmount = 0,
                     neverFoundAmount = 0, depotAmount = 0;
             int jan = 0, feb = 0, mar = 0, apr = 0, mei = 0, jun = 0, jul = 0, aug = 0,
@@ -473,6 +464,8 @@ public class StatistiekenController implements Initializable {
             total = 0;
             series.getData().clear();
             pieChartData = FXCollections.observableArrayList();
+            
+            //Krijg alle data voor de pietchart die tussen de periode van DateFrom en DateTo ligt.
             try {
                 conn = fys.connectToDatabase(conn);
                 stmt = conn.createStatement();
@@ -484,10 +477,11 @@ public class StatistiekenController implements Initializable {
                         + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
                         + "WHERE date BETWEEN \"" + dateFromInput + "\" AND \"" + dateToInput +"\" "
                         + "GROUP BY x.status";
+                
+                //Voeg alle aantallen per status toe aan variabelen.
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
                         luggage++;
-                        //System.out.println(rs.getString("status") + " " + rs.getInt("Count"));
                         //Retrieve by column name
                         foundAmount = (rs.getInt("status") == 0 ? rs.getInt("Count") : foundAmount);
                         lostAmount = (rs.getInt("status") == 1 ? rs.getInt("Count") : lostAmount);
@@ -503,16 +497,22 @@ public class StatistiekenController implements Initializable {
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
             }
-
+            
+            //Voeg de waardes toe aan de array.
             pieChartData = FXCollections.observableArrayList(
                     new PieChart.Data(taal[54], foundAmount), new PieChart.Data(taal[55], lostAmount),
                     new PieChart.Data(taal[56], destroyAmount), new PieChart.Data(taal[57], settleAmount),
                     new PieChart.Data(taal[58], neverFoundAmount), new PieChart.Data(taal[59], depotAmount));
+            
+            //Update de piechart met de gevraagde gegevens.
             pieChart.setData(pieChartData);
+            
+            //Voor elke aantal tel ze met elkaar op en sla het op bij total.
             for (PieChart.Data d : pieChart.getData()) {
                 total += d.getPieValue();
             }
-
+            
+            //Verander de tekst van elke piechartdata. naar: (aantal statusnaam: percentage).
             pieChartData.forEach(data -> data.nameProperty().bind(
                     Bindings.concat(
                             (int) data.getPieValue(), " ", data.getName(), ": ",
@@ -521,6 +521,7 @@ public class StatistiekenController implements Initializable {
             ));
 
             //LINECHART
+            //Krijg alle data voor de linechart die tussen de periode van DateFrom en DateTo ligt.
             try {
                 conn = fys.connectToDatabase(conn);
                 stmt = conn.createStatement();
@@ -530,7 +531,9 @@ public class StatistiekenController implements Initializable {
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {
                     //Retrieve by column name
+                    //Voeg alle aantallen per maand toe aan variabelen.
                     if (rs.getString("date") != null) {
+                        //Krijg van elke date record de maand eruit.
                         String str[] = rs.getString("date").split("-");
                         int month = Integer.parseInt(str[1]);
                         jan = (month == 1 ? jan += rs.getInt("Count") : jan);
@@ -555,6 +558,8 @@ public class StatistiekenController implements Initializable {
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
             }
+            
+            //Update de linechart naar de waardes die gewenst is.
             series.getData().add(new XYChart.Data<>(taal[78], jan));
             series.getData().add(new XYChart.Data(taal[79], feb));
             series.getData().add(new XYChart.Data<>(taal[80], mar));
@@ -567,16 +572,25 @@ public class StatistiekenController implements Initializable {
             series.getData().add(new XYChart.Data(taal[87], okt));
             series.getData().add(new XYChart.Data<>(taal[88], nov));
             series.getData().add(new XYChart.Data(taal[89], dec));
+            
+            //Update de piechart en linechart voordat er een screenshot van genomen wordt.
             lineChart.applyCss();
             lineChart.layout();
             pieChart.applyCss();
             pieChart.layout();
+            
+            //Maak een screenshot van de piechart en linechart.
             savePieChartAsPng();
             saveLineChartAsPng();
+            
             try {
+                
+                //Krijg de datum van vandaag voor pdf.
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = new Date();
                 String dateString = dateFormat.format(date);
+                
+                //Krijg de content van de template pdf en maake nieuw pdf aan.
                 File pdfdoc = new File("src/fys/templates/statisticstemplate.pdf");
                 PDDocument document = null;
                 document = PDDocument.load(pdfdoc);
@@ -584,6 +598,7 @@ public class StatistiekenController implements Initializable {
                 List<PDField> fields = acroForm.getFields();
 
                 // set the text in the form-field <-- does work
+                //Verander voor elk veld de waardes.
                 for (PDField field : fields) {
                     if (field.getFullyQualifiedName().equals("found")) {
                         field.setValue(String.valueOf(foundAmount));
@@ -652,26 +667,27 @@ public class StatistiekenController implements Initializable {
                 PDPage page = document.getPage(0);
 
                 //Creating PDImageXObject object
-                PDImageXObject pieChartImage = PDImageXObject.createFromFile("PieChart.png", document);
-                PDImageXObject lineChartImage = PDImageXObject.createFromFile("LineChart.png", document);
+                loginController login = new loginController();
+                PDImageXObject pieChartImage = PDImageXObject.createFromFile("src/fys/statistieken/PieChart_" + login.getUsersName() + ".png", document);
+                PDImageXObject lineChartImage = PDImageXObject.createFromFile("src/fys/statistieken/LineChart_" + login.getUsersName() + ".png", document);
 
                 //creating the PDPageContentStream object
                 PDPageContentStream contents = new PDPageContentStream(document, page, true, true, true);
-
+                
                 //Drawing the image in the PDF document
                 contents.drawImage(pieChartImage, 75, 0, 350, 300);
                 contents.drawImage(lineChartImage, 425, 0, 350, 300);
 
-                System.out.println("Image inserted");
-
                 //Closing the PDPageContentStream object
                 contents.close();
                 
-                document.save("src/fys/formulieren/statistics" + dateFromInput + dateToInput + ".pdf");
+                //Sla het docment op.
+                document.save("src/fys/statistieken/statistics" + dateFromInput + dateToInput + ".pdf");
                 document.close();
+                
+                //Verwijder de plaatjes die waren opgeslagen.
                 savePieChartAsPng().delete();
                 saveLineChartAsPng().delete();
-                System.out.println("Username=" + dateFromInput + ", Password=" + dateToInput);
             } catch (IOException ex) {
                 Logger.getLogger(StatistiekenController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -682,7 +698,8 @@ public class StatistiekenController implements Initializable {
     public File savePieChartAsPng() {
         WritableImage image = pieChart.snapshot(new SnapshotParameters(), null);
         // TODO: probably use a file chooser here
-        File file = new File("PieChart.png");
+        loginController login = new loginController();
+        File file = new File("src/fys/statistieken/PieChart_" + login.getUsersName() + ".png");
 
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
@@ -694,9 +711,9 @@ public class StatistiekenController implements Initializable {
 
     public File saveLineChartAsPng() {
         WritableImage image = lineChart.snapshot(new SnapshotParameters(), null);
-
         // TODO: probably use a file chooser here
-        File file = new File("LineChart.png");
+        loginController login = new loginController();
+        File file = new File("src/fys/statistieken/LineChart_" + login.getUsersName() + ".png");
 
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);

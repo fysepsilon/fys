@@ -413,9 +413,9 @@ public class StatistiekenController implements Initializable {
         grid.setVgap(20);
 
         TextField dateFrom = new TextField();
-        dateFrom.setPromptText("1970-01-01");
+        dateFrom.setPromptText("01-01-1970");
         TextField dateTo = new TextField();
-        dateTo.setPromptText("1970-12-31");
+        dateTo.setPromptText("31-12-2016");
 
         grid.add(new Label("Datum vanaf:"), 0, 0);
         grid.add(dateFrom, 1, 0);
@@ -475,7 +475,8 @@ public class StatistiekenController implements Initializable {
                         + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
                         + "UNION ALL SELECT status, date FROM found, airport "
                         + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
-                        + "WHERE date BETWEEN \"" + dateFromInput + "\" AND \"" + dateToInput +"\" "
+                        + "WHERE date BETWEEN \"" + fys.convertToDutchDate(dateFromInput) + "\" "
+                        + "AND \"" + fys.convertToDutchDate(dateToInput) +"\" "
                         + "GROUP BY x.status";
                 
                 //Voeg alle aantallen per status toe aan variabelen.
@@ -526,7 +527,8 @@ public class StatistiekenController implements Initializable {
                 conn = fys.connectToDatabase(conn);
                 stmt = conn.createStatement();
                 String sql = "SELECT date, COUNT(date) as Count FROM insurance_claim "
-                        + "WHERE date BETWEEN \"" + dateFromInput + "\" AND \"" + dateToInput + "\" "
+                        + "WHERE date BETWEEN \"" + fys.convertToDutchDate(dateFromInput) + "\" "
+                        + "AND \"" + fys.convertToDutchDate(dateToInput) + "\" "
                         + "GROUP BY date";
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {

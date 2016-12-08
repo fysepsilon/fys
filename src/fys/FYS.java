@@ -613,6 +613,15 @@ public class FYS extends Application {
         return hexString.toString();
     }
     
+    public String convertToDutchDate(String date){
+        final int yearAantal = 4;
+        String[] tokens = date.split("-");
+        if(tokens[0].length() == yearAantal){
+            return date;
+        }
+        return tokens[2] + "-" + tokens[1] + "-" + tokens[0];
+    }
+    
     public File fileChooser(){
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

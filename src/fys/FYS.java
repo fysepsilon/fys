@@ -55,10 +55,10 @@ public class FYS extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+        //Laat de hoofdscherm in.
         parentWindow = stage; 
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
         Scene scene = new Scene(root);
-        // scene.getStylesheets().add("style.css");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Corendon-Login");
@@ -66,7 +66,12 @@ public class FYS extends Application {
         stage.show();  
     }
     
-    //Made a method to switch to FXML screens.
+    /**
+     * 
+     * @param title set the title of the window.
+     * @param changeToWindow change window to this FXML file.
+     * @throws IOException 
+     */
     public void changeToAnotherFXML(String title, String changeToWindow) throws IOException{
         Parent window1;
         window1 = FXMLLoader.load(getClass().getResource(changeToWindow));
@@ -77,6 +82,11 @@ public class FYS extends Application {
         mainStage.getScene().setRoot(window1);
     }
     
+    /**
+     * 
+     * @param length de lengte van het wachtwoord.
+     * @return een random wachtwoord met de lengte die is geselecteerd.
+     */
     public static String generateRandomPassword(int length) {
         Random rng = new Random();
         char[] text = new char[length];
@@ -86,6 +96,11 @@ public class FYS extends Application {
         return new String(text);
     }
     
+    /**
+     * 
+     * @param type welke type er is geselecteerd in cijfers.
+     * @return user type in woorden in de taal van de gebruiker.
+     */
     public String getUserFunction(int type){
         taal language = new taal();
         String[] taal = language.getLanguage();
@@ -97,6 +112,11 @@ public class FYS extends Application {
         return taal[66];
     }
     
+    /**
+     * 
+     * @param type Welke type er is geselecteerd in de taal van de gebruiker.
+     * @return user type in getallen.
+     */
     public Integer getUserFunctionString(String type) {
         taal language = new taal();
         String[] taal = language.getLanguage();
@@ -108,19 +128,32 @@ public class FYS extends Application {
         return 0;
     }
     
-     public String getUserLanguage(int type) {
+    /**
+     * 
+     * @param type Welke taal is geselecteerd in getallen.
+     * @return de taal in de taal van de gebruiker.
+     */
+    public String getUserLanguage(int type) {
         taal language = new taal();
         String[] taal = language.getLanguage();
-        if (type == 1) {
-            return taal[70];
-        } else if (type == 2) {
-            return taal[71];
-        } else if (type == 3) {
-            return taal[72];
+        switch (type) {
+            case 1:
+                return taal[70];
+            case 2:
+                return taal[71];
+            case 3:
+                return taal[72];
+            default:
+                break;
         }
         return taal[69];
     }
-     
+    
+    /**
+     * 
+     * @param type Welke taal is geselecteerd in de taal van de gebruiker.
+     * @return de taal in getallen.
+     */
     public Integer getUserLanguageString(String type) {
         taal language = new taal();
         String[] taal = language.getLanguage();
@@ -134,6 +167,11 @@ public class FYS extends Application {
         return 0;
     }
     
+    /**
+     * 
+     * @param type Welke bagage type is geselecteerd in de taal van de gebruiker.
+     * @return de bagage type in getallen.
+     */
     public Integer getBaggageTypeString(String type) {
         taal language = new taal();
         String[] taal = language.getLanguage();
@@ -147,6 +185,11 @@ public class FYS extends Application {
         return 0;
     }
     
+    /**
+     * 
+     * @param type Welke bagage type is geselecteerd in getallen.
+     * @return de bagage type in de taal van de gebruiker.
+     */
     public String getBaggageType(int type) {
         taal language = new taal();
         String[] taal = language.getLanguage();
@@ -163,6 +206,11 @@ public class FYS extends Application {
         return taal[27];
     }
     
+    /**
+     * 
+     * @param status Wekle status is geselecteerd in getallen.
+     * @return de status in de taal van de gebruiker.
+     */
     public String getStatus(int status) {
         taal language = new taal();
         String[] taal = language.getLanguage();
@@ -185,6 +233,11 @@ public class FYS extends Application {
         return taal[54];
     }
     
+    /**
+     * 
+     * @param status Welke status is geselecteerd in de taal van de gebruiker
+     * @return de status in getallen
+     */
     public Integer getStatusString(String status) {
         taal language = new taal();
         String[] taal = language.getLanguage();
@@ -205,6 +258,11 @@ public class FYS extends Application {
         }
     }
     
+    /**
+     * 
+     * @param month Welke maand is geselecteerd in de taal van de gebruiker.
+     * @return de maand in getallen.
+     */
     public String getMonthNumber(String month) {
         taal language = new taal();
         String[] taal = language.getLanguage();
@@ -236,37 +294,51 @@ public class FYS extends Application {
         return "";
     }
     
+    /**
+     * 
+     * @param month Welke is geselecteerd in getallen.
+     * @return de maand in de taal van de gebruiker.
+     */
     public String getMonthName(String month) {
         taal language = new taal();
-        String[] taal = language.getLanguage();
-        if (month.equals("01")) {
-            return taal[109];
-        } else if (month.equals("02")) {
-            return taal[110];
-        } else if (month.equals("03")) {
-            return taal[111];
-        } else if (month.equals("04")) {
-            return taal[112];
-        } else if (month.equals("05")) {
-            return taal[113];
-        } else if (month.equals("06")) {
-            return taal[114];
-        } else if (month.equals("07")) {
-            return taal[115];
-        } else if (month.equals("08")) {
-            return taal[116];
-        } else if (month.equals("09")) {
-            return taal[117];
-        } else if (month.equals("10")) {
-            return taal[118];
-        } else if (month.equals("11")) {
-            return taal[119];
-        } else if (month.equals("12")) {
-            return taal[120];
+        String[] taal;
+        taal = language.getLanguage();
+        switch (month) {
+            case "01":
+                return taal[109];
+            case "02":
+                return taal[110];
+            case "03":
+                return taal[111];
+            case "04":
+                return taal[112];
+            case "05":
+                return taal[113];
+            case "06":
+                return taal[114];
+            case "07":
+                return taal[115];
+            case "08":
+                return taal[116];
+            case "09":
+                return taal[117];
+            case "10":
+                return taal[118];
+            case "11":
+                return taal[119];
+            case "12":
+                return taal[120];
+            default:
+                break;
         }
         return "";
     }
     
+    /**
+     * 
+     * @param color Welke kleur is geselecteerd in getallen.
+     * @return de kleur in de taal van de gebruiker.
+     */
     public String getColor(int color) {
         taal language = new taal();
         String[] taal = language.getLanguage();
@@ -298,7 +370,12 @@ public class FYS extends Application {
         }
         return taal[32];
     }
-
+    
+    /**
+     * 
+     * @param color Welke kleur is geselecteerd in de taal van de gebruiker.
+     * @return de kleur in getallen.
+     */
     public Integer getColorString(String color) {
         taal language = new taal();
         String[] taal = language.getLanguage();
@@ -329,6 +406,11 @@ public class FYS extends Application {
         }
     }
     
+    /**
+     * 
+     * @param email Kijk of deze emailadres al bestaat in de database.
+     * @return 
+     */
     public boolean checkEmailExists(String email){
         Statement stmt = null;
         Connection conn = null;
@@ -353,7 +435,13 @@ public class FYS extends Application {
         return false;
     }
     
-        public boolean checkEmailExistsOnChange(String email, String emailWas){
+    /**
+     * 
+     * @param email Controleer of deze emailadres in de database bestaat.
+     * @param emailWas Maar kijk niet naar deze emailadres, omdat dit de oude emailadres was.
+     * @return true als het bestaat anders false.
+     */
+    public boolean checkEmailExistsOnChange(String email, String emailWas){
         Statement stmt = null;
         Connection conn = null;
         try {
@@ -382,7 +470,15 @@ public class FYS extends Application {
         conn = DriverManager.getConnection("jdbc:mysql://localhost/bagagedatabase?user=root&password=root&useSSL=false");
         return conn;
     }
-        
+    
+    /**
+     * 
+     * @param to De emailadres naar wie het moet worden gesturd.
+     * @param subject Het onderwerp van de mail.
+     * @param content De inhoud van de mail.
+     * @param printMessage Eventueel printen dat het is verstuurd.
+     * @throws UnsupportedEncodingException 
+     */
     public void sendEmail(String to, String subject, String content, String printMessage) throws UnsupportedEncodingException{
         String from = "admin@corendon.com";
         final String username = "fysepsilon@gmail.com";//Gmail-username
@@ -435,6 +531,11 @@ public class FYS extends Application {
         }
     }
     
+    /**
+     * 
+     * @param email Controlleer of de emailadres klopt volgens de regels.
+     * @return true als de email klopt anders false.
+     */
     public static boolean isValidEmailAddress(String email) {
         boolean result = true;
         try {
@@ -480,6 +581,11 @@ public class FYS extends Application {
         }
     }
     
+    /**
+     * 
+     * @param ss Zet het wachtwood om naar hexadecimaal. 
+     * @return the string van hexadecimaal.
+     */
     private static byte[] convertHexString(String ss) {
         byte digest[] = new byte[ss.length() / 2];
         for (int i = 0; i < digest.length; i++) {
@@ -490,6 +596,11 @@ public class FYS extends Application {
         return digest;
     }
     
+    /**
+     * 
+     * @param b Zet het hexadecimaal weer om naar het wachtwoord
+     * @return het wachtwoord
+     */
     private static String toHexString(byte b[]) {
         StringBuffer hexString = new StringBuffer();
         for (int i = 0; i < b.length; i++) {

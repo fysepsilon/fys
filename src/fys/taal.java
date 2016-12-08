@@ -24,7 +24,7 @@ public class taal {
     
     public String[] getLanguage(){
         String[] languagefields = new String[amountOfLanguageFields];
-        
+        //haal uit de database welke taal is geselecteerd.
         FYS fys = new FYS();
         loginController login = new loginController();
         Statement stmt = null;
@@ -47,6 +47,7 @@ public class taal {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         
+        //Return dan de woorden in array in de taal die is geselecteerd.
         if(language == 0){ // Engels
             languagefields[0] = "REGISTER MISSING LUGGAGE";
             languagefields[1] = "REGISTER FOUND LUGGAGE";

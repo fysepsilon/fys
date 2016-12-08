@@ -147,6 +147,7 @@ public class HomepageadminController implements Initializable {
         
         //Voeg de aantal 0 toe in de tabel en de namen van de statussen.
         tableTitle.setText(taal[48] + " " + fys.getMonthName(months ) +" " + year);
+        week.setText(taal[143]);
         status.setText(taal[48]);
         amount.setText(taal[132]);
         getStatusData(year, months);

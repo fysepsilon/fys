@@ -34,6 +34,7 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -64,6 +65,7 @@ public class StatistiekenController implements Initializable {
     @FXML private int foundAmount, lostAmount, destroyAmount, settleAmount, neverFoundAmount, depotAmount = 0;
     @FXML private int jan, feb, mar, apr, mei, jun, jul, aug, sep, okt, nov, dec = 0;
     @FXML private ComboBox year, month;
+    @FXML private Button exportToPDF, filter;
     @FXML private ArrayList<String> years = new ArrayList<String>();
     @FXML private Connection conn = null; 
     @FXML private Statement stmt = null; 
@@ -79,6 +81,12 @@ public class StatistiekenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        /**
+         * De taal van de buttons veranderen
+         */
+        exportToPDF.setText(taal[138]);
+        filter.setText(taal[47]);
+        
         /**
          * Krijg alle unieke jaren vanuit de database. Wanneer de bagage geregistreerd zijn als vermist of gevonden.
          */
@@ -400,11 +408,11 @@ public class StatistiekenController implements Initializable {
     private void handleExportToPDFAction(ActionEvent event) throws IOException {
         // Create the custom dialog.
         Dialog<Pair<String, String>> dialog = new Dialog<>();
-        dialog.setTitle("Exporteren naar PDF");
-        dialog.setHeaderText("Selecteer periode");
+        dialog.setTitle(taal[138]);
+        dialog.setHeaderText(taal[139]);
 
         // Set the button types.
-        ButtonType loginButtonType = new ButtonType("Exporteer", ButtonData.OK_DONE);
+        ButtonType loginButtonType = new ButtonType(taal[140], ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
 
         // Create the datefrom and dateto labels and fields.
@@ -413,13 +421,13 @@ public class StatistiekenController implements Initializable {
         grid.setVgap(20);
 
         TextField dateFrom = new TextField();
-        dateFrom.setPromptText("01-01-1970");
+        dateFrom.setPromptText("1970-01-01");
         TextField dateTo = new TextField();
-        dateTo.setPromptText("31-12-2016");
+        dateTo.setPromptText("2016-12-31");
 
-        grid.add(new Label("Datum vanaf:"), 0, 0);
+        grid.add(new Label(taal[141] + ":"), 0, 0);
         grid.add(dateFrom, 1, 0);
-        grid.add(new Label("Datum tot:"), 0, 1);
+        grid.add(new Label(taal[142] + ":"), 0, 1);
         grid.add(dateTo, 1, 1);
 
         // Enable/Disable export button depending on whether a datefrom was entered.

@@ -24,7 +24,7 @@
                       <NumberAxis side="LEFT" />
                   </yAxis>
               </LineChart>
-            <ComboBox fx:id="month" layoutX="14.0" layoutY="14.0" prefHeight="31.0" prefWidth="168.0" >
+            <ComboBox fx:id="month" layoutX="14.0" layoutY="14.0" prefHeight="31.0" prefWidth="168.0">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="" />
@@ -34,7 +34,7 @@
                     <String fx:value="" />
                 </value>
             </ComboBox>
-            <ComboBox fx:id="year" layoutX="208.0" layoutY="14.0" prefHeight="31.0" prefWidth="168.0" >
+            <ComboBox fx:id="year" layoutX="208.0" layoutY="14.0" prefHeight="31.0" prefWidth="168.0">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="" />
@@ -44,8 +44,8 @@
                     <String fx:value="" />
                 </value>
             </ComboBox>
-            <Button fx:id="exportToPDF" layoutX="617.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleExportToPDFAction" text="Exporteren naar PDF" />
-            <Button fx:id="filter" layoutX="432.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" onAction="#handleFilterAction" prefWidth="155.0" text="Filteren" />
+            <Button fx:id="exportToPDF" layoutX="604.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleExportToPDFAction" prefHeight="31.0" prefWidth="190.0" text="Exporteren naar PDF" />
+            <Button fx:id="filter" layoutX="399.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="31.0" prefWidth="190.0" text="Filteren" />
          </children></Pane>
     </children>
 </AnchorPane>

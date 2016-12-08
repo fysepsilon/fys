@@ -255,12 +255,14 @@ public class BagageformulierenController implements Initializable {
         color_label.setText(taal[22] + ":");
         characteristics_label.setText(taal[23] + ":");
         picture_label.setText(taal[24] + ":");
-        airport_combo.setPromptText(taal[25]);
-        type_combo.setPromptText(taal[26]);
+        
+        // WERKT NIET
+        airport_combo.setPromptText(taal[25]);   
         color_combo.setPromptText(taal[31]);
         color_combo.getItems().addAll(
                 taal[32], taal[33], taal[34], taal[35], taal[36],
                 taal[37], taal[38], taal[39], taal[40], taal[41], taal[42], taal[43]);
+        type_combo.setPromptText(taal[26]);
         type_combo.getItems().addAll(taal[29], taal[27], taal[30], taal[125], taal[28]);
         picture_button.setText(taal[44]);
         send_button.setText(taal[46]);

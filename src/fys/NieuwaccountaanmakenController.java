@@ -50,7 +50,7 @@ public class NieuwaccountaanmakenController implements Initializable {
     private Label loginerror, surname_label, name_label, type_label, address_label, residence_label,
             zipcode_label, country_label, phone_label, mail_label, language_label;
     @FXML
-    private Button SendNewAccount;
+    private Button SendNewAccount, cancel;
     @FXML
     private taal language = new taal();
     @FXML
@@ -367,6 +367,7 @@ public class NieuwaccountaanmakenController implements Initializable {
         type_label.setText(taal[20] + ":");
         language_label.setText(taal[68] + ":");
         SendNewAccount.setText(taal[46]);
+        cancel.setText(taal[127]);
         language_combo.setPromptText(taal[73]);
 
         if (loginController.getUsertype() == 1) { // Service medewerker (GEEN TYPE FUNCTIE)

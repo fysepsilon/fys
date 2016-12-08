@@ -44,6 +44,8 @@ import javafx.scene.web.HTMLEditor;
 public class MailsettingsController implements Initializable {
 
     @FXML
+    private AnchorPane home_pane, edit_pane;
+    @FXML
     private TableView<Mail> table;
     @FXML
     private ObservableList<Mail> data = FXCollections.observableArrayList();
@@ -52,9 +54,11 @@ public class MailsettingsController implements Initializable {
     @FXML
     private HTMLEditor HTMLEditor;
     @FXML
-    private Button change_button, send_button;
+    private Button change_button, send_button, cancel_button;
     @FXML
-    private Label mailid_label;
+    private Label mailid_label, subject_label;
+    @FXML
+    private TextField subject_field;
     @FXML
     private loginController loginController = new loginController();
     @FXML
@@ -70,9 +74,14 @@ public class MailsettingsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        subject.setText(taal[9]);
-        message.setText(taal[10]);
-        
+        subject.setText(taal[135]);
+        message.setText(taal[136]);
+        subject_label.setText(taal[135]);
+
+        change_button.setText(taal[67]);
+        send_button.setText(taal[46]);
+        cancel_button.setText(taal[127]);
+
         loginController loginController = new loginController();
 
         getMailData();
@@ -91,19 +100,18 @@ public class MailsettingsController implements Initializable {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
             //connectToDatabase(conn, stmt, "test", "root", "root");
-                String sql = "SELECT * FROM bagagedatabase.mail";
+            String sql = "SELECT * FROM bagagedatabase.mail";
 
-                try (ResultSet rs = stmt.executeQuery(sql)) {
-                    while (rs.next()) {
-                        //Retrieve by column name
-                        int mailid = rs.getInt("mailid");
-                        String subject = rs.getString("subject");
-                        String message = rs.getString("message");
-                       
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    int mailid = rs.getInt("mailid");
+                    String subject = rs.getString("subject");
+                    String message = rs.getString("message");
 
-                        data.add(new Mail(mailid, subject, message));
-                    }
+                    data.add(new Mail(mailid, subject, message));
                 }
+            }
             conn.close();
 
         } catch (SQLException ex) {
@@ -113,14 +121,14 @@ public class MailsettingsController implements Initializable {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
     }
-    
+
     public void handleChange(ActionEvent event) throws IOException {
         int selectedIndex = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             int dr_mailid = (table.getSelectionModel().getSelectedItem().getMailid());
             String dr_subject = (table.getSelectionModel().getSelectedItem().getSubject());
             String dr_message = (table.getSelectionModel().getSelectedItem().getMessage());
-           
+
             doNext(dr_mailid, dr_subject, dr_message);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -132,16 +140,34 @@ public class MailsettingsController implements Initializable {
 
     @FXML
     public void doNext(int dr_mailid, String dr_subject, String dr_message) {
-        HTMLEditor.setHtmlText(dr_message);
+        // Switch from an anchorpane to another anchorpane
+        home_pane.setDisable(true);
+        home_pane.setVisible(false);
+        edit_pane.setDisable(false);
+        edit_pane.setVisible(true);
+
+        // Fill columns with data
         mailid_label.setText(String.valueOf(dr_mailid));
+        subject_field.setText(dr_subject);
+        HTMLEditor.setHtmlText(dr_message);
+
+    }
+
+    @FXML
+    private void handleCancel(ActionEvent event) throws IOException {
+        // Switch from an anchorpane to another anchorpane
+        home_pane.setDisable(false);
+        home_pane.setVisible(true);
+        edit_pane.setDisable(true);
+        edit_pane.setVisible(false);
     }
 
     @FXML
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
-        sendToDatabase(Integer.parseInt(mailid_label.getText()), HTMLEditor.getHtmlText());
+        sendToDatabase(Integer.parseInt(mailid_label.getText()), subject_field.getText(), HTMLEditor.getHtmlText());
     }
 
-    private void sendToDatabase(int dr_mailid, String message) throws IOException, SQLException {
+    private void sendToDatabase(int mailid, String subject, String message) throws IOException, SQLException {
         FYS fys = new FYS();
 
         try {
@@ -156,12 +182,12 @@ public class MailsettingsController implements Initializable {
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
             String sql_person = "UPDATE bagagedatabase.mail SET "
-                    + "message='" + message + "'"
-                    + "WHERE mailid='" + dr_mailid + "'";
+                    + "subject='" + subject + "', message='" + message + "'"
+                    + "WHERE mailid='" + mailid + "'";
 
             stmt.executeUpdate(sql_person);
 
-            fys.changeToAnotherFXML(taal[98], "accounts.fxml");
+            fys.changeToAnotherFXML(taal[137], "mailsettings.fxml");
 
             conn.close();
         } catch (SQLException ex) {
@@ -171,5 +197,5 @@ public class MailsettingsController implements Initializable {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
     }
-    
+
 }

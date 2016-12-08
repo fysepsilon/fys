@@ -316,6 +316,8 @@ public class taal {
             languagefields[130] = "' wilt verwijderen?";
             languagefields[131] = "maand";
             languagefields[132] = "Aantal";
+            languagefields[133] = "Verwijderen van gegevens";
+            languagefields[134] = "Selecteer eerst een rij in de tabel om deze te verwijderen";
 
         } else if(language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";

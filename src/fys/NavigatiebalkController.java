@@ -69,6 +69,11 @@ public class NavigatiebalkController implements Initializable {
     }
     
     @FXML
+    private void handleMailsettings(ActionEvent event) throws IOException {
+        fys.changeToAnotherFXML("mailsettings", "mailsettings.fxml");
+    }
+    
+    @FXML
     private void handleBagagedatabase(ActionEvent event) throws IOException {
         fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");
     }

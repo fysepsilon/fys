@@ -25,8 +25,9 @@
                </LineChart>
               <TableView fx:id="table" layoutX="388.0" layoutY="88.0" prefHeight="376.0" prefWidth="399.0">
                   <columns>
-                      <TableColumn id="status" fx:id="status" maxWidth="262.0" minWidth="200.0" prefWidth="262.0" text="Status" />
-                      <TableColumn id="amount" fx:id="amount" maxWidth="250.0" minWidth="100.0" prefWidth="136.0" text="Aantal" />
+                  <TableColumn id="week" fx:id="week" maxWidth="262.0" minWidth="-1.0" prefWidth="50.0" text="Week" />
+                      <TableColumn id="status" fx:id="status" maxWidth="262.0" minWidth="-1.0" prefWidth="212.0" text="Status" />
+                      <TableColumn id="amount" fx:id="amount" maxWidth="250.0" minWidth="-1.0" prefWidth="136.0" text="Aantal" />
                   </columns>
               </TableView>
             <Label fx:id="tableTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="41.0" prefHeight="21.0" prefWidth="399.0" text="Label">

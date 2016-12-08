@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -330,7 +330,7 @@ public class BagagedatabaseController implements Initializable {
             int drFrom = Integer.parseInt((table.getSelectionModel().getSelectedItem().getTableFrom()));
             String dr_status = (table.getSelectionModel().getSelectedItem().getStatus());
             String dr_airport = (table.getSelectionModel().getSelectedItem().getAirportFound());
-            if(dr_airport==null){
+            if (dr_airport == null) {
                 dr_airport = (table.getSelectionModel().getSelectedItem().getAirportLost());
             }
             String dr_name = (table.getSelectionModel().getSelectedItem().getFirst_name());
@@ -423,6 +423,8 @@ public class BagagedatabaseController implements Initializable {
             throws IOException, SQLException {
 
         try {
+            String[] mailInformation = new String[6];
+            int[] mailInformation2 = new int [3];
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
 
@@ -570,6 +572,92 @@ public class BagagedatabaseController implements Initializable {
 
                 document.save("src/fys/formulieren/dhlFormulier" + frontname + surname + dr_personId + ".pdf");
                 document.close();
+
+                // Mail
+                try {
+                    //connectToDatabase(conn, stmt, "test", "root", "root");
+                    String sql = "SELECT person_id, type, language, first_name, surname FROM person WHERE mail='" + mail_input.getText() + "'";
+                    ResultSet rs = stmt.executeQuery(sql);
+                    while (rs.next()) {
+                        //Retrieve by column name
+                        mailInformation[0] = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
+                        mailInformation[1] = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
+                        mailInformation2[0] = rs.getInt("person_id");
+                        mailInformation2[1] = rs.getInt("language");
+                    }
+                    rs.close();
+                } catch (SQLException ex) {
+                    // handle any errors
+                    System.out.println("SQLException: " + ex.getMessage());
+                    System.out.println("SQLState: " + ex.getSQLState());
+                    System.out.println("VendorError: " + ex.getErrorCode());
+                }
+                
+                try {
+                    //connectToDatabase(conn, stmt, "test", "root", "root");
+                    String sql = "SELECT color, brand, type FROM found OR lost WHERE person_id='" + mailInformation2[0] + "'";
+                    ResultSet rs = stmt.executeQuery(sql);
+                    while (rs.next()) {
+                        //Retrieve by column name
+                        mailInformation2[2] = rs.getInt("color");
+                        mailInformation[2] = rs.getString("brand").substring(0, 1).toUpperCase() + rs.getString("brand").substring(1);
+                        mailInformation2[3] = rs.getInt("type");
+                    }
+                    rs.close();
+                } catch (SQLException ex) {
+                    // handle any errors
+                    System.out.println("SQLException: " + ex.getMessage());
+                    System.out.println("SQLState: " + ex.getSQLState());
+                    System.out.println("VendorError: " + ex.getErrorCode());
+                }
+
+                if (mailInformation2[1] == 0) { // English emails
+                    fys.sendEmail(mail_input.getText(), "Corendon - Logindata", "Dear valued customer, "
+                            + "<br><br>There is an account created for you by one of our employees."
+                            + "<br>You can login to this account on our web application to view the status of your case."
+                            + "<br>You will need the following data to log in:"
+                            + "<br>Username: <i>" + mail_input.getText()
+                            + "</i><br>Password: <i>" + mailInformation[2]
+                            + "</i><br><br>You can change your password in the web application."
+                            + "<br>We hope to have informed you sufficiently."
+                            + "<br><br>Sincerely,"
+                            + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
+                } else if (mailInformation2[1] == 1) { // Dutch emails
+                    // Mail voor klant (type = 0)
+                    fys.sendEmail(mail_input.getText(), "Corendon - Inloggegevens", "Gewaardeerde klant, "
+                            + "<br><br>Uw " + mailInformation2[2] + mailInformation[2] + mailInformation2[3] + " is afgehandeld."
+                            + "<br>U kunt met dit account inloggen op onze webapplicatie om de status van uw koffer te bekijken."
+                            + "<br>U heeft de volgende gegevens nodig om in te kunnen loggen:"
+                            + "<br>Gebruikersnaam: <i>" + mail_input.getText()
+                            + "</i><br>Wachtwoord: <i>" + mailInformation[2]
+                            + "</i><br><br>U kunt uw wachtwoord wijzigen in de webapplicatie."
+                            + "<br>Wij hopen u hiermee voldoende te hebben geïnformeerd."
+                            + "<br><br>Met vriendelijke groet,"
+                            + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
+                } else if (mailInformation2[1] == 2) { // Spanish emails
+                    // Mail voor klant (type = 0)
+                    fys.sendEmail(mail_input.getText(), "Corendon - Logindatos", "Estimado cliente, "
+                            + "<br><br>Hay una cuenta creada para usted por uno de nuestros empleados."
+                            + "<br>Puede iniciar sesión con la cuenta en nuestra aplicación web para ver el estado de su caso."
+                            + "<br>Necesitará la siguiente información para iniciar sesión:"
+                            + "<br>Nombre de usuario: <i>" + mail_input.getText()
+                            + "</i><br>Contraseña: <i>" + mailInformation[2]
+                            + "</i><br><br>Puede cambiar su contraseña en la aplicación web."
+                            + "<br>Esperamos que te han informado lo suficiente."
+                            + "<br><br>Atentamente,"
+                            + "<br><br><b>El equipo de Corendon</b>", "Sent message successfully....");
+                } else { // Turkisch emails
+                    fys.sendEmail(mail_input.getText(), "Corendon - Giriş", "Değerli müşterimiz, "
+                            + "<br><br>Çalışanlarımızın biri tarafından sizin için oluşturulan bir hesap vardır."
+                            + "<br>Sen davanın durumunu görüntülemek için web uygulamasında bu hesaba giriş yapabilirsiniz."
+                            + "<br>Oturum açmak için aşağıdaki bilgilere ihtiyacınız olacaktır:"
+                            + "<br>Kullanıcı adı: <i>" + mail_input.getText()
+                            + "</i><br>Şifre: <i>" + mailInformation[2]
+                            + "</i><br><br>Bu web uygulamasında şifrenizi değiştirebilirsiniz."
+                            + "<br>Biz yeterince sizi haberdar etmek istedik."
+                            + "<br><br>Saygılarımızla,"
+                            + "<br><br><b>Corendon Takımı</b>", "Sent message successfully....");
+                }
             }
             fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");
             conn.close();

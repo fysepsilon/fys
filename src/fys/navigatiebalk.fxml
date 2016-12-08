@@ -195,6 +195,18 @@
                       <Font name="System Bold" size="14.0" />
                   </font>
               </Button>
+              <SplitPane id="afscheiding10" fx:id="afscheiding10" prefHeight="49.0" prefWidth="2.0" style="-fx-background-color: #B81A04;" />
+              <Button id="mailAdmin" fx:id="mailAdmin" mnemonicParsing="false" onAction="#handleMailsettings" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="E-MAIL INSTELLINGEN" textFill="WHITE">
+                  <cursor>
+                      <Cursor fx:constant="HAND" />
+                  </cursor>
+                  <padding>
+                      <Insets left="10.0" right="10.0" />
+                  </padding>
+                  <font>
+                      <Font name="System Bold" size="14.0" />
+                  </font>
+              </Button>
          </children>
       </HBox>
     </children>

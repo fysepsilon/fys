@@ -373,7 +373,7 @@ public class FYS extends Application {
         conn = DriverManager.getConnection("jdbc:mysql://localhost/bagagedatabase?user=root&password=root&useSSL=false");
         return conn;
     }
-        
+    
     public void sendEmail(String to, String subject, String content, String printMessage) throws UnsupportedEncodingException{
         String from = "admin@corendon.com";
         final String username = "fysepsilon@gmail.com";//Gmail-username
@@ -424,6 +424,20 @@ public class FYS extends Application {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+    }
+    
+    public String replaceEmail(String getmessage, String filter1, String filter2, String filter3, String filter4) throws UnsupportedEncodingException {
+        getmessage = getmessage.replace("*username*", filter1);
+        getmessage = getmessage.replace("*password*", filter2);
+        getmessage = getmessage.replace("*firstname*", filter3);
+        getmessage = getmessage.replace("*surname*", filter4);
+        
+//        String getmessage2 = getmessage.replace("*username*", filter1);
+//         String getmessage3 = getmessage2.replace("*password*", filter2);
+//         String getmessage4 = getmessage3.replace("*firstname*", filter3);
+//         String message = getmessage4.replace("*surname*", filter4);
+         
+         return getmessage;
     }
     
     public static boolean isValidEmailAddress(String email) {

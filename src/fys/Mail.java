@@ -14,21 +14,25 @@ import javafx.fxml.FXML;
  * @author Paras
  */
 public class Mail {
-    @FXML private final SimpleIntegerProperty mailid;
+    @FXML private final SimpleIntegerProperty mailid, page, type, language;
     @FXML private final SimpleStringProperty subject, message;
 
-    public Mail(int mailidname, String subjectname, String messagename) {
+    public Mail(int mailidname, String subjectname, String messagename, int pagename, int typename, int languagename) {
         this.mailid = new SimpleIntegerProperty(mailidname);
         this.subject = new SimpleStringProperty(subjectname);
         this.message = new SimpleStringProperty(messagename);
+        this.page = new SimpleIntegerProperty(pagename);
+        this.type = new SimpleIntegerProperty(typename);
+        this.language = new SimpleIntegerProperty(languagename);
+
     }
 
     public int getMailid() {
         return mailid.get();
     }
 
-    public void setMailid(String mailidname) {
-        subject.set(mailidname);
+    public void setMailid(int mailidname) {
+        mailid.set(mailidname);
     }
     
     public String getSubject() {
@@ -45,5 +49,29 @@ public class Mail {
 
     public void setMessage(String messagename) {
         message.set(messagename);
+    }
+    
+    public int getPage() {
+        return page.get();
+    }
+
+    public void setPage(int pagename) {
+        page.set(pagename);
+    }
+    
+    public int getType() {
+        return type.get();
+    }
+
+    public void setType(int typename) {
+        type.set(typename);
+    }
+    
+    public int getLanguage() {
+        return language.get();
+    }
+
+    public void setLanguage(int languagename) {
+        language.set(languagename);
     }
 }

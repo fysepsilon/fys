@@ -70,7 +70,7 @@ public class NavigatiebalkController implements Initializable {
     
     @FXML
     private void handleMailsettings(ActionEvent event) throws IOException {
-        fys.changeToAnotherFXML(taal[137], "mailsettings.fxml");
+        fys.changeToAnotherFXML(taal[145], "mailsettings.fxml");
     }
     
     @FXML

@@ -99,8 +99,8 @@ public class accountsController implements Initializable {
             alert.setHeaderText(taal[128]);
             alert.setContentText(taal[129] + dr_first_name + " " + dr_surname + taal[130]);
 
-            ButtonType buttonTypeOne = new ButtonType("Bevestigen");
-            ButtonType buttonTypeCancel = new ButtonType("Annuleren", ButtonBar.ButtonData.CANCEL_CLOSE);
+            ButtonType buttonTypeOne = new ButtonType(taal[146]);
+            ButtonType buttonTypeCancel = new ButtonType(taal[127], ButtonBar.ButtonData.CANCEL_CLOSE);
 
             alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
 

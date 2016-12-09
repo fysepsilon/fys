@@ -50,15 +50,17 @@ public class MailsettingsController implements Initializable {
     @FXML
     private ObservableList<Mail> data = FXCollections.observableArrayList();
     @FXML
-    private TableColumn mailid, subject, message;
+    private TableColumn mailid, subject, message, page, type, language;
     @FXML
     private HTMLEditor HTMLEditor;
     @FXML
     private Button change_button, send_button, cancel_button;
     @FXML
-    private Label mailid_label, subject_label;
+    private Label mailid_label, subject_label, page_label, type_label,
+            language_label, info_firstname, info_surname, info_password, 
+            info_username, info, warning, warning_label, info_label;
     @FXML
-    private TextField subject_field;
+    private TextField subject_field, page_field, type_field, language_field;
     @FXML
     private loginController loginController = new loginController();
     @FXML
@@ -76,8 +78,20 @@ public class MailsettingsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         subject.setText(taal[135]);
         message.setText(taal[136]);
-        subject_label.setText(taal[135]);
-
+        subject_label.setText(taal[135] + ":");
+        page_label.setText(taal[144] + ":");
+        type_label.setText(taal[20] + ":");
+        language_label.setText(taal[68] + ":");
+        
+        info_username.setText(taal[148]);
+        info_password.setText(taal[90]);
+        info_firstname.setText(taal[9]);
+        info_surname.setText(taal[10]);
+        info_label.setText(taal[152]);
+        info.setText(taal[149]);
+        warning.setText(taal[150]);
+        warning_label.setText(taal[151]);
+        
         change_button.setText(taal[67]);
         send_button.setText(taal[46]);
         cancel_button.setText(taal[127]);
@@ -88,8 +102,10 @@ public class MailsettingsController implements Initializable {
         mailid.setCellValueFactory(new PropertyValueFactory<>("mailid"));
         subject.setCellValueFactory(new PropertyValueFactory<>("subject"));
         message.setCellValueFactory(new PropertyValueFactory<>("message"));
+        page.setCellValueFactory(new PropertyValueFactory<>("page"));
+        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        language.setCellValueFactory(new PropertyValueFactory<>("language"));
 
-        mailid.setStyle("-fx-alignment: CENTER;");
         subject.setStyle("-fx-alignment: CENTER;");
         message.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
@@ -108,8 +124,11 @@ public class MailsettingsController implements Initializable {
                     int mailid = rs.getInt("mailid");
                     String subject = rs.getString("subject");
                     String message = rs.getString("message");
+                    int page = rs.getInt("pageid");
+                    int type = rs.getInt("type");
+                    int language = rs.getInt("language");
 
-                    data.add(new Mail(mailid, subject, message));
+                    data.add(new Mail(mailid, subject, message, page, type, language));
                 }
             }
             conn.close();
@@ -128,8 +147,11 @@ public class MailsettingsController implements Initializable {
             int dr_mailid = (table.getSelectionModel().getSelectedItem().getMailid());
             String dr_subject = (table.getSelectionModel().getSelectedItem().getSubject());
             String dr_message = (table.getSelectionModel().getSelectedItem().getMessage());
+            int dr_page = (table.getSelectionModel().getSelectedItem().getPage());
+            int dr_type = (table.getSelectionModel().getSelectedItem().getType());
+            int dr_language = (table.getSelectionModel().getSelectedItem().getLanguage());
 
-            doNext(dr_mailid, dr_subject, dr_message);
+            doNext(dr_mailid, dr_subject, dr_message, dr_page, dr_type, dr_language);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(taal[133]);
@@ -139,7 +161,7 @@ public class MailsettingsController implements Initializable {
     }
 
     @FXML
-    public void doNext(int dr_mailid, String dr_subject, String dr_message) {
+    public void doNext(int dr_mailid, String dr_subject, String dr_message, int dr_page, int dr_type, int dr_language) {
         // Switch from an anchorpane to another anchorpane
         home_pane.setDisable(true);
         home_pane.setVisible(false);
@@ -150,6 +172,9 @@ public class MailsettingsController implements Initializable {
         mailid_label.setText(String.valueOf(dr_mailid));
         subject_field.setText(dr_subject);
         HTMLEditor.setHtmlText(dr_message);
+        page_field.setText(String.valueOf(dr_page));
+        type_field.setText(String.valueOf(dr_type));
+        language_field.setText(String.valueOf(dr_language));
 
     }
 
@@ -160,6 +185,79 @@ public class MailsettingsController implements Initializable {
         home_pane.setVisible(true);
         edit_pane.setDisable(true);
         edit_pane.setVisible(false);
+    }
+
+    public void handleRecover(ActionEvent event) throws IOException {
+        int selectedIndex = table.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            int dr_mailid = (table.getSelectionModel().getSelectedItem().getMailid());
+            String dr_subject = (table.getSelectionModel().getSelectedItem().getSubject());
+            String dr_message = (table.getSelectionModel().getSelectedItem().getMessage());
+            int dr_page = (table.getSelectionModel().getSelectedItem().getPage());
+            int dr_type = (table.getSelectionModel().getSelectedItem().getType());
+            int dr_language = (table.getSelectionModel().getSelectedItem().getLanguage());
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText(taal[104]);
+            alert.setContentText(taal[147]);
+
+            ButtonType buttonTypeOne = new ButtonType(taal[146]);
+            ButtonType buttonTypeCancel = new ButtonType(taal[127], ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == buttonTypeOne) {
+
+                mailid_label.setText(String.valueOf(dr_mailid));
+
+                try {
+                    sendToDatabase2(Integer.parseInt(mailid_label.getText()));
+                } catch (SQLException ex) {
+                    // handle any errors
+                    System.out.println("SQLException: " + ex.getMessage());
+                    System.out.println("SQLState: " + ex.getSQLState());
+                    System.out.println("VendorError: " + ex.getErrorCode());
+                }
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(taal[104]);
+            alert.setContentText(taal[105]);
+            alert.showAndWait();
+        }
+    }
+
+    private void sendToDatabase2(int dr_mailid) throws IOException, SQLException {
+        try {
+            conn = fys.connectToDatabase(conn);
+            stmt = conn.createStatement();
+
+            String sql_select = "SELECT * FROM bagagedatabase.mail WHERE mailid='" + dr_mailid + "'";
+            try (ResultSet rs = stmt.executeQuery(sql_select)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    String recover_subject = rs.getString("recover_subject");
+                    String recover_message = rs.getString("recover_message");
+
+                    //connectToDatabase(conn, stmt, "test", "root", "root");
+                    String sql_update = "UPDATE bagagedatabase.mail "
+                            + "SET subject='" + recover_subject + "',message='" + recover_message + "' "
+                            + "WHERE mailid='" + dr_mailid + "'";
+
+                    stmt.executeUpdate(sql_update);
+                }
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+
+        fys.changeToAnotherFXML(taal[145], "mailsettings.fxml");
+
     }
 
     @FXML
@@ -187,7 +285,7 @@ public class MailsettingsController implements Initializable {
 
             stmt.executeUpdate(sql_person);
 
-            fys.changeToAnotherFXML(taal[137], "mailsettings.fxml");
+            fys.changeToAnotherFXML(taal[145], "mailsettings.fxml");
 
             conn.close();
         } catch (SQLException ex) {

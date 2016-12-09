@@ -15,14 +15,15 @@ import java.sql.Statement;
  * @author Paras
  */
 public class taal {
+
     private final int amountOfLanguageFields = 200;
     private int language = 0;
-    
-    public void setLanguage(int taal){
+
+    public void setLanguage(int taal) {
         this.language = taal;
     }
-    
-    public String[] getLanguage(){
+
+    public String[] getLanguage() {
         String[] languagefields = new String[amountOfLanguageFields];
         //haal uit de database welke taal is geselecteerd.
         FYS fys = new FYS();
@@ -46,9 +47,9 @@ public class taal {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-        
+
         //Return dan de woorden in array in de taal die is geselecteerd.
-        if(language == 0){ // Engels
+        if (language == 0) { // Engels
             languagefields[0] = "REGISTER MISSING LUGGAGE";
             languagefields[1] = "REGISTER FOUND LUGGAGE";
             languagefields[2] = "LUGGAGE DATABASE";
@@ -143,19 +144,19 @@ public class taal {
             languagefields[91] = "E-mailaddress";
             languagefields[92] = "Save";
             languagefields[93] = "Some required fields are left blank!";
-            languagefields[94] = "E-mail already exists!"; 
-            languagefields[95] = "Register missing luggage";   
-            languagefields[96] = "Register found luggage";   
-            languagefields[97] = "Home";   
-            languagefields[98] = "Accounts";   
-            languagefields[99] = "Statistics";   
-            languagefields[100] = "Luggage database";   
-            languagefields[101] = "Login";   
-            languagefields[102] = "Settings";  
+            languagefields[94] = "E-mail already exists!";
+            languagefields[95] = "Register missing luggage";
+            languagefields[96] = "Register found luggage";
+            languagefields[97] = "Home";
+            languagefields[98] = "Accounts";
+            languagefields[99] = "Statistics";
+            languagefields[100] = "Luggage database";
+            languagefields[101] = "Login";
+            languagefields[102] = "Settings";
             languagefields[103] = "The account is created and an e-mail has been sent!";
             languagefields[104] = "Change data";
             languagefields[105] = "First, select a row in the table to change something";
-            languagefields[106] = "Latest luggage";    
+            languagefields[106] = "Latest luggage";
             languagefields[107] = "Time";
             languagefields[108] = "Insurance claim";
             languagefields[109] = "January";
@@ -172,7 +173,7 @@ public class taal {
             languagefields[120] = "December";
             languagefields[121] = "This e-mail address already exists.";
             languagefields[122] = "Changing";
-            languagefields[123] = "Your data has been changed."; 
+            languagefields[123] = "Your data has been changed.";
             languagefields[124] = "The data has been added.";
             languagefields[125] = "Shoulder bag";
             languagefields[126] = "Change an account";
@@ -193,7 +194,17 @@ public class taal {
             languagefields[141] = "Date from";
             languagefields[142] = "Date to";
             languagefields[143] = "Week";
-        } else if(language == 1) { // Nederlands
+            languagefields[144] = "Page";
+            languagefields[145] = "Extra";
+            languagefields[146] = "Confirm";
+            languagefields[147] = "Are you sure you want to reset this email to its normal message?";
+            languagefields[148] = "Username";
+            languagefields[149] = "Information";
+            languagefields[150] = "Warning";
+            languagefields[151] = "Use the characters &quot; and ' &#10; not in an email.";
+            languagefields[152] = "You can use certain &#10;words in an email that &#10;mean something. Below are &#10;the words that you &#10;can use with the &#10;meaning behind it.";
+            languagefields[153] = "Recover";
+        } else if (language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
             languagefields[2] = "BAGAGE DATABASE";
@@ -287,21 +298,21 @@ public class taal {
             languagefields[89] = "dec";
             languagefields[90] = "Wachtwoord";
             languagefields[91] = "E-mailadres";
-            languagefields[92] = "Opslaan";    
-            languagefields[93] = "Er zijn benodigde velden leeg gelaten!";          
-            languagefields[94] = "E-mailadres bestaat al!"; 
-            languagefields[95] = "Vermiste bagage registreren";   
-            languagefields[96] = "Gevonden bagage registreren";   
-            languagefields[97] = "Home";   
-            languagefields[98] = "Accounts";   
-            languagefields[99] = "Statistieken";   
-            languagefields[100] = "Bagage database";   
-            languagefields[101] = "Login";   
-            languagefields[102] = "Instellingen";   
+            languagefields[92] = "Opslaan";
+            languagefields[93] = "Er zijn benodigde velden leeg gelaten!";
+            languagefields[94] = "E-mailadres bestaat al!";
+            languagefields[95] = "Vermiste bagage registreren";
+            languagefields[96] = "Gevonden bagage registreren";
+            languagefields[97] = "Home";
+            languagefields[98] = "Accounts";
+            languagefields[99] = "Statistieken";
+            languagefields[100] = "Bagage database";
+            languagefields[101] = "Login";
+            languagefields[102] = "Instellingen";
             languagefields[103] = "Het account is gemaakt en een e-mail is verstuurd!";
             languagefields[104] = "Wijzigen van gegevens";
             languagefields[105] = "Selecteer eerst een rij in de tabel om deze te wijzigen";
-            languagefields[106] = "Meest recente bagage";       
+            languagefields[106] = "Meest recente bagage";
             languagefields[107] = "Tijd";
             languagefields[108] = "Schadeclaim";
             languagefields[109] = "januari";
@@ -319,7 +330,7 @@ public class taal {
             languagefields[121] = "Dit email adres bestaat al.";
             languagefields[122] = "Aanpassingen";
             languagefields[123] = "Uw gegevens zijn gewijzigd.";
-            languagefields[124] = "De gegevens zijn toegevoegd."; 
+            languagefields[124] = "De gegevens zijn toegevoegd.";
             languagefields[125] = "Schoudertas";
             languagefields[126] = "Account wijzigen";
             languagefields[127] = "Annuleren";
@@ -339,7 +350,17 @@ public class taal {
             languagefields[141] = "Datum vanaf";
             languagefields[142] = "Datum tot";
             languagefields[143] = "Week";
-        } else if(language == 2) { // Spaans
+            languagefields[144] = "Pagina";
+            languagefields[145] = "Extra";
+            languagefields[146] = "Bevestigen";
+            languagefields[147] = "Weet je zeker dat je deze email wilt herstellen naar zijn normale bericht?";
+            languagefields[148] = "Gebruikersnaam";
+            languagefields[149] = "Informatie";
+            languagefields[150] = "Waarschuwing";
+            languagefields[151] = "Gebruik de tekens &quot; en ' &#10;niet in een email.";
+            languagefields[152] = "Je kan bepaalde woorden&#10;gebruiken in een email die &#10;iets betekenen. Hieronder &#10;staan de woorden die je &#10;kan gebruiken met de&#10;betekenis erachter.";
+            languagefields[153] = "Herstellen";
+        } else if (language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";
             languagefields[2] = "BASE DE DATOS DE EQUIPAJE";
@@ -388,7 +409,7 @@ public class taal {
             languagefields[45] = "Crear una cuenta";
             languagefields[46] = "Barco";
             languagefields[47] = "Filtro";
-            languagefields[48] = "Estatus";       
+            languagefields[48] = "Estatus";
             languagefields[49] = "Color";
             languagefields[50] = "Tipo";
             languagefields[51] = "Marca";
@@ -406,7 +427,7 @@ public class taal {
             languagefields[63] = "Crear nueva cuenta";
             languagefields[64] = "Auxiliar de servicios";
             languagefields[65] = "Administrador";
-            languagefields[66] = "Cliente";        
+            languagefields[66] = "Cliente";
             languagefields[67] = "Modificar";
             languagefields[68] = "Eliminar";
             languagefields[68] = "Idioma";
@@ -433,21 +454,21 @@ public class taal {
             languagefields[89] = "dic";
             languagefields[90] = "Contraseña";
             languagefields[91] = "Correo electrónico";
-            languagefields[92] = "Tienda";   
-            languagefields[93] = "Hay campos se dejan en blanco!";  
-            languagefields[94] = "Correo electrónico ya existe!";    
-            languagefields[95] = "Registro equipaje perdido";   
-            languagefields[96] = "Registro encontró equipaje";   
-            languagefields[97] = "Casa";   
-            languagefields[98] = "Cuentas";   
-            languagefields[99] = "Estadística";   
-            languagefields[100] = "Base de datos de equipaje";   
-            languagefields[101] = "Login";   
-            languagefields[102] = "Ajustes";   
+            languagefields[92] = "Tienda";
+            languagefields[93] = "Hay campos se dejan en blanco!";
+            languagefields[94] = "Correo electrónico ya existe!";
+            languagefields[95] = "Registro equipaje perdido";
+            languagefields[96] = "Registro encontró equipaje";
+            languagefields[97] = "Casa";
+            languagefields[98] = "Cuentas";
+            languagefields[99] = "Estadística";
+            languagefields[100] = "Base de datos de equipaje";
+            languagefields[101] = "Login";
+            languagefields[102] = "Ajustes";
             languagefields[103] = "La cuenta se crea y se envía el e-mail!";
             languagefields[104] = "Cambio de datos";
             languagefields[105] = "En primer lugar, seleccione una fila de la tabla para cambiar esta";
-            languagefields[106] = "Última equipaje";   
+            languagefields[106] = "Última equipaje";
             languagefields[107] = "Tiempo";
             languagefields[108] = "Reclamación de seguro";
             languagefields[109] = "enero";
@@ -466,7 +487,7 @@ public class taal {
             languagefields[122] = "Ajustes";
             languagefields[123] = "Se cambia sus datos.";
             languagefields[124] = "Los datos se han añadido.";
-            languagefields[125] = "Bolso de bandolera";            
+            languagefields[125] = "Bolso de bandolera";
             languagefields[126] = "Cuenta de modificación";
             languagefields[127] = "Cancelar";
             languagefields[128] = "Eliminar cuenta";
@@ -485,6 +506,16 @@ public class taal {
             languagefields[141] = "Fecha a partir de";
             languagefields[142] = "Fecha de";
             languagefields[143] = "Semana";
+            languagefields[144] = "Página";
+            languagefields[145] = "Extra";
+            languagefields[146] = "Confirmar";
+            languagefields[147] = "¿Está seguro de que desea restablecer este mensaje a su mensaje normal?";
+            languagefields[148] = "Nombre de usuario";
+            languagefields[149] = "Información";
+            languagefields[150] = "Advertencia";
+            languagefields[151] = "Utilice los caracteres &quot; y ' no en un correo electrónico.";
+            languagefields[152] = "Puede usar ciertas &#10;palabras en un correo &#10;electrónico que quiere &#10;decir algo. A continuación &#10;se presentan las palabras que &#10;se pueden utilizar con el &#10;significado detrás de él.";
+            languagefields[153] = "Recuperar";
         } else { //Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
@@ -579,21 +610,21 @@ public class taal {
             languagefields[89] = "ara";
             languagefields[90] = "Şifre";
             languagefields[91] = "Posta";
-            languagefields[92] = "Mağaza";       
-            languagefields[93] = "Boş bırakılan alanlar vardır!";  
-            languagefields[94] = "Posta zaten var!";       
-            languagefields[95] = "Kayıt kayıp bagaj";   
-            languagefields[96] = "Kayıt bagaj bulundu";   
-            languagefields[97] = "Ev";   
-            languagefields[98] = "Hesapları";   
-            languagefields[99] = "Istatistik";   
-            languagefields[100] = "Bagaj veritabanı";   
-            languagefields[101] = "Giriş";   
-            languagefields[102] = "Ayarlar";   
+            languagefields[92] = "Mağaza";
+            languagefields[93] = "Boş bırakılan alanlar vardır!";
+            languagefields[94] = "Posta zaten var!";
+            languagefields[95] = "Kayıt kayıp bagaj";
+            languagefields[96] = "Kayıt bagaj bulundu";
+            languagefields[97] = "Ev";
+            languagefields[98] = "Hesapları";
+            languagefields[99] = "Istatistik";
+            languagefields[100] = "Bagaj veritabanı";
+            languagefields[101] = "Giriş";
+            languagefields[102] = "Ayarlar";
             languagefields[103] = "Hesabı oluşturulur ve e-posta gönderilir!";
             languagefields[104] = "Değişim verileri";
             languagefields[105] = "İlk olarak, bu değiştirmek için tablodaki bir satır seçin";
-            languagefields[106] = "Son bagaj";     
+            languagefields[106] = "Son bagaj";
             languagefields[107] = "Zaman";
             languagefields[108] = "Sigorta tazminat talebi";
             languagefields[109] = "Ocak";
@@ -612,7 +643,7 @@ public class taal {
             languagefields[122] = "Ayarlamalar";
             languagefields[123] = "Verileriniz değiştirilir.";
             languagefields[124] = "Veri eklendi.";
-            languagefields[125] = "Omuz çantası";                        
+            languagefields[125] = "Omuz çantası";
             languagefields[126] = "Değişim hesabı";
             languagefields[127] = "Iptal";
             languagefields[128] = "Hesabı silmek";
@@ -631,6 +662,16 @@ public class taal {
             languagefields[141] = "Geçmişe dayanmak";
             languagefields[142] = "Tarih";
             languagefields[143] = "Hafta";
+            languagefields[144] = "Sayfa";
+            languagefields[145] = "Ekstra";
+            languagefields[146] = "Onaylamak";
+            languagefields[147] = "Eğer normal iletiye Bu e-postayı sıfırlamak istediğinizden emin misiniz?";
+            languagefields[148] = "Kullanıcı adı";
+            languagefields[149] = "Bilgi";
+            languagefields[150] = "Uyarı";
+            languagefields[151] = "Bir e-posta karakterleri &quot; ve ' değil kullanın.";
+            languagefields[152] = "Bir şey demek bir &#10;e-posta belirli kelimeleri &#10;kullanabilirsiniz. Aşağıda &#10;arkasında anlamı ile &#10;kullanabileceğiniz kelimelerdir.";
+            languagefields[153] = "Kurtarmak";
         }
         return languagefields;
     }

@@ -72,10 +72,17 @@ public class GevondenformulierController implements Initializable {
             }
             String dateString = tokens[0];
             String timeString = tokens[1];
+            
+            String destination;
+            if(destination_combo.getValue() == null){
+                destination = " ";
+            } else{
+                destination = destination_combo.getValue().toString();
+            }
 
             sendToDatabase(airport_combo.getValue().toString(), name_input.getText(),
                     surname_input.getText(), labelnumber_input.getText(), filePath,
-                    flightnumber_input.getText(), destination_combo.getValue().toString(),
+                    flightnumber_input.getText(), destination,
                     fys.getBaggageTypeString(type_combo.getValue().toString()), 
                     brand_input.getText(), fys.getColorString(color_combo.getValue().toString()), 
                     characteristics_input.getText(), dateString, timeString);
@@ -154,6 +161,7 @@ public class GevondenformulierController implements Initializable {
         //String fileRaw = file.getAbsolutePath();
         filePath = "fys/luggageImages/" + file.getName();
         //filePath = fileRaw.replace("\\","\\\\");
+        System.out.println(filePath);
         picture_button.setText(file.getName());
     }
 

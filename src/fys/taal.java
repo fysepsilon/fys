@@ -204,7 +204,13 @@ public class taal {
             languagefields[151] = "Use the characters &quot; and ' &#10; not in an email.";
             languagefields[152] = "You can use certain &#10;words in an email that &#10;mean something. Below are &#10;the words that you &#10;can use with the &#10;meaning behind it.";
             languagefields[153] = "Recover";
-        } else if (language == 1) { // Nederlands
+            languagefields[154] = "Delete data";
+            languagefields[155] = "You are about to delete this luggage and customer data"
+                    + " permanently! Are you sure?";
+            languagefields[156] = "Delete";
+            languagefields[157] = "The data has successfully been removed!";
+            languagefields[158] = "Renew the page to update the database";
+        } else if(language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
             languagefields[2] = "BAGAGE DATABASE";
@@ -359,8 +365,14 @@ public class taal {
             languagefields[150] = "Waarschuwing";
             languagefields[151] = "Gebruik de tekens &quot; en ' &#10;niet in een email.";
             languagefields[152] = "Je kan bepaalde woorden&#10;gebruiken in een email die &#10;iets betekenen. Hieronder &#10;staan de woorden die je &#10;kan gebruiken met de&#10;betekenis erachter.";
-            languagefields[153] = "Herstellen";
-        } else if (language == 2) { // Spaans
+            languagefields[153] = "Herstellen";      
+            languagefields[154] = "Verwijderen van gegevens";
+            languagefields[155] = "U staat op het punt deze bagage- en klantgegevens permanent"
+                    + " te verwijderen! Weet u het zeker?";
+            languagefields[156] = "Verwijderen";
+            languagefields[157] = "De data is succesvol verwijderd!";
+            languagefields[158] = "Vernieuw de pagina om de database te updaten";
+        } else if(language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";
             languagefields[2] = "BASE DE DATOS DE EQUIPAJE";
@@ -516,6 +528,12 @@ public class taal {
             languagefields[151] = "Utilice los caracteres &quot; y ' no en un correo electrónico.";
             languagefields[152] = "Puede usar ciertas &#10;palabras en un correo &#10;electrónico que quiere &#10;decir algo. A continuación &#10;se presentan las palabras que &#10;se pueden utilizar con el &#10;significado detrás de él.";
             languagefields[153] = "Recuperar";
+            languagefields[154] = "Eliminación de datos";
+            languagefields[155] = "Estás a punto de eliminar esta equipaje y datos"
+                    + " de forma permanente al cliente! ¿Seguro?";
+            languagefields[156] = "Eliminar";
+            languagefields[157] = "Los datos se han eliminado correctamente!";
+            languagefields[158] = "Actualizar la página para actualizar la base de datos";
         } else { //Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
@@ -672,6 +690,12 @@ public class taal {
             languagefields[151] = "Bir e-posta karakterleri &quot; ve ' değil kullanın.";
             languagefields[152] = "Bir şey demek bir &#10;e-posta belirli kelimeleri &#10;kullanabilirsiniz. Aşağıda &#10;arkasında anlamı ile &#10;kullanabileceğiniz kelimelerdir.";
             languagefields[153] = "Kurtarmak";
+            languagefields[154] = "Silme veri";
+            languagefields[155] = "Bunu sürekli olarak bu bagaj ve müşteri verilerini "
+                    + " kaldırmak üzeresiniz! Emin misiniz?";
+            languagefields[156] = "Kaldırmak";
+            languagefields[157] = "Verileri başarıyla silindi!";
+            languagefields[158] = "Veritabanını güncellemek için sayfayı yenileyin";
         }
         return languagefields;
     }

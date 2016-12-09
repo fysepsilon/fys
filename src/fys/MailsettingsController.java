@@ -54,7 +54,7 @@ public class MailsettingsController implements Initializable {
     @FXML
     private HTMLEditor HTMLEditor;
     @FXML
-    private Button change_button, send_button, cancel_button;
+    private Button change_button, send_button, cancel_button, recover_button;
     @FXML
     private Label mailid_label, subject_label, page_label, type_label,
             language_label, info_firstname, info_surname, info_password, 
@@ -95,7 +95,8 @@ public class MailsettingsController implements Initializable {
         change_button.setText(taal[67]);
         send_button.setText(taal[46]);
         cancel_button.setText(taal[127]);
-
+        recover_button.setText(taal[153]);
+        
         loginController loginController = new loginController();
 
         getMailData();

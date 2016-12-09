@@ -79,7 +79,7 @@ public class BagageformulierenController implements Initializable {
             loginerror.setText(taal[93]);
             loginerror.setStyle("-fx-text-fill: red;");
             loginerror.setVisible(true);
-        } else if (fys.isValidEmailAddress(mail_input.getText())) {
+        } else if (!fys.isValidEmailAddress(mail_input.getText())) {
             //Indien het ingevulde emailadres al in de database bestaat foutmelding geven
             loginerror.setVisible(false);
             loginerror.setText(taal[159]);

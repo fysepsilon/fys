@@ -74,11 +74,11 @@ public class BagagedatabaseController implements Initializable {
     @FXML
     private Button filter;
     @FXML
-    private ComboBox statusCombo, airportCombo, typeCombo, colorCombo;
+    private ComboBox statusCombo, airportCombo, typeCombo, colorCombo, destination_combo;
     @FXML
     private TextField nameInput, surNameInput, addressInput,
             residenceInput, zipcodeInput, countryInput, phoneInput,
-            mailInput, labelNumberInput, flightNumberInput, destinationInput,
+            mailInput, labelNumberInput, flightNumberInput,
             brandInput, characteristicsInput;
     @FXML
     private Button pictureButton, sendButton, cancelButton, changeButton, removeButton;
@@ -407,7 +407,6 @@ public class BagagedatabaseController implements Initializable {
 
     @FXML
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
-
         if ((typeCombo.getValue() == null)
                 || (brandInput.getText() == null || brandInput.getText().trim().isEmpty())
                 || (colorCombo.getValue() == null)) {
@@ -415,13 +414,20 @@ public class BagagedatabaseController implements Initializable {
             loginerror.setText(taal[93]);
             loginerror.setVisible(true);
         } else {
+            String destination;
+            if(destination_combo.getValue() == null){
+                destination = " ";
+            } else{
+                destination = destination_combo.getValue().toString();
+            }
+            
             sendToDatabase(Integer.parseInt(idLabel.getText()), Integer.parseInt(personIdLabel.getText()), 
                     Integer.parseInt(lafIdLabel.getText()), Integer.parseInt(tableFromLabel.getText()), 
                     fys.getStatusString(statusCombo.getValue().toString()), airportCombo.getValue().toString(), 
                     nameInput.getText(), surNameInput.getText(), addressInput.getText(), 
                     residenceInput.getText(), zipcodeInput.getText(), countryInput.getText(), 
                     phoneInput.getText(), mailInput.getText(), labelNumberInput.getText(), 
-                    filePath, flightNumberInput.getText(), destinationInput.getText(),
+                    filePath, flightNumberInput.getText(), destination,
                     fys.getBaggageTypeString(typeCombo.getValue().toString()), brandInput.getText(), 
                     fys.getColorString(colorCombo.getValue().toString()), characteristicsInput.getText());
         }

@@ -220,7 +220,7 @@ public class taal {
             languagefields[156] = "Delete";
             languagefields[157] = "The data has successfully been removed!";
             languagefields[158] = "Renew the page to update the database";
-            languagefields[149] = "E-mailaddress is not correct";
+            languagefields[159] = "E-mailaddress is not correct";
         } else if(language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";

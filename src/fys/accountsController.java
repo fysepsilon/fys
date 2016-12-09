@@ -43,7 +43,7 @@ import javafx.scene.layout.AnchorPane;
 public class accountsController implements Initializable {
 
     @FXML
-    private Button NewAccountButton, change_button, remove_button;
+    private Button NewAccountButton, change_button, remove_button, cancel_button, send_button;
     @FXML
     private TableView<Accounts> table;
     @FXML
@@ -163,6 +163,8 @@ public class accountsController implements Initializable {
         NewAccountButton.setText(taal[63]);
         change_button.setText(taal[126]);
         remove_button.setText(taal[128]);
+        cancel_button.setText(taal[127]);
+        send_button.setText(taal[46]);
         first_name_label.setText(taal[9] + ":");
         surname_label.setText(taal[10] + ":");
         address_label.setText(taal[11] + ":");
@@ -216,7 +218,6 @@ public class accountsController implements Initializable {
         phone.setStyle("-fx-alignment: CENTER;");
         language_column.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
-
     }
 
     public void getLuggageData() {
@@ -232,7 +233,7 @@ public class accountsController implements Initializable {
             stmt = conn.createStatement();
             //connectToDatabase(conn, stmt, "test", "root", "root");
             if (loginController.getUsertype() == 2) { //SQL bij administrator (type = 2)
-                String sql = "SELECT * FROM bagagedatabase.person";
+                String sql = "SELECT * FROM bagagedatabase.person WHERE person.IS_SHOW = '0'";
 
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
@@ -258,7 +259,7 @@ public class accountsController implements Initializable {
                     }
                 }
             } else { //SQL bij servicemedewerker (type = 1)
-                String sql = "SELECT * FROM bagagedatabase.person WHERE type = '0'";
+                String sql = "SELECT * FROM bagagedatabase.person WHERE person.IS_SHOW = '0' AND type = '0'";
 
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
@@ -313,8 +314,8 @@ public class accountsController implements Initializable {
             doNext(dr_first_name, dr_surname, dr_type_combo, dr_mail, dr_address, dr_residence, dr_zip_code, dr_country, dr_phone, dr_language_combo, dr_personId);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(taal[104]);
-            alert.setContentText(taal[105]);
+            alert.setHeaderText(taal[133]);
+            alert.setContentText(taal[134]);
             alert.showAndWait();
         }
     }
@@ -470,7 +471,7 @@ public class accountsController implements Initializable {
             String[] taal = languages.getLanguage();
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql_person = "UPDATE bagagedatabase.person_table SET "
+            String sql_person = "UPDATE bagagedatabase.person SET "
                     + "first_name='" + first_name + "',"
                     + "surname='" + surname + "',"
                     + "mail='" + mail + "', address='" + address + "',"

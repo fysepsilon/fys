@@ -69,7 +69,8 @@
                 <TextArea fx:id="characteristicsFilter" layoutX="116.0" layoutY="328.0" prefHeight="87.0" prefWidth="187.0" />
                 <Button fx:id="filter" layoutX="116.0" layoutY="30.0" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="31.0" prefWidth="187.0" text="Filteren" />
                 <TextField fx:id="colorFilter" layoutX="116.0" layoutY="132.0" />
-                <Button fx:id="changeButton" layoutX="324.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleChange" prefHeight="39.0" prefWidth="574.0" text="Wijzig" />
+                <Button fx:id="changeButton" layoutX="324.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleChange" prefHeight="39.0" prefWidth="277.0" text="Wijzig" />
+            <Button fx:id="removeButton" layoutX="619.0" layoutY="419.0" mnemonicParsing="false" onAction="#handeRemove" prefHeight="39.0" prefWidth="277.0" text="Verwijderen" />
             </children>
         </AnchorPane>
         

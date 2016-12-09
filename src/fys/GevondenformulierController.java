@@ -31,23 +31,19 @@ import javafx.scene.control.TextField;
  * @author Team Epsilon
  */
 public class GevondenformulierController implements Initializable {
-
     //Alle inputvelden initialiseren
     @FXML
     private ComboBox airport_combo, color_combo, type_combo, destination_combo;
     @FXML
     private TextField name_input, surname_input, labelnumber_input,
-            flightnumber_input, brand_input,
-            characteristics_input;
+            flightnumber_input, destination_input, brand_input, characteristics_input;
     private CheckBox account_checkbox;
-    @FXML
-    private Button picture_button;
     @FXML
     private Label surname_label, name_label, airport_label, label_label,
             flight_label, destination_label, type_label, brand_label, color_label,
             characteristics_label, picture_label, loginerror;
     @FXML
-    private Button send_button;
+    private Button picture_button, send_button;
     @FXML
     private FYS fys = new FYS();
     public String filePath = null;
@@ -76,10 +72,17 @@ public class GevondenformulierController implements Initializable {
             }
             String dateString = tokens[0];
             String timeString = tokens[1];
+            
+            String destination;
+            if(destination_combo.getValue() == null){
+                destination = " ";
+            } else{
+                destination = destination_combo.getValue().toString();
+            }
 
             sendToDatabase(airport_combo.getValue().toString(), name_input.getText(),
                     surname_input.getText(), labelnumber_input.getText(), filePath,
-                    flightnumber_input.getText(), destination_combo.getValue().toString(),
+                    flightnumber_input.getText(), destination,
                     fys.getBaggageTypeString(type_combo.getValue().toString()), 
                     brand_input.getText(), fys.getColorString(color_combo.getValue().toString()), 
                     characteristics_input.getText(), dateString, timeString);
@@ -98,10 +101,16 @@ public class GevondenformulierController implements Initializable {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
 
-            //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql_person = "INSERT INTO bagagedatabase.person (type, language, first_name, "
-                    + "surname) VALUES ('0', '0', '" + frontname + "', '" + surname + "')";
-            stmt.executeUpdate(sql_person);
+            if ((name_input.getText() == null || name_input.getText().trim().isEmpty())
+                    || (surname_input.getText() == null || surname_input.getText().trim().isEmpty())) {
+               String sql_person = "INSERT INTO bagagedatabase.person (type, language, first_name, surname, IS_SHOW) "
+                        + "VALUES ('0', '0', '" + frontname + "', '" + surname + "', '1')";
+                stmt.executeUpdate(sql_person);
+            } else {
+                String sql_person = "INSERT INTO bagagedatabase.person (type, language, first_name, surname) "
+                        + "VALUES ('0', '0', '" + frontname + "', '" + surname + "')";
+                stmt.executeUpdate(sql_person);
+            }
 
             String sql_airport = "INSERT INTO bagagedatabase.airport (date, "
                     + "time, airport_found, label_number, flight_number, destination) "
@@ -152,6 +161,7 @@ public class GevondenformulierController implements Initializable {
         //String fileRaw = file.getAbsolutePath();
         filePath = "fys/luggageImages/" + file.getName();
         //filePath = fileRaw.replace("\\","\\\\");
+        System.out.println(filePath);
         picture_button.setText(file.getName());
     }
 
@@ -181,3 +191,4 @@ public class GevondenformulierController implements Initializable {
         send_button.setText(taal[46]);
     }
 }
+

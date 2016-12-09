@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +24,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -71,14 +74,14 @@ public class BagagedatabaseController implements Initializable {
     @FXML
     private Button filter;
     @FXML
-    private ComboBox statusCombo, airportCombo, typeCombo, colorCombo;
+    private ComboBox statusCombo, airportCombo, typeCombo, colorCombo, destination_combo;
     @FXML
     private TextField nameInput, surNameInput, addressInput,
             residenceInput, zipcodeInput, countryInput, phoneInput,
-            mailInput, labelNumberInput, flightNumberInput, destinationInput,
+            mailInput, labelNumberInput, flightNumberInput,
             brandInput, characteristicsInput;
     @FXML
-    private Button pictureButton, sendButton, cancelButton, changeButton;
+    private Button pictureButton, sendButton, cancelButton, changeButton, removeButton;
     @FXML
     private Label mailLabel, phoneLabel, countryLabel, zipcodeLabel,
             residenceLabel, addressLabel, surNameLabel, nameLabel, idLabel,
@@ -127,6 +130,7 @@ public class BagagedatabaseController implements Initializable {
         sendButton.setText(taal[46]);
         cancelButton.setText(taal[127]);
         changeButton.setText(taal[67]);
+        removeButton.setText(taal[146]);
 
         airportLabel.setText(taal[8] + ":");
         nameLabel.setText(taal[9] + ":");
@@ -336,7 +340,7 @@ public class BagagedatabaseController implements Initializable {
             int drFrom = Integer.parseInt((table.getSelectionModel().getSelectedItem().getTableFrom()));
             String dr_status = (table.getSelectionModel().getSelectedItem().getStatus());
             String dr_airport = (table.getSelectionModel().getSelectedItem().getAirportFound());
-            if(dr_airport==null){
+            if (dr_airport == null) {
                 dr_airport = (table.getSelectionModel().getSelectedItem().getAirportLost());
             }
             String dr_name = (table.getSelectionModel().getSelectedItem().getFirstName());
@@ -403,7 +407,6 @@ public class BagagedatabaseController implements Initializable {
 
     @FXML
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
-
         if ((typeCombo.getValue() == null)
                 || (brandInput.getText() == null || brandInput.getText().trim().isEmpty())
                 || (colorCombo.getValue() == null)) {
@@ -411,13 +414,20 @@ public class BagagedatabaseController implements Initializable {
             loginerror.setText(taal[93]);
             loginerror.setVisible(true);
         } else {
+            String destination;
+            if(destination_combo.getValue() == null){
+                destination = " ";
+            } else{
+                destination = destination_combo.getValue().toString();
+            }
+            
             sendToDatabase(Integer.parseInt(idLabel.getText()), Integer.parseInt(personIdLabel.getText()), 
                     Integer.parseInt(lafIdLabel.getText()), Integer.parseInt(tableFromLabel.getText()), 
                     fys.getStatusString(statusCombo.getValue().toString()), airportCombo.getValue().toString(), 
                     nameInput.getText(), surNameInput.getText(), addressInput.getText(), 
                     residenceInput.getText(), zipcodeInput.getText(), countryInput.getText(), 
                     phoneInput.getText(), mailInput.getText(), labelNumberInput.getText(), 
-                    filePath, flightNumberInput.getText(), destinationInput.getText(),
+                    filePath, flightNumberInput.getText(), destination,
                     fys.getBaggageTypeString(typeCombo.getValue().toString()), brandInput.getText(), 
                     fys.getColorString(colorCombo.getValue().toString()), characteristicsInput.getText());
         }
@@ -431,6 +441,8 @@ public class BagagedatabaseController implements Initializable {
             throws IOException, SQLException {
 
         try {
+            String[] mailInformation = new String[6];
+            int[] mailInformation2 = new int [3];
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
 
@@ -589,6 +601,92 @@ public class BagagedatabaseController implements Initializable {
                 //Sla het document op
                 document.save("src/fys/formulieren/dhlFormulier" + frontname + surname + dr_personId + ".pdf");
                 document.close();
+
+                // Mail
+                try {
+                    //connectToDatabase(conn, stmt, "test", "root", "root");
+                    String sql = "SELECT person_id, type, language, first_name, surname FROM person WHERE mail='" + mailInput.getText() + "'";
+                    ResultSet rs = stmt.executeQuery(sql);
+                    while (rs.next()) {
+                        //Retrieve by column name
+                        mailInformation[0] = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
+                        mailInformation[1] = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
+                        mailInformation2[0] = rs.getInt("person_id");
+                        mailInformation2[1] = rs.getInt("language");
+                    }
+                    rs.close();
+                } catch (SQLException ex) {
+                    // handle any errors
+                    System.out.println("SQLException: " + ex.getMessage());
+                    System.out.println("SQLState: " + ex.getSQLState());
+                    System.out.println("VendorError: " + ex.getErrorCode());
+                }
+                
+                try {
+                    //connectToDatabase(conn, stmt, "test", "root", "root");
+                    String sql = "SELECT color, brand, type FROM found OR lost WHERE person_id='" + mailInformation2[0] + "'";
+                    ResultSet rs = stmt.executeQuery(sql);
+                    while (rs.next()) {
+                        //Retrieve by column name
+                        mailInformation2[2] = rs.getInt("color");
+                        mailInformation[2] = rs.getString("brand").substring(0, 1).toUpperCase() + rs.getString("brand").substring(1);
+                        mailInformation2[3] = rs.getInt("type");
+                    }
+                    rs.close();
+                } catch (SQLException ex) {
+                    // handle any errors
+                    System.out.println("SQLException: " + ex.getMessage());
+                    System.out.println("SQLState: " + ex.getSQLState());
+                    System.out.println("VendorError: " + ex.getErrorCode());
+                }
+
+                if (mailInformation2[1] == 0) { // English emails
+                    fys.sendEmail(mailInput.getText(), "Corendon - Logindata", "Dear valued customer, "
+                            + "<br><br>There is an account created for you by one of our employees."
+                            + "<br>You can login to this account on our web application to view the status of your case."
+                            + "<br>You will need the following data to log in:"
+                            + "<br>Username: <i>" + mailInput.getText()
+                            + "</i><br>Password: <i>" + mailInformation[2]
+                            + "</i><br><br>You can change your password in the web application."
+                            + "<br>We hope to have informed you sufficiently."
+                            + "<br><br>Sincerely,"
+                            + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
+                } else if (mailInformation2[1] == 1) { // Dutch emails
+                    // Mail voor klant (type = 0)
+                    fys.sendEmail(mailInput.getText(), "Corendon - Inloggegevens", "Gewaardeerde klant, "
+                            + "<br><br>Uw " + mailInformation2[2] + mailInformation[2] + mailInformation2[3] + " is afgehandeld."
+                            + "<br>U kunt met dit account inloggen op onze webapplicatie om de status van uw koffer te bekijken."
+                            + "<br>U heeft de volgende gegevens nodig om in te kunnen loggen:"
+                            + "<br>Gebruikersnaam: <i>" + mailInput.getText()
+                            + "</i><br>Wachtwoord: <i>" + mailInformation[2]
+                            + "</i><br><br>U kunt uw wachtwoord wijzigen in de webapplicatie."
+                            + "<br>Wij hopen u hiermee voldoende te hebben geïnformeerd."
+                            + "<br><br>Met vriendelijke groet,"
+                            + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
+                } else if (mailInformation2[1] == 2) { // Spanish emails
+                    // Mail voor klant (type = 0)
+                    fys.sendEmail(mailInput.getText(), "Corendon - Logindatos", "Estimado cliente, "
+                            + "<br><br>Hay una cuenta creada para usted por uno de nuestros empleados."
+                            + "<br>Puede iniciar sesión con la cuenta en nuestra aplicación web para ver el estado de su caso."
+                            + "<br>Necesitará la siguiente información para iniciar sesión:"
+                            + "<br>Nombre de usuario: <i>" + mailInput.getText()
+                            + "</i><br>Contraseña: <i>" + mailInformation[2]
+                            + "</i><br><br>Puede cambiar su contraseña en la aplicación web."
+                            + "<br>Esperamos que te han informado lo suficiente."
+                            + "<br><br>Atentamente,"
+                            + "<br><br><b>El equipo de Corendon</b>", "Sent message successfully....");
+                } else { // Turkisch emails
+                    fys.sendEmail(mailInput.getText(), "Corendon - Giriş", "Değerli müşterimiz, "
+                            + "<br><br>Çalışanlarımızın biri tarafından sizin için oluşturulan bir hesap vardır."
+                            + "<br>Sen davanın durumunu görüntülemek için web uygulamasında bu hesaba giriş yapabilirsiniz."
+                            + "<br>Oturum açmak için aşağıdaki bilgilere ihtiyacınız olacaktır:"
+                            + "<br>Kullanıcı adı: <i>" + mailInput.getText()
+                            + "</i><br>Şifre: <i>" + mailInformation[2]
+                            + "</i><br><br>Bu web uygulamasında şifrenizi değiştirebilirsiniz."
+                            + "<br>Biz yeterince sizi haberdar etmek istedik."
+                            + "<br><br>Saygılarımızla,"
+                            + "<br><br><b>Corendon Takımı</b>", "Sent message successfully....");
+                }
             }
             pictureButton.setText("Klik hier om een afbeelding toe te voegen");
             fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");
@@ -610,5 +708,67 @@ public class BagagedatabaseController implements Initializable {
         System.out.println(filePath);
         //filePath = fileRaw.replace("\\","\\\\");
         pictureButton.setText(file.getName());
+    }
+    
+    //Bagage permanent uit de database verwijderen
+    @FXML
+    public void handeRemove(ActionEvent event) {
+        int selectedIndex = table.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            //Verkrijg de id, personId en lafId om data te verwijderen
+            int dr_id = (table.getSelectionModel().getSelectedItem().getRealid());
+            int dr_personId = (table.getSelectionModel().getSelectedItem().getPersonID());
+            int dr_lafId = (table.getSelectionModel().getSelectedItem().getLostAndFoundID());
+            int dr_from = Integer.parseInt((table.getSelectionModel().getSelectedItem().getTableFrom()));
+            
+            //Vraag of de gebruiker het zeker weet
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setHeaderText(taal[144]);
+            confirm.setContentText(taal[145]);            
+            Optional<ButtonType> result = confirm.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                try {
+                    conn = fys.connectToDatabase(conn);
+                    stmt = conn.createStatement();
+                    String sql_del = "";
+                    String sql_del2 = "";
+                    String sql_del3 = "";
+                    
+                    //Verwijder de gegevens die coresponderen aan de id, personId en lafId
+                    if(dr_from == 0){ //0 = lost_table
+                        sql_del = "DELETE FROM bagagedatabase.lost WHERE id='" + dr_id + "'";
+                        sql_del2 = "DELETE FROM bagagedatabase.person WHERE person_id='" + dr_personId + "'";
+                        sql_del3 = "DELETE FROM bagagedatabase.airport WHERE lost_and_found_id='" + dr_lafId + "'";
+                    } else if(dr_from == 1){ //1 = found_table
+                        sql_del = "DELETE FROM bagagedatabase.found WHERE id='" + dr_id + "'";
+                        sql_del2 = "DELETE FROM bagagedatabase.person WHERE person_id='" + dr_personId + "'";
+                        sql_del3 = "DELETE FROM bagagedatabase.airport WHERE lost_and_found_id='" + dr_lafId + "'";
+                    }
+                    stmt.executeUpdate(sql_del);
+                    stmt.executeUpdate(sql_del2);
+                    stmt.executeUpdate(sql_del3);
+                    conn.close();
+                    
+                    Alert info = new Alert(AlertType.INFORMATION);
+                    info.setTitle("Information Dialog");
+                    info.setHeaderText(taal[147]);
+                    info.setContentText(taal[148]);
+
+                    info.showAndWait();
+                } catch (SQLException ex) {
+                    // handle any errors
+                    System.out.println("SQLException: " + ex.getMessage());
+                    System.out.println("SQLState: " + ex.getSQLState());
+                    System.out.println("VendorError: " + ex.getErrorCode());
+                }
+            } else {
+                //Ignore
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(taal[144]);
+            alert.setContentText(taal[105]);
+            alert.showAndWait();
+        }
     }
 }

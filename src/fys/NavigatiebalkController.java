@@ -30,7 +30,7 @@ public class NavigatiebalkController implements Initializable {
      * Initializes the controller class.
      */
     @FXML private Button homeAdmin, missingAdmin, foundAdmin, luggageAdmin, accountAdmin
-            , staticsAdmin, home, missing, found, luggage, account;
+            , staticsAdmin, home, missing, found, luggage, account, mailAdmin;
     @FXML private Text welcomeText;   
     @FXML private HBox HBoxAdmin, HBoxSM;
     @FXML private MenuItem settings, logout;
@@ -69,6 +69,11 @@ public class NavigatiebalkController implements Initializable {
     }
     
     @FXML
+    private void handleMailsettings(ActionEvent event) throws IOException {
+        fys.changeToAnotherFXML(taal[137], "mailsettings.fxml");
+    }
+    
+    @FXML
     private void handleBagagedatabase(ActionEvent event) throws IOException {
         fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");
     }
@@ -99,7 +104,8 @@ public class NavigatiebalkController implements Initializable {
             foundAdmin.setText(taal[1]);
             luggageAdmin.setText(taal[2]);
             accountAdmin.setText(taal[3]);
-            staticsAdmin.setText(taal[4]);            
+            staticsAdmin.setText(taal[4]); 
+            mailAdmin.setText(taal[137]);
             HBoxAdmin.setVisible(true);
             HBoxSM.setVisible(false);
             welcomeText.setText( taal[6] + " - " + taal[5] + "! " + name);

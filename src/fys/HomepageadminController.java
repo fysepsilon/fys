@@ -12,7 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,7 +48,7 @@ public class HomepageadminController implements Initializable {
             new Status(taal[54], 0), new Status(taal[55], 0),
             new Status(taal[56], 0), new Status(taal[57], 0),
             new Status(taal[58], 0), new Status(taal[59], 0));
-    @FXML private TableColumn status, amount;
+    @FXML private TableColumn week, status, amount;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -57,6 +59,12 @@ public class HomepageadminController implements Initializable {
         String[] tokens = dateTimeString.split("-");
         String year = tokens[0];
         String months = tokens[1];
+        
+        Calendar calendar = new GregorianCalendar();
+        Date trialTime = new Date();   
+        calendar.setTime(trialTime);     
+        System.out.println("Week number:" + 
+            calendar.get(Calendar.WEEK_OF_YEAR));
        
         //LINECHART
         linechart.setTitle(taal[76] + " " + fys.getMonthName(months ) +" " + year);
@@ -139,6 +147,7 @@ public class HomepageadminController implements Initializable {
         
         //Voeg de aantal 0 toe in de tabel en de namen van de statussen.
         tableTitle.setText(taal[48] + " " + fys.getMonthName(months ) +" " + year);
+        week.setText(taal[143]);
         status.setText(taal[48]);
         amount.setText(taal[132]);
         getStatusData(year, months);

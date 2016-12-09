@@ -63,8 +63,8 @@ public class HomepageadminController implements Initializable {
         Calendar calendar = new GregorianCalendar();
         Date trialTime = new Date();   
         calendar.setTime(trialTime);     
-        System.out.println("Week number:" + 
-            calendar.get(Calendar.WEEK_OF_YEAR));
+//        System.out.println("Week number:" + 
+//            calendar.get(Calendar.WEEK_OF_YEAR));
        
         //LINECHART
         linechart.setTitle(taal[76] + " " + fys.getMonthName(months ) +" " + year);

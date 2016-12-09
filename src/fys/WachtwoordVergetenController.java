@@ -60,7 +60,7 @@ public class WachtwoordVergetenController implements Initializable {
             if(FYS.isValidEmailAddress(username.getText())){
                 //Haal de mail die is ingevuld.
                 try {
-                    String sql = "SELECT mail FROM person WHERE mail='" + username.getText() + "'";
+                    String sql = "SELECT mail FROM person WHERE mail='" + username.getText() + "' AND (type = '1' OR type = '2')";
                     try (ResultSet rs = stmt.executeQuery(sql)) {
                         while (rs.next()) {
                             //Retrieve by column name
@@ -74,7 +74,6 @@ public class WachtwoordVergetenController implements Initializable {
                     System.out.println("SQLState: " + ex.getSQLState());
                     System.out.println("VendorError: " + ex.getErrorCode());
                 }
-                
                 //Controleer of de ingevulde veld leeg is. Laat dan een error zien.
                 if ((email == null || email.trim().isEmpty())) {
                     sendPasswordMessage.setText("This username unfortunately does not exists!");

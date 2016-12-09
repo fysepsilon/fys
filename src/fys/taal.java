@@ -199,6 +199,7 @@ public class taal {
             languagefields[146] = "Delete";
             languagefields[147] = "The data has successfully been removed!";
             languagefields[148] = "Renew the page to update the database";
+            languagefields[149] = "E-mailaddress is not correct";
         } else if(language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
@@ -351,6 +352,7 @@ public class taal {
             languagefields[146] = "Verwijderen";
             languagefields[147] = "De data is succesvol verwijderd!";
             languagefields[148] = "Vernieuw de pagina om de database te updaten";
+            languagefields[149] = "E-mailadres is niet geldig";
         } else if(language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";
@@ -503,6 +505,7 @@ public class taal {
             languagefields[146] = "Eliminar";
             languagefields[147] = "Los datos se han eliminado correctamente!";
             languagefields[148] = "Actualizar la página para actualizar la base de datos";
+            languagefields[149] = "El correo electrónico no es válida";
         } else { //Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
@@ -655,6 +658,7 @@ public class taal {
             languagefields[146] = "Kaldırmak";
             languagefields[147] = "Verileri başarıyla silindi!";
             languagefields[148] = "Veritabanını güncellemek için sayfayı yenileyin";
+            languagefields[149] = "E-posta geçerli değil";
         }
         return languagefields;
     }

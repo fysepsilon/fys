@@ -46,13 +46,14 @@ public class GevondenformulierController implements Initializable {
     private Button picture_button, send_button;
     @FXML
     private FYS fys = new FYS();
+    @FXML
     public String filePath = null;
+    @FXML private taal language = new taal();
+    @FXML private String[] taal = language.getLanguage();
 
     //Methode om ingevulde data van gevonden bagage naar de database te sturen
     @FXML
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
-        taal language = new taal();
-        String[] taal = language.getLanguage();
 
         //Controleren of alles wat ingevuld moet worden is ingevuld
         if ((airport_combo.getValue() == null) || (type_combo.getValue() == null)
@@ -152,6 +153,7 @@ public class GevondenformulierController implements Initializable {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
+        fys.changeToAnotherFXML(taal[96], "gevondenformulier.fxml");
     }
 
     //Fileselector aanroepen wanneer iemand een afbeelding wil toevoegen

@@ -421,9 +421,9 @@ public class StatistiekenController implements Initializable {
         grid.setVgap(20);
 
         TextField dateFrom = new TextField();
-        dateFrom.setPromptText("1970-01-01");
+        dateFrom.setPromptText("01-01-1970");
         TextField dateTo = new TextField();
-        dateTo.setPromptText("2016-12-31");
+        dateTo.setPromptText("31-12-2016");
 
         grid.add(new Label(taal[141] + ":"), 0, 0);
         grid.add(dateFrom, 1, 0);

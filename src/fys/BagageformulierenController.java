@@ -7,6 +7,7 @@ package fys;
 
 import static fys.FYS.generateRandomPassword;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -61,11 +62,7 @@ public class BagageformulierenController implements Initializable {
     //Methode om ingevulde data van virmiste bagage naar de database te sturen
     @FXML
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
-        String password = fys.encrypt(generateRandomPassword(8));
-        String[] mailInformation = new String[3];
-        int[] language_user = new int[1];
-        conn = fys.connectToDatabase(conn);
-        stmt = conn.createStatement();
+        String password = FYS.encrypt(generateRandomPassword(8));
 
         //Controleren of alles wat ingevuld moet worden is ingevuld
         if ((name_input.getText() == null || name_input.getText().trim().isEmpty())
@@ -80,6 +77,12 @@ public class BagageformulierenController implements Initializable {
             //Indien niet alles correct is ingevuld foutmelding geven
             loginerror.setVisible(false);
             loginerror.setText(taal[93]);
+            loginerror.setStyle("-fx-text-fill: red;");
+            loginerror.setVisible(true);
+        } else if (fys.isValidEmailAddress(mail_input.getText())) {
+            //Indien het ingevulde emailadres al in de database bestaat foutmelding geven
+            loginerror.setVisible(false);
+            loginerror.setText(taal[159]);
             loginerror.setStyle("-fx-text-fill: red;");
             loginerror.setVisible(true);
         } else if (fys.checkEmailExists(mail_input.getText())) {
@@ -122,41 +125,6 @@ public class BagageformulierenController implements Initializable {
                     fys.getBaggageTypeString(type_combo.getValue().toString()),
                     brand_input.getText(), fys.getColorString(color_combo.getValue().toString()),
                     characteristics_input.getText(), dateString, timeString, password);
-
-            try {
-                //Mail sturen naar klant met zijn/haar inloggegevens
-                String sql = "SELECT type, language, first_name, surname, "
-                        + "password FROM person WHERE mail='" + mail_input.getText() + "'";
-                ResultSet rs = stmt.executeQuery(sql);
-                while (rs.next()) {
-                    //Retrieve by column name
-                    mailInformation[0] = rs.getString("first_name").substring(0, 1).toUpperCase()
-                            + rs.getString("first_name").substring(1);
-                    mailInformation[1] = rs.getString("surname").substring(0, 1).toUpperCase()
-                            + rs.getString("surname").substring(1);
-                    mailInformation[2] = fys.decrypt(rs.getString("password"));
-                    language_user[0] = rs.getInt("language");
-                }
-                rs.close();
-            } catch (SQLException ex) {
-                // handle any errors
-                System.out.println("SQLException: " + ex.getMessage());
-                System.out.println("SQLState: " + ex.getSQLState());
-                System.out.println("VendorError: " + ex.getErrorCode());
-            }
-
-            if (language_user[0] == 0) { // Mail voor klant (type = 0)
-                fys.sendEmail(mail_input.getText(), "Corendon - Logindata", "Dear valued customer, "
-                        + "<br><br>There is an account created for you by one of our employees."
-                        + "<br>You can login to this account on our web application to view the status of your case."
-                        + "<br>You will need the following data to log in:"
-                        + "<br>Username: <i>" + mail_input.getText()
-                        + "</i><br>Password: <i>" + mailInformation[2]
-                        + "</i><br><br>You can change your password in the web application."
-                        + "<br>We hope to have informed you sufficiently."
-                        + "<br><br>Sincerely,"
-                        + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
-            }
         }
     }
 
@@ -168,8 +136,10 @@ public class BagageformulierenController implements Initializable {
             Integer color, String characteristics, String date, String time,
             String password)
             throws IOException, SQLException {
-
+        
         try {
+            String passwordDecrypted = "";
+            int language_user = 0;
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
 
@@ -201,28 +171,50 @@ public class BagageformulierenController implements Initializable {
                     + labelnumber + "' AND airport.flight_number = '" + flightnumber + "' "
                     + "AND airport.destination = '" + destination + "'";
 
-            ResultSet id_rs = stmt.executeQuery(sql_personID);
             //personId en lost_and_foundId opslaan als variabelen
-            String personIdStr = null, lostAndFoundIdStr = null;
-            int personId = -1, lostAndFoundId = -1;
-            while (id_rs.next()) {
-                String strA = id_rs.getString("person_id");
-                personIdStr = strA.replace("\n", ",");
-                personId = Integer.parseInt(personIdStr);
-
-                String strB = id_rs.getString("lost_and_found_id");
-                lostAndFoundIdStr = strB.replace("\n", ",");
-                lostAndFoundId = Integer.parseInt(lostAndFoundIdStr);
+            try (ResultSet id_rs = stmt.executeQuery(sql_personID)) {
+                String personIdStr = null, lostAndFoundIdStr = null;
+                int personId = -1, lostAndFoundId = -1;
+                while (id_rs.next()) {
+                    String strA = id_rs.getString("person_id");
+                    personIdStr = strA.replace("\n", ",");
+                    personId = Integer.parseInt(personIdStr);
+                    
+                    String strB = id_rs.getString("lost_and_found_id");
+                    lostAndFoundIdStr = strB.replace("\n", ",");
+                    lostAndFoundId = Integer.parseInt(lostAndFoundIdStr);
+                }   //De gegevens van de verloren bagage toe voegen aan de database
+                String sql_lost = "INSERT INTO bagagedatabase.lost (type, brand, color, "
+                        + "characteristics, status, picture, person_id, lost_and_found_id) VALUES ('" + type + "', "
+                        + "'" + brand + "', '" + color + "', '" + characteristics + "', 1, "
+                        + "'" + filePath + "', '" + personId + "', '" + lostAndFoundId + "')";
+                stmt.executeUpdate(sql_lost);
             }
+            
+            //Mail sturen naar klant met zijn/haar inloggegevens
+            String sql = "SELECT type, language, first_name, surname, "
+                    + "password FROM person WHERE mail='" + mail_input.getText() + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                //Retrieve by column name
+                passwordDecrypted = FYS.decrypt(rs.getString("password"));
+                language_user = rs.getInt("language");
+            }
+            rs.close();
 
-            //De gegevens van de verloren bagage toe voegen aan de database
-            String sql_lost = "INSERT INTO bagagedatabase.lost (type, brand, color, "
-                    + "characteristics, status, picture, person_id, lost_and_found_id) VALUES ('" + type + "', "
-                    + "'" + brand + "', '" + color + "', '" + characteristics + "', 1, "
-                    + "'" + filePath + "', '" + personId + "', '" + lostAndFoundId + "')";
-            stmt.executeUpdate(sql_lost);
-
-            id_rs.close();
+            if (language_user == 0) { // Mail voor klant (type = 0)
+                fys.sendEmail(mail_input.getText(), "Corendon - Logindata", "Dear valued customer, "
+                        + "<br><br>There is an account created for you by one of our employees."
+                        + "<br>You can login to this account on our web application to view the status of your case."
+                        + "<br>You will need the following data to log in:"
+                        + "<br>Username: <i>" + mail_input.getText()
+                        + "</i><br>Password: <i>" + passwordDecrypted
+                        + "</i><br><br>You can change your password in the web application."
+                        + "<br>We hope to have informed you sufficiently."
+                        + "<br><br>Sincerely,"
+                        + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
+            }
+            
             conn.close();
         } catch (SQLException ex) {
             // handle any errors
@@ -230,14 +222,16 @@ public class BagageformulierenController implements Initializable {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
+        fys.changeToAnotherFXML(taal[95], "bagageformulieren.fxml");
     }
 
     //Fileselector aanroepen wanneer iemand een afbeelding wil toevoegen
     @FXML
-    public void handleFileSelector(ActionEvent event) {
+    public void handleFileSelector(ActionEvent event) throws IOException {
         File file = fys.fileChooser();
         //String fileRaw = file.getAbsolutePath();
-        filePath = "fys/luggageImages/" + file.getName();
+        filePath = "/fys/src/fys/luggageImages/" + file.getName();
+        
         //filePath = fileRaw.replace("\\","\\\\");
         System.out.println(filePath);
         picture_button.setText(file.getName());

@@ -6,7 +6,10 @@
 package fys;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -442,7 +445,7 @@ public class BagagedatabaseController implements Initializable {
 
         try {
             String[] mailInformation = new String[6];
-            int[] mailInformation2 = new int [3];
+            int[] mailInformation2 = new int [4];
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
 
@@ -478,14 +481,14 @@ public class BagagedatabaseController implements Initializable {
                     case 0:
                         sql_airport = "UPDATE bagagedatabase.airport SET airport_found='" + airport + "',"
                                 + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
-                                + "picture='" + filePath + "', destination='" + destination + "'"
+                                + "destination='" + destination + "'"
                                 + "WHERE lost_and_found_id='" + dr_lafId + "'";
                         break;
                     //case 3: Gaat van lost naar status Afgehandeld
                     case 3:
                         sql_airport = "UPDATE bagagedatabase.airport SET airport_found='" + airport + "',"
                                 + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
-                                + "picture='" + filePath + "', destination='" + destination + "'"
+                                + "destination='" + destination + "'"
                                 + "WHERE lost_and_found_id='" + dr_lafId + "'";
                         break;
                     //case 6: registreer schadeclaim de status zal niet veranderen.    
@@ -497,7 +500,7 @@ public class BagagedatabaseController implements Initializable {
                     default:
                         sql_airport = "UPDATE bagagedatabase.airport SET airport_lost='" + airport + "',"
                                 + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
-                                + "picture='" + filePath + "', destination='" + destination + "'"
+                                + "destination='" + destination + "'"
                                 + "WHERE lost_and_found_id='" + dr_lafId + "'";
                         break;
                 }
@@ -512,14 +515,14 @@ public class BagagedatabaseController implements Initializable {
                     case 1:
                         sql_airport = "UPDATE bagagedatabase.airport SET airport_lost='" + airport + "',"
                                 + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
-                                + "picture='" + filePath + "', destination='" + destination + "'"
+                                + "destination='" + destination + "'"
                                 + "WHERE lost_and_found_id='" + dr_lafId + "'";
                         break;
                     //case 3: Gaat van found naar status Afgehandeld
                     case 3:
                         sql_airport = "UPDATE bagagedatabase.airport SET airport_lost='" + airport + "',"
                                 + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
-                                + "picture='" + filePath + "', destination='" + destination + "'"
+                                + "destination='" + destination + "'"
                                 + "WHERE lost_and_found_id='" + dr_lafId + "'";
                         break;
                     //case 6: registreer schadeclaim de status zal niet veranderen.     
@@ -531,7 +534,7 @@ public class BagagedatabaseController implements Initializable {
                     default:
                         sql_airport = "UPDATE bagagedatabase.airport SET airport_found='" + airport + "',"
                                 + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
-                                + "picture='" + filePath + "', destination='" + destination + "'"
+                                + "destination='" + destination + "'"
                                 + "WHERE lost_and_found_id='" + dr_lafId + "'";
                         break;
                 }
@@ -624,7 +627,12 @@ public class BagagedatabaseController implements Initializable {
                 
                 try {
                     //connectToDatabase(conn, stmt, "test", "root", "root");
-                    String sql = "SELECT color, brand, type FROM found OR lost WHERE person_id='" + mailInformation2[0] + "'";
+                    String sql = "";
+                    if (tableFrom == 1) {
+                        sql = "SELECT color, brand, type FROM found WHERE person_id='" + mailInformation2[0] + "'";
+                    } else{
+                        sql = "SELECT color, brand, type FROM lost WHERE person_id='" + mailInformation2[0] + "'";
+                    }
                     ResultSet rs = stmt.executeQuery(sql);
                     while (rs.next()) {
                         //Retrieve by column name
@@ -701,10 +709,10 @@ public class BagagedatabaseController implements Initializable {
     
     //Fileselector aanroepen wanneer iemand een afbeelding wil toevoegen
     @FXML
-    public void handleFileSelector(ActionEvent event) {
+    public void handleFileSelector(ActionEvent event) throws FileNotFoundException, IOException {
         File file = fys.fileChooser();
         //String fileRaw = file.getAbsolutePath();
-        filePath = "fys/luggageImages/" + file.getName();
+        filePath = "fys/src/fys/luggageImages/" + file.getName();
         System.out.println(filePath);
         //filePath = fileRaw.replace("\\","\\\\");
         pictureButton.setText(file.getName());
@@ -712,7 +720,7 @@ public class BagagedatabaseController implements Initializable {
     
     //Bagage permanent uit de database verwijderen
     @FXML
-    public void handeRemove(ActionEvent event) {
+    public void handeRemove(ActionEvent event) throws IOException {
         int selectedIndex = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             //Verkrijg de id, personId en lafId om data te verwijderen
@@ -749,12 +757,13 @@ public class BagagedatabaseController implements Initializable {
                     stmt.executeUpdate(sql_del3);
                     conn.close();
                     
-                    Alert info = new Alert(AlertType.INFORMATION);
-                    info.setTitle("Information Dialog");
-                    info.setHeaderText(taal[157]);
-                    info.setContentText(taal[158]);
+                    fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");
+//                    Alert info = new Alert(AlertType.INFORMATION);
+//                    info.setTitle("Information Dialog");
+//                    info.setHeaderText(taal[157]);
+//                    info.setContentText(taal[158]);
 
-                    info.showAndWait();
+//                    info.showAndWait();
                 } catch (SQLException ex) {
                     // handle any errors
                     System.out.println("SQLException: " + ex.getMessage());

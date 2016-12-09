@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +24,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -78,7 +81,7 @@ public class BagagedatabaseController implements Initializable {
             mailInput, labelNumberInput, flightNumberInput, destinationInput,
             brandInput, characteristicsInput;
     @FXML
-    private Button pictureButton, sendButton, cancelButton, changeButton;
+    private Button pictureButton, sendButton, cancelButton, changeButton, removeButton;
     @FXML
     private Label mailLabel, phoneLabel, countryLabel, zipcodeLabel,
             residenceLabel, addressLabel, surNameLabel, nameLabel, idLabel,
@@ -127,6 +130,7 @@ public class BagagedatabaseController implements Initializable {
         sendButton.setText(taal[46]);
         cancelButton.setText(taal[127]);
         changeButton.setText(taal[67]);
+        removeButton.setText(taal[146]);
 
         airportLabel.setText(taal[8] + ":");
         nameLabel.setText(taal[9] + ":");
@@ -698,5 +702,67 @@ public class BagagedatabaseController implements Initializable {
         System.out.println(filePath);
         //filePath = fileRaw.replace("\\","\\\\");
         pictureButton.setText(file.getName());
+    }
+    
+    //Bagage permanent uit de database verwijderen
+    @FXML
+    public void handeRemove(ActionEvent event) {
+        int selectedIndex = table.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            //Verkrijg de id, personId en lafId om data te verwijderen
+            int dr_id = (table.getSelectionModel().getSelectedItem().getRealid());
+            int dr_personId = (table.getSelectionModel().getSelectedItem().getPersonID());
+            int dr_lafId = (table.getSelectionModel().getSelectedItem().getLostAndFoundID());
+            int dr_from = Integer.parseInt((table.getSelectionModel().getSelectedItem().getTableFrom()));
+            
+            //Vraag of de gebruiker het zeker weet
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setHeaderText(taal[144]);
+            confirm.setContentText(taal[145]);            
+            Optional<ButtonType> result = confirm.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                try {
+                    conn = fys.connectToDatabase(conn);
+                    stmt = conn.createStatement();
+                    String sql_del = "";
+                    String sql_del2 = "";
+                    String sql_del3 = "";
+                    
+                    //Verwijder de gegevens die coresponderen aan de id, personId en lafId
+                    if(dr_from == 0){ //0 = lost_table
+                        sql_del = "DELETE FROM bagagedatabase.lost WHERE id='" + dr_id + "'";
+                        sql_del2 = "DELETE FROM bagagedatabase.person WHERE person_id='" + dr_personId + "'";
+                        sql_del3 = "DELETE FROM bagagedatabase.airport WHERE lost_and_found_id='" + dr_lafId + "'";
+                    } else if(dr_from == 1){ //1 = found_table
+                        sql_del = "DELETE FROM bagagedatabase.found WHERE id='" + dr_id + "'";
+                        sql_del2 = "DELETE FROM bagagedatabase.person WHERE person_id='" + dr_personId + "'";
+                        sql_del3 = "DELETE FROM bagagedatabase.airport WHERE lost_and_found_id='" + dr_lafId + "'";
+                    }
+                    stmt.executeUpdate(sql_del);
+                    stmt.executeUpdate(sql_del2);
+                    stmt.executeUpdate(sql_del3);
+                    conn.close();
+                    
+                    Alert info = new Alert(AlertType.INFORMATION);
+                    info.setTitle("Information Dialog");
+                    info.setHeaderText(taal[147]);
+                    info.setContentText(taal[148]);
+
+                    info.showAndWait();
+                } catch (SQLException ex) {
+                    // handle any errors
+                    System.out.println("SQLException: " + ex.getMessage());
+                    System.out.println("SQLState: " + ex.getSQLState());
+                    System.out.println("VendorError: " + ex.getErrorCode());
+                }
+            } else {
+                //Ignore
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(taal[144]);
+            alert.setContentText(taal[105]);
+            alert.showAndWait();
+        }
     }
 }

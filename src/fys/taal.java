@@ -193,6 +193,12 @@ public class taal {
             languagefields[141] = "Date from";
             languagefields[142] = "Date to";
             languagefields[143] = "Week";
+            languagefields[144] = "Delete data";
+            languagefields[145] = "You are about to delete this luggage and customer data"
+                    + " permanently! Are you sure?";
+            languagefields[146] = "Delete";
+            languagefields[147] = "The data has successfully been removed!";
+            languagefields[148] = "Renew the page to update the database";
         } else if(language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
@@ -339,6 +345,12 @@ public class taal {
             languagefields[141] = "Datum vanaf";
             languagefields[142] = "Datum tot";
             languagefields[143] = "Week";
+            languagefields[144] = "Verwijderen van gegevens";
+            languagefields[145] = "U staat op het punt deze bagage- en klantgegevens permanent"
+                    + " te verwijderen! Weet u het zeker?";
+            languagefields[146] = "Verwijderen";
+            languagefields[147] = "De data is succesvol verwijderd!";
+            languagefields[148] = "Vernieuw de pagina om de database te updaten";
         } else if(language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";
@@ -485,6 +497,12 @@ public class taal {
             languagefields[141] = "Fecha a partir de";
             languagefields[142] = "Fecha de";
             languagefields[143] = "Semana";
+            languagefields[144] = "Eliminación de datos";
+            languagefields[145] = "Estás a punto de eliminar esta equipaje y datos"
+                    + " de forma permanente al cliente! ¿Seguro?";
+            languagefields[146] = "Eliminar";
+            languagefields[147] = "Los datos se han eliminado correctamente!";
+            languagefields[148] = "Actualizar la página para actualizar la base de datos";
         } else { //Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
@@ -631,6 +649,12 @@ public class taal {
             languagefields[141] = "Geçmişe dayanmak";
             languagefields[142] = "Tarih";
             languagefields[143] = "Hafta";
+            languagefields[144] = "Silme veri";
+            languagefields[145] = "Bunu sürekli olarak bu bagaj ve müşteri verilerini "
+                    + " kaldırmak üzeresiniz! Emin misiniz?";
+            languagefields[146] = "Kaldırmak";
+            languagefields[147] = "Verileri başarıyla silindi!";
+            languagefields[148] = "Veritabanını güncellemek için sayfayı yenileyin";
         }
         return languagefields;
     }

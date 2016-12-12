@@ -31,6 +31,7 @@
                 <Menu>
                     <items>
                         <MenuItem id="settings" fx:id="settings" mnemonicParsing="false" onAction="#handleSettings" text="Instellingen" />
+                        <MenuItem id="usermanual" fx:id="usermanual" mnemonicParsing="false" onAction="#handleManual" text="Gebruikershandleiding" />
                         <MenuItem id="logout" fx:id="logout" mnemonicParsing="false" onAction="#handleLogout" text="Uitloggen" />
                     </items>
                     <graphic>

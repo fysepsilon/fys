@@ -97,6 +97,7 @@ public class accountsController implements Initializable {
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(taal[128]);
+            alert.setTitle(taal[128]);
             alert.setContentText(taal[129] + dr_first_name + " " + dr_surname + taal[130]);
 
             ButtonType buttonTypeOne = new ButtonType(taal[146]);
@@ -121,6 +122,7 @@ public class accountsController implements Initializable {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(taal[104]);
+            alert.setTitle(taal[104]);
             alert.setContentText(taal[105]);
             alert.showAndWait();
         }
@@ -315,6 +317,7 @@ public class accountsController implements Initializable {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(taal[133]);
+            alert.setTitle(taal[133]);
             alert.setContentText(taal[134]);
             alert.showAndWait();
         }

@@ -350,6 +350,7 @@ public class BagagedatabaseController implements Initializable {
             if (dr_airport == null) {
                 dr_airport = (table.getSelectionModel().getSelectedItem().getAirportLost());
             }
+            filePath = (table.getSelectionModel().getSelectedItem().getPicture());
             String dr_name = (table.getSelectionModel().getSelectedItem().getFirstName());
             String dr_surname = (table.getSelectionModel().getSelectedItem().getSurName());
             String dr_address = (table.getSelectionModel().getSelectedItem().getAddress());

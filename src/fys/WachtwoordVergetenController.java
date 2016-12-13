@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author Paras
+ * @author Team Epsilon
  */
 public class WachtwoordVergetenController implements Initializable {
 

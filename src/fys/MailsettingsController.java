@@ -35,13 +35,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.HTMLEditor;
 
 /**
  * FXML Controller class
  *
- * @author Paras
+ * @author Team Epsilon
  */
 public class MailsettingsController implements Initializable {
 
@@ -56,13 +57,14 @@ public class MailsettingsController implements Initializable {
     @FXML
     private HTMLEditor HTMLEditor;
     @FXML
-    private Button change_button, send_button, cancel_button, recover_button, show_VBox;
+    private Button change_button, send_button, cancel_button, recover_button,
+            show_VBox, close_VBOX;
     @FXML
     private Label mailid_label, subject_label, page_label, type_label,
-            language_label, info_firstname, info_surname, info_password, 
-            info_username, info, 
-            // warning, warning_label, 
-            info_label;
+            language_label, info_firstname, info_surname, info_password,
+            info_username, info, error, info_label;
+    @FXML
+    private GridPane mailGridpane;
     @FXML
     private VBox VBox;
     @FXML
@@ -88,21 +90,19 @@ public class MailsettingsController implements Initializable {
         page_label.setText(taal[144] + ":");
         type_label.setText(taal[20] + ":");
         language_label.setText(taal[68] + ":");
-        
+
         info_username.setText(taal[148]);
         info_password.setText(taal[90]);
         info_firstname.setText(taal[9]);
         info_surname.setText(taal[10]);
         info_label.setText(taal[152]);
         info.setText(taal[149]);
-        // warning.setText(taal[150]);
-        // warning_label.setText(taal[151]);
-        
+
         change_button.setText(taal[67]);
         send_button.setText(taal[46]);
         cancel_button.setText(taal[127]);
         recover_button.setText(taal[153]);
-        
+
         loginController loginController = new loginController();
 
         getMailData();
@@ -131,9 +131,9 @@ public class MailsettingsController implements Initializable {
                     int mailid = rs.getInt("mailid");
                     String subject = rs.getString("subject");
                     String message = rs.getString("message");
-                    int page = rs.getInt("pageid");
-                    int type = rs.getInt("type");
-                    int language = rs.getInt("language");
+                    String page = fys.getPage(rs.getInt("pageid"));
+                    String type = fys.getUserFunction(rs.getInt("type"));
+                    String language = fys.getUserLanguage(rs.getInt("language"));
 
                     data.add(new Mail(mailid, subject, message, page, type, language));
                 }
@@ -154,9 +154,9 @@ public class MailsettingsController implements Initializable {
             int dr_mailid = (table.getSelectionModel().getSelectedItem().getMailid());
             String dr_subject = (table.getSelectionModel().getSelectedItem().getSubject());
             String dr_message = (table.getSelectionModel().getSelectedItem().getMessage());
-            int dr_page = (table.getSelectionModel().getSelectedItem().getPage());
-            int dr_type = (table.getSelectionModel().getSelectedItem().getType());
-            int dr_language = (table.getSelectionModel().getSelectedItem().getLanguage());
+            String dr_page = (table.getSelectionModel().getSelectedItem().getPage());
+            String dr_type = (table.getSelectionModel().getSelectedItem().getType());
+            String dr_language = (table.getSelectionModel().getSelectedItem().getLanguage());
 
             doNext(dr_mailid, dr_subject, dr_message, dr_page, dr_type, dr_language);
         } else {
@@ -169,7 +169,8 @@ public class MailsettingsController implements Initializable {
     }
 
     @FXML
-    public void doNext(int dr_mailid, String dr_subject, String dr_message, int dr_page, int dr_type, int dr_language) {
+    public void doNext(int dr_mailid, String dr_subject, String dr_message, 
+            String dr_page, String dr_type, String dr_language) {
         // Switch from an anchorpane to another anchorpane
         home_pane.setDisable(true);
         home_pane.setVisible(false);
@@ -194,23 +195,25 @@ public class MailsettingsController implements Initializable {
         edit_pane.setDisable(true);
         edit_pane.setVisible(false);
     }
-    
+
     @FXML
     private void handleBig(ActionEvent event) throws IOException {
         // Switch from an anchorpane to another anchorpane
         VBox.setVisible(true);
-        HTMLEditor.setPrefWidth(600);
+        HTMLEditor.setPrefWidth(560);
         show_VBox.setVisible(false);
-
+        mailGridpane.setPrefWidth(560);
+        close_VBOX.setVisible(true);
     }
-    
+
     @FXML
     private void handleCloseBig(ActionEvent event) throws IOException {
         // Switch from an anchorpane to another anchorpane
         VBox.setVisible(false);
         HTMLEditor.setPrefWidth(772);
         show_VBox.setVisible(true);
-
+        mailGridpane.setPrefWidth(772);
+        close_VBOX.setVisible(false);
     }
 
     public void handleRecover(ActionEvent event) throws IOException {
@@ -219,9 +222,9 @@ public class MailsettingsController implements Initializable {
             int dr_mailid = (table.getSelectionModel().getSelectedItem().getMailid());
             String dr_subject = (table.getSelectionModel().getSelectedItem().getSubject());
             String dr_message = (table.getSelectionModel().getSelectedItem().getMessage());
-            int dr_page = (table.getSelectionModel().getSelectedItem().getPage());
-            int dr_type = (table.getSelectionModel().getSelectedItem().getType());
-            int dr_language = (table.getSelectionModel().getSelectedItem().getLanguage());
+            String dr_page = (table.getSelectionModel().getSelectedItem().getPage());
+            String dr_type = (table.getSelectionModel().getSelectedItem().getType());
+            String dr_language = (table.getSelectionModel().getSelectedItem().getLanguage());
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(taal[104]);
@@ -290,7 +293,15 @@ public class MailsettingsController implements Initializable {
 
     @FXML
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
-        sendToDatabase(Integer.parseInt(mailid_label.getText()), subject_field.getText(), HTMLEditor.getHtmlText());
+        if (((HTMLEditor.getHtmlText() == null || HTMLEditor.getHtmlText().trim().isEmpty())
+                || subject_field.getText() == null || subject_field.getText().trim().isEmpty())) {
+            // Foutmelding
+            error.setText(taal[93]);
+            error.setVisible(true);
+        } else {       
+            sendToDatabase(Integer.parseInt(mailid_label.getText()), subject_field.getText(), HTMLEditor.getHtmlText());
+        }
+
     }
 
     private void sendToDatabase(int mailid, String subject, String message) throws IOException, SQLException {

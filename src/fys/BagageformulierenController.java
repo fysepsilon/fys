@@ -35,7 +35,7 @@ public class BagageformulierenController implements Initializable {
 
     //Alle inputvelden initialiseren
     @FXML
-    private ComboBox airport_combo, type_combo, color_combo, destination_combo;
+    private ComboBox airport_combo, type_combo, color_combo, destination_combo, language_combo;
     @FXML
     private TextField name_input, surname_input, address_input, residence_input,
             zipcode_input, country_input, phone_input, mail_input, labelnumber_input,
@@ -46,7 +46,7 @@ public class BagageformulierenController implements Initializable {
     private Label surname_label, name_label, airport_label, label_label,
             flight_label, destination_label, type_label, brand_label, color_label,
             characteristics_label, picture_label, address_label, residence_label,
-            zipcode_label, country_label, phone_label, mail_label, loginerror;
+            zipcode_label, country_label, phone_label, mail_label, loginerror, language_label;
     @FXML
     private FYS fys = new FYS();
     @FXML
@@ -146,7 +146,9 @@ public class BagageformulierenController implements Initializable {
             //Query om klant toe te voegen aan de database
             String sql_person = "INSERT INTO bagagedatabase.person (type, language, "
                     + "first_name, surname, address, residence, zip_code, country, "
-                    + "phone, mail, password) VALUES ('0', '0', '" + frontname + "', "
+                    + "phone, mail, password) VALUES ('0', '" + 
+                    fys.getUserLanguageString(language_combo.getSelectionModel().getSelectedItem().toString())
+                    + "', '" + frontname + "', "
                     + "'" + surname + "', '" + address + "', '" + residence + "', "
                     + "'" + zipcode + "', '" + country + "', '" + phone + "', "
                     + "'" + mail + "', '" + password + "')";
@@ -257,9 +259,13 @@ public class BagageformulierenController implements Initializable {
         color_label.setText(taal[22] + ":");
         characteristics_label.setText(taal[23] + ":");
         picture_label.setText(taal[24] + ":");
+        language_label.setText(taal[68] + ":");
+        language_combo.getItems().addAll(
+                taal[69],taal[70], taal[71], taal[72]);
         
-        // WERKT NIET
-        airport_combo.setPromptText(taal[25]);   
+        airport_combo.setPromptText(taal[25]);  
+        destination_combo.setPromptText(taal[25]);
+        language_combo.setPromptText(taal[164]);
         color_combo.setPromptText(taal[31]);
         color_combo.getItems().addAll(
                 taal[32], taal[33], taal[34], taal[35], taal[36],

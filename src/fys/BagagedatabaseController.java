@@ -7,9 +7,7 @@ package fys;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -27,10 +25,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -47,7 +43,7 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 /**
  * FXML Controller class
  *
- * @author Paras
+ * @author Team Epsilon
  */
 public class BagagedatabaseController implements Initializable {
     @FXML
@@ -61,7 +57,7 @@ public class BagagedatabaseController implements Initializable {
     @FXML
     private ObservableList<Bagage> dataFilter = FXCollections.observableArrayList();
     @FXML
-    private TableColumn id, status, type, color, brand, date, information,
+    private TableColumn id, status, type, color, brand, picture, date, information,
             firstName, surName, address, residence, zipcode, country, phone, mail,
             labelNumber, flightNumber, destination, airportFound, airportLost, tableFrom, lostAndFoundID,
             personID, realId;
@@ -113,6 +109,7 @@ public class BagagedatabaseController implements Initializable {
         color.setText(taal[49]);
         type.setText(taal[50]);
         brand.setText(taal[51]);
+        picture.setText(taal[24]);
         date.setText(taal[52]);
         information.setText(taal[23]);
         firstName.setText(taal[9]);
@@ -185,6 +182,7 @@ public class BagagedatabaseController implements Initializable {
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
         color.setCellValueFactory(new PropertyValueFactory<>("color"));
         brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        picture.setCellValueFactory(new PropertyValueFactory<>("picture"));
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
         information.setCellValueFactory(new PropertyValueFactory<>("information"));
         firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -209,6 +207,7 @@ public class BagagedatabaseController implements Initializable {
         type.setStyle("-fx-alignment: CENTER;");
         color.setStyle("-fx-alignment: CENTER;");
         brand.setStyle("-fx-alignment: CENTER;");
+        picture.setStyle("-fx-alignment: CENTER;");
         date.setStyle("-fx-alignment: CENTER;");
         information.setStyle("-fx-alignment: CENTER;");
         firstName.setStyle("-fx-alignment: CENTER;");
@@ -226,6 +225,7 @@ public class BagagedatabaseController implements Initializable {
         airportLost.setStyle("-fx-alignment: CENTER;");
         tableFrom.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
+        destination_combo.setPromptText(taal[25]);
         inklapLabel.setText("\u21f1");
         uitklapLabel.setText("\u21f2");
         uitklapLabel.setDisable(true);
@@ -301,6 +301,7 @@ public class BagagedatabaseController implements Initializable {
                     String type = fys.getBaggageType(rs.getInt("type"));
                     String color = fys.getColor(rs.getInt("color"));
                     String brand = rs.getString("brand");
+                    String picture = rs.getString("picture");
                     String date = rs.getString("date");
                     String characteristics = rs.getString("characteristics");
                     String firstname = rs.getString("first_name");

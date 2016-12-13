@@ -25,6 +25,7 @@
                         <TableColumn id="type" fx:id="type" maxWidth="150.0" minWidth="68.0" prefWidth="68.0" text="Type" />
                         <TableColumn id="color" fx:id="color" maxWidth="150.0" minWidth="69.0" prefWidth="69.0" text="Kleur" />
                         <TableColumn id="brand" fx:id="brand" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Merk" />
+                        <TableColumn id="picture" fx:id="picture" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Foto" />
                         <TableColumn id="information" fx:id="information" maxWidth="500.0" minWidth="194.0" prefWidth="194.0" text="Kenmerken" />
                         <TableColumn id="firstName" fx:id="firstName" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Voornaam" />
                         <TableColumn id="surName" fx:id="surName" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="Achternaam" />

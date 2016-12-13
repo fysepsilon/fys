@@ -55,7 +55,7 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 /**
  * FXML Controller class
  *
- * @author Paras
+ * @author Team Epsilon
  */
 public class StatistiekenController implements Initializable {
 

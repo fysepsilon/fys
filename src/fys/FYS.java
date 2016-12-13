@@ -45,7 +45,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author Paras
+ * @author Team Epsilon
  */
 public class FYS extends Application {
 
@@ -62,6 +62,7 @@ public class FYS extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Corendon-Login");
+        
         stage.getIcons().add(new Image("http://www.corendon.com/favicon.png"));
         stage.show();
     }
@@ -259,6 +260,19 @@ public class FYS extends Application {
         }
     }
 
+    
+    
+     public String getPage(int page) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        switch (page) {
+            case 1:
+                return taal[63];
+            default:
+                break;
+        }
+        return taal[163];
+    }
     /**
      *
      * @param month Welke maand is geselecteerd in de taal van de gebruiker.

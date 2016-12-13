@@ -11,19 +11,21 @@ import javafx.fxml.FXML;
 
 /**
  *
- * @author Paras
+ * @author Team Epsilon
  */
 public class Mail {
-    @FXML private final SimpleIntegerProperty mailid, page, type, language;
-    @FXML private final SimpleStringProperty subject, message;
+    @FXML private final SimpleIntegerProperty mailid;
+    @FXML private final SimpleStringProperty subject, message, type, language, 
+            page;
 
-    public Mail(int mailidname, String subjectname, String messagename, int pagename, int typename, int languagename) {
+    public Mail(int mailidname, String subjectname, String messagename, 
+            String pagename, String typename, String languagename) {
         this.mailid = new SimpleIntegerProperty(mailidname);
         this.subject = new SimpleStringProperty(subjectname);
         this.message = new SimpleStringProperty(messagename);
-        this.page = new SimpleIntegerProperty(pagename);
-        this.type = new SimpleIntegerProperty(typename);
-        this.language = new SimpleIntegerProperty(languagename);
+        this.page = new SimpleStringProperty(pagename);
+        this.type = new SimpleStringProperty(typename);
+        this.language = new SimpleStringProperty(languagename);
 
     }
 
@@ -51,27 +53,27 @@ public class Mail {
         message.set(messagename);
     }
     
-    public int getPage() {
+    public String getPage() {
         return page.get();
     }
 
-    public void setPage(int pagename) {
+    public void setPage(String pagename) {
         page.set(pagename);
     }
     
-    public int getType() {
+    public String getType() {
         return type.get();
     }
 
-    public void setType(int typename) {
+    public void setType(String typename) {
         type.set(typename);
     }
     
-    public int getLanguage() {
+    public String getLanguage() {
         return language.get();
     }
 
-    public void setLanguage(int languagename) {
+    public void setLanguage(String languagename) {
         language.set(languagename);
     }
 }

@@ -12,7 +12,7 @@ import java.sql.Statement;
 
 /**
  *
- * @author Paras
+ * @author Team Epsilon
  */
 public class taal {
 
@@ -101,9 +101,9 @@ public class taal {
             languagefields[46] = "Send";
             languagefields[47] = "Filter";
             languagefields[48] = "Status";
-            languagefields[49] = "Color";
-            languagefields[50] = "Type";
-            languagefields[51] = "Brand";
+            languagefields[49] = "Color"; //DUBBEL
+            languagefields[50] = "Type"; //DUBBEL
+            languagefields[51] = "Brand"; //DUBBEL
             languagefields[52] = "Date";
             languagefields[53] = "Extra information";
             languagefields[54] = "Found";
@@ -117,7 +117,7 @@ public class taal {
             languagefields[62] = "Log out";
             languagefields[63] = "Create a new account";
             languagefields[64] = "Service-employee";
-            languagefields[65] = "Administrator";
+            languagefields[65] = "Administrator"; //DUBBEL
             languagefields[66] = "Customer";
             languagefields[67] = "Edit";
             languagefields[68] = "Language";
@@ -127,7 +127,7 @@ public class taal {
             languagefields[72] = "Turkish";
             languagefields[73] = "Choose the language";
             languagefields[74] = "Choose the role";
-            languagefields[75] = "Status";
+            languagefields[75] = "Status"; //DUBBEL
             languagefields[76] = "Insurance claims";
             languagefields[77] = "Amount of Insurance claims";
             languagefields[78] = "Jan";
@@ -147,14 +147,14 @@ public class taal {
             languagefields[92] = "Save";
             languagefields[93] = "Some required fields are left blank!";
             languagefields[94] = "E-mail already exists!";
-            languagefields[95] = "Register missing luggage";
-            languagefields[96] = "Register found luggage";
-            languagefields[97] = "Home";
-            languagefields[98] = "Accounts";
-            languagefields[99] = "Statistics";
-            languagefields[100] = "Luggage database";
-            languagefields[101] = "Login";
-            languagefields[102] = "Settings";
+            languagefields[95] = "Register missing luggage"; //DUBBEL?
+            languagefields[96] = "Register found luggage"; //DUBBEL?
+            languagefields[97] = "Home"; //DUBBEL?
+            languagefields[98] = "Accounts"; //DUBBEL?
+            languagefields[99] = "Statistics"; //DUBBEL?
+            languagefields[100] = "Luggage database"; //DUBBEL?
+            languagefields[101] = "Login"; //DUBBEL?
+            languagefields[102] = "Settings"; //DUBBEL
             languagefields[103] = "The account is created and an e-mail has "
                     + "been sent!";
             languagefields[104] = "Change data";
@@ -200,7 +200,7 @@ public class taal {
             languagefields[142] = "Date to";
             languagefields[143] = "Week";
             languagefields[144] = "Page";
-            languagefields[145] = "Extra";
+            languagefields[145] = "Extra"; //DUBBEL?
             languagefields[146] = "Confirm";
             languagefields[147] = "Are you sure you want to reset this email "
                     + "to its normal message?";
@@ -224,6 +224,7 @@ public class taal {
             languagefields[160] = "PDF opens";
             languagefields[161] = "Has just opened a PDF file with the user.";
             languagefields[162] = "User's guide";
+            languagefields[164] = "Select the customers language";
         } else if(language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
@@ -402,6 +403,8 @@ public class taal {
             languagefields[161] = "Er is zojuist een PDF bestand geopend met "
                     + "de gebruikershandleiding.";
             languagefields[162] = "Gebruikershandleiding";
+            languagefields[163] = "Onbekend";
+            languagefields[164] = "Kies hier de taal van de klant";
         } else if(language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";
@@ -580,6 +583,7 @@ public class taal {
             languagefields[161] = "Acaba de abrir un archivo PDF con el "
                     + "usuario.";
             languagefields[162] = "Guía del usuario";
+            languagefields[164] = "Seleccionar el idioma del cliente";
         } else { //Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
@@ -755,6 +759,7 @@ public class taal {
             languagefields[160] = "PDF açılır";
             languagefields[161] = "Sadece kullanıcı ile bir PDF dosyası açtı.";
             languagefields[162] = "Kullanıcı kılavuzu";
+            languagefields[164] = "Müşterinin dili seçin";
         }
         return languagefields;
     }

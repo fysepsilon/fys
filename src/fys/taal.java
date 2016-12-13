@@ -402,6 +402,7 @@ public class taal {
             languagefields[161] = "Er is zojuist een PDF bestand geopend met "
                     + "de gebruikershandleiding.";
             languagefields[162] = "Gebruikershandleiding";
+            languagefields[163] = "Onbekend";
         } else if(language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";

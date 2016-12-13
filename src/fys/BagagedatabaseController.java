@@ -369,6 +369,7 @@ public class BagagedatabaseController implements Initializable {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(taal[104]);
+            alert.setTitle(taal[104]);
             alert.setContentText(taal[105]);
             alert.showAndWait();
         }
@@ -776,6 +777,7 @@ public class BagagedatabaseController implements Initializable {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(taal[154]);
+            alert.setTitle(taal[154]);
             alert.setContentText(taal[105]);
             alert.showAndWait();
         }

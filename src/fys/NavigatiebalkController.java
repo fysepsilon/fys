@@ -109,6 +109,7 @@ public class NavigatiebalkController implements Initializable {
         
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(taal[160]);
+        alert.setTitle(taal[160]);
         alert.setContentText(taal[161]);
         alert.showAndWait();
     }

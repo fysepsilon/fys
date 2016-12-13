@@ -115,6 +115,7 @@ public class InstellingenController implements Initializable {
                 //Geef een melding in de taal die is geinstalleerd dat de gegevens zijn aangepast.
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText(taal[122]);
+                alert.setTitle(taal[122]);
                 alert.setContentText(taal[123]);
                 alert.showAndWait();
                 fys.changeToAnotherFXML(taal[102], "instellingen.fxml");

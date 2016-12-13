@@ -162,6 +162,7 @@ public class MailsettingsController implements Initializable {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(taal[133]);
+            alert.setTitle(taal[133]);
             alert.setContentText(taal[134]);
             alert.showAndWait();
         }
@@ -224,6 +225,7 @@ public class MailsettingsController implements Initializable {
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(taal[104]);
+            alert.setTitle(taal[104]);
             alert.setContentText(taal[147]);
 
             ButtonType buttonTypeOne = new ButtonType(taal[146]);
@@ -248,6 +250,7 @@ public class MailsettingsController implements Initializable {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(taal[104]);
+            alert.setTitle(taal[104]);
             alert.setContentText(taal[105]);
             alert.showAndWait();
         }

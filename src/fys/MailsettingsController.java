@@ -28,12 +28,14 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.HTMLEditor;
 
 /**
@@ -54,11 +56,15 @@ public class MailsettingsController implements Initializable {
     @FXML
     private HTMLEditor HTMLEditor;
     @FXML
-    private Button change_button, send_button, cancel_button;
+    private Button change_button, send_button, cancel_button, recover_button, show_VBox;
     @FXML
     private Label mailid_label, subject_label, page_label, type_label,
             language_label, info_firstname, info_surname, info_password, 
-            info_username, info, warning, warning_label, info_label;
+            info_username, info, 
+            // warning, warning_label, 
+            info_label;
+    @FXML
+    private VBox VBox;
     @FXML
     private TextField subject_field, page_field, type_field, language_field;
     @FXML
@@ -89,13 +95,14 @@ public class MailsettingsController implements Initializable {
         info_surname.setText(taal[10]);
         info_label.setText(taal[152]);
         info.setText(taal[149]);
-        warning.setText(taal[150]);
-        warning_label.setText(taal[151]);
+        // warning.setText(taal[150]);
+        // warning_label.setText(taal[151]);
         
         change_button.setText(taal[67]);
         send_button.setText(taal[46]);
         cancel_button.setText(taal[127]);
-
+        recover_button.setText(taal[153]);
+        
         loginController loginController = new loginController();
 
         getMailData();
@@ -185,6 +192,24 @@ public class MailsettingsController implements Initializable {
         home_pane.setVisible(true);
         edit_pane.setDisable(true);
         edit_pane.setVisible(false);
+    }
+    
+    @FXML
+    private void handleBig(ActionEvent event) throws IOException {
+        // Switch from an anchorpane to another anchorpane
+        VBox.setVisible(true);
+        HTMLEditor.setPrefWidth(600);
+        show_VBox.setVisible(false);
+
+    }
+    
+    @FXML
+    private void handleCloseBig(ActionEvent event) throws IOException {
+        // Switch from an anchorpane to another anchorpane
+        VBox.setVisible(false);
+        HTMLEditor.setPrefWidth(772);
+        show_VBox.setVisible(true);
+
     }
 
     public void handleRecover(ActionEvent event) throws IOException {

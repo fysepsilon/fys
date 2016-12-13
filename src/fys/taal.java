@@ -207,11 +207,11 @@ public class taal {
             languagefields[148] = "Username";
             languagefields[149] = "Information";
             languagefields[150] = "Warning";
-            languagefields[151] = "Use the characters &quot; and ' &#10; not "
+            languagefields[151] = "Use the characters &quot; and ' \n not "
                     + "in an email.";
-            languagefields[152] = "You can use certain &#10;words in an email "
-                    + "that &#10;mean something. Below are &#10;the words that "
-                    + "you &#10;can use with the &#10;meaning behind it.";
+            languagefields[152] = "You can use certain \nwords in an email "
+                    + "that \nmean something. Below are \nthe words that "
+                    + "you \ncan use with the \nmeaning behind it.";
             languagefields[153] = "Recover";
             languagefields[154] = "Delete data";
             languagefields[155] = "You are about to delete this luggage and"
@@ -221,6 +221,9 @@ public class taal {
             languagefields[157] = "The data has successfully been removed!";
             languagefields[158] = "Renew the page to update the database";
             languagefields[159] = "E-mailaddress is not correct";
+            languagefields[160] = "PDF opens";
+            languagefields[161] = "Has just opened a PDF file with the user.";
+            languagefields[162] = "User's guide";
         } else if(language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
@@ -379,11 +382,11 @@ public class taal {
             languagefields[148] = "Gebruikersnaam";
             languagefields[149] = "Informatie";
             languagefields[150] = "Waarschuwing";
-            languagefields[151] = "Gebruik de tekens &quot; en ' &#10;niet "
+            languagefields[151] = "Gebruik de tekens &quot; en ' \nniet "
                     + "in een email.";
-            languagefields[152] = "Je kan bepaalde woorden&#10;gebruiken in "
-                    + "een email die &#10;iets betekenen. Hieronder &#10;staan "
-                    + "de woorden die je &#10;kan gebruiken met de&#10;"
+            languagefields[152] = "Je kan bepaalde woorden\ngebruiken in "
+                    + "een email die \niets betekenen. Hieronder \nstaan "
+                    + "de woorden die je \nkan gebruiken met de\n"
                     + "betekenis erachter.";
             languagefields[153] = "Herstellen";      
             languagefields[154] = "Verwijderen van gegevens";
@@ -395,6 +398,10 @@ public class taal {
             languagefields[158] = "Vernieuw de pagina om de database te "
                     + "updaten";
             languagefields[159] = "E-mailadres is niet geldig";
+            languagefields[160] = "PDF geopend";
+            languagefields[161] = "Er is zojuist een PDF bestand geopend met "
+                    + "de gebruikershandleiding.";
+            languagefields[162] = "Gebruikershandleiding";
         } else if(language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";
@@ -554,10 +561,10 @@ public class taal {
             languagefields[150] = "Advertencia";
             languagefields[151] = "Utilice los caracteres &quot; y ' no en un "
                     + "correo electrónico.";
-            languagefields[152] = "Puede usar ciertas &#10;palabras en un "
-                    + "correo &#10;electrónico que quiere &#10;decir algo. "
-                    + "A continuación &#10;se presentan las palabras que &#10;"
-                    + "se pueden utilizar con el &#10;significado detrás "
+            languagefields[152] = "Puede usar ciertas palabras \nen un "
+                    + "correo electrónico que \nquiere decir algo. "
+                    + "A \ncontinuación se presentan \nlas palabras que "
+                    + "se pueden \nutilizar con el significado \ndetrás "
                     + "de él.";
             languagefields[153] = "Recuperar";
             languagefields[154] = "Eliminación de datos";
@@ -569,6 +576,10 @@ public class taal {
             languagefields[158] = "Actualizar la página para actualizar la "
                     + "base de datos";
             languagefields[159] = "El correo electrónico no es válida";
+            languagefields[160] = "PDF abre";
+            languagefields[161] = "Acaba de abrir un archivo PDF con el "
+                    + "usuario.";
+            languagefields[162] = "Guía del usuario";
         } else { //Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
@@ -727,9 +738,9 @@ public class taal {
             languagefields[150] = "Uyarı";
             languagefields[151] = "Bir e-posta karakterleri &quot; ve ' "
                     + "değil kullanın.";
-            languagefields[152] = "Bir şey demek bir &#10;e-posta belirli "
-                    + "kelimeleri &#10;kullanabilirsiniz. Aşağıda &#10;"
-                    + "arkasında anlamı ile &#10;kullanabileceğiniz "
+            languagefields[152] = "Bir şey demek bir \ne-posta belirli "
+                    + "kelimeleri \nkullanabilirsiniz. Aşağıda \n"
+                    + "arkasında anlamı ile \nkullanabileceğiniz "
                     + "kelimelerdir.";
             languagefields[153] = "Kurtarmak";
             languagefields[154] = "Silme veri";
@@ -741,6 +752,9 @@ public class taal {
             languagefields[158] = "Veritabanını güncellemek için sayfayı "
                     + "yenileyin";
             languagefields[159] = "E-posta geçerli değil";
+            languagefields[160] = "PDF açılır";
+            languagefields[161] = "Sadece kullanıcı ile bir PDF dosyası açtı.";
+            languagefields[162] = "Kullanıcı kılavuzu";
         }
         return languagefields;
     }

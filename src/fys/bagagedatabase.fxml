@@ -73,12 +73,23 @@
                       <TextField fx:id="brandFilter" layoutY="202.0" />
                </children>
             </Pane>
-                <Button fx:id="changeButton" layoutX="324.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleChange" prefHeight="39.0" prefWidth="277.0" text="Wijzig" />
-            <Button fx:id="removeButton" layoutX="619.0" layoutY="419.0" mnemonicParsing="false" onAction="#handeRemove" prefHeight="39.0" prefWidth="277.0" text="Verwijderen" />
-            <Label layoutX="106.0" layoutY="-5.0" prefHeight="35.0" prefWidth="27.0" text="⇱">
+                <Button fx:id="changeButton" layoutX="324.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleChange" prefHeight="39.0" prefWidth="265.0" text="Wijzig" />
+            <Button fx:id="removeButton" layoutX="619.0" layoutY="419.0" mnemonicParsing="false" onAction="#handeRemove" prefHeight="39.0" prefWidth="265.0" text="Verwijderen" />
+            <Label fx:id="inklapLabel" layoutX="106.0" layoutY="-5.0" onMouseClicked="#hideFilter" prefHeight="35.0" prefWidth="27.0">
                <font>
                   <Font size="24.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label fx:id="uitklapLabel" layoutX="106.0" layoutY="-5.0" onMouseClicked="#showFilter" prefHeight="35.0" prefWidth="27.0">
+                <font>
+                    <Font size="24.0" />
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
             </Label>
             </children>
         </AnchorPane>

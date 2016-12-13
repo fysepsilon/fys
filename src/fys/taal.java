@@ -101,9 +101,9 @@ public class taal {
             languagefields[46] = "Send";
             languagefields[47] = "Filter";
             languagefields[48] = "Status";
-            languagefields[49] = "Color";
-            languagefields[50] = "Type";
-            languagefields[51] = "Brand";
+            languagefields[49] = "Color"; //DUBBEL
+            languagefields[50] = "Type"; //DUBBEL
+            languagefields[51] = "Brand"; //DUBBEL
             languagefields[52] = "Date";
             languagefields[53] = "Extra information";
             languagefields[54] = "Found";
@@ -117,7 +117,7 @@ public class taal {
             languagefields[62] = "Log out";
             languagefields[63] = "Create a new account";
             languagefields[64] = "Service-employee";
-            languagefields[65] = "Administrator";
+            languagefields[65] = "Administrator"; //DUBBEL
             languagefields[66] = "Customer";
             languagefields[67] = "Edit";
             languagefields[68] = "Language";
@@ -127,7 +127,7 @@ public class taal {
             languagefields[72] = "Turkish";
             languagefields[73] = "Choose the language";
             languagefields[74] = "Choose the role";
-            languagefields[75] = "Status";
+            languagefields[75] = "Status"; //DUBBEL
             languagefields[76] = "Insurance claims";
             languagefields[77] = "Amount of Insurance claims";
             languagefields[78] = "Jan";

@@ -53,7 +53,7 @@ public class InstellingenController implements Initializable {
         save.setText(taal[92]);
         save.setDefaultButton(true);
         language.getItems().addAll(
-                taal[69],taal[70], taal[71], taal[72]);
+                taal[69],taal[70], taal[71], taal[72], taal[165]);
         
         //Krijg de gegevens van de gebruiker die ingelogd is.
         //Vul de textfields in met gegevens die zijn opgehaald.

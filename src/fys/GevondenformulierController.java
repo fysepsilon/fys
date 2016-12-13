@@ -183,6 +183,7 @@ public class GevondenformulierController implements Initializable {
         characteristics_label.setText(taal[23] + ":");
         picture_label.setText(taal[24] + ":");
         airport_combo.setPromptText(taal[25]);
+        destination_combo.setPromptText(taal[25]);
         type_combo.setPromptText(taal[26]);
         color_combo.setPromptText(taal[31]);
         color_combo.getItems().addAll(

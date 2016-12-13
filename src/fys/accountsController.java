@@ -38,7 +38,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * FXML Controller class
  *
- * @author Paras
+ * @author Team Epsilon
  */
 public class accountsController implements Initializable {
 

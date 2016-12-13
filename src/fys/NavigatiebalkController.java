@@ -26,7 +26,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 /**
  * FXML Controller class
  *
- * @author Paras
+ * @author Team Epsilon
  */
 public class NavigatiebalkController implements Initializable {
 

@@ -12,7 +12,7 @@ import java.sql.Statement;
 
 /**
  *
- * @author Paras
+ * @author Team Epsilon
  */
 public class taal {
 

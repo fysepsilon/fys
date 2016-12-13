@@ -34,7 +34,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 /**
  * FXML Controller class
  *
- * @author Veron
+ * @author Team Epsilon
  */
 public class HomepageController implements Initializable {
 

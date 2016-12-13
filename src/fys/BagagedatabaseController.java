@@ -47,7 +47,7 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 /**
  * FXML Controller class
  *
- * @author Paras
+ * @author Team Epsilon
  */
 public class BagagedatabaseController implements Initializable {
     @FXML
@@ -226,6 +226,7 @@ public class BagagedatabaseController implements Initializable {
         airportLost.setStyle("-fx-alignment: CENTER;");
         tableFrom.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
+        destination_combo.setPromptText(taal[25]);
         inklapLabel.setText("\u21f1");
         uitklapLabel.setText("\u21f2");
         uitklapLabel.setDisable(true);

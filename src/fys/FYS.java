@@ -45,7 +45,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author Paras
+ * @author Team Epsilon
  */
 public class FYS extends Application {
 

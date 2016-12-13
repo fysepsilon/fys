@@ -11,7 +11,7 @@ import javafx.fxml.FXML;
 
 /**
  *
- * @author Paras
+ * @author Team Epsilon
  */
 public class Status {
     @FXML private final SimpleStringProperty statusName;

@@ -26,7 +26,7 @@ import javafx.scene.text.Text;
 /**
  * FXML Controller class
  *
- * @author Paras
+ * @author Team Epsilon
  */
 public class InstellingenController implements Initializable {
 

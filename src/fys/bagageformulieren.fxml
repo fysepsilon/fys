@@ -94,7 +94,7 @@
                       <Label fx:id="picture_label" prefHeight="30.0" prefWidth="126.0" text="Afbeelding:" GridPane.columnIndex="3" GridPane.rowIndex="7" />
                       <TextField fx:id="labelnumber_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="104.0" GridPane.columnIndex="4" />
                       <TextField fx:id="flightnumber_input" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                      <ComboBox fx:id="destination_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" promptText="Kies hier uw luchthaven" GridPane.columnIndex="4" GridPane.rowIndex="2" >
+                      <ComboBox fx:id="destination_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" promptText="Kies hier uw luchthaven" GridPane.columnIndex="4" GridPane.rowIndex="2">
                           <items>
                               <FXCollections fx:factory="observableArrayList">
                                   <String fx:value="Alanya-Gazipasa" />
@@ -142,9 +142,11 @@
                       </ComboBox>
                       <TextField fx:id="characteristics_input" alignment="TOP_LEFT" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
                       <Button fx:id="picture_button" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleFileSelector" prefHeight="30.0" prefWidth="318.0" text="Klik hier om een afbeelding toe te voegen" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+                  <Label fx:id="language_label" prefHeight="30.0" prefWidth="126.0" text="Taal:" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+                  <ComboBox fx:id="language_combo" minHeight="-Infinity" prefHeight="30.0" prefWidth="318.0" promptText="Kies hier de taal van de klant" GridPane.columnIndex="4" GridPane.rowIndex="8" />
                   </children>
               </GridPane>
-              <Button fx:id="send_button" layoutX="16.0" layoutY="443.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleSendToDatabase" prefHeight="35.0" prefWidth="744.0" text="Verzenden" />
+              <Button fx:id="send_button" layoutX="20.0" layoutY="441.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleSendToDatabase" prefHeight="35.0" prefWidth="760.0" text="Verzenden" />
             <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutX="20.0" layoutY="5.0" prefHeight="25.0" prefWidth="598.0" textFill="RED" visible="false">
                <font>
                   <Font name="System Bold" size="16.0" />

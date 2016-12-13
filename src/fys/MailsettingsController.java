@@ -42,7 +42,7 @@ import javafx.scene.web.HTMLEditor;
 /**
  * FXML Controller class
  *
- * @author Paras
+ * @author Team Epsilon
  */
 public class MailsettingsController implements Initializable {
 

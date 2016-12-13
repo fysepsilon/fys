@@ -37,7 +37,7 @@ import javax.imageio.ImageIO;
 /**
  * FXML Controller class
  *
- * @author Veron
+ * @author Team Epsilon
  */
 public class NieuwaccountaanmakenController implements Initializable {
 

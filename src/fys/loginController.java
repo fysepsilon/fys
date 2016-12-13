@@ -22,7 +22,7 @@ import javafx.scene.control.TextField;
 
 /**
  *
- * @author Paras
+ * @author Team Epsilon
  */
 public class loginController implements Initializable {
 

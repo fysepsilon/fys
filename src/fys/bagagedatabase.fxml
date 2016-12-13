@@ -15,9 +15,9 @@
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
         <Pane layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0" style=" -fx-border-width:0 2 0 2; -fx-border-color:lightgrey; -fx-background-color: white;" />
 
-        <AnchorPane fx:id="database_pane" disable="false" layoutY="122.0" prefHeight="478.0" prefWidth="1000.0">
+              <AnchorPane fx:id="database_pane" disable="false" layoutY="122.0" prefHeight="478.0" prefWidth="1000.0">
             <children>
-                <TableView fx:id="table" layoutX="324.0" layoutY="29.0" prefHeight="384.0" prefWidth="675.0">
+                <TableView fx:id="table" layoutX="324.0" layoutY="29.0" prefHeight="384.0" prefWidth="560.0">
                     <columns>
                         <TableColumn id="id" fx:id="id" maxWidth="100.0" minWidth="50.0" prefWidth="50.0" text="ID" />
                         <TableColumn id="status" fx:id="status" maxWidth="150.0" minWidth="85.0" prefWidth="85.0" text="Status" />
@@ -45,32 +45,52 @@
                         <TableColumn id="realId" fx:id="realId" maxWidth="150.0" minWidth="136.0" prefWidth="136.0" text="realId" visible="false" />
                     </columns>
                 </TableView>
-                <ComboBox fx:id="statusFilter" layoutX="116.0" layoutY="82.0" prefHeight="31.0" prefWidth="187.0" promptText="Kies een status">
-                    <items>
-                        <FXCollections fx:factory="observableArrayList">
+            <Pane fx:id="filterPane" layoutX="112.0" layoutY="73.0">
+               <children>
+                      <TextField fx:id="dateFilter" layoutY="252.0" />
+                      <TextArea fx:id="characteristicsFilter" layoutY="298.0" prefHeight="87.0" prefWidth="187.0" />
+                      <TextField fx:id="colorFilter" layoutY="102.0" />
+                      <ComboBox fx:id="typeFilter" layoutY="152.0" prefHeight="31.0" prefWidth="187.0" promptText="Kies type">
+                          <items>
+                              <FXCollections fx:factory="observableArrayList">
+                                  <String fx:value="" />
+                              </FXCollections>
+                          </items>
+                          <value>
+                              <String fx:value="" />
+                          </value>
+                      </ComboBox>
+                      <Button fx:id="filter" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="31.0" prefWidth="187.0" text="Filteren" />
+                      <ComboBox fx:id="statusFilter" layoutY="52.0" prefHeight="31.0" prefWidth="187.0" promptText="Kies een status">
+                          <items>
+                              <FXCollections fx:factory="observableArrayList">
                         </FXCollections>
-                    </items>
-                    <value>
-                        <String fx:value="" />
-                    </value>
-                </ComboBox>
-                <TextField fx:id="brandFilter" layoutX="116.0" layoutY="232.0" />
-                <ComboBox fx:id="typeFilter" layoutX="116.0" layoutY="182.0" prefHeight="31.0" prefWidth="187.0" promptText="Kies type">
-                    <items>
-                        <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="" />
-                        </FXCollections>
-                    </items>
-                    <value>
-                        <String fx:value="" />
-                    </value>
-                </ComboBox>
-                <TextField fx:id="dateFilter" layoutX="116.0" layoutY="282.0" />
-                <TextArea fx:id="characteristicsFilter" layoutX="116.0" layoutY="328.0" prefHeight="87.0" prefWidth="187.0" />
-                <Button fx:id="filter" layoutX="116.0" layoutY="30.0" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="31.0" prefWidth="187.0" text="Filteren" />
-                <TextField fx:id="colorFilter" layoutX="116.0" layoutY="132.0" />
-                <Button fx:id="changeButton" layoutX="324.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleChange" prefHeight="39.0" prefWidth="277.0" text="Wijzig" />
-            <Button fx:id="removeButton" layoutX="619.0" layoutY="419.0" mnemonicParsing="false" onAction="#handeRemove" prefHeight="39.0" prefWidth="277.0" text="Verwijderen" />
+                          </items>
+                          <value>
+                              <String fx:value="" />
+                          </value>
+                      </ComboBox>
+                      <TextField fx:id="brandFilter" layoutY="202.0" />
+               </children>
+            </Pane>
+                <Button fx:id="changeButton" layoutX="324.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleChange" prefHeight="39.0" prefWidth="265.0" text="Wijzig" />
+            <Button fx:id="removeButton" layoutX="619.0" layoutY="419.0" mnemonicParsing="false" onAction="#handeRemove" prefHeight="39.0" prefWidth="265.0" text="Verwijderen" />
+            <Label fx:id="inklapLabel" layoutX="106.0" layoutY="-5.0" onMouseClicked="#hideFilter" prefHeight="35.0" prefWidth="27.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label fx:id="uitklapLabel" layoutX="106.0" layoutY="-5.0" onMouseClicked="#showFilter" prefHeight="35.0" prefWidth="27.0">
+                <font>
+                    <Font size="24.0" />
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </Label>
             </children>
         </AnchorPane>
         

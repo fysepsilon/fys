@@ -39,15 +39,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
+import javafx.scene.layout.Pane;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
-import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
 
 /**
  * FXML Controller class
@@ -57,6 +52,8 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
 public class BagagedatabaseController implements Initializable {
     @FXML
     private AnchorPane database_pane, wijzig_pane;
+    @FXML
+    private Pane filterPane;
     @FXML
     private TableView<Bagage> table;
     @FXML
@@ -91,7 +88,7 @@ public class BagagedatabaseController implements Initializable {
             airportLabel, labelLabel, flightLabel, destinationLabel,
             typeLabel, brandLabel, colorLabel, characteristicsLabel,
             pictureLabel, statusLabel, personIdLabel, lafIdLabel,
-            tableFromLabel, loginerror;
+            tableFromLabel, loginerror, inklapLabel, uitklapLabel;
     @FXML
     private FYS fys = new FYS();
     @FXML
@@ -229,6 +226,10 @@ public class BagagedatabaseController implements Initializable {
         airportLost.setStyle("-fx-alignment: CENTER;");
         tableFrom.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
+        inklapLabel.setText("\u21f1");
+        uitklapLabel.setText("\u21f2");
+        uitklapLabel.setDisable(true);
+        uitklapLabel.setVisible(false);
     }
 
     @FXML
@@ -369,6 +370,7 @@ public class BagagedatabaseController implements Initializable {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(taal[104]);
+            alert.setTitle(taal[104]);
             alert.setContentText(taal[105]);
             alert.showAndWait();
         }
@@ -776,8 +778,34 @@ public class BagagedatabaseController implements Initializable {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(taal[154]);
+            alert.setTitle(taal[154]);
             alert.setContentText(taal[105]);
             alert.showAndWait();
         }
+    }
+    
+    public void hideFilter(){
+        filterPane.setDisable(true);
+        filterPane.setVisible(false);
+        //inklapLabel.setText("\u21f2");
+        table.setLayoutX(112.0);
+        table.setPrefWidth(772.0);
+        inklapLabel.setDisable(true);
+        inklapLabel.setVisible(false);
+        uitklapLabel.setDisable(false);
+        uitklapLabel.setVisible(true);
+        changeButton.setLayoutX(112.0);
+    }
+    
+    public void showFilter(){
+        filterPane.setDisable(false);
+        filterPane.setVisible(true);
+        table.setLayoutX(324.0);
+        table.setPrefWidth(560.0);
+        uitklapLabel.setDisable(true);
+        uitklapLabel.setVisible(false);
+        inklapLabel.setDisable(false);
+        inklapLabel.setVisible(true);
+        changeButton.setLayoutX(324.0);
     }
 }

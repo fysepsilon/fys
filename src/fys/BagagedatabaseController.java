@@ -96,6 +96,8 @@ public class BagagedatabaseController implements Initializable {
     @FXML
     private Connection conn = null;
     public String filePath = null;
+    public String dr_mail = "";
+    public String dr_status = "";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -257,7 +259,7 @@ public class BagagedatabaseController implements Initializable {
                     && data.get(i).getType().toLowerCase().contains(typeFilter.getSelectionModel().getSelectedItem().toString().toLowerCase())
                     && data.get(i).getInformation().toLowerCase().contains(characteristicsFilter.getText().toLowerCase())) {
                 dataFilter.add(new Bagage(data.get(i).getId(), data.get(i).getStatus(),
-                        data.get(i).getType(), data.get(i).getColor(), data.get(i).getBrand(),
+                        data.get(i).getType(), data.get(i).getColor(), data.get(i).getBrand(), data.get(i).getPicture(),
                         data.get(i).getDate(), data.get(i).getInformation(), data.get(i).getFirstName(),
                         data.get(i).getSurName(), data.get(i).getAddress(), data.get(i).getResidence(), data.get(i).getZipcode(),
                         data.get(i).getCountry(), data.get(i).getPhone(), data.get(i).getMail(), data.get(i).getLabelNumber(),
@@ -322,7 +324,7 @@ public class BagagedatabaseController implements Initializable {
                     int personID = rs.getInt("person_id");
                     
                     //Voeg de gegegevens toe in de data array.
-                    data.add(new Bagage(luggage, status, type, color, brand, date, characteristics, firstname,
+                    data.add(new Bagage(luggage, status, type, color, brand, picture, date, characteristics, firstname,
                             surname, address, residence, zipcode, country, phone, mail, labelnumber, flightnumber, destination,
                             airportfound, airportlost, tablefrom, lostAndFoundID, personID, id));
                 }
@@ -343,7 +345,7 @@ public class BagagedatabaseController implements Initializable {
             int dr_personId = (table.getSelectionModel().getSelectedItem().getPersonID());
             int dr_lafId = (table.getSelectionModel().getSelectedItem().getLostAndFoundID());
             int drFrom = Integer.parseInt((table.getSelectionModel().getSelectedItem().getTableFrom()));
-            String dr_status = (table.getSelectionModel().getSelectedItem().getStatus());
+            dr_status = (table.getSelectionModel().getSelectedItem().getStatus());
             String dr_airport = (table.getSelectionModel().getSelectedItem().getAirportFound());
             if (dr_airport == null) {
                 dr_airport = (table.getSelectionModel().getSelectedItem().getAirportLost());
@@ -355,7 +357,7 @@ public class BagagedatabaseController implements Initializable {
             String dr_zipcode = (table.getSelectionModel().getSelectedItem().getZipcode());
             String dr_country = (table.getSelectionModel().getSelectedItem().getCountry());
             String dr_phone = (table.getSelectionModel().getSelectedItem().getPhone());
-            String dr_mail = (table.getSelectionModel().getSelectedItem().getMail());
+            dr_mail = (table.getSelectionModel().getSelectedItem().getMail());
             String dr_label = (table.getSelectionModel().getSelectedItem().getLabelNumber());
             String dr_flight = (table.getSelectionModel().getSelectedItem().getFlightNumber());
             String dr_destination = (table.getSelectionModel().getSelectedItem().getDestination());
@@ -427,6 +429,69 @@ public class BagagedatabaseController implements Initializable {
                 destination = destination_combo.getValue().toString();
             }
             
+            //MAILEN
+            if (fys.checkEmailExistsOnChange(mailInput.getText(), dr_mail)) {
+                System.out.println("Emailadres bestaat al!!!");
+            } else if(fys.getStatusString(dr_status) != fys.getStatusString(statusCombo.getValue().toString())) {
+                int language = 0;
+                try {
+                    //connectToDatabase(conn, stmt, "test", "root", "root");
+                    String sql = "SELECT person_id, language FROM person WHERE mail='" + mailInput.getText() +"'";
+                    System.out.println(sql);
+                    ResultSet rs = stmt.executeQuery(sql);
+                    while (rs.next()) {
+                        //Retrieve by column name
+                         language = rs.getInt("language");
+                    }
+                    //rs.close();
+                } catch (SQLException ex) {
+                    // handle any errors
+                    System.out.println("SQLException: " + ex.getMessage());
+                    System.out.println("SQLState: " + ex.getSQLState());
+                    System.out.println("VendorError: " + ex.getErrorCode());
+                }
+                if (!mailInput.getText().isEmpty()) {
+                    System.out.println(language);
+                    switch (language) {
+                        case 1:
+                            //Nederlands
+                            fys.sendEmail(mailInput.getText(), "Corendon - Bagagestatus gewijzigd", "Beste "
+                                    + nameInput.getText() + " " + surNameInput.getText() + ", "
+                                    + "<br><br>De status van uw bagage is veranderd in <i>" + fys.getStatusString(statusCombo.getValue().toString())
+                                    + "</i>.<br><br>Wij hopen u hiermee genoeg te hebben geinformeerd."
+                                    + "<br><br>Met vriendelijke groet,"
+                                    + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
+                            break;
+                        case 2:
+                            //Spaans
+                            fys.sendEmail(mailInput.getText(), "Corendon - Estado del equipaje cambiado", "Valorado "
+                                    + nameInput.getText() + " " + surNameInput.getText() + ", "
+                                    + "<br><br>El estado de su equipaje ha cambiado a <i>" + fys.getStatusString(statusCombo.getValue().toString())
+                                    + "</i>.<br><br>Esperamos que te hayamos informado lo suficiente."
+                                    + "<br><br>Sinceramente,"
+                                    + "<br><br><b>El equipo de Corendon</b>", "Sent message successfully....");
+                            break;
+                        case 3:
+                            //turks
+                            fys.sendEmail(mailInput.getText(), "Corendon - Luggagestatus değiştirildi", "Değerli "
+                                    + nameInput.getText() + " " + surNameInput.getText() + ", "
+                                    + "<br><br>Bagajınızın durumu <i>" + fys.getStatusString(statusCombo.getValue().toString())
+                                    + "</i>.<br><br>Umarız biz sizi yeterince bilgilendirmiş oluruz."
+                                    + "<br><br>İçtenlikle,"
+                                    + "<br><br><b>Corendon Ekibi</b>", "Sent message successfully....");
+                            break;
+                        default:
+                            fys.sendEmail(mailInput.getText(), "Corendon - Luggagestatus changed", "Valued "
+                                    + nameInput.getText() + " " + surNameInput.getText() + ", "
+                                    + "<br><br>The status of your luggage has been changed to <i>" + fys.getStatusString(statusCombo.getValue().toString())
+                                    + "</i>.<br><br>We hope that we have informed you enough."
+                                    + "<br><br>Sincerely,"
+                                    + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
+                            break;
+                    }
+                }
+
+                //MAILEN
             sendToDatabase(Integer.parseInt(idLabel.getText()), Integer.parseInt(personIdLabel.getText()), 
                     Integer.parseInt(lafIdLabel.getText()), Integer.parseInt(tableFromLabel.getText()), 
                     fys.getStatusString(statusCombo.getValue().toString()), airportCombo.getValue().toString(), 
@@ -436,6 +501,17 @@ public class BagagedatabaseController implements Initializable {
                     filePath, flightNumberInput.getText(), destination,
                     fys.getBaggageTypeString(typeCombo.getValue().toString()), brandInput.getText(), 
                     fys.getColorString(colorCombo.getValue().toString()), characteristicsInput.getText());
+            } else{
+                sendToDatabase(Integer.parseInt(idLabel.getText()), Integer.parseInt(personIdLabel.getText()),
+                        Integer.parseInt(lafIdLabel.getText()), Integer.parseInt(tableFromLabel.getText()),
+                        fys.getStatusString(statusCombo.getValue().toString()), airportCombo.getValue().toString(),
+                        nameInput.getText(), surNameInput.getText(), addressInput.getText(),
+                        residenceInput.getText(), zipcodeInput.getText(), countryInput.getText(),
+                        phoneInput.getText(), mailInput.getText(), labelNumberInput.getText(),
+                        filePath, flightNumberInput.getText(), destination,
+                        fys.getBaggageTypeString(typeCombo.getValue().toString()), brandInput.getText(),
+                        fys.getColorString(colorCombo.getValue().toString()), characteristicsInput.getText());
+            }
         }
     }
 

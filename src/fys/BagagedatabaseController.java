@@ -113,7 +113,7 @@ public class BagagedatabaseController implements Initializable {
         brand.setText(taal[51]);
         picture.setText(taal[24]);
         date.setText(taal[52]);
-        information.setText(taal[53]);
+        information.setText(taal[23]);
         firstName.setText(taal[9]);
         surName.setText(taal[10]);
         address.setText(taal[11]);

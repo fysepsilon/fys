@@ -182,6 +182,10 @@ public class accountsController implements Initializable {
             type_label.setVisible(false);
             type_combo.setVisible(false);
         }
+        
+        if (loginController.getUsertype() == 1) { // Service medewerker (ZONDER REMOVE BUTTON)
+            remove_button.setVisible(false);
+        }
 
         type_label.setText(taal[20] + ":");
         type_combo.getItems().addAll(

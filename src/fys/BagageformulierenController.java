@@ -191,28 +191,11 @@ public class BagageformulierenController implements Initializable {
                 stmt.executeUpdate(sql_lost);
             }
             
-            //Mail sturen naar klant met zijn/haar inloggegevens
-            String sql = "SELECT type, language, first_name, surname, "
-                    + "password FROM person WHERE mail='" + mail_input.getText() + "'";
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                //Retrieve by column name
-                passwordDecrypted = FYS.decrypt(rs.getString("password"));
-                language_user = rs.getInt("language");
-            }
-            rs.close();
+            // Replacen in email
+            String getmessage = fys.replaceEmail(fys.Email_Message(), mail_input.getText());
 
-            if (language_user == 0) { // Mail voor klant (type = 0)
-                fys.sendEmail(mail_input.getText(), "Corendon - Logindata", "Dear valued customer, "
-                        + "<br><br>There is an account created for you by one of our employees."
-                        + "<br>You can login to this account on our web application to view the status of your case."
-                        + "<br>You will need the following data to log in:"
-                        + "<br>Username: <i>" + mail_input.getText()
-                        + "</i><br>Password: <i>" + passwordDecrypted
-                        + "</i><br><br>You can change your password in the web application."
-                        + "<br>We hope to have informed you sufficiently."
-                        + "<br><br>Sincerely,"
-                        + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
+            if (fys.Email_Mailid() == 13) { // Mailid = 13
+                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
             }
             
             conn.close();

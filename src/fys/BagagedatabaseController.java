@@ -606,49 +606,9 @@ public class BagagedatabaseController implements Initializable {
                 //Sla het document op
                 document.save("src/fys/formulieren/dhlFormulier" + frontname + surname + dr_personId + ".pdf");
                 document.close();
-
-                // Mail
-                try {
-                    //connectToDatabase(conn, stmt, "test", "root", "root");
-                    String sql = "SELECT person_id, type, language, first_name, surname FROM person WHERE mail='" + mailInput.getText() + "'";
-                    ResultSet rs = stmt.executeQuery(sql);
-                    while (rs.next()) {
-                        //Retrieve by column name
-                        mailInformation[0] = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
-                        mailInformation[1] = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
-                        mailInformation2[0] = rs.getInt("person_id");
-                        mailInformation2[1] = rs.getInt("language");
-                    }
-                    rs.close();
-                } catch (SQLException ex) {
-                    // handle any errors
-                    System.out.println("SQLException: " + ex.getMessage());
-                    System.out.println("SQLState: " + ex.getSQLState());
-                    System.out.println("VendorError: " + ex.getErrorCode());
-                }
                 
-                try {
-                    //connectToDatabase(conn, stmt, "test", "root", "root");
-                    String sql = "";
-                    if (tableFrom == 1) {
-                        sql = "SELECT color, brand, type FROM found WHERE person_id='" + mailInformation2[0] + "'";
-                    } else{
-                        sql = "SELECT color, brand, type FROM lost WHERE person_id='" + mailInformation2[0] + "'";
-                    }
-                    ResultSet rs = stmt.executeQuery(sql);
-                    while (rs.next()) {
-                        //Retrieve by column name
-                        mailInformation2[2] = rs.getInt("color");
-                        mailInformation[2] = rs.getString("brand").substring(0, 1).toUpperCase() + rs.getString("brand").substring(1);
-                        mailInformation2[3] = rs.getInt("type");
-                    }
-                    rs.close();
-                } catch (SQLException ex) {
-                    // handle any errors
-                    System.out.println("SQLException: " + ex.getMessage());
-                    System.out.println("SQLState: " + ex.getSQLState());
-                    System.out.println("VendorError: " + ex.getErrorCode());
-                }
+                // Replacen in email
+                String getmessage = fys.replaceEmail(fys.Email_Message(), mailInput.getText());
 
                 if (mailInformation2[1] == 0) { // English emails
                     fys.sendEmail(mailInput.getText(), "Corendon - Logindata", "Dear valued customer, "
@@ -733,6 +693,7 @@ public class BagagedatabaseController implements Initializable {
             
             //Vraag of de gebruiker het zeker weet
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setTitle(taal[154]);
             confirm.setHeaderText(taal[154]);
             confirm.setContentText(taal[155]);            
             Optional<ButtonType> result = confirm.showAndWait();

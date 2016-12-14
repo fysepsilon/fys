@@ -433,11 +433,12 @@ public class BagagedatabaseController implements Initializable {
             if (fys.checkEmailExistsOnChange(mailInput.getText(), dr_mail)) {
                 System.out.println("Emailadres bestaat al!!!");
             } else if(fys.getStatusString(dr_status) != fys.getStatusString(statusCombo.getValue().toString())) {
+                conn = fys.connectToDatabase(conn);
+                stmt = conn.createStatement();
                 int language = 0;
                 try {
                     //connectToDatabase(conn, stmt, "test", "root", "root");
                     String sql = "SELECT person_id, language FROM person WHERE mail='" + mailInput.getText() +"'";
-                    System.out.println(sql);
                     ResultSet rs = stmt.executeQuery(sql);
                     while (rs.next()) {
                         //Retrieve by column name
@@ -451,7 +452,6 @@ public class BagagedatabaseController implements Initializable {
                     System.out.println("VendorError: " + ex.getErrorCode());
                 }
                 if (!mailInput.getText().isEmpty()) {
-                    System.out.println(language);
                     switch (language) {
                         case 1:
                             //Nederlands

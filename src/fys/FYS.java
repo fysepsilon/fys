@@ -144,6 +144,8 @@ public class FYS extends Application {
                 return taal[71];
             case 3:
                 return taal[72];
+            case 4:
+                return taal[165];
             default:
                 break;
         }
@@ -164,6 +166,8 @@ public class FYS extends Application {
             return 2;
         } else if (type.equals(taal[72])) {
             return 3;
+        } else if (type.equals(taal[165])) {
+            return 4;
         }
         return 0;
     }

@@ -244,7 +244,7 @@ public class BagageformulierenController implements Initializable {
         picture_label.setText(taal[24] + ":");
         language_label.setText(taal[68] + ":");
         language_combo.getItems().addAll(
-                taal[69],taal[70], taal[71], taal[72]);
+                taal[69],taal[70], taal[71], taal[72], taal[165]);
         
         airport_combo.setPromptText(taal[25]);  
         destination_combo.setPromptText(taal[25]);

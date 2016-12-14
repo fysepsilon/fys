@@ -273,6 +273,7 @@ public class NieuwaccountaanmakenController implements Initializable {
                 taal[69],
                 taal[70],
                 taal[71],
-                taal[72]);
+                taal[72], 
+                taal[165]);
     }
 }

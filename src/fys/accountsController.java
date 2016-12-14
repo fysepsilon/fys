@@ -198,7 +198,8 @@ public class accountsController implements Initializable {
                 taal[69],
                 taal[70],
                 taal[71],
-                taal[72]);
+                taal[72], 
+                taal[165]);
 
         getLuggageData();
         first_name.setCellValueFactory(new PropertyValueFactory<>("first_name"));

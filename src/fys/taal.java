@@ -224,7 +224,9 @@ public class taal {
             languagefields[160] = "PDF opens";
             languagefields[161] = "Has just opened a PDF file with the user.";
             languagefields[162] = "User's guide";
+            languagefields[163] = "Unknown";
             languagefields[164] = "Select the customers language";
+            languagefields[165] = "German";
         } else if(language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
@@ -405,6 +407,7 @@ public class taal {
             languagefields[162] = "Gebruikershandleiding";
             languagefields[163] = "Onbekend";
             languagefields[164] = "Kies hier de taal van de klant";
+            languagefields[165] = "Duits";
         } else if(language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";
@@ -583,8 +586,10 @@ public class taal {
             languagefields[161] = "Acaba de abrir un archivo PDF con el "
                     + "usuario.";
             languagefields[162] = "Guía del usuario";
+            languagefields[163] = "Desconocido";
             languagefields[164] = "Seleccionar el idioma del cliente";
-        } else { //Turks
+            languagefields[165] = "Alemán";
+        } else if(language == 3) { // Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
             languagefields[2] = "BAGAJ VERİTABANI";
@@ -759,7 +764,190 @@ public class taal {
             languagefields[160] = "PDF açılır";
             languagefields[161] = "Sadece kullanıcı ile bir PDF dosyası açtı.";
             languagefields[162] = "Kullanıcı kılavuzu";
+            languagefields[163] = "Bilinmeyen";
             languagefields[164] = "Müşterinin dili seçin";
+            languagefields[165] = "Alman";
+        } else { // Duits
+            languagefields[0] = "FEHLENDES GEPÄCK REGISTRIEREN";
+            languagefields[1] = "GEFUNDEN GEPÄCK ANMELDEN";
+            languagefields[2] = "GEPÄCK DATABASE";
+            languagefields[3] = "KONTEN";
+            languagefields[4] = "STATISTIK";
+            languagefields[5] = "Willkommen";
+            languagefields[6] = "Administrator";
+            languagefields[7] = "Service-Assistent";
+            languagefields[8] = "Flughafen";
+            languagefields[9] = "Vorname";
+            languagefields[10] = "Nachname";
+            languagefields[11] = "Adresse";
+            languagefields[12] = "Residenz";
+            languagefields[13] = "Postleitzahl";
+            languagefields[14] = "Land";
+            languagefields[15] = "Telefon";
+            languagefields[16] = "E-Mail";
+            languagefields[17] = "Label-nummer";
+            languagefields[18] = "Flugnummer";
+            languagefields[19] = "Ziel";
+            languagefields[20] = "Typ";
+            languagefields[21] = "Markierung";
+            languagefields[22] = "Farbe";
+            languagefields[23] = "Feature";
+            languagefields[24] = "Bild";
+            languagefields[25] = "Bitte wählen Sie Ihre Flughafen";
+            languagefields[26] = "Bitte wählen Sie Ihre Art von Gepäck";
+            languagefields[27] = "Koffer";
+            languagefields[28] = "Wochenendtasche";
+            languagefields[29] = "Handtasche";
+            languagefields[30] = "Rucksack";
+            languagefields[31] = "Wählen Sie die Farbe des Gepäck";
+            languagefields[32] = "Braun";
+            languagefields[33] = "Beige";
+            languagefields[34] = "Rot";
+            languagefields[35] = "Orange";
+            languagefields[36] = "Gelb";
+            languagefields[37] = "Grün";
+            languagefields[38] = "Blau";
+            languagefields[39] = "Violett";
+            languagefields[40] = "Rosa";
+            languagefields[41] = "Schwarz";
+            languagefields[42] = "Grau";
+            languagefields[43] = "Weiß";
+            languagefields[44] = "Klicken Sie hier, um ein Bild hinzuzufügen";
+            languagefields[45] = "Konto erstellen";
+            languagefields[46] = "Schiff";
+            languagefields[47] = "Filter";
+            languagefields[48] = "Status";
+            languagefields[49] = "Farbe";
+            languagefields[50] = "Typ";
+            languagefields[51] = "Markierung";
+            languagefields[52] = "Datum";
+            languagefields[53] = "Weitere Informationen";
+            languagefields[54] = "Gefunden";
+            languagefields[55] = "Fehlt";
+            languagefields[56] = "Zerstört";
+            languagefields[57] = "Fertiggestellt";
+            languagefields[58] = "Nie gefunden";
+            languagefields[59] = "Depot";
+            languagefields[60] = "Aktionen";
+            languagefields[61] = "Einstellungen";
+            languagefields[62] = "Austragen";
+            languagefields[63] = "Neues Konto erstellen";
+            languagefields[64] = "Service-Assistent";
+            languagefields[65] = "Administrator";
+            languagefields[66] = "Kunde";
+            languagefields[67] = "Ändern";
+            languagefields[68] = "Entfernen";
+            languagefields[68] = "Sprache";
+            languagefields[69] = "Englisch";
+            languagefields[70] = "Holländisch";
+            languagefields[71] = "Spanisch";
+            languagefields[72] = "Türkisch";
+            languagefields[73] = "Wählen Sie die Sprache";
+            languagefields[74] = "Wählen Sie die Rolle";
+            languagefields[75] = "Status";
+            languagefields[76] = "Versicherungsansprüche";
+            languagefields[77] = "Anzahl der Ansprüche";
+            languagefields[78] = "jan";
+            languagefields[79] = "feb";
+            languagefields[80] = "mär";
+            languagefields[81] = "apr";
+            languagefields[82] = "mai";
+            languagefields[83] = "jun";
+            languagefields[84] = "jul";
+            languagefields[85] = "aug";
+            languagefields[86] = "sep";
+            languagefields[87] = "okt";
+            languagefields[88] = "nov";
+            languagefields[89] = "dez";
+            languagefields[90] = "Kennwort";
+            languagefields[91] = "E-Mail";
+            languagefields[92] = "Speicher";
+            languagefields[93] = "Es sind Pflichtfelder leer gelassen!";
+            languagefields[94] = "E-Mail ist bereits vorhanden!";
+            languagefields[95] = "Registrieren fehlende Gepäck";
+            languagefields[96] = "Register Gepäck";
+            languagefields[97] = "Zuhause";
+            languagefields[98] = "Konten";
+            languagefields[99] = "Statistik";
+            languagefields[100] = "Gepäck-Datenbank";
+            languagefields[101] = "Login";
+            languagefields[102] = "Einstellungen";
+            languagefields[103] = "Das Konto wird erstellt und versendet eine "
+                    + "E-Mail!";
+            languagefields[104] = "Daten ändern";
+            languagefields[105] = "Wählen Sie zunächst eine Zeile in der "
+                    + "Tabelle, dies zu ändern";
+            languagefields[106] = "Neueste Gepäck";
+            languagefields[107] = "Zeit";
+            languagefields[108] = "Versicherung Anspruch";
+            languagefields[109] = "Januar";
+            languagefields[110] = "Februar";
+            languagefields[111] = "März";
+            languagefields[112] = "April";
+            languagefields[113] = "Mai";
+            languagefields[114] = "Juni";
+            languagefields[115] = "Juli";
+            languagefields[116] = "August";
+            languagefields[117] = "September";
+            languagefields[118] = "Oktober";
+            languagefields[119] = "November";
+            languagefields[120] = "Dezember";
+            languagefields[121] = "Diese E-Mail-Adresse ist bereits vorhanden.";
+            languagefields[122] = "Anpassungen";
+            languagefields[123] = "Ihre Daten werden geändert.";
+            languagefields[124] = "Die Daten wurden hinzugefügt.";
+            languagefields[125] = "Schulter";
+            languagefields[126] = "Veränderungsrechnung";
+            languagefields[127] = "Stornieren";
+            languagefields[128] = "Konto löschen";
+            languagefields[129] = "Sind Sie sicher, dass Sie den Namen Konto '";
+            languagefields[130] = "' so entfernen?";
+            languagefields[131] = "Monat";
+            languagefields[132] = "Anzahl";
+            languagefields[133] = "Löschen von Daten";
+            languagefields[134] = "Zuerst wählen Sie eine Zeile in der Tabelle,"
+                    + " um sie zu entfernen";
+            languagefields[135] = "Thema";
+            languagefields[136] = "Nachricht";
+            languagefields[137] = "EXTRA";
+            languagefields[138] = "Export in PDF";
+            languagefields[139] = "Verfügbarkeit prüfen";
+            languagefields[140] = "Export";
+            languagefields[141] = "Datum aus";
+            languagefields[142] = "Datum zu";
+            languagefields[143] = "Woche";
+            languagefields[144] = "Seite";
+            languagefields[145] = "Zusätzlich";
+            languagefields[146] = "Bestätigen";
+            languagefields[147] = "Sind Sie sicher, dass Sie diese E-Mail an "
+                    + "seine normale Nachricht zurücksetzen?";
+            languagefields[148] = "Benutzername";
+            languagefields[149] = "Informationen";
+            languagefields[150] = "Warnung";
+            languagefields[151] = "Verwenden Sie die Zeichen &quot; und ' \n"
+                    + "eine E-Mail aus.";
+            languagefields[152] = "Sie können bestimmte Wörter verwenden \n "
+                    + "in einer E-Mail \n "
+                    + "bedeuten nichts. Hier \n "
+                    + "nbe löschte die Wörter, die Sie verwenden \n "
+                    + "Die mit dem \n "
+                    + "Sinn dahinter.";
+            languagefields[153] = "Genesen";
+            languagefields[154] = "Löschen von Daten";
+            languagefields[155] = "Sie haben sich im Gepäck und Kundendaten "
+                    + "dauerhaft zu entfernen! Sind Sie sicher?";
+            languagefields[156] = "Entfernen";
+            languagefields[157] = "Die Daten wurden erfolgreich gelöscht!";
+            languagefields[158] = "Aktualisieren Sie die Seite, um die "
+                    + "Datenbank zu aktualisieren";
+            languagefields[159] = "E-Mail-Adresse ist ungültig";
+            languagefields[160] = "PDF öffnet";
+            languagefields[161] = "Hat nur eine PDF-Datei mit dem Benutzer "
+                    + "geöffnet.";
+            languagefields[162] = "Benutzer";
+            languagefields[163] = "Unbekannt";
+            languagefields[164] = "Wählen Sie die Sprache des Kunden";
+            languagefields[165] = "Deutsch";
         }
         return languagefields;
     }

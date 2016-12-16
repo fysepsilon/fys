@@ -44,10 +44,12 @@ public class HomepageadminController implements Initializable {
     @FXML private LineChart<Number, Number> linechart;
     @FXML private Label tableTitle;
     @FXML private TableView<Status> table;
+    @FXML private Calendar calendar = new GregorianCalendar();
+    @FXML private Date trialTime = new Date();
     @FXML private ObservableList<Status> data = FXCollections.observableArrayList(
-            new Status(taal[54], 0), new Status(taal[55], 0),
-            new Status(taal[56], 0), new Status(taal[57], 0),
-            new Status(taal[58], 0), new Status(taal[59], 0));
+            new Status(0, taal[54], 0), new Status(0, taal[55], 0),
+            new Status(0, taal[56], 0), new Status(0, taal[57], 0),
+            new Status(0, taal[58], 0), new Status(0, taal[59], 0));
     @FXML private TableColumn week, status, amount;
     
     @Override
@@ -59,10 +61,7 @@ public class HomepageadminController implements Initializable {
         String[] tokens = dateTimeString.split("-");
         String year = tokens[0];
         String months = tokens[1];
-        
-        Calendar calendar = new GregorianCalendar();
-        Date trialTime = new Date();   
-        calendar.setTime(trialTime);     
+        calendar.setTime (trialTime);
 //        System.out.println("Week number:" + 
 //            calendar.get(Calendar.WEEK_OF_YEAR));
        
@@ -151,8 +150,10 @@ public class HomepageadminController implements Initializable {
         status.setText(taal[48]);
         amount.setText(taal[132]);
         getStatusData(year, months);
+        week.setCellValueFactory(new PropertyValueFactory<>("weekNumber"));
         status.setCellValueFactory(new PropertyValueFactory<>("statusName"));
         amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        week.setStyle("-fx-alignment: CENTER;");
         status.setStyle("-fx-alignment: CENTER;");
         amount.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
@@ -199,6 +200,14 @@ public class HomepageadminController implements Initializable {
             data.get(3).setAmount(settleAmount);
             data.get(4).setAmount(neverFoundAmount);
             data.get(5).setAmount(depotAmount);
+            
+            //Update de tabel met weeknummer.
+            data.get(0).setWeekNumber(calendar.get(Calendar.WEEK_OF_YEAR));
+            data.get(1).setWeekNumber(calendar.get(Calendar.WEEK_OF_YEAR));
+            data.get(2).setWeekNumber(calendar.get(Calendar.WEEK_OF_YEAR));
+            data.get(3).setWeekNumber(calendar.get(Calendar.WEEK_OF_YEAR));
+            data.get(4).setWeekNumber(calendar.get(Calendar.WEEK_OF_YEAR));
+            data.get(5).setWeekNumber(calendar.get(Calendar.WEEK_OF_YEAR));
             conn.close();
 
         } catch (SQLException ex) {

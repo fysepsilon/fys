@@ -182,6 +182,10 @@ public class accountsController implements Initializable {
             type_label.setVisible(false);
             type_combo.setVisible(false);
         }
+        
+        if (loginController.getUsertype() == 1) { // Service medewerker (ZONDER REMOVE BUTTON)
+            remove_button.setVisible(false);
+        }
 
         type_label.setText(taal[20] + ":");
         type_combo.getItems().addAll(
@@ -194,7 +198,8 @@ public class accountsController implements Initializable {
                 taal[69],
                 taal[70],
                 taal[71],
-                taal[72]);
+                taal[72], 
+                taal[165]);
 
         getLuggageData();
         first_name.setCellValueFactory(new PropertyValueFactory<>("first_name"));

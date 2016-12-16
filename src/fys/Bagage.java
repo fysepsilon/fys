@@ -18,9 +18,41 @@ public class Bagage {
     @FXML
     private final SimpleIntegerProperty id, realId, lostAndFoundID, personID;
     @FXML
-    private final SimpleStringProperty status, type, color, brand, date, information,
-            firstName, surName, address, residence, zipcode, country, phone, mail,
-            labelNumber, flightNumber, destination, airportFound, airportLost, tableFrom;
+    private final SimpleStringProperty status, type, color, brand;
+    @FXML
+    private SimpleStringProperty picture;
+    @FXML
+    private final SimpleStringProperty date;
+    @FXML
+    private final SimpleStringProperty information;
+    @FXML
+    private final SimpleStringProperty firstName;
+    @FXML
+    private final SimpleStringProperty surName;
+    @FXML
+    private final SimpleStringProperty address;
+    @FXML
+    private final SimpleStringProperty residence;
+    @FXML
+    private final SimpleStringProperty zipcode;
+    @FXML
+    private final SimpleStringProperty country;
+    @FXML
+    private final SimpleStringProperty phone;
+    @FXML
+    private final SimpleStringProperty mail;
+    @FXML
+    private final SimpleStringProperty labelNumber;
+    @FXML
+    private final SimpleStringProperty flightNumber;
+    @FXML
+    private final SimpleStringProperty destination;
+    @FXML
+    private final SimpleStringProperty airportFound;
+    @FXML
+    private final SimpleStringProperty airportLost;
+    @FXML
+    private final SimpleStringProperty tableFrom;
     @FXML
     private SimpleStringProperty time;
 
@@ -52,7 +84,7 @@ public class Bagage {
      * @param realIdValue set value to real id.
      */
     public Bagage(Integer idValue, String statusValue, String typeValue, String colorValue,
-            String brandValue, String dateValue, String informationValue, String firstNameValue,
+            String brandValue, String pictureValue, String dateValue, String informationValue, String firstNameValue,
             String surNameValue, String addressValue, String residenceValue, String zipcodeValue,
             String countryValue, String phoneValue, String mailValue, String labelNumberValue,
             String flightNumberValue, String destinationValue, String airportFoundValue, String airportLostValue,
@@ -62,6 +94,7 @@ public class Bagage {
         this.type = new SimpleStringProperty(typeValue);
         this.color = new SimpleStringProperty(colorValue);
         this.brand = new SimpleStringProperty(brandValue);
+        this.picture = new SimpleStringProperty(pictureValue);
         this.date = new SimpleStringProperty(dateValue);
         this.information = new SimpleStringProperty(informationValue);
         this.firstName = new SimpleStringProperty(firstNameValue);
@@ -96,6 +129,7 @@ public class Bagage {
         this.lostAndFoundID = new SimpleIntegerProperty(0);
         this.personID = new SimpleIntegerProperty(0);
         this.status = new SimpleStringProperty("");
+        this.picture = new SimpleStringProperty("");
         this.type = new SimpleStringProperty("");
         this.information = new SimpleStringProperty("");
         this.firstName = new SimpleStringProperty("");
@@ -483,5 +517,19 @@ public class Bagage {
      */
     public void setTableFrom(String tableFromValue) {
         tableFrom.set(tableFromValue);
+    }
+
+    /**
+     * @return the picture
+     */
+    public String getPicture() {
+        return picture.get();
+    }
+
+    /**
+     * @param picture the picture to set
+     */
+    public void setPicture(String pictureValue) {
+        picture.set(pictureValue);
     }
 }

@@ -457,7 +457,7 @@ public class BagagedatabaseController implements Initializable {
                             //Nederlands
                             fys.sendEmail(mailInput.getText(), "Corendon - Bagagestatus gewijzigd", "Beste "
                                     + nameInput.getText() + " " + surNameInput.getText() + ", "
-                                    + "<br><br>De status van uw bagage is veranderd in <i>" + fys.getStatusString(statusCombo.getValue().toString())
+                                    + "<br><br>De status van uw bagage is veranderd in <i>" + fys.getStatusForMail(language, fys.getStatusString(statusCombo.getValue().toString()))
                                     + "</i>.<br><br>Wij hopen u hiermee genoeg te hebben geinformeerd."
                                     + "<br><br>Met vriendelijke groet,"
                                     + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
@@ -466,7 +466,7 @@ public class BagagedatabaseController implements Initializable {
                             //Spaans
                             fys.sendEmail(mailInput.getText(), "Corendon - Estado del equipaje cambiado", "Valorado "
                                     + nameInput.getText() + " " + surNameInput.getText() + ", "
-                                    + "<br><br>El estado de su equipaje ha cambiado a <i>" + fys.getStatusString(statusCombo.getValue().toString())
+                                    + "<br><br>El estado de su equipaje ha cambiado a <i>" + fys.getStatusForMail(language, fys.getStatusString(statusCombo.getValue().toString()))
                                     + "</i>.<br><br>Esperamos que te hayamos informado lo suficiente."
                                     + "<br><br>Sinceramente,"
                                     + "<br><br><b>El equipo de Corendon</b>", "Sent message successfully....");
@@ -475,7 +475,7 @@ public class BagagedatabaseController implements Initializable {
                             //turks
                             fys.sendEmail(mailInput.getText(), "Corendon - Luggagestatus değiştirildi", "Değerli "
                                     + nameInput.getText() + " " + surNameInput.getText() + ", "
-                                    + "<br><br>Bagajınızın durumu <i>" + fys.getStatusString(statusCombo.getValue().toString())
+                                    + "<br><br>Bagajınızın durumu <i>" + fys.getStatusForMail(language, fys.getStatusString(statusCombo.getValue().toString()))
                                     + "</i>.<br><br>Umarız biz sizi yeterince bilgilendirmiş oluruz."
                                     + "<br><br>İçtenlikle,"
                                     + "<br><br><b>Corendon Ekibi</b>", "Sent message successfully....");
@@ -483,7 +483,7 @@ public class BagagedatabaseController implements Initializable {
                         default:
                             fys.sendEmail(mailInput.getText(), "Corendon - Luggagestatus changed", "Valued "
                                     + nameInput.getText() + " " + surNameInput.getText() + ", "
-                                    + "<br><br>The status of your luggage has been changed to <i>" + fys.getStatusString(statusCombo.getValue().toString())
+                                    + "<br><br>The status of your luggage has been changed to <i>" + fys.getStatusForMail(language, fys.getStatusString(statusCombo.getValue().toString()))
                                     + "</i>.<br><br>We hope that we have informed you enough."
                                     + "<br><br>Sincerely,"
                                     + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");

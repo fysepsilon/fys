@@ -211,6 +211,84 @@ public class FYS extends Application {
         }
         return taal[27];
     }
+    
+    public String getStatusForMail(int language, int status){
+        switch (language) {
+            case 0:
+                switch (status) {
+                    case 1:
+                        return "Lost";
+                    case 2:
+                        return "Destroyed";
+                    case 3:
+                        return "Completed";
+                    case 4:
+                        return "Never found";
+                    case 5:
+                        return "Depot";
+                    case 6:
+                        return "Insurance claim";
+                    default:
+                        break;
+                }
+                return "Found";
+            case 1:
+                switch (status) {
+                    case 1:
+                        return "Vermist";
+                    case 2:
+                        return "Vernietigd";
+                    case 3:
+                        return "Afgehandeld";
+                    case 4:
+                        return "Nooit gevonden";
+                    case 5:
+                        return "Depot";
+                    case 6:
+                        return "Schadeclaim";
+                    default:
+                        break;
+                }
+                return "Gevonden";
+            case 2:
+                switch (status) {
+                    case 1:
+                        return "Que falta";
+                    case 2:
+                        return "Destruido";
+                    case 3:
+                        return "Tratado";
+                    case 4:
+                        return "Nunca encontrado";
+                    case 5:
+                        return "Almacén";
+                    case 6:
+                        return "Reclamación de seguro";
+                    default:
+                        break;
+                }
+                return "Fundar";
+            case 3:
+                switch (status) {
+                    case 1:
+                        return "Eksik";
+                    case 2:
+                        return "Tahrip";
+                    case 3:
+                        return "Tamamlanan";
+                    case 4:
+                        return "Bulmadım";
+                    case 5:
+                        return "Depo";
+                    case 6:
+                        return "Sigorta tazminat talebi";
+                    default:
+                        break;
+                }
+                return "Bulundu";
+        }   
+        return "";
+    }
 
     /**
      *

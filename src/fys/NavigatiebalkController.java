@@ -101,7 +101,7 @@ public class NavigatiebalkController implements Initializable {
     @FXML
     private void handleManual(ActionEvent event) throws IOException {
         try {
-            File myFile = new File("src/fys/templates/dhltemplate.pdf");
+            File myFile = new File("src/fys/templates/Gebruikershandleiding.pdf");
             Desktop.getDesktop().open(myFile);
         } catch (IOException ex) {
             // no application registered for PDFs

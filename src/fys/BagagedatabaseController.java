@@ -375,6 +375,7 @@ public class BagagedatabaseController implements Initializable {
     }
     
     //Wanneer er op de kop Anuleren wordt geklikt
+    @FXML
     private void handleCancel(ActionEvent event) throws IOException {
         pictureButton.setText(taal[44]);
         database_pane.setDisable(false);
@@ -383,6 +384,7 @@ public class BagagedatabaseController implements Initializable {
         wijzig_pane.setVisible(false);
     }
 
+    @FXML
     public void doNext(int dr_id, int dr_personId, int dr_lafId, int drFrom, String dr_status,
             String dr_airport, String dr_name, String dr_surname, String dr_address,
             String dr_residence, String dr_zipcode, String dr_country, String dr_phone,
@@ -417,6 +419,7 @@ public class BagagedatabaseController implements Initializable {
     }
 
     //Wanneer er op de knop Verzenden wordt geklikt
+    @FXML
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
         if ((typeCombo.getValue() == null)
                 || (brandInput.getText() == null || brandInput.getText().trim().isEmpty())

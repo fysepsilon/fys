@@ -400,7 +400,6 @@ public class BagagedatabaseController implements Initializable {
         lafIdLabel.setText(String.valueOf(dr_lafId));
         tableFromLabel.setText(String.valueOf(drFrom));
         statusCombo.setValue(dr_status);
-        airportCombo.setValue(dr_airport);
         nameInput.setText(dr_name);
         surNameInput.setText(dr_surname);
         addressInput.setText(dr_address);
@@ -411,7 +410,7 @@ public class BagagedatabaseController implements Initializable {
         mailInput.setText(dr_mail);
         labelNumberInput.setText(dr_label);
         flightNumberInput.setText(dr_flight);
-        //destinationInput.setText(dr_destination);
+        destination_combo.setValue(dr_destination);
         typeCombo.setValue(dr_type);
         brandInput.setText(dr_brand);
         colorCombo.setValue(dr_color);
@@ -440,7 +439,7 @@ public class BagagedatabaseController implements Initializable {
                 System.out.println("Emailadres bestaat al!");
             //Deze mail wordt verstuurd wanneer de status veranderd en niet op afgehandeld is gezet.
             } else if (fys.getStatusString(dr_status) != fys.getStatusString(statusCombo.getValue().toString())) {
-                if (fys.getStatusString(statusCombo.getValue().toString()) != 3) {
+                //if (fys.getStatusString(statusCombo.getValue().toString()) != 3) {
                     int pageid = 4;
                     int type_email = 0;
 
@@ -458,7 +457,7 @@ public class BagagedatabaseController implements Initializable {
                             filePath, flightNumberInput.getText(), destination,
                             fys.getBaggageTypeString(typeCombo.getValue().toString()), brandInput.getText(),
                             fys.getColorString(colorCombo.getValue().toString()), characteristicsInput.getText());
-                }
+                //}
             } else {
                 sendToDatabase(Integer.parseInt(idLabel.getText()), Integer.parseInt(personIdLabel.getText()),
                         Integer.parseInt(lafIdLabel.getText()), Integer.parseInt(tableFromLabel.getText()),

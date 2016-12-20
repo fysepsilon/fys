@@ -66,7 +66,7 @@ public class NieuwaccountaanmakenController implements Initializable {
 
     @FXML
     private void handleAction(ActionEvent event) throws IOException, SQLException {
-        String password = fys.encrypt(generateRandomPassword(8));
+        String generate_password = fys.encrypt(generateRandomPassword(8));
         String email = "";
 
         loginController loginController = new loginController();
@@ -115,7 +115,7 @@ public class NieuwaccountaanmakenController implements Initializable {
             sendToDatabase_type(name_input.getText(), surname_input.getText(),
                     address_input.getText(), residence_input.getText(), zipcode_input.getText(),
                     country_input.getText(), phone_input.getText(), mail_input.getText(),
-                    password, language_combo.getValue().toString(), type_combo.getValue().toString()
+                    generate_password, language_combo.getValue().toString(), type_combo.getValue().toString()
             );
 
             try {
@@ -131,160 +131,49 @@ public class NieuwaccountaanmakenController implements Initializable {
                 System.out.println("VendorError: " + ex.getErrorCode());
             }
 
-            String[] mailInformation = new String[3];
-            int[] language = new int[1];
-            int[] mailidOphalen = new int[1];
-            String[] mailOphalen = new String[2];
-            int[] type = new int[1];
+            // Replacen in email
+            String getmessage = fys.replaceEmail(fys.Email_Message(), mail_input.getText());
 
-            try {
-                conn = fys.connectToDatabase(conn);
-                stmt = conn.createStatement();
-                //connectToDatabase(conn, stmt, "test", "root", "root");
-
-                String sql = "SELECT mail FROM person WHERE mail='" + mail_input.getText() + "'";
-                ResultSet rs = stmt.executeQuery(sql);
-                while (rs.next()) {
-                    //Retrieve by column name
-                    email = rs.getString("mail");
-                    //Display values
-                    //System.out.print("username: " + email);
-                }
-                rs.close();
-
-                String sql2 = "SELECT type, language, first_name, surname, password FROM person WHERE mail='" + mail_input.getText() + "'";
-                ResultSet rs2 = stmt.executeQuery(sql2);
-                while (rs2.next()) {
-                    //Retrieve by column name
-                    mailInformation[0] = rs2.getString("first_name").substring(0, 1).toUpperCase() + rs2.getString("first_name").substring(1);
-                    mailInformation[1] = rs2.getString("surname").substring(0, 1).toUpperCase() + rs2.getString("surname").substring(1);
-                    mailInformation[2] = fys.decrypt(rs2.getString("password"));
-                    type[0] = rs2.getInt("type");
-                    language[0] = rs2.getInt("language");
-                    //Display values
-                    //System.out.print("username: " + email);
-                }
-                rs2.close();
-
-                String sql3 = "SELECT mailid, subject, message FROM mail";
-                ResultSet rs3 = stmt.executeQuery(sql3);
-                while (rs3.next()) {
-                    //Retrieve by column name
-                    mailidOphalen[0] = rs3.getInt("mailid");
-                    mailOphalen[0] = rs3.getString("subject").substring(0, 1).toUpperCase() + rs3.getString("subject").substring(1);
-                    mailOphalen[1] = rs3.getString("message").substring(0, 1).toUpperCase() + rs3.getString("message").substring(1);
-
-                    // Replacen in email
-                    String getmessage = fys.replaceEmail(mailOphalen[1], mail_input.getText(), mailInformation[2], mailInformation[0], mailInformation[1]);
-
-                    if (language[0] == 0) { // English emails
-                        switch (type[0]) {
-                            case 0: // Mail voor klant (type = 0)
-                                if (mailidOphalen[0] == 1) { // Mailid = 1
-                                    fys.sendEmail(mail_input.getText(), mailOphalen[0], getmessage, "Sent message successfully....");
-                                }
-                                break;
-                            case 1: // Mail voor servicemedewerker (type = 1)
-                                if (mailidOphalen[0] == 2) { // Mailid = 2
-                                    fys.sendEmail(mail_input.getText(), mailOphalen[0], getmessage, "Sent message successfully....");
-                                }
-                                break;
-                            default:
-                                // Mail voor administrator (type = 2)
-                                if (mailidOphalen[0] == 3) { // Mailid = 3
-                                    fys.sendEmail(mail_input.getText(), mailOphalen[0], getmessage, "Sent message successfully....");
-                                }
-                                break;
-                        }
-                    } else if (language[0] == 1) { // Dutch emails
-                        switch (type[0]) {
-                            case 0:
-                                // Mail voor klant (type = 0)
-                                if (mailidOphalen[0] == 4) { // Mailid = 4
-                                    fys.sendEmail(mail_input.getText(), mailOphalen[0], getmessage, "Sent message successfully....");
-                                }
-                                break;
-                            case 1:
-                                // Mail voor servicemedewerker (type = 1)
-                                if (mailidOphalen[0] == 5) { // Mailid = 5
-                                    fys.sendEmail(mail_input.getText(), mailOphalen[0], getmessage, "Sent message successfully....");
-                                }
-                                break;
-                            default:
-                                // Mail voor administrator (type = 2)
-                                if (mailidOphalen[0] == 6) { // Mailid = 6
-                                    fys.sendEmail(mail_input.getText(), mailOphalen[0], getmessage, "Sent message successfully....");
-                                }
-                                break;
-                        }
-                    } else if (language[0] == 2) { // Spanish emails
-                        switch (type[0]) {
-                            case 0:
-                                // Mail voor klant (type = 0)
-                                if (mailidOphalen[0] == 7) { // Mailid = 7
-                                    fys.sendEmail(mail_input.getText(), mailOphalen[0], getmessage, "Sent message successfully....");
-                                }
-                                break;
-                            case 1:
-                                // Mail voor servicemedewerker (type = 1)
-                                if (mailidOphalen[0] == 8) { // Mailid = 8
-                                    fys.sendEmail(mail_input.getText(), mailOphalen[0], getmessage, "Sent message successfully....");
-                                }
-                                break;
-                            default:
-                                // Mail voor administrator (type = 2)
-                                if (mailidOphalen[0] == 9) { // Mailid = 9
-                                    fys.sendEmail(mail_input.getText(), mailOphalen[0], getmessage, "Sent message successfully....");
-                                }
-                                break;
-                        }
-                    } else { // Turkisch emails
-                        switch (type[0]) {
-                            case 0:
-                                // Mail voor klant (type = 0)
-                                if (mailidOphalen[0] == 10) { // Mailid = 10
-                                    fys.sendEmail(mail_input.getText(), mailOphalen[0], getmessage, "Sent message successfully....");
-                                }
-                                break;
-                            case 1:
-                                // Mail voor servicemedewerker (type = 1)
-                                if (mailidOphalen[0] == 11) { // Mailid = 11
-                                    fys.sendEmail(mail_input.getText(), mailOphalen[0], getmessage, "Sent message successfully....");
-                                }
-                                break;
-                            default:
-                                // Mail voor administrator (type = 2)
-                                if (mailidOphalen[0] == 12) { // Mailid = 12
-                                    fys.sendEmail(mail_input.getText(), mailOphalen[0], getmessage, "Sent message successfully....");
-                                }
-                                break;
-                        }
-                    }
-                }
-                rs3.close();
-                conn.close();
-            } catch (SQLException ex) {
-                // handle any errors
-                System.out.println("SQLException: " + ex.getMessage());
-                System.out.println("SQLState: " + ex.getSQLState());
-                System.out.println("VendorError: " + ex.getErrorCode());
+            if (fys.Email_Mailid() == 1) { // Mailid = 1
+                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
+            } else if (fys.Email_Mailid() == 2) { // Mailid = 2
+                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
+            } else if (fys.Email_Mailid() == 3) { // Mailid = 3
+                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
+            } else if (fys.Email_Mailid() == 4) { // Mailid = 4
+                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
+            } else if (fys.Email_Mailid() == 5) { // Mailid = 5
+                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
+            } else if (fys.Email_Mailid() == 6) { // Mailid = 6
+                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
+            } else if (fys.Email_Mailid() == 7) { // Mailid = 7
+                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
+            } else if (fys.Email_Mailid() == 8) { // Mailid = 8
+                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
+            } else if (fys.Email_Mailid() == 9) { // Mailid = 9
+                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
+            } else if (fys.Email_Mailid() == 10) { // Mailid = 10
+                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
+            } else if (fys.Email_Mailid() == 11) { // Mailid = 11
+                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
+            } else if (fys.Email_Mailid() == 12) { // Mailid = 12
+                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
             }
-
-            loginerror.setText(taal[103]);
-            loginerror.setStyle("-fx-text-fill: green;");
-            loginerror.setVisible(true);
-            loginerror.setDisable(false);
-
-            name_input.setText("");
-            surname_input.setText("");
-            address_input.setText("");
-            residence_input.setText("");
-            zipcode_input.setText("");
-            country_input.setText("");
-            phone_input.setText("");
-            mail_input.setText("");
         }
 
+        loginerror.setText(taal[103]);
+        loginerror.setStyle("-fx-text-fill: green;");
+        loginerror.setVisible(true);
+        loginerror.setDisable(false);
+
+        name_input.setText("");
+        surname_input.setText("");
+        address_input.setText("");
+        residence_input.setText("");
+        zipcode_input.setText("");
+        country_input.setText("");
+        phone_input.setText("");
+        mail_input.setText("");
     }
 
     @FXML
@@ -384,6 +273,7 @@ public class NieuwaccountaanmakenController implements Initializable {
                 taal[69],
                 taal[70],
                 taal[71],
-                taal[72]);
+                taal[72], 
+                taal[165]);
     }
 }

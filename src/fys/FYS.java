@@ -62,7 +62,7 @@ public class FYS extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Corendon-Login");
-        
+
         stage.getIcons().add(new Image("http://www.corendon.com/favicon.png"));
         stage.show();
     }
@@ -144,6 +144,8 @@ public class FYS extends Application {
                 return taal[71];
             case 3:
                 return taal[72];
+            case 4:
+                return taal[165];
             default:
                 break;
         }
@@ -164,6 +166,8 @@ public class FYS extends Application {
             return 2;
         } else if (type.equals(taal[72])) {
             return 3;
+        } else if (type.equals(taal[165])) {
+            return 4;
         }
         return 0;
     }
@@ -206,6 +210,84 @@ public class FYS extends Application {
                 break;
         }
         return taal[27];
+    }
+    
+    public String getStatusForMail(int language, int status){
+        switch (language) {
+            case 0:
+                switch (status) {
+                    case 1:
+                        return "Lost";
+                    case 2:
+                        return "Destroyed";
+                    case 3:
+                        return "Completed";
+                    case 4:
+                        return "Never found";
+                    case 5:
+                        return "Depot";
+                    case 6:
+                        return "Insurance claim";
+                    default:
+                        break;
+                }
+                return "Found";
+            case 1:
+                switch (status) {
+                    case 1:
+                        return "Vermist";
+                    case 2:
+                        return "Vernietigd";
+                    case 3:
+                        return "Afgehandeld";
+                    case 4:
+                        return "Nooit gevonden";
+                    case 5:
+                        return "Depot";
+                    case 6:
+                        return "Schadeclaim";
+                    default:
+                        break;
+                }
+                return "Gevonden";
+            case 2:
+                switch (status) {
+                    case 1:
+                        return "Que falta";
+                    case 2:
+                        return "Destruido";
+                    case 3:
+                        return "Tratado";
+                    case 4:
+                        return "Nunca encontrado";
+                    case 5:
+                        return "Almacén";
+                    case 6:
+                        return "Reclamación de seguro";
+                    default:
+                        break;
+                }
+                return "Fundar";
+            case 3:
+                switch (status) {
+                    case 1:
+                        return "Eksik";
+                    case 2:
+                        return "Tahrip";
+                    case 3:
+                        return "Tamamlanan";
+                    case 4:
+                        return "Bulmadım";
+                    case 5:
+                        return "Depo";
+                    case 6:
+                        return "Sigorta tazminat talebi";
+                    default:
+                        break;
+                }
+                return "Bulundu";
+        }   
+        return "";
     }
 
     /**
@@ -260,9 +342,7 @@ public class FYS extends Application {
         }
     }
 
-    
-    
-     public String getPage(int page) {
+    public String getPage(int page) {
         taal language = new taal();
         String[] taal = language.getLanguage();
         switch (page) {
@@ -273,6 +353,7 @@ public class FYS extends Application {
         }
         return taal[163];
     }
+
     /**
      *
      * @param month Welke maand is geselecteerd in de taal van de gebruiker.
@@ -547,22 +628,334 @@ public class FYS extends Application {
     }
 
     /**
-     * 
+     *
      * @param getmessage Het bericht uit de database.
      * @param filter1 Het eerste filter woord -> username
      * @param filter2 Het tweede filter woord -> password
      * @param filter3 Het derde filter woord -> firstname
      * @param filter4 Het vierde filter woord -> surname
      * @return
-     * @throws UnsupportedEncodingException 
+     * @throws UnsupportedEncodingException
      */
-    
-    public String replaceEmail(String getmessage, String filter1, String filter2, String filter3, String filter4) throws UnsupportedEncodingException {
-        getmessage = getmessage.replace("*username*", filter1);
-        getmessage = getmessage.replace("*password*", filter2);
-        getmessage = getmessage.replace("*firstname*", filter3);
-        getmessage = getmessage.replace("*surname*", filter4);
+    public String replaceEmail(String getmessage, String mail_input) throws UnsupportedEncodingException, SQLException {
+        getmessage = getmessage.replace("*username*", mail_input);
+        getmessage = getmessage.replace("*password*", Email_Password(mail_input));
+        getmessage = getmessage.replace("*firstname*", Email_Firstname(mail_input));
+        getmessage = getmessage.replace("*surname*", Email_Surname(mail_input));
         return getmessage;
+    }
+
+    public String replaceEmail_tF(String getmessage, String mail_input, int tableForm) throws UnsupportedEncodingException, SQLException {
+        getmessage = getmessage.replace("*color*", Email_Color(tableForm, mail_input));
+        getmessage = getmessage.replace("*brand*", Email_Brand(tableForm, mail_input));
+        getmessage = getmessage.replace("*luggagetype*", Email_LuggageType(tableForm, mail_input));
+        return getmessage;
+    }
+
+    public int Email_Mailid() throws SQLException {
+        int[] mailOphalen = new int[1];
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            String sql = "SELECT mailid FROM mail";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                //Retrieve by column name
+                mailOphalen[0] = rs.getInt("mailid");
+
+                return mailOphalen[0];
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen[0];
+    }
+
+    public String Email_Subject() throws SQLException {
+        String[] mailOphalen = new String[1];
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            String sql = "SELECT subject FROM mail";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                //Retrieve by column name
+                mailOphalen[0] = rs.getString("subject").substring(0, 1).toUpperCase() + rs.getString("subject").substring(1);
+
+                return mailOphalen[0];
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen[0];
+    }
+
+    public String Email_Message() throws SQLException {
+        String[] mailOphalen = new String[1];
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            String sql = "SELECT mailid, subject, message FROM mail";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                //Retrieve by column name
+                mailOphalen[0] = rs.getString("message").substring(0, 1).toUpperCase() + rs.getString("message").substring(1);
+
+                return mailOphalen[0];
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen[0];
+    }
+
+    public String Email_Firstname(String mail_input) throws SQLException {
+        String[] mailOphalen = new String[1];
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            String sql = "SELECT first_name FROM person WHERE mail='" + mail_input + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                //Retrieve by column name
+                mailOphalen[0] = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
+
+                return mailOphalen[0];
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen[0];
+    }
+
+    public String Email_Surname(String mail_input) throws SQLException {
+        String[] mailOphalen = new String[1];
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            String sql = "SELECT surname FROM person WHERE mail='" + mail_input + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                //Retrieve by column name
+                mailOphalen[0] = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
+
+                return mailOphalen[0];
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen[0];
+    }
+
+    public String Email_Password(String mail_input) throws SQLException {
+        String[] mailOphalen = new String[1];
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            String sql = "SELECT password FROM person WHERE mail='" + mail_input + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                //Retrieve by column name
+                mailOphalen[0] = decrypt(rs.getString("password"));
+
+                return mailOphalen[0];
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen[0];
+    }
+
+    public String Email_Personid(String mail_input) throws SQLException {
+        String[] mailOphalen = new String[1];
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            String sql = "SELECT person_id FROM person WHERE mail='" + mail_input + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                //Retrieve by column name
+                mailOphalen[0] = rs.getString("person_id").substring(0, 1).toUpperCase() + rs.getString("person_id").substring(1);
+
+                return mailOphalen[0];
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen[0];
+    }
+    
+    public int Email_Persontype(String mail_input) throws SQLException {
+        int[] mailOphalen = new int[1];
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            String sql = "SELECT type FROM person WHERE mail='" + mail_input + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                //Retrieve by column name
+                mailOphalen[0] = rs.getInt("type");
+
+                return mailOphalen[0];
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen[0];
+    }
+
+    public String Email_Color(int tableFrom, String mail_input) throws SQLException {
+        String[] mailOphalen = new String[1];
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            if (tableFrom == 1) {
+                String sql = "SELECT color FROM found WHERE person_id='"
+                        + Email_Personid(mail_input) + "'";
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    //Retrieve by column name
+                    mailOphalen[0] = getColor(rs.getInt("color"));
+
+                    return mailOphalen[0];
+                }
+            } else {
+                String sql = "SELECT color FROM lost WHERE person_id='"
+                        + Email_Personid(mail_input) + "'";
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    //Retrieve by column name
+                    mailOphalen[0] = getColor(rs.getInt("color"));
+
+                    return mailOphalen[0];
+                }
+            }
+
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen[0];
+    }
+
+    public String Email_Brand(int tableFrom, String mail_input) throws SQLException {
+        String[] mailOphalen = new String[1];
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            if (tableFrom == 1) {
+                String sql = "SELECT brand FROM found WHERE person_id='"
+                        + Email_Personid(mail_input) + "'";
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    //Retrieve by column name
+                    mailOphalen[0] = rs.getString("brand").substring(0, 1).toUpperCase() + rs.getString("brand").substring(1);
+
+                    return mailOphalen[0];
+                }
+            } else {
+                String sql = "SELECT brand FROM lost WHERE person_id='"
+                        + Email_Personid(mail_input) + "'";
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    //Retrieve by column name
+                    mailOphalen[0] = rs.getString("brand").substring(0, 1).toUpperCase() + rs.getString("brand").substring(1);
+
+                    return mailOphalen[0];
+                }
+            }
+
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen[0];
+    }
+
+    public String Email_LuggageType(int tableFrom, String mail_input) throws SQLException {
+        String[] mailOphalen = new String[1];
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            if (tableFrom == 1) {
+                String sql = "SELECT type FROM found WHERE person_id='"
+                        + Email_Personid(mail_input) + "'";
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    //Retrieve by column name
+                    mailOphalen[0] = getBaggageType(rs.getInt("type"));;
+
+                    return mailOphalen[0];
+                }
+            } else {
+                String sql = "SELECT type FROM lost WHERE person_id='"
+                        + Email_Personid(mail_input) + "'";
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    //Retrieve by column name
+                    mailOphalen[0] = getBaggageType(rs.getInt("type"));;
+
+                    return mailOphalen[0];
+                }
+            }
+
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen[0];
     }
 
     /**

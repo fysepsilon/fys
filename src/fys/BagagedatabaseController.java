@@ -17,6 +17,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -430,15 +431,16 @@ public class BagagedatabaseController implements Initializable {
                 destination = destination_combo.getValue().toString();
             }
             
-            //MAILEN
+            //mail wanneer de status van een bagage aangepast wordt.
             if (fys.checkEmailExistsOnChange(mailInput.getText(), dr_mail)) {
                 System.out.println("Emailadres bestaat al!!!");
-            } else if(fys.getStatusString(dr_status) != fys.getStatusString(statusCombo.getValue().toString())) {
+            } else if(!Objects.equals(fys.getStatusString(dr_status), fys.getStatusString(statusCombo.getValue().toString()))) {
+                conn = fys.connectToDatabase(conn);
+                stmt = conn.createStatement();
                 int language = 0;
                 try {
                     //connectToDatabase(conn, stmt, "test", "root", "root");
                     String sql = "SELECT person_id, language FROM person WHERE mail='" + mailInput.getText() +"'";
-                    System.out.println(sql);
                     ResultSet rs = stmt.executeQuery(sql);
                     while (rs.next()) {
                         //Retrieve by column name
@@ -452,14 +454,17 @@ public class BagagedatabaseController implements Initializable {
                     System.out.println("VendorError: " + ex.getErrorCode());
                 }
                 if (!mailInput.getText().isEmpty()) {
-                    System.out.println(language);
+                    //Controleer in welke taal de mail verstuurd moet worden.
                     switch (language) {
                         case 1:
                             //Nederlands
                             fys.sendEmail(mailInput.getText(), "Corendon - Bagagestatus gewijzigd", "Beste "
                                     + nameInput.getText() + " " + surNameInput.getText() + ", "
-                                    + "<br><br>De status van uw bagage is veranderd in <i>" + fys.getStatusString(statusCombo.getValue().toString())
-                                    + "</i>.<br><br>Wij hopen u hiermee genoeg te hebben geinformeerd."
+                                    + "<br><br>De status van uw bagage is veranderd in <i>" + fys.getStatusForMail(language, fys.getStatusString(statusCombo.getValue().toString()))
+                                    + "</i>."
+                                    + (fys.getStatusString(statusCombo.getValue().toString()) == 3 ? "<br>Uw bagage wordt zo spoedig mogelijk naar uw adres gebracht."
+                                            + "<br>Vanaf nu zal DHL contact met u opnemen.": "")
+                                    + "<br><br>Wij hopen u hiermee genoeg te hebben geinformeerd."
                                     + "<br><br>Met vriendelijke groet,"
                                     + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
                             break;
@@ -467,8 +472,11 @@ public class BagagedatabaseController implements Initializable {
                             //Spaans
                             fys.sendEmail(mailInput.getText(), "Corendon - Estado del equipaje cambiado", "Valorado "
                                     + nameInput.getText() + " " + surNameInput.getText() + ", "
-                                    + "<br><br>El estado de su equipaje ha cambiado a <i>" + fys.getStatusString(statusCombo.getValue().toString())
-                                    + "</i>.<br><br>Esperamos que te hayamos informado lo suficiente."
+                                    + "<br><br>El estado de su equipaje ha cambiado a <i>" + fys.getStatusForMail(language, fys.getStatusString(statusCombo.getValue().toString()))
+                                    + "</i>."
+                                    + (fys.getStatusString(statusCombo.getValue().toString()) == 3 ? "<br>Su equipaje será entregado a su dirección tan pronto como sea posible."
+                                            + "<br>A partir de ahora se pondrá en contacto DHL.": "")
+                                    + "<br><br>Esperamos que te hayamos informado lo suficiente."
                                     + "<br><br>Sinceramente,"
                                     + "<br><br><b>El equipo de Corendon</b>", "Sent message successfully....");
                             break;
@@ -476,16 +484,22 @@ public class BagagedatabaseController implements Initializable {
                             //turks
                             fys.sendEmail(mailInput.getText(), "Corendon - Luggagestatus değiştirildi", "Değerli "
                                     + nameInput.getText() + " " + surNameInput.getText() + ", "
-                                    + "<br><br>Bagajınızın durumu <i>" + fys.getStatusString(statusCombo.getValue().toString())
-                                    + "</i>.<br><br>Umarız biz sizi yeterince bilgilendirmiş oluruz."
+                                    + "<br><br>Bagajınızın durumu <i>" + fys.getStatusForMail(language, fys.getStatusString(statusCombo.getValue().toString()))
+                                    + "</i>."
+                                    + (fys.getStatusString(statusCombo.getValue().toString()) == 3 ? "<br>Bagaj kısa sürede adresinize teslim edilecektir."
+                                            + "<br>Şu andan itibaren DHL sizinle irtibata geçecektir.": "")
+                                    + "<br><br>Umarız biz sizi yeterince bilgilendirmiş oluruz."
                                     + "<br><br>İçtenlikle,"
                                     + "<br><br><b>Corendon Ekibi</b>", "Sent message successfully....");
                             break;
                         default:
                             fys.sendEmail(mailInput.getText(), "Corendon - Luggagestatus changed", "Valued "
                                     + nameInput.getText() + " " + surNameInput.getText() + ", "
-                                    + "<br><br>The status of your luggage has been changed to <i>" + fys.getStatusString(statusCombo.getValue().toString())
-                                    + "</i>.<br><br>We hope that we have informed you enough."
+                                    + "<br><br>The status of your luggage has been changed to <i>" + fys.getStatusForMail(language, fys.getStatusString(statusCombo.getValue().toString()))
+                                    + "</i>."
+                                    + (fys.getStatusString(statusCombo.getValue().toString()) == 3 ? "<br>Your luggage will be delivered to your address as soon as possible."
+                                            + "<br>From now DHL will contact you.": "")
+                                    + "<br><br>We hope that we have informed you enough."
                                     + "<br><br>Sincerely,"
                                     + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
                             break;
@@ -493,7 +507,7 @@ public class BagagedatabaseController implements Initializable {
                 }
 
                 //MAILEN
-            sendToDatabase(Integer.parseInt(idLabel.getText()), Integer.parseInt(personIdLabel.getText()), 
+                sendToDatabase(Integer.parseInt(idLabel.getText()), Integer.parseInt(personIdLabel.getText()), 
                     Integer.parseInt(lafIdLabel.getText()), Integer.parseInt(tableFromLabel.getText()), 
                     fys.getStatusString(statusCombo.getValue().toString()), airportCombo.getValue().toString(), 
                     nameInput.getText(), surNameInput.getText(), addressInput.getText(), 
@@ -684,97 +698,66 @@ public class BagagedatabaseController implements Initializable {
                 //Sla het document op
                 document.save("src/fys/formulieren/dhlFormulier" + frontname + surname + dr_personId + ".pdf");
                 document.close();
-
-                // Mail
-                try {
-                    //connectToDatabase(conn, stmt, "test", "root", "root");
-                    String sql = "SELECT person_id, type, language, first_name, surname FROM person WHERE mail='" + mailInput.getText() + "'";
-                    ResultSet rs = stmt.executeQuery(sql);
-                    while (rs.next()) {
-                        //Retrieve by column name
-                        mailInformation[0] = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
-                        mailInformation[1] = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
-                        mailInformation2[0] = rs.getInt("person_id");
-                        mailInformation2[1] = rs.getInt("language");
-                    }
-                    rs.close();
-                } catch (SQLException ex) {
-                    // handle any errors
-                    System.out.println("SQLException: " + ex.getMessage());
-                    System.out.println("SQLState: " + ex.getSQLState());
-                    System.out.println("VendorError: " + ex.getErrorCode());
-                }
                 
-                try {
-                    //connectToDatabase(conn, stmt, "test", "root", "root");
-                    String sql = "";
-                    if (tableFrom == 1) {
-                        sql = "SELECT color, brand, type FROM found WHERE person_id='" + mailInformation2[0] + "'";
-                    } else{
-                        sql = "SELECT color, brand, type FROM lost WHERE person_id='" + mailInformation2[0] + "'";
-                    }
-                    ResultSet rs = stmt.executeQuery(sql);
-                    while (rs.next()) {
-                        //Retrieve by column name
-                        mailInformation2[2] = rs.getInt("color");
-                        mailInformation[2] = rs.getString("brand").substring(0, 1).toUpperCase() + rs.getString("brand").substring(1);
-                        mailInformation2[3] = rs.getInt("type");
-                    }
-                    rs.close();
-                } catch (SQLException ex) {
-                    // handle any errors
-                    System.out.println("SQLException: " + ex.getMessage());
-                    System.out.println("SQLState: " + ex.getSQLState());
-                    System.out.println("VendorError: " + ex.getErrorCode());
-                }
-
-                if (mailInformation2[1] == 0) { // English emails
-                    fys.sendEmail(mailInput.getText(), "Corendon - Logindata", "Dear valued customer, "
-                            + "<br><br>There is an account created for you by one of our employees."
-                            + "<br>You can login to this account on our web application to view the status of your case."
-                            + "<br>You will need the following data to log in:"
-                            + "<br>Username: <i>" + mailInput.getText()
-                            + "</i><br>Password: <i>" + mailInformation[2]
-                            + "</i><br><br>You can change your password in the web application."
-                            + "<br>We hope to have informed you sufficiently."
-                            + "<br><br>Sincerely,"
-                            + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
-                } else if (mailInformation2[1] == 1) { // Dutch emails
-                    // Mail voor klant (type = 0)
-                    fys.sendEmail(mailInput.getText(), "Corendon - Inloggegevens", "Gewaardeerde klant, "
-                            + "<br><br>Uw " + mailInformation2[2] + mailInformation[2] + mailInformation2[3] + " is afgehandeld."
-                            + "<br>U kunt met dit account inloggen op onze webapplicatie om de status van uw koffer te bekijken."
-                            + "<br>U heeft de volgende gegevens nodig om in te kunnen loggen:"
-                            + "<br>Gebruikersnaam: <i>" + mailInput.getText()
-                            + "</i><br>Wachtwoord: <i>" + mailInformation[2]
-                            + "</i><br><br>U kunt uw wachtwoord wijzigen in de webapplicatie."
-                            + "<br>Wij hopen u hiermee voldoende te hebben geïnformeerd."
-                            + "<br><br>Met vriendelijke groet,"
-                            + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
-                } else if (mailInformation2[1] == 2) { // Spanish emails
-                    // Mail voor klant (type = 0)
-                    fys.sendEmail(mailInput.getText(), "Corendon - Logindatos", "Estimado cliente, "
-                            + "<br><br>Hay una cuenta creada para usted por uno de nuestros empleados."
-                            + "<br>Puede iniciar sesión con la cuenta en nuestra aplicación web para ver el estado de su caso."
-                            + "<br>Necesitará la siguiente información para iniciar sesión:"
-                            + "<br>Nombre de usuario: <i>" + mailInput.getText()
-                            + "</i><br>Contraseña: <i>" + mailInformation[2]
-                            + "</i><br><br>Puede cambiar su contraseña en la aplicación web."
-                            + "<br>Esperamos que te han informado lo suficiente."
-                            + "<br><br>Atentamente,"
-                            + "<br><br><b>El equipo de Corendon</b>", "Sent message successfully....");
-                } else { // Turkisch emails
-                    fys.sendEmail(mailInput.getText(), "Corendon - Giriş", "Değerli müşterimiz, "
-                            + "<br><br>Çalışanlarımızın biri tarafından sizin için oluşturulan bir hesap vardır."
-                            + "<br>Sen davanın durumunu görüntülemek için web uygulamasında bu hesaba giriş yapabilirsiniz."
-                            + "<br>Oturum açmak için aşağıdaki bilgilere ihtiyacınız olacaktır:"
-                            + "<br>Kullanıcı adı: <i>" + mailInput.getText()
-                            + "</i><br>Şifre: <i>" + mailInformation[2]
-                            + "</i><br><br>Bu web uygulamasında şifrenizi değiştirebilirsiniz."
-                            + "<br>Biz yeterince sizi haberdar etmek istedik."
-                            + "<br><br>Saygılarımızla,"
-                            + "<br><br><b>Corendon Takımı</b>", "Sent message successfully....");
-                }
+                // Replacen in email
+//                String getmessage = fys.replaceEmail(fys.Email_Message(), mailInput.getText());
+//
+//                switch (mailInformation2[1]) {
+//                    case 0:
+//                        // English emails
+//                        fys.sendEmail(mailInput.getText(), "Corendon - Logindata", "Dear valued customer, "
+//                                + "<br><br>There is an account created for you by one of our employees."
+//                                + "<br>You can login to this account on our web application to view the status of your case."
+//                                + "<br>You will need the following data to log in:"
+//                                + "<br>Username: <i>" + mailInput.getText()
+//                                + "</i><br>Password: <i>" + mailInformation[2]
+//                                + "</i><br><br>You can change your password in the web application."
+//                                + "<br>We hope to have informed you sufficiently."
+//                                + "<br><br>Sincerely,"
+//                                + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
+//                        break;
+//                    case 1:
+//                        // Dutch emails
+//                        // Mail voor klant (type = 0)
+//                        fys.sendEmail(mailInput.getText(), "Corendon - Inloggegevens", "Gewaardeerde klant, "
+//                                + "<br><br>Uw " + mailInformation2[2] + mailInformation[2] + mailInformation2[3] + " is afgehandeld."
+//                                + "<br>U kunt met dit account inloggen op onze webapplicatie om de status van uw koffer te bekijken."
+//                                + "<br>U heeft de volgende gegevens nodig om in te kunnen loggen:"
+//                                + "<br>Gebruikersnaam: <i>" + mailInput.getText()
+//                                + "</i><br>Wachtwoord: <i>" + mailInformation[2]
+//                                + "</i><br><br>U kunt uw wachtwoord wijzigen in de webapplicatie."
+//                                + "<br>Wij hopen u hiermee voldoende te hebben geïnformeerd."
+//                                + "<br><br>Met vriendelijke groet,"
+//                                + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
+//                        break;
+//                    case 2:
+//                        // Spanish emails
+//                        // Mail voor klant (type = 0)
+//                        fys.sendEmail(mailInput.getText(), "Corendon - Logindatos", "Estimado cliente, "
+//                                + "<br><br>Hay una cuenta creada para usted por uno de nuestros empleados."
+//                                + "<br>Puede iniciar sesión con la cuenta en nuestra aplicación web para ver el estado de su caso."
+//                                + "<br>Necesitará la siguiente información para iniciar sesión:"
+//                                + "<br>Nombre de usuario: <i>" + mailInput.getText()
+//                                + "</i><br>Contraseña: <i>" + mailInformation[2]
+//                                + "</i><br><br>Puede cambiar su contraseña en la aplicación web."
+//                                + "<br>Esperamos que te han informado lo suficiente."
+//                                + "<br><br>Atentamente,"
+//                                + "<br><br><b>El equipo de Corendon</b>", "Sent message successfully....");
+//                        break;
+//                    default:
+//                        // Turkisch emails
+//                        fys.sendEmail(mailInput.getText(), "Corendon - Giriş", "Değerli müşterimiz, "
+//                                + "<br><br>Çalışanlarımızın biri tarafından sizin için oluşturulan bir hesap vardır."
+//                                + "<br>Sen davanın durumunu görüntülemek için web uygulamasında bu hesaba giriş yapabilirsiniz."
+//                                + "<br>Oturum açmak için aşağıdaki bilgilere ihtiyacınız olacaktır:"
+//                                + "<br>Kullanıcı adı: <i>" + mailInput.getText()
+//                                + "</i><br>Şifre: <i>" + mailInformation[2]
+//                                + "</i><br><br>Bu web uygulamasında şifrenizi değiştirebilirsiniz."
+//                                + "<br>Biz yeterince sizi haberdar etmek istedik."
+//                                + "<br><br>Saygılarımızla,"
+//                                + "<br><br><b>Corendon Takımı</b>", "Sent message successfully....");
+//                        break;
+//                }
             }
             pictureButton.setText("Klik hier om een afbeelding toe te voegen");
             fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");
@@ -811,6 +794,7 @@ public class BagagedatabaseController implements Initializable {
             
             //Vraag of de gebruiker het zeker weet
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setTitle(taal[154]);
             confirm.setHeaderText(taal[154]);
             confirm.setContentText(taal[155]);            
             Optional<ButtonType> result = confirm.showAndWait();

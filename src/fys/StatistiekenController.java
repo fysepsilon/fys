@@ -69,9 +69,9 @@ public class StatistiekenController implements Initializable {
     @FXML private ArrayList<String> years = new ArrayList<String>();
     @FXML private Connection conn = null; 
     @FXML private Statement stmt = null; 
-    @FXML private FYS fys = new FYS();
-    @FXML private taal language = new taal();
-    @FXML private String[] taal = language.getLanguage();
+    @FXML private final FYS fys = new FYS();
+    @FXML private final taal language = new taal();
+    @FXML private final String[] taal = language.getLanguage();
     @FXML private ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
             new PieChart.Data(taal[54], 0), new PieChart.Data(taal[55], 0),
             new PieChart.Data(taal[56], 0), new PieChart.Data(taal[57], 0),
@@ -160,7 +160,7 @@ public class StatistiekenController implements Initializable {
         pieChartData.get(4).setPieValue(neverFoundAmount);
         pieChartData.get(5).setPieValue(depotAmount);
         
-        //Voor elke aantal tel ze met elkaar op en sla het op bij total.
+        //Voor elk aantal tel ze met elkaar op en sla het op bij total.
         for (PieChart.Data d : pieChart.getData()) {
             total += d.getPieValue();
         }
@@ -250,6 +250,7 @@ public class StatistiekenController implements Initializable {
         series.getData().set(11, new XYChart.Data(taal[89], dec));
     }
     
+    //Wanneer de gebruiker op filteren klikt.
     @FXML
     private void handleFilterAction(ActionEvent event) throws IOException, InterruptedException {
         //PIECHART
@@ -404,6 +405,7 @@ public class StatistiekenController implements Initializable {
         series.getData().add(new XYChart.Data(taal[89], dec));
     }
     
+    //Wanneer de gebruiker op exporteren klikt.
     @FXML
     private void handleExportToPDFAction(ActionEvent event) throws IOException {
         // Create the custom dialog.

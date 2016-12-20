@@ -5,8 +5,6 @@
  */
 package fys;
 
-import java.awt.Desktop;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -18,13 +16,9 @@ import java.sql.Statement;
 import java.util.Properties;
 import java.util.Random;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javax.crypto.Cipher;
@@ -55,10 +49,14 @@ public class FYS extends Application {
     private static Stage parentWindow;
     private static final String key = "1234abcd";
     private final static String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
-
+    
+    /**
+     * Verander het hoofscherm in login.fxml
+     * @param stage Een hoofdscherm
+     * @throws Exception 
+     */
     @Override
     public void start(Stage stage) throws Exception {
-        //Laat de hoofdscherm in.
         parentWindow = stage;
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
         Scene scene = new Scene(root);
@@ -73,8 +71,8 @@ public class FYS extends Application {
 
     /**
      *
-     * @param title set the title of the window.
-     * @param changeToWindow change window to this FXML file.
+     * @param title zet titel van het hoofscherm.
+     * @param changeToWindow Verander het hoofdscherm in een willekeurige fxml bestand.
      * @throws IOException
      */
     public void changeToAnotherFXML(String title, String changeToWindow) throws IOException {
@@ -89,7 +87,7 @@ public class FYS extends Application {
     }
 
     /**
-     *
+     * 
      * @param length de lengte van het wachtwoord.
      * @return een random wachtwoord met de lengte die is geselecteerd.
      */
@@ -105,7 +103,7 @@ public class FYS extends Application {
     /**
      *
      * @param type welke type er is geselecteerd in cijfers.
-     * @return user type in woorden in de taal van de gebruiker.
+     * @return user type in woorden in de taal van de gebruiker (account).
      */
     public String getUserFunction(int type) {
         taal language = new taal();
@@ -120,7 +118,7 @@ public class FYS extends Application {
 
     /**
      *
-     * @param type Welke type er is geselecteerd in de taal van de gebruiker.
+     * @param type Welke type er is geselecteerd in de taal van de gebruiker (account).
      * @return user type in getallen.
      */
     public Integer getUserFunctionString(String type) {
@@ -215,6 +213,90 @@ public class FYS extends Application {
                 break;
         }
         return taal[27];
+    }
+    
+    /**
+     * 
+     * @param language
+     * @param status
+     * @return 
+     */
+    public String getStatusForMail(int language, int status){
+        switch (language) {
+            case 0:
+                switch (status) {
+                    case 1:
+                        return "Lost";
+                    case 2:
+                        return "Destroyed";
+                    case 3:
+                        return "Completed";
+                    case 4:
+                        return "Never found";
+                    case 5:
+                        return "Depot";
+                    case 6:
+                        return "Insurance claim";
+                    default:
+                        break;
+                }
+                return "Found";
+            case 1:
+                switch (status) {
+                    case 1:
+                        return "Vermist";
+                    case 2:
+                        return "Vernietigd";
+                    case 3:
+                        return "Afgehandeld";
+                    case 4:
+                        return "Nooit gevonden";
+                    case 5:
+                        return "Depot";
+                    case 6:
+                        return "Schadeclaim";
+                    default:
+                        break;
+                }
+                return "Gevonden";
+            case 2:
+                switch (status) {
+                    case 1:
+                        return "Que falta";
+                    case 2:
+                        return "Destruido";
+                    case 3:
+                        return "Tratado";
+                    case 4:
+                        return "Nunca encontrado";
+                    case 5:
+                        return "Almacén";
+                    case 6:
+                        return "Reclamación de seguro";
+                    default:
+                        break;
+                }
+                return "Fundar";
+            case 3:
+                switch (status) {
+                    case 1:
+                        return "Eksik";
+                    case 2:
+                        return "Tahrip";
+                    case 3:
+                        return "Tamamlanan";
+                    case 4:
+                        return "Bulmadım";
+                    case 5:
+                        return "Depo";
+                    case 6:
+                        return "Sigorta tazminat talebi";
+                    default:
+                        break;
+                }
+                return "Bulundu";
+        }   
+        return "";
     }
 
     /**
@@ -580,6 +662,15 @@ public class FYS extends Application {
         return getmessage;
     }
 
+    /**
+     * 
+     * @param getmessage
+     * @param mail_input
+     * @param tableForm
+     * @return
+     * @throws UnsupportedEncodingException
+     * @throws SQLException 
+     */
     public String replaceEmail_tF(String getmessage, String mail_input, int tableForm) throws UnsupportedEncodingException, SQLException {
         getmessage = getmessage.replace("*luggagecolor*", Email_LuggageColor(tableForm, mail_input));
         getmessage = getmessage.replace("*luggagebrand*", Email_LuggageBrand(tableForm, mail_input));
@@ -1095,6 +1186,7 @@ public class FYS extends Application {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            System.out.println("Error bij het initialeren van de look en feel van de filechooser:\n" + ex);
         }
         JPanel frame = new JPanel();
 

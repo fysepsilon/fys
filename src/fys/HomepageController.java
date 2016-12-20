@@ -39,66 +39,67 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class HomepageController implements Initializable {
 
     //@FXML private final TableView<Person> table = new TableView<>();
-    @FXML private TableView<Bagage> table;
-    @FXML private ObservableList<Bagage> data = FXCollections.observableArrayList(), datafilter = FXCollections.observableArrayList();
-    @FXML private TableView<Bagage> table1;
-    @FXML private ObservableList<Bagage> data1 = FXCollections.observableArrayList();
-    @FXML private TableColumn date, color, brand, time, date1, color1, brand1, time1;
-    @FXML private Label recentlabel, lostlabel, foundlabel;
-    @FXML private FYS fys = new FYS();
-    @FXML private Statement stmt = null;
-    @FXML private Connection conn = null;
-    @FXML private taal language = new taal();
-    @FXML private String[] taal = language.getLanguage();
+    @FXML
+    private TableView<Bagage> table;
+    @FXML
+    private ObservableList<Bagage> data = FXCollections.observableArrayList(), datafilter = FXCollections.observableArrayList();
+    @FXML
+    private TableView<Bagage> table1;
+    @FXML
+    private ObservableList<Bagage> data1 = FXCollections.observableArrayList();
+    @FXML
+    private TableColumn date, color, brand, time, date1, color1, brand1, time1;
+    @FXML
+    private Label recentlabel, lostlabel, foundlabel;
+    @FXML
+    private final FYS fys = new FYS();
+    @FXML
+    private Statement stmt = null;
+    @FXML
+    private Connection conn = null;
+    @FXML
+    private final taal language = new taal();
+    @FXML
+    private final String[] taal = language.getLanguage();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         recentlabel.setText(taal[106]);
         lostlabel.setText(taal[55]);
         foundlabel.setText(taal[54]);
-        
-        date.setText(taal[52]);  
+
+        date.setText(taal[52]);
         time.setText(taal[107]);
         color.setText(taal[49]);
         brand.setText(taal[51]);
-        date1.setText(taal[52]);  
+        date1.setText(taal[52]);
         time1.setText(taal[107]);
         color1.setText(taal[49]);
         brand1.setText(taal[51]);
 
-        
+        //Found
         getLuggageData();
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
         time.setCellValueFactory(new PropertyValueFactory<>("time"));
         color.setCellValueFactory(new PropertyValueFactory<>("color"));
         brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
         date.setStyle("-fx-alignment: CENTER;");
-        time.setStyle("-fx-alignment: CENTER;");        
+        time.setStyle("-fx-alignment: CENTER;");
         color.setStyle("-fx-alignment: CENTER;");
         brand.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
-      
+
+        // Lost
         getLuggageData1();
         date1.setCellValueFactory(new PropertyValueFactory<>("date"));
         time1.setCellValueFactory(new PropertyValueFactory<>("time"));
         color1.setCellValueFactory(new PropertyValueFactory<>("color"));
         brand1.setCellValueFactory(new PropertyValueFactory<>("brand"));
         date1.setStyle("-fx-alignment: CENTER;");
-        time1.setStyle("-fx-alignment: CENTER;");        
+        time1.setStyle("-fx-alignment: CENTER;");
         color1.setStyle("-fx-alignment: CENTER;");
         brand1.setStyle("-fx-alignment: CENTER;");
         table1.setItems(data1);
-        
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        Date date = new Date();
-        String dateTimeString = dateFormat.format(date);
-        String[] tokens = dateTimeString.split(" ");
-        if (tokens.length != 2) {
-            throw new IllegalArgumentException();
-        }
-        tokens = tokens[0].split("-");
-        String year = tokens[0];
-        String months = tokens[1];
     }
 
     public void getLuggageData() {
@@ -130,7 +131,7 @@ public class HomepageController implements Initializable {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
     }
-    
+
     public void getLuggageData1() {
         int luggage = 0;
         try {
@@ -159,5 +160,5 @@ public class HomepageController implements Initializable {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-    }    
+    }
 }

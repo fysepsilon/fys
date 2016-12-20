@@ -79,6 +79,7 @@ public class InstellingenController implements Initializable {
         }
     }
     
+    //Wanneer er op de button opslaan wordt geklikt.
     @FXML
     private void handleSaveAction(ActionEvent event) throws IOException {
         

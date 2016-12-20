@@ -14,10 +14,12 @@ import javafx.fxml.FXML;
  * @author Team Epsilon
  */
 public class Status {
+    @FXML private SimpleIntegerProperty weekNumber;
     @FXML private final SimpleStringProperty statusName;
     @FXML private final SimpleIntegerProperty amount;
     
-    public Status(String status, int amount){
+    public Status(int week, String status, int amount){
+        this.weekNumber = new SimpleIntegerProperty(week);
         this.statusName = new SimpleStringProperty(status);
         this.amount = new SimpleIntegerProperty(amount);
     }
@@ -48,6 +50,20 @@ public class Status {
      */
     public void setAmount(Integer amounts) {
         amount.set(amounts);
+    }
+
+    /**
+     * @return the weekNumber
+     */
+    public int getWeekNumber() {
+        return weekNumber.get();
+    }
+
+    /**
+     * @param weekNumber the weekNumber to set
+     */
+    public void setWeekNumber(int weekNumbers) {
+        this.weekNumber.set(weekNumbers);
     }
     
     

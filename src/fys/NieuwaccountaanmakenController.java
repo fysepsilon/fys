@@ -6,34 +6,20 @@
 package fys;
 
 import static fys.FYS.generateRandomPassword;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.util.Date;
-import java.text.DateFormat;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javax.imageio.ImageIO;
-import javax.swing.SpringLayout;
 
 /**
  * FXML Controller class
@@ -53,11 +39,11 @@ public class NieuwaccountaanmakenController implements Initializable {
     @FXML
     private Button SendNewAccount, cancel;
     @FXML
-    private taal language = new taal();
+    private final taal language = new taal();
     @FXML
-    private String[] taal = language.getLanguage();
+    private final String[] taal = language.getLanguage();
     @FXML
-    private FYS fys = new FYS();
+    private final FYS fys = new FYS();
     @FXML
     private Statement stmt = null;
     @FXML

@@ -87,11 +87,11 @@ public class BagagedatabaseController implements Initializable {
             pictureLabel, statusLabel, personIdLabel, lafIdLabel,
             tableFromLabel, loginerror, inklapLabel, uitklapLabel;
     @FXML
-    private FYS fys = new FYS();
+    private final FYS fys = new FYS();
     @FXML
-    private taal language = new taal();
+    private final taal language = new taal();
     @FXML
-    private String[] taal = language.getLanguage();
+    private final String[] taal = language.getLanguage();
     @FXML
     private Statement stmt = null;
     @FXML
@@ -234,16 +234,8 @@ public class BagagedatabaseController implements Initializable {
         uitklapLabel.setDisable(true);
         uitklapLabel.setVisible(false);
     }
-
-    @FXML
-    private void handleCancel(ActionEvent event) throws IOException {
-        pictureButton.setText("Klik hier om een afbeelding toe te voegen");
-        database_pane.setDisable(false);
-        database_pane.setVisible(true);
-        wijzig_pane.setDisable(true);
-        wijzig_pane.setVisible(false);
-    }
-
+    
+    //Wanneer er op de button filteren wordt geklikt.
     @FXML
     private void handleFilterAction(ActionEvent event) throws IOException {
         //Altijd wanneer de filter button wordt geklikt maak de array leeg.
@@ -339,6 +331,7 @@ public class BagagedatabaseController implements Initializable {
         }
     }
 
+    //Wanneer er op de wijzigen button wordt geklikt
     public void handleChange(ActionEvent event) throws IOException {
         int selectedIndex = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -379,8 +372,16 @@ public class BagagedatabaseController implements Initializable {
             alert.showAndWait();
         }
     }
+    
+    //Wanneer er op de kop Anuleren wordt geklikt
+    private void handleCancel(ActionEvent event) throws IOException {
+        pictureButton.setText(taal[44]);
+        database_pane.setDisable(false);
+        database_pane.setVisible(true);
+        wijzig_pane.setDisable(true);
+        wijzig_pane.setVisible(false);
+    }
 
-    @FXML
     public void doNext(int dr_id, int dr_personId, int dr_lafId, int drFrom, String dr_status,
             String dr_airport, String dr_name, String dr_surname, String dr_address,
             String dr_residence, String dr_zipcode, String dr_country, String dr_phone,
@@ -414,7 +415,7 @@ public class BagagedatabaseController implements Initializable {
         characteristicsInput.setText(dr_characteristics);
     }
 
-    @FXML
+    //Wanneer er op de knop Verzenden wordt geklikt
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
         if ((typeCombo.getValue() == null)
                 || (brandInput.getText() == null || brandInput.getText().trim().isEmpty())
@@ -433,6 +434,7 @@ public class BagagedatabaseController implements Initializable {
             //MAILEN
             if (fys.checkEmailExistsOnChange(mailInput.getText(), dr_mail)) {
                 System.out.println("Emailadres bestaat al!");
+            //Deze mail wordt verstuurd wanneer de status veranderd en niet op afgehandeld is gezet.
             } else if (fys.getStatusString(dr_status) != fys.getStatusString(statusCombo.getValue().toString())) {
                 if (fys.getStatusString(statusCombo.getValue().toString()) != 3) {
                     int pageid = 4;
@@ -475,8 +477,6 @@ public class BagagedatabaseController implements Initializable {
             throws IOException, SQLException {
 
         try {
-            String[] mailInformation = new String[6];
-            int[] mailInformation2 = new int[4];
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
 
@@ -582,7 +582,7 @@ public class BagagedatabaseController implements Initializable {
             Het formulier is gekopieerd en aangepast d.m.v. Adobe Acrobat DC en is 
             louter bedoeld voor demonstratieve doeleinden.
              */
-            if (status == 3) {
+            if (status == 3) { //Afgehandeld
                 //Maak nieuwe PDF-document aan de hand van de template
                 File pdfdoc = new File("src/fys/templates/dhltemplate.pdf");
                 PDDocument document;
@@ -644,7 +644,7 @@ public class BagagedatabaseController implements Initializable {
                 // Email versturen
                 fys.sendEmail(mailInput.getText(), fys.Email_Subject(type_email, fys.Email_Language(mailInput.getText()), pageid), getmessage, "Sent message successfully....");
             }
-            pictureButton.setText("Klik hier om een afbeelding toe te voegen");
+            pictureButton.setText(taal[44]);
             fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");
             conn.close();
         } catch (SQLException ex) {
@@ -734,7 +734,6 @@ public class BagagedatabaseController implements Initializable {
     public void hideFilter() {
         filterPane.setDisable(true);
         filterPane.setVisible(false);
-        //inklapLabel.setText("\u21f2");
         table.setLayoutX(112.0);
         table.setPrefWidth(772.0);
         inklapLabel.setDisable(true);

@@ -45,11 +45,11 @@ public class GevondenformulierController implements Initializable {
     @FXML
     private Button picture_button, send_button;
     @FXML
-    private FYS fys = new FYS();
+    private final FYS fys = new FYS();
     @FXML
     public String filePath = null;
-    @FXML private taal language = new taal();
-    @FXML private String[] taal = language.getLanguage();
+    @FXML private final taal language = new taal();
+    @FXML private final String[] taal = language.getLanguage();
 
     //Methode om ingevulde data van gevonden bagage naar de database te sturen
     @FXML
@@ -169,8 +169,6 @@ public class GevondenformulierController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        taal language = new taal();
-        String[] taal = language.getLanguage();
         airport_label.setText(taal[8] + ":");
         name_label.setText(taal[9] + ":");
         surname_label.setText(taal[10] + ":");

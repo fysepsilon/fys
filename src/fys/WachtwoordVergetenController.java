@@ -36,18 +36,20 @@ public class WachtwoordVergetenController implements Initializable {
     private Label sendPasswordMessage;
     @FXML
     private Button sendNewPasswordButton;
-
+    @FXML
+    private final FYS fys = new FYS();
+    
+    //Dit wordt aangeroepen wanneer je op de button terug klikt.
     @FXML
     private void handleBackButtonAction(ActionEvent event) throws IOException {
-        FYS fys = new FYS();
         fys.changeToAnotherFXML("Corendon-Login", "login.fxml");
     }
-
+    
+    //Dit wordt aangeroepen wanneer de gebruiker op de button wachtwoord verzenden klikt.
     @FXML
     private void handleSendNewPasswordAction(ActionEvent event) throws IOException, SQLException {
         sendNewPasswordButton.setDisable(true);
         int pageid = 3;
-        FYS fys = new FYS();
         String email = "";
         String type = "";
         String language = "";
@@ -56,7 +58,7 @@ public class WachtwoordVergetenController implements Initializable {
         conn = fys.connectToDatabase(conn);
         stmt = conn.createStatement();
 
-        //Controleer of de velden gebruikersnaam of wachtwoord leeg zijn. Anders laat een error zien.
+        //Controleer of de velden wachtwoord leeg zijn. Anders laat een error zien.
         if ((username.getText() == null || username.getText().trim().isEmpty())) {
             sendPasswordMessage.setText("Username is empty!");
             sendPasswordMessage.setStyle("-fx-text-fill: red;");

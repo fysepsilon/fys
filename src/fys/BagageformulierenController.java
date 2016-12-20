@@ -7,7 +7,6 @@ package fys;
 
 import static fys.FYS.generateRandomPassword;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -48,18 +47,19 @@ public class BagageformulierenController implements Initializable {
             characteristics_label, picture_label, address_label, residence_label,
             zipcode_label, country_label, phone_label, mail_label, loginerror, language_label;
     @FXML
-    private FYS fys = new FYS();
+    private final FYS fys = new FYS();
     @FXML
-    private taal language = new taal();
+    private final taal language = new taal();
     @FXML
-    private String[] taal = language.getLanguage();
+    private final String[] taal = language.getLanguage();
     @FXML
     private Statement stmt = null;
     @FXML
     private Connection conn = null;
     public String filePath = null;
 
-    //Methode om ingevulde data van virmiste bagage naar de database te sturen
+    //Methode om ingevulde data van vermiste bagage naar de database te sturen
+    //Wanneer er op de knop Verzenden wordt geklikt
     @FXML
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
         String password = FYS.encrypt(generateRandomPassword(8));
@@ -195,9 +195,9 @@ public class BagageformulierenController implements Initializable {
             }
             
             
-             // Email bericht filteren op sommige woorden.            
+            // Email bericht filteren op sommige woorden.            
             String getmessage = fys.replaceEmail(fys.Email_Message(type_email, fys.getUserLanguageString(language_combo.getValue().toString()), pageid), mail_input.getText());            
-           // Email versturen
+            // Email versturen
             fys.sendEmail(mail_input.getText(), fys.Email_Subject(type_email, fys.getUserLanguageString(language_combo.getValue().toString()), pageid), getmessage, "Sent message successfully....");
             
             conn.close();
@@ -210,7 +210,7 @@ public class BagageformulierenController implements Initializable {
         fys.changeToAnotherFXML(taal[95], "bagageformulieren.fxml");
     }
 
-    //Fileselector aanroepen wanneer iemand een afbeelding wil toevoegen
+    //Fileselector aanroepen wanneer iemand een afbeelding wilt toevoegen
     @FXML
     public void handleFileSelector(ActionEvent event) throws IOException {
         File file = fys.fileChooser();
@@ -218,7 +218,7 @@ public class BagageformulierenController implements Initializable {
         filePath = "/fys/src/fys/luggageImages/" + file.getName();
         
         //filePath = fileRaw.replace("\\","\\\\");
-        System.out.println(filePath);
+        //System.out.println(filePath);
         picture_button.setText(file.getName());
     }
 

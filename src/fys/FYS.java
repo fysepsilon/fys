@@ -645,14 +645,12 @@ public class FYS extends Application {
     }
 
     /**
-     *
+     * 
      * @param getmessage Het bericht uit de database.
-     * @param filter1 Het eerste filter woord -> username
-     * @param filter2 Het tweede filter woord -> password
-     * @param filter3 Het derde filter woord -> firstname
-     * @param filter4 Het vierde filter woord -> surname
+     * @param mail_input Het email-adres waar de mail naar toe moet worden gestuurd.
      * @return
      * @throws UnsupportedEncodingException
+     * @throws SQLException 
      */
     public String replaceEmail(String getmessage, String mail_input) throws UnsupportedEncodingException, SQLException {
         getmessage = getmessage.replace("*username*", mail_input);
@@ -664,9 +662,9 @@ public class FYS extends Application {
 
     /**
      * 
-     * @param getmessage
-     * @param mail_input
-     * @param tableForm
+     * @param getmessage Het bericht uit de database
+     * @param mail_input Het email-adres waar de mail naar toe moet worden gestuurd.
+     * @param tableForm 
      * @return
      * @throws UnsupportedEncodingException
      * @throws SQLException 
@@ -826,8 +824,7 @@ public class FYS extends Application {
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
-                    mailOphalen[0] = rs.getString("password").substring(0, 1).toUpperCase() + rs.getString("password").substring(1);
-
+                    mailOphalen[0] = decrypt(rs.getString("password").substring(0, 1).toUpperCase() + rs.getString("password").substring(1));
                     return mailOphalen[0];
                 }
             }

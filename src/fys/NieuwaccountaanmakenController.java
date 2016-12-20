@@ -6,33 +6,20 @@
 package fys;
 
 import static fys.FYS.generateRandomPassword;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.util.Date;
-import java.text.DateFormat;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javax.imageio.ImageIO;
 
 /**
  * FXML Controller class
@@ -52,11 +39,11 @@ public class NieuwaccountaanmakenController implements Initializable {
     @FXML
     private Button SendNewAccount, cancel;
     @FXML
-    private taal language = new taal();
+    private final taal language = new taal();
     @FXML
-    private String[] taal = language.getLanguage();
+    private final String[] taal = language.getLanguage();
     @FXML
-    private FYS fys = new FYS();
+    private final FYS fys = new FYS();
     @FXML
     private Statement stmt = null;
     @FXML
@@ -66,7 +53,8 @@ public class NieuwaccountaanmakenController implements Initializable {
 
     @FXML
     private void handleAction(ActionEvent event) throws IOException, SQLException {
-        String generate_password = fys.encrypt(generateRandomPassword(8));
+        int pageid = 1;
+        String password = fys.encrypt(generateRandomPassword(8));
         String email = "";
 
         loginController loginController = new loginController();
@@ -115,50 +103,13 @@ public class NieuwaccountaanmakenController implements Initializable {
             sendToDatabase_type(name_input.getText(), surname_input.getText(),
                     address_input.getText(), residence_input.getText(), zipcode_input.getText(),
                     country_input.getText(), phone_input.getText(), mail_input.getText(),
-                    generate_password, language_combo.getValue().toString(), type_combo.getValue().toString()
+                    password, language_combo.getValue().toString(), type_combo.getValue().toString()
             );
 
-            try {
-                conn = fys.connectToDatabase(conn);
-                stmt = conn.createStatement();
-                //connectToDatabase(conn, stmt, "test", "root", "root");
-
-                conn.close();
-            } catch (SQLException ex) {
-                // handle any errors
-                System.out.println("SQLException: " + ex.getMessage());
-                System.out.println("SQLState: " + ex.getSQLState());
-                System.out.println("VendorError: " + ex.getErrorCode());
-            }
-
-            // Replacen in email
-            String getmessage = fys.replaceEmail(fys.Email_Message(), mail_input.getText());
-
-            if (fys.Email_Mailid() == 1) { // Mailid = 1
-                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
-            } else if (fys.Email_Mailid() == 2) { // Mailid = 2
-                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
-            } else if (fys.Email_Mailid() == 3) { // Mailid = 3
-                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
-            } else if (fys.Email_Mailid() == 4) { // Mailid = 4
-                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
-            } else if (fys.Email_Mailid() == 5) { // Mailid = 5
-                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
-            } else if (fys.Email_Mailid() == 6) { // Mailid = 6
-                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
-            } else if (fys.Email_Mailid() == 7) { // Mailid = 7
-                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
-            } else if (fys.Email_Mailid() == 8) { // Mailid = 8
-                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
-            } else if (fys.Email_Mailid() == 9) { // Mailid = 9
-                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
-            } else if (fys.Email_Mailid() == 10) { // Mailid = 10
-                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
-            } else if (fys.Email_Mailid() == 11) { // Mailid = 11
-                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
-            } else if (fys.Email_Mailid() == 12) { // Mailid = 12
-                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
-            }
+            // Email bericht filteren op sommige woorden.            
+            String getmessage = fys.replaceEmail(fys.Email_Message(fys.getUserFunctionString(type_combo.getValue().toString()), fys.getUserLanguageString(language_combo.getValue().toString()), pageid), mail_input.getText());
+            // Email versturen
+            fys.sendEmail(mail_input.getText(), fys.Email_Subject(fys.getUserFunctionString(type_combo.getValue().toString()), fys.getUserLanguageString(language_combo.getValue().toString()), pageid), getmessage, "Sent message successfully....");
         }
 
         loginerror.setText(taal[103]);
@@ -273,7 +224,7 @@ public class NieuwaccountaanmakenController implements Initializable {
                 taal[69],
                 taal[70],
                 taal[71],
-                taal[72], 
+                taal[72],
                 taal[165]);
     }
 }

@@ -13,10 +13,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,7 +28,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -63,23 +58,25 @@ public class accountsController implements Initializable {
             address_label, residence_label, zip_code_label, country_label, phone_label, mail_label,
             personId_label;
     @FXML
-    private loginController loginController = new loginController();
+    private final loginController loginController = new loginController();
     @FXML
-    private FYS fys = new FYS();
+    private final FYS fys = new FYS();
     @FXML
-    private taal languages = new taal();
+    private final taal languages = new taal();
     @FXML
-    private String[] taal = languages.getLanguage();
+    private final String[] taal = languages.getLanguage();
     @FXML
     private Statement stmt = null;
     @FXML
     private Connection conn = null;
 
+    // Wanneer je op de button nieuw account aanmaken klikt.
     @FXML
     private void handlenieuwaccount(ActionEvent event) throws IOException {
         fys.changeToAnotherFXML(taal[63], "nieuwaccountaanmaken.fxml");
     }
 
+    // Wanneer je op de button annuleren klikt.
     @FXML
     private void handleCancel(ActionEvent event) throws IOException {
         database_pane.setDisable(false);
@@ -88,6 +85,7 @@ public class accountsController implements Initializable {
         wijzig_pane.setVisible(false);
     }
 
+    // Wanneer je op de button verwijderen klikt.
     public void handleRemove(ActionEvent event) throws IOException {
         int selectedIndex = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -181,9 +179,8 @@ public class accountsController implements Initializable {
         if (loginController.getUsertype() == 1) { // Service medewerker (ZONDER TYPE EDIT FUNCTIE)
             type_label.setVisible(false);
             type_combo.setVisible(false);
-        }
-        
-        if (loginController.getUsertype() == 1) { // Service medewerker (ZONDER REMOVE BUTTON)
+            
+            // Service medewerker (ZONDER REMOVE BUTTON)
             remove_button.setVisible(false);
         }
 
@@ -198,7 +195,7 @@ public class accountsController implements Initializable {
                 taal[69],
                 taal[70],
                 taal[71],
-                taal[72], 
+                taal[72],
                 taal[165]);
 
         getLuggageData();
@@ -239,57 +236,33 @@ public class accountsController implements Initializable {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
             //connectToDatabase(conn, stmt, "test", "root", "root");
+            String sql = "";
             if (loginController.getUsertype() == 2) { //SQL bij administrator (type = 2)
-                String sql = "SELECT * FROM bagagedatabase.person WHERE person.IS_SHOW = '0'";
+                sql = "SELECT * FROM bagagedatabase.person WHERE person.IS_SHOW = '0'";
+            } else { //SQL bij service medewerker (type = 1)
+                sql = "SELECT * FROM bagagedatabase.person WHERE person.IS_SHOW = '0' AND type = '0'";
+            }
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    String first_name = rs.getString("first_name");
+                    String surname = rs.getString("surname");
+                    int type = rs.getInt("type");
+                    type_text = fys.getUserFunction(type);
+                    String mail = rs.getString("mail");
+                    String address = rs.getString("address");
+                    String residence = rs.getString("residence");
+                    String zip_code = rs.getString("zip_code");
+                    String country = rs.getString("country");
+                    String phone = rs.getString("phone");
+                    int language_column = rs.getInt("language");
+                    language_text = fys.getUserLanguage(language_column);
 
-                try (ResultSet rs = stmt.executeQuery(sql)) {
-                    while (rs.next()) {
-                        //Retrieve by column name
-                        String first_name = rs.getString("first_name");
-                        String surname = rs.getString("surname");
-                        int type = rs.getInt("type");
-                        type_text = fys.getUserFunction(type);
-                        String mail = rs.getString("mail");
-                        String address = rs.getString("address");
-                        String residence = rs.getString("residence");
-                        String zip_code = rs.getString("zip_code");
-                        String country = rs.getString("country");
-                        String phone = rs.getString("phone");
-                        int language_column = rs.getInt("language");
-                        language_text = fys.getUserLanguage(language_column);
+                    int personId = rs.getInt("person_id");
 
-                        int personId = rs.getInt("person_id");
-
-                        data.add(new Accounts(first_name, surname, type_text,
-                                mail, address, residence, zip_code, country,
-                                phone, language_text, personId));
-                    }
-                }
-            } else { //SQL bij servicemedewerker (type = 1)
-                String sql = "SELECT * FROM bagagedatabase.person WHERE person.IS_SHOW = '0' AND type = '0'";
-
-                try (ResultSet rs = stmt.executeQuery(sql)) {
-                    while (rs.next()) {
-                        //Retrieve by column name
-                        String first_name = rs.getString("first_name");
-                        String surname = rs.getString("surname");
-                        int type = rs.getInt("type");
-                        type_text = fys.getUserFunction(type);
-                        String mail = rs.getString("mail");
-                        String address = rs.getString("address");
-                        String residence = rs.getString("residence");
-                        String zip_code = rs.getString("zip_code");
-                        String country = rs.getString("country");
-                        String phone = rs.getString("phone");
-                        int language_column = rs.getInt("language");
-                        language_text = fys.getUserLanguage(language_column);
-
-                        int personId = rs.getInt("person_id");
-
-                        data.add(new Accounts(first_name, surname, type_text,
-                                mail, address, residence, zip_code, country,
-                                phone, language_text, personId));
-                    }
+                    data.add(new Accounts(first_name, surname, type_text,
+                            mail, address, residence, zip_code, country,
+                            phone, language_text, personId));
                 }
             }
             conn.close();
@@ -302,6 +275,7 @@ public class accountsController implements Initializable {
         }
     }
 
+    // Wanneer er op de button wijzigen wordt geklikt.
     public void handleChange(ActionEvent event) throws IOException {
         int selectedIndex
                 = table.getSelectionModel().getSelectedIndex();
@@ -349,6 +323,7 @@ public class accountsController implements Initializable {
 
     }
 
+    // Wanneer je op de button verzenden klikt.
     @FXML
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
         FYS fys = new FYS();
@@ -428,6 +403,7 @@ public class accountsController implements Initializable {
         }
     }
 
+    //Administrator met type
     private void sendToDatabase_type(int dr_personId, String first_name,
             String surname, int type_combo, String mail, String address,
             String residence, String zip_code, String country, String phone,
@@ -461,6 +437,7 @@ public class accountsController implements Initializable {
         }
     }
 
+    // Service medewerker zonder type
     private void sendToDatabase(int dr_personId, String first_name,
             String surname, String mail, String address,
             String residence, String zip_code, String country, String phone,

@@ -227,6 +227,7 @@ public class taal {
             languagefields[163] = "Unknown";
             languagefields[164] = "Select the customers language";
             languagefields[165] = "German";
+            languagefields[166] = "Forgot password";
         } else if(language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
@@ -408,6 +409,7 @@ public class taal {
             languagefields[163] = "Onbekend";
             languagefields[164] = "Kies hier de taal van de klant";
             languagefields[165] = "Duits";
+            languagefields[166] = "Wachtwoord vergeten";
         } else if(language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";
@@ -589,6 +591,7 @@ public class taal {
             languagefields[163] = "Desconocido";
             languagefields[164] = "Seleccionar el idioma del cliente";
             languagefields[165] = "Alemán";
+            languagefields[166] = "Contraseña";
         } else if(language == 3) { // Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
@@ -767,6 +770,7 @@ public class taal {
             languagefields[163] = "Bilinmeyen";
             languagefields[164] = "Müşterinin dili seçin";
             languagefields[165] = "Alman";
+            languagefields[166] = "Şifre";
         } else { // Duits
             languagefields[0] = "FEHLENDES GEPÄCK REGISTRIEREN";
             languagefields[1] = "GEFUNDEN GEPÄCK ANMELDEN";
@@ -948,6 +952,7 @@ public class taal {
             languagefields[163] = "Unbekannt";
             languagefields[164] = "Wählen Sie die Sprache des Kunden";
             languagefields[165] = "Deutsch";
+            languagefields[166] = "Kennwort";
         }
         return languagefields;
     }

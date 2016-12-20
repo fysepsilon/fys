@@ -18,7 +18,7 @@
                 <AnchorPane fx:id="edit_pane" disable="true" prefHeight="478.0" prefWidth="1000.0" visible="false">
                     <children>                           
                         <HTMLEditor id="HTMLEditor" fx:id="HTMLEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="121.0" maxWidth="772.0" prefHeight="298.0" prefWidth="772.0" />
-                        <Button fx:id="send_button" layoutX="14.0" layoutY="433.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleSendToDatabase" prefHeight="35.0" prefWidth="230.0" text="Verzenden" /> 
+                        <Button fx:id="send_button" layoutX="14.0" layoutY="433.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleSendToDatabase" prefHeight="35.0" prefWidth="230.0" text="Opslaan" /> 
                         <Button fx:id="cancel_button" layoutX="556.0" layoutY="433.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="35.0" prefWidth="230.0" text="Annuleren" />
                         <Label fx:id="mailid_label" prefHeight="30.0" prefWidth="126.0" visible="false" />
 
@@ -116,7 +116,7 @@
                             <columns>
                                 <TableColumn id="mailid" fx:id="mailid" maxWidth="148.0" minWidth="50.0" prefWidth="148.0" visible="false" />
                                 <TableColumn id="subject" fx:id="subject" maxWidth="148.0" minWidth="50.0" prefWidth="148.0" />
-                                <TableColumn id="message" fx:id="message" maxWidth="631.0" minWidth="50.0" prefWidth="631.0" />
+                                <TableColumn id="message" fx:id="message" maxWidth="1000.0" minWidth="50.0" prefWidth="1000.0" />
                                 <TableColumn id="page" fx:id="page" maxWidth="148.0" minWidth="50.0" prefWidth="148.0" visible="false" />
                                 <TableColumn id="type" fx:id="type" maxWidth="148.0" minWidth="50.0" prefWidth="148.0" visible="false" />
                                 <TableColumn id="language" fx:id="language" maxWidth="148.0" minWidth="50.0" prefWidth="148.0" visible="false" />

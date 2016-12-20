@@ -42,7 +42,7 @@ public class HomepageadminController implements Initializable {
     @FXML private taal language = new taal();
     @FXML private String[] taal = language.getLanguage();
     @FXML private LineChart<Number, Number> linechart;
-    @FXML private Label tableTitle;
+    @FXML private Label tableTitle, linechartTitle;
     @FXML private TableView<Status> table;
     @FXML private Calendar calendar = new GregorianCalendar();
     @FXML private Date trialTime = new Date();
@@ -66,7 +66,7 @@ public class HomepageadminController implements Initializable {
 //            calendar.get(Calendar.WEEK_OF_YEAR));
        
         //LINECHART
-        linechart.setTitle(taal[76] + " " + fys.getMonthName(months ) +" " + year);
+        linechartTitle.setText(taal[76] + " " + fys.getMonthName(months ) +" " + year);
         linechart.setAnimated(true);
         linechart.getXAxis().setAutoRanging(true); 
         linechart.getYAxis().setAutoRanging(true); 

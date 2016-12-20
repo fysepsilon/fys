@@ -34,7 +34,7 @@ public class NavigatiebalkController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
-    private Button homeAdmin, missingAdmin, foundAdmin, luggageAdmin, accountAdmin, staticsAdmin, home, missing, found, luggage, account, mailAdmin;
+    private Button missingAdmin, foundAdmin, luggageAdmin, accountAdmin, staticsAdmin, home, missing, found, luggage, account, mailAdmin;
     @FXML
     private Text welcomeText;
     @FXML
@@ -107,7 +107,7 @@ public class NavigatiebalkController implements Initializable {
             // no application registered for PDFs
         }
         
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(taal[160]);
         alert.setTitle(taal[160]);
         alert.setContentText(taal[161]);
@@ -121,7 +121,6 @@ public class NavigatiebalkController implements Initializable {
         String name = loginController.getUsersName().replaceAll("null", "");
         name = name.replaceAll("  ", " ");
         taal language = new taal();
-        String[] taal = language.getLanguage();
         //Controleer of een admin of systeembeheerder is ingelogd.
         //Laat box zien als het admin is.
         if (loginController.getUsertype() == 2) {

@@ -17,7 +17,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -47,6 +46,7 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDField;
  * @author Team Epsilon
  */
 public class BagagedatabaseController implements Initializable {
+
     @FXML
     private AnchorPane database_pane, wijzig_pane;
     @FXML
@@ -87,11 +87,11 @@ public class BagagedatabaseController implements Initializable {
             pictureLabel, statusLabel, personIdLabel, lafIdLabel,
             tableFromLabel, loginerror, inklapLabel, uitklapLabel;
     @FXML
-    private FYS fys = new FYS();
+    private final FYS fys = new FYS();
     @FXML
-    private taal language = new taal();
+    private final taal language = new taal();
     @FXML
-    private String[] taal = language.getLanguage();
+    private final String[] taal = language.getLanguage();
     @FXML
     private Statement stmt = null;
     @FXML
@@ -234,21 +234,13 @@ public class BagagedatabaseController implements Initializable {
         uitklapLabel.setDisable(true);
         uitklapLabel.setVisible(false);
     }
-
-    @FXML
-    private void handleCancel(ActionEvent event) throws IOException {
-        pictureButton.setText("Klik hier om een afbeelding toe te voegen");
-        database_pane.setDisable(false);
-        database_pane.setVisible(true);
-        wijzig_pane.setDisable(true);
-        wijzig_pane.setVisible(false);
-    }
-
+    
+    //Wanneer er op de button filteren wordt geklikt.
     @FXML
     private void handleFilterAction(ActionEvent event) throws IOException {
         //Altijd wanneer de filter button wordt geklikt maak de array leeg.
         dataFilter = FXCollections.observableArrayList();
-        
+
         //Controleer voor elk veld of het gelijk is met de filter velden.
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i).getColor().toLowerCase().contains(colorFilter.getText().toLowerCase())
@@ -268,7 +260,7 @@ public class BagagedatabaseController implements Initializable {
                         data.get(i).getTableFrom(), data.get(i).getLostAndFoundID(), data.get(i).getPersonID(), data.get(i).getRealid()));
             }
         }
-        
+
         //Update de tabel met gegevens die is gevraagd.
         table.setItems(dataFilter);
     }
@@ -323,7 +315,7 @@ public class BagagedatabaseController implements Initializable {
                     String tablefrom = rs.getString("tablefrom");
                     int lostAndFoundID = rs.getInt("lost_and_found_id");
                     int personID = rs.getInt("person_id");
-                    
+
                     //Voeg de gegegevens toe in de data array.
                     data.add(new Bagage(luggage, status, type, color, brand, picture, date, characteristics, firstname,
                             surname, address, residence, zipcode, country, phone, mail, labelnumber, flightnumber, destination,
@@ -339,6 +331,7 @@ public class BagagedatabaseController implements Initializable {
         }
     }
 
+    //Wanneer er op de wijzigen button wordt geklikt
     public void handleChange(ActionEvent event) throws IOException {
         int selectedIndex = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -368,9 +361,9 @@ public class BagagedatabaseController implements Initializable {
             String dr_color = (table.getSelectionModel().getSelectedItem().getColor());
             String dr_characteristics = (table.getSelectionModel().getSelectedItem().getInformation());
 
-            doNext(dr_id, dr_personId, dr_lafId, drFrom, dr_status, dr_airport, 
-                    dr_name, dr_surname, dr_address, dr_residence, dr_zipcode, 
-                    dr_country, dr_phone, dr_mail, dr_label, dr_flight, dr_destination, 
+            doNext(dr_id, dr_personId, dr_lafId, drFrom, dr_status, dr_airport,
+                    dr_name, dr_surname, dr_address, dr_residence, dr_zipcode,
+                    dr_country, dr_phone, dr_mail, dr_label, dr_flight, dr_destination,
                     dr_type, dr_brand, dr_color, dr_characteristics);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -380,12 +373,20 @@ public class BagagedatabaseController implements Initializable {
             alert.showAndWait();
         }
     }
+    
+    //Wanneer er op de kop Anuleren wordt geklikt
+    private void handleCancel(ActionEvent event) throws IOException {
+        pictureButton.setText(taal[44]);
+        database_pane.setDisable(false);
+        database_pane.setVisible(true);
+        wijzig_pane.setDisable(true);
+        wijzig_pane.setVisible(false);
+    }
 
-    @FXML
-    public void doNext(int dr_id, int dr_personId, int dr_lafId, int drFrom, String dr_status, 
-            String dr_airport, String dr_name, String dr_surname, String dr_address, 
-            String dr_residence, String dr_zipcode, String dr_country, String dr_phone, 
-            String dr_mail, String dr_label, String dr_flight, String dr_destination, 
+    public void doNext(int dr_id, int dr_personId, int dr_lafId, int drFrom, String dr_status,
+            String dr_airport, String dr_name, String dr_surname, String dr_address,
+            String dr_residence, String dr_zipcode, String dr_country, String dr_phone,
+            String dr_mail, String dr_label, String dr_flight, String dr_destination,
             String dr_type, String dr_brand, String dr_color, String dr_characteristics) {
         database_pane.setDisable(true);
         database_pane.setVisible(false);
@@ -415,7 +416,7 @@ public class BagagedatabaseController implements Initializable {
         characteristicsInput.setText(dr_characteristics);
     }
 
-    @FXML
+    //Wanneer er op de knop Verzenden wordt geklikt
     private void handleSendToDatabase(ActionEvent event) throws IOException, SQLException {
         if ((typeCombo.getValue() == null)
                 || (brandInput.getText() == null || brandInput.getText().trim().isEmpty())
@@ -425,98 +426,37 @@ public class BagagedatabaseController implements Initializable {
             loginerror.setVisible(true);
         } else {
             String destination;
-            if(destination_combo.getValue() == null){
+            if (destination_combo.getValue() == null) {
                 destination = " ";
-            } else{
+            } else {
                 destination = destination_combo.getValue().toString();
             }
-            
-            //mail wanneer de status van een bagage aangepast wordt.
-            if (fys.checkEmailExistsOnChange(mailInput.getText(), dr_mail)) {
-                System.out.println("Emailadres bestaat al!!!");
-            } else if(!Objects.equals(fys.getStatusString(dr_status), fys.getStatusString(statusCombo.getValue().toString()))) {
-                conn = fys.connectToDatabase(conn);
-                stmt = conn.createStatement();
-                int language = 0;
-                try {
-                    //connectToDatabase(conn, stmt, "test", "root", "root");
-                    String sql = "SELECT person_id, language FROM person WHERE mail='" + mailInput.getText() +"'";
-                    ResultSet rs = stmt.executeQuery(sql);
-                    while (rs.next()) {
-                        //Retrieve by column name
-                         language = rs.getInt("language");
-                    }
-                    //rs.close();
-                } catch (SQLException ex) {
-                    // handle any errors
-                    System.out.println("SQLException: " + ex.getMessage());
-                    System.out.println("SQLState: " + ex.getSQLState());
-                    System.out.println("VendorError: " + ex.getErrorCode());
-                }
-                if (!mailInput.getText().isEmpty()) {
-                    //Controleer in welke taal de mail verstuurd moet worden.
-                    switch (language) {
-                        case 1:
-                            //Nederlands
-                            fys.sendEmail(mailInput.getText(), "Corendon - Bagagestatus gewijzigd", "Beste "
-                                    + nameInput.getText() + " " + surNameInput.getText() + ", "
-                                    + "<br><br>De status van uw bagage is veranderd in <i>" + fys.getStatusForMail(language, fys.getStatusString(statusCombo.getValue().toString()))
-                                    + "</i>."
-                                    + (fys.getStatusString(statusCombo.getValue().toString()) == 3 ? "<br>Uw bagage wordt zo spoedig mogelijk naar uw adres gebracht."
-                                            + "<br>Vanaf nu zal DHL contact met u opnemen.": "")
-                                    + "<br><br>Wij hopen u hiermee genoeg te hebben geinformeerd."
-                                    + "<br><br>Met vriendelijke groet,"
-                                    + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
-                            break;
-                        case 2:
-                            //Spaans
-                            fys.sendEmail(mailInput.getText(), "Corendon - Estado del equipaje cambiado", "Valorado "
-                                    + nameInput.getText() + " " + surNameInput.getText() + ", "
-                                    + "<br><br>El estado de su equipaje ha cambiado a <i>" + fys.getStatusForMail(language, fys.getStatusString(statusCombo.getValue().toString()))
-                                    + "</i>."
-                                    + (fys.getStatusString(statusCombo.getValue().toString()) == 3 ? "<br>Su equipaje será entregado a su dirección tan pronto como sea posible."
-                                            + "<br>A partir de ahora se pondrá en contacto DHL.": "")
-                                    + "<br><br>Esperamos que te hayamos informado lo suficiente."
-                                    + "<br><br>Sinceramente,"
-                                    + "<br><br><b>El equipo de Corendon</b>", "Sent message successfully....");
-                            break;
-                        case 3:
-                            //turks
-                            fys.sendEmail(mailInput.getText(), "Corendon - Luggagestatus değiştirildi", "Değerli "
-                                    + nameInput.getText() + " " + surNameInput.getText() + ", "
-                                    + "<br><br>Bagajınızın durumu <i>" + fys.getStatusForMail(language, fys.getStatusString(statusCombo.getValue().toString()))
-                                    + "</i>."
-                                    + (fys.getStatusString(statusCombo.getValue().toString()) == 3 ? "<br>Bagaj kısa sürede adresinize teslim edilecektir."
-                                            + "<br>Şu andan itibaren DHL sizinle irtibata geçecektir.": "")
-                                    + "<br><br>Umarız biz sizi yeterince bilgilendirmiş oluruz."
-                                    + "<br><br>İçtenlikle,"
-                                    + "<br><br><b>Corendon Ekibi</b>", "Sent message successfully....");
-                            break;
-                        default:
-                            fys.sendEmail(mailInput.getText(), "Corendon - Luggagestatus changed", "Valued "
-                                    + nameInput.getText() + " " + surNameInput.getText() + ", "
-                                    + "<br><br>The status of your luggage has been changed to <i>" + fys.getStatusForMail(language, fys.getStatusString(statusCombo.getValue().toString()))
-                                    + "</i>."
-                                    + (fys.getStatusString(statusCombo.getValue().toString()) == 3 ? "<br>Your luggage will be delivered to your address as soon as possible."
-                                            + "<br>From now DHL will contact you.": "")
-                                    + "<br><br>We hope that we have informed you enough."
-                                    + "<br><br>Sincerely,"
-                                    + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
-                            break;
-                    }
-                }
 
-                //MAILEN
-                sendToDatabase(Integer.parseInt(idLabel.getText()), Integer.parseInt(personIdLabel.getText()), 
-                    Integer.parseInt(lafIdLabel.getText()), Integer.parseInt(tableFromLabel.getText()), 
-                    fys.getStatusString(statusCombo.getValue().toString()), airportCombo.getValue().toString(), 
-                    nameInput.getText(), surNameInput.getText(), addressInput.getText(), 
-                    residenceInput.getText(), zipcodeInput.getText(), countryInput.getText(), 
-                    phoneInput.getText(), mailInput.getText(), labelNumberInput.getText(), 
-                    filePath, flightNumberInput.getText(), destination,
-                    fys.getBaggageTypeString(typeCombo.getValue().toString()), brandInput.getText(), 
-                    fys.getColorString(colorCombo.getValue().toString()), characteristicsInput.getText());
-            } else{
+            //MAILEN
+            if (fys.checkEmailExistsOnChange(mailInput.getText(), dr_mail)) {
+                System.out.println("Emailadres bestaat al!");
+            //Deze mail wordt verstuurd wanneer de status veranderd en niet op afgehandeld is gezet.
+            } else if (fys.getStatusString(dr_status) != fys.getStatusString(statusCombo.getValue().toString())) {
+                if (fys.getStatusString(statusCombo.getValue().toString()) != 3) {
+                    int pageid = 4;
+                    int type_email = 0;
+
+                    // Email bericht filteren op sommige woorden.            
+                    String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, fys.Email_Language(mailInput.getText()), pageid), mailInput.getText(), Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
+                    // Email versturen
+                    fys.sendEmail(mailInput.getText(), fys.Email_Subject(type_email, fys.Email_Language(mailInput.getText()), pageid), getmessage, "Sent message successfully....");
+
+                    sendToDatabase(Integer.parseInt(idLabel.getText()), Integer.parseInt(personIdLabel.getText()),
+                            Integer.parseInt(lafIdLabel.getText()), Integer.parseInt(tableFromLabel.getText()),
+                            fys.getStatusString(statusCombo.getValue().toString()), airportCombo.getValue().toString(),
+                            nameInput.getText(), surNameInput.getText(), addressInput.getText(),
+                            residenceInput.getText(), zipcodeInput.getText(), countryInput.getText(),
+                            phoneInput.getText(), mailInput.getText(), labelNumberInput.getText(),
+                            filePath, flightNumberInput.getText(), destination,
+                            fys.getBaggageTypeString(typeCombo.getValue().toString()), brandInput.getText(),
+                            fys.getColorString(colorCombo.getValue().toString()), characteristicsInput.getText());
+                }
+            } else {
                 sendToDatabase(Integer.parseInt(idLabel.getText()), Integer.parseInt(personIdLabel.getText()),
                         Integer.parseInt(lafIdLabel.getText()), Integer.parseInt(tableFromLabel.getText()),
                         fys.getStatusString(statusCombo.getValue().toString()), airportCombo.getValue().toString(),
@@ -530,16 +470,14 @@ public class BagagedatabaseController implements Initializable {
         }
     }
 
-    private void sendToDatabase(int dr_id, int dr_personId, int dr_lafId, int tableFrom, 
-            int status, String airport, String frontname, String surname, String address, 
+    private void sendToDatabase(int dr_id, int dr_personId, int dr_lafId, int tableFrom,
+            int status, String airport, String frontname, String surname, String address,
             String residence, String zipcode, String country, String phone, String mail,
             String labelnumber, String filePath, String flightnumber, String destination,
             int type, String brand, Integer color, String characteristics)
             throws IOException, SQLException {
 
         try {
-            String[] mailInformation = new String[6];
-            int[] mailInformation2 = new int [4];
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
 
@@ -644,8 +582,8 @@ public class BagagedatabaseController implements Initializable {
             op 'http://www.dhl.com/en/express/resource_center/emailship.html'.
             Het formulier is gekopieerd en aangepast d.m.v. Adobe Acrobat DC en is 
             louter bedoeld voor demonstratieve doeleinden.
-            */
-            if (status == 3) {
+             */
+            if (status == 3) { //Afgehandeld
                 //Maak nieuwe PDF-document aan de hand van de template
                 File pdfdoc = new File("src/fys/templates/dhltemplate.pdf");
                 PDDocument document;
@@ -698,68 +636,16 @@ public class BagagedatabaseController implements Initializable {
                 //Sla het document op
                 document.save("src/fys/formulieren/dhlFormulier" + frontname + surname + dr_personId + ".pdf");
                 document.close();
-                
-                // Replacen in email
-//                String getmessage = fys.replaceEmail(fys.Email_Message(), mailInput.getText());
-//
-//                switch (mailInformation2[1]) {
-//                    case 0:
-//                        // English emails
-//                        fys.sendEmail(mailInput.getText(), "Corendon - Logindata", "Dear valued customer, "
-//                                + "<br><br>There is an account created for you by one of our employees."
-//                                + "<br>You can login to this account on our web application to view the status of your case."
-//                                + "<br>You will need the following data to log in:"
-//                                + "<br>Username: <i>" + mailInput.getText()
-//                                + "</i><br>Password: <i>" + mailInformation[2]
-//                                + "</i><br><br>You can change your password in the web application."
-//                                + "<br>We hope to have informed you sufficiently."
-//                                + "<br><br>Sincerely,"
-//                                + "<br><br><b>The Corendon Team</b>", "Sent message successfully....");
-//                        break;
-//                    case 1:
-//                        // Dutch emails
-//                        // Mail voor klant (type = 0)
-//                        fys.sendEmail(mailInput.getText(), "Corendon - Inloggegevens", "Gewaardeerde klant, "
-//                                + "<br><br>Uw " + mailInformation2[2] + mailInformation[2] + mailInformation2[3] + " is afgehandeld."
-//                                + "<br>U kunt met dit account inloggen op onze webapplicatie om de status van uw koffer te bekijken."
-//                                + "<br>U heeft de volgende gegevens nodig om in te kunnen loggen:"
-//                                + "<br>Gebruikersnaam: <i>" + mailInput.getText()
-//                                + "</i><br>Wachtwoord: <i>" + mailInformation[2]
-//                                + "</i><br><br>U kunt uw wachtwoord wijzigen in de webapplicatie."
-//                                + "<br>Wij hopen u hiermee voldoende te hebben geïnformeerd."
-//                                + "<br><br>Met vriendelijke groet,"
-//                                + "<br><br><b>Het Corendon Team</b>", "Sent message successfully....");
-//                        break;
-//                    case 2:
-//                        // Spanish emails
-//                        // Mail voor klant (type = 0)
-//                        fys.sendEmail(mailInput.getText(), "Corendon - Logindatos", "Estimado cliente, "
-//                                + "<br><br>Hay una cuenta creada para usted por uno de nuestros empleados."
-//                                + "<br>Puede iniciar sesión con la cuenta en nuestra aplicación web para ver el estado de su caso."
-//                                + "<br>Necesitará la siguiente información para iniciar sesión:"
-//                                + "<br>Nombre de usuario: <i>" + mailInput.getText()
-//                                + "</i><br>Contraseña: <i>" + mailInformation[2]
-//                                + "</i><br><br>Puede cambiar su contraseña en la aplicación web."
-//                                + "<br>Esperamos que te han informado lo suficiente."
-//                                + "<br><br>Atentamente,"
-//                                + "<br><br><b>El equipo de Corendon</b>", "Sent message successfully....");
-//                        break;
-//                    default:
-//                        // Turkisch emails
-//                        fys.sendEmail(mailInput.getText(), "Corendon - Giriş", "Değerli müşterimiz, "
-//                                + "<br><br>Çalışanlarımızın biri tarafından sizin için oluşturulan bir hesap vardır."
-//                                + "<br>Sen davanın durumunu görüntülemek için web uygulamasında bu hesaba giriş yapabilirsiniz."
-//                                + "<br>Oturum açmak için aşağıdaki bilgilere ihtiyacınız olacaktır:"
-//                                + "<br>Kullanıcı adı: <i>" + mailInput.getText()
-//                                + "</i><br>Şifre: <i>" + mailInformation[2]
-//                                + "</i><br><br>Bu web uygulamasında şifrenizi değiştirebilirsiniz."
-//                                + "<br>Biz yeterince sizi haberdar etmek istedik."
-//                                + "<br><br>Saygılarımızla,"
-//                                + "<br><br><b>Corendon Takımı</b>", "Sent message successfully....");
-//                        break;
-//                }
+
+                int pageid = 5;
+                int type_email = 0;
+
+                // Email bericht filteren op sommige woorden.            
+                String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, fys.Email_Language(mailInput.getText()), pageid), mailInput.getText(), Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
+                // Email versturen
+                fys.sendEmail(mailInput.getText(), fys.Email_Subject(type_email, fys.Email_Language(mailInput.getText()), pageid), getmessage, "Sent message successfully....");
             }
-            pictureButton.setText("Klik hier om een afbeelding toe te voegen");
+            pictureButton.setText(taal[44]);
             fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");
             conn.close();
         } catch (SQLException ex) {
@@ -769,7 +655,7 @@ public class BagagedatabaseController implements Initializable {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
     }
-    
+
     //Fileselector aanroepen wanneer iemand een afbeelding wil toevoegen
     @FXML
     public void handleFileSelector(ActionEvent event) throws FileNotFoundException, IOException {
@@ -780,7 +666,7 @@ public class BagagedatabaseController implements Initializable {
         //filePath = fileRaw.replace("\\","\\\\");
         pictureButton.setText(file.getName());
     }
-    
+
     //Bagage permanent uit de database verwijderen
     @FXML
     public void handeRemove(ActionEvent event) throws IOException {
@@ -791,12 +677,12 @@ public class BagagedatabaseController implements Initializable {
             int dr_personId = (table.getSelectionModel().getSelectedItem().getPersonID());
             int dr_lafId = (table.getSelectionModel().getSelectedItem().getLostAndFoundID());
             int dr_from = Integer.parseInt((table.getSelectionModel().getSelectedItem().getTableFrom()));
-            
+
             //Vraag of de gebruiker het zeker weet
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
             confirm.setTitle(taal[154]);
             confirm.setHeaderText(taal[154]);
-            confirm.setContentText(taal[155]);            
+            confirm.setContentText(taal[155]);
             Optional<ButtonType> result = confirm.showAndWait();
             if (result.get() == ButtonType.OK) {
                 try {
@@ -805,13 +691,13 @@ public class BagagedatabaseController implements Initializable {
                     String sql_del = "";
                     String sql_del2 = "";
                     String sql_del3 = "";
-                    
+
                     //Verwijder de gegevens die coresponderen aan de id, personId en lafId
-                    if(dr_from == 0){ //0 = lost_table
+                    if (dr_from == 0) { //0 = lost_table
                         sql_del = "DELETE FROM bagagedatabase.lost WHERE id='" + dr_id + "'";
                         sql_del2 = "DELETE FROM bagagedatabase.person WHERE person_id='" + dr_personId + "'";
                         sql_del3 = "DELETE FROM bagagedatabase.airport WHERE lost_and_found_id='" + dr_lafId + "'";
-                    } else if(dr_from == 1){ //1 = found_table
+                    } else if (dr_from == 1) { //1 = found_table
                         sql_del = "DELETE FROM bagagedatabase.found WHERE id='" + dr_id + "'";
                         sql_del2 = "DELETE FROM bagagedatabase.person WHERE person_id='" + dr_personId + "'";
                         sql_del3 = "DELETE FROM bagagedatabase.airport WHERE lost_and_found_id='" + dr_lafId + "'";
@@ -820,7 +706,7 @@ public class BagagedatabaseController implements Initializable {
                     stmt.executeUpdate(sql_del2);
                     stmt.executeUpdate(sql_del3);
                     conn.close();
-                    
+
                     fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");
 //                    Alert info = new Alert(AlertType.INFORMATION);
 //                    info.setTitle("Information Dialog");
@@ -845,11 +731,10 @@ public class BagagedatabaseController implements Initializable {
             alert.showAndWait();
         }
     }
-    
-    public void hideFilter(){
+
+    public void hideFilter() {
         filterPane.setDisable(true);
         filterPane.setVisible(false);
-        //inklapLabel.setText("\u21f2");
         table.setLayoutX(112.0);
         table.setPrefWidth(772.0);
         inklapLabel.setDisable(true);
@@ -858,8 +743,8 @@ public class BagagedatabaseController implements Initializable {
         uitklapLabel.setVisible(true);
         changeButton.setLayoutX(112.0);
     }
-    
-    public void showFilter(){
+
+    public void showFilter() {
         filterPane.setDisable(false);
         filterPane.setVisible(true);
         table.setLayoutX(324.0);

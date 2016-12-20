@@ -15,7 +15,15 @@
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
         <Pane layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0" style=" -fx-border-width:0 2 0 2; -fx-border-color:lightgrey; -fx-background-color: white;">
            <children>
-               <LineChart id="linechart" fx:id="linechart" layoutY="41.0" prefHeight="430.0" prefWidth="388.0">
+               <Label fx:id="linechartTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="0" layoutY="46.0" prefHeight="21.0" prefWidth="399.0" text="Label">
+               <font>
+                  <Font size="22.0" />
+               </font></Label>
+            <Label fx:id="tableTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="399.0" layoutY="46.0" prefHeight="21.0" prefWidth="399.0" text="Label">
+               <font>
+                  <Font size="22.0" />
+               </font></Label>
+               <LineChart id="linechart" fx:id="linechart" layoutY="78.0" prefWidth="400.0" style="-fx-border-color: lightgrey; -fx-border-width: 2;">
                    <xAxis>
                        <CategoryAxis side="BOTTOM" />
                    </xAxis>
@@ -23,17 +31,13 @@
                        <NumberAxis side="LEFT" />
                    </yAxis>
                </LineChart>
-              <TableView fx:id="table" layoutX="388.0" layoutY="88.0" prefHeight="376.0" prefWidth="399.0">
+              <TableView fx:id="table" layoutX="397.0" layoutY="78.0" prefWidth="402.0" style="-fx-border-color: lightgrey; -fx-border-width: 2;">
                   <columns>
                   <TableColumn id="week" fx:id="week" maxWidth="262.0" minWidth="-1.0" prefWidth="50.0" text="Week" />
                       <TableColumn id="status" fx:id="status" maxWidth="262.0" minWidth="-1.0" prefWidth="212.0" text="Status" />
                       <TableColumn id="amount" fx:id="amount" maxWidth="250.0" minWidth="-1.0" prefWidth="136.0" text="Aantal" />
                   </columns>
               </TableView>
-            <Label fx:id="tableTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="41.0" prefHeight="21.0" prefWidth="399.0" text="Label">
-               <font>
-                  <Font size="22.0" />
-               </font></Label>
            </children>
         </Pane>
     </children>

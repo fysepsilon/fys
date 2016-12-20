@@ -13,10 +13,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,14 +22,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -70,13 +63,13 @@ public class MailsettingsController implements Initializable {
     @FXML
     private TextField subject_field, page_field, type_field, language_field;
     @FXML
-    private loginController loginController = new loginController();
+    private final loginController loginController = new loginController();
     @FXML
-    private FYS fys = new FYS();
+    private final FYS fys = new FYS();
     @FXML
-    private taal languages = new taal();
+    private final taal languages = new taal();
     @FXML
-    private String[] taal = languages.getLanguage();
+    private final String[] taal = languages.getLanguage();
     @FXML
     private Statement stmt = null;
     @FXML
@@ -99,7 +92,7 @@ public class MailsettingsController implements Initializable {
         info.setText(taal[149]);
 
         change_button.setText(taal[67]);
-        send_button.setText(taal[46]);
+        send_button.setText(taal[92]);
         cancel_button.setText(taal[127]);
         recover_button.setText(taal[153]);
 
@@ -196,6 +189,7 @@ public class MailsettingsController implements Initializable {
         edit_pane.setVisible(false);
     }
 
+    //Wanneer je op het informatie icoontje klikt
     @FXML
     private void handleBig(ActionEvent event) throws IOException {
         // Switch from an anchorpane to another anchorpane
@@ -206,6 +200,7 @@ public class MailsettingsController implements Initializable {
         close_VBOX.setVisible(true);
     }
 
+    // Wanneer je op het sluit icoontje klikt
     @FXML
     private void handleCloseBig(ActionEvent event) throws IOException {
         // Switch from an anchorpane to another anchorpane
@@ -215,7 +210,8 @@ public class MailsettingsController implements Initializable {
         mailGridpane.setPrefWidth(772);
         close_VBOX.setVisible(false);
     }
-
+    
+    //Wanneer je op de button herstellen klikt.
     public void handleRecover(ActionEvent event) throws IOException {
         int selectedIndex = table.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -259,6 +255,7 @@ public class MailsettingsController implements Initializable {
         }
     }
 
+    //Herstellen
     private void sendToDatabase2(int dr_mailid) throws IOException, SQLException {
         try {
             conn = fys.connectToDatabase(conn);

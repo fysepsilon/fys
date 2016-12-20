@@ -31,8 +31,6 @@ public class loginController implements Initializable {
     @FXML
     private PasswordField password;
     @FXML
-    private Label label;
-    @FXML
     private Label loginerror;
     @FXML
     private static int usertype;
@@ -46,7 +44,11 @@ public class loginController implements Initializable {
     private Button logInButton;
     @FXML
     private final FYS fys = new FYS();
-
+    
+    /**
+     * 
+     * @return De type van de gebruiker.
+     */
     public int getUsertype() {
         return usertype;
     }
@@ -78,13 +80,16 @@ public class loginController implements Initializable {
     public void setUsersName(String usersname) {
         loginController.usersname = usersname;
     }
-
+    
+    //Wanneer de gebruiker op wachtwoord vergeten klikt. 
+    //Wordt diegene doorgestuurd naar de pagina van wachtwoord vergeten.
     @FXML
     private void handleForgotPasswordAction(ActionEvent event) throws IOException {
         //Switch screen to wachtwoordvergeten.
         fys.changeToAnotherFXML("Corendon-Forgotpassword", "wachtwoordVergeten.fxml");
     }
-
+    
+    //Als de gebruiker op de knop op login klikt.
     @FXML
     private void handleChechLoginAction(ActionEvent event) throws IOException, SQLException {
         //Controleer of de velden gebruikersnaam of wachtwoord zijn ingevuld lat anders een error zien.

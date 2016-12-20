@@ -138,8 +138,9 @@ public class BagageformulierenController implements Initializable {
             throws IOException, SQLException {
         
         try {
+            int pageid = 2;
             String passwordDecrypted = "";
-            int language_user = 0;
+            int type_email = 0;
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
 
@@ -193,12 +194,11 @@ public class BagageformulierenController implements Initializable {
                 stmt.executeUpdate(sql_lost);
             }
             
-            // Replacen in email
-            String getmessage = fys.replaceEmail(fys.Email_Message(), mail_input.getText());
-
-            if (fys.Email_Mailid() == 13) { // Mailid = 13
-                fys.sendEmail(mail_input.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
-            }
+            
+             // Email bericht filteren op sommige woorden.            
+            String getmessage = fys.replaceEmail(fys.Email_Message(type_email, fys.getUserLanguageString(language_combo.getValue().toString()), pageid), mail_input.getText());            
+           // Email versturen
+            fys.sendEmail(mail_input.getText(), fys.Email_Subject(type_email, fys.getUserLanguageString(language_combo.getValue().toString()), pageid), getmessage, "Sent message successfully....");
             
             conn.close();
         } catch (SQLException ex) {

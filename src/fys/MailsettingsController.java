@@ -99,7 +99,7 @@ public class MailsettingsController implements Initializable {
         info.setText(taal[149]);
 
         change_button.setText(taal[67]);
-        send_button.setText(taal[46]);
+        send_button.setText(taal[92]);
         cancel_button.setText(taal[127]);
         recover_button.setText(taal[153]);
 

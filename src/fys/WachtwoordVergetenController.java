@@ -46,8 +46,11 @@ public class WachtwoordVergetenController implements Initializable {
     @FXML
     private void handleSendNewPasswordAction(ActionEvent event) throws IOException, SQLException {
         sendNewPasswordButton.setDisable(true);
+        int pageid = 3;
         FYS fys = new FYS();
         String email = "";
+        String type = "";
+        String language = "";
         Statement stmt = null;
         Connection conn = null;
         conn = fys.connectToDatabase(conn);
@@ -64,11 +67,13 @@ public class WachtwoordVergetenController implements Initializable {
             if (FYS.isValidEmailAddress(username.getText())) {
                 //Haal de mail die is ingevuld.
                 try {
-                    String sql = "SELECT mail FROM person WHERE mail='" + username.getText() + "' AND (type = '1' OR type = '2')";
+                    String sql = "SELECT mail, type, language FROM person WHERE mail='" + username.getText() + "' AND (type = '1' OR type = '2')";
                     try (ResultSet rs = stmt.executeQuery(sql)) {
                         while (rs.next()) {
                             //Retrieve by column name
                             email = rs.getString("mail");
+                            type = rs.getString("type");
+                            language = rs.getString("language");
                             //Display values
                         }
                     }
@@ -78,28 +83,26 @@ public class WachtwoordVergetenController implements Initializable {
                     System.out.println("SQLState: " + ex.getSQLState());
                     System.out.println("VendorError: " + ex.getErrorCode());
                 }
+                
                 //Controleer of de ingevulde veld leeg is. Laat dan een error zien.
                 if ((email == null || email.trim().isEmpty())) {
                     sendPasswordMessage.setText("This username unfortunately does not exists!");
                     sendPasswordMessage.setStyle("-fx-text-fill: red;");
                     sendPasswordMessage.setVisible(true);
                     sendNewPasswordButton.setDisable(false);
-                } else {
-                    // Stuur email als gebruiker type 1 of 2 is.
-                    if (fys.Email_Persontype(username.getText()) == 1 || fys.Email_Persontype(username.getText()) == 2) {
-                        // Replacen in email
-                        String getmessage = fys.replaceEmail(fys.Email_Message(), username.getText());
+                } else if (fys.Email_Persontype(username.getText()) == 1
+                        || fys.Email_Persontype(username.getText()) == 2) { // Stuur email als gebruiker type 1 of 2 is.
 
-                        if (fys.Email_Mailid() == 14) { // Mailid = 14
-                            fys.sendEmail(username.getText(), fys.Email_Subject(), getmessage, "Sent message successfully....");
-                        }
+                    // Email bericht filteren op sommige woorden.            
+                    String getmessage = fys.replaceEmail(fys.Email_Message(fys.getUserFunctionString(type), fys.getUserLanguageString(language), pageid), username.getText());
+                    // Email versturen
+                    fys.sendEmail(username.getText(), fys.Email_Subject(fys.getUserFunctionString(type), fys.getUserLanguageString(language), pageid), getmessage, "Sent message successfully....");
 
-                        sendPasswordMessage.setText("Your password has been sent to: " + username.getText() + "!");
-                        sendPasswordMessage.setStyle("-fx-text-fill: green;");
-                        sendPasswordMessage.setVisible(true);
-                        username.setText("");
-                        sendNewPasswordButton.setDisable(false);
-                    }
+                    sendPasswordMessage.setText("Your password has been sent to: " + username.getText() + "!");
+                    sendPasswordMessage.setStyle("-fx-text-fill: green;");
+                    sendPasswordMessage.setVisible(true);
+                    username.setText("");
+                    sendNewPasswordButton.setDisable(false);
                 }
             } else {
                 sendPasswordMessage.setText("Please enter a valid email address!");

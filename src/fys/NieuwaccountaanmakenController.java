@@ -95,6 +95,10 @@ public class NieuwaccountaanmakenController implements Initializable {
             loginerror.setText(taal[93]);
             loginerror.setVisible(true);
 
+        } else if (!FYS.isValidEmailAddress(mail_input.getText())) {
+            loginerror.setText("E-mailadres is niet geldig!");
+            loginerror.setVisible(true);
+            //Anders update de gegevens in de database.    
         } else if (fys.checkEmailExists(mail_input.getText())) {
             //Foutmelding
             loginerror.setText(taal[121]);
@@ -110,21 +114,20 @@ public class NieuwaccountaanmakenController implements Initializable {
             String getmessage = fys.replaceEmail(fys.Email_Message(fys.getUserFunctionString(type_combo.getValue().toString()), fys.getUserLanguageString(language_combo.getValue().toString()), pageid), mail_input.getText());
             // Email versturen
             fys.sendEmail(mail_input.getText(), fys.Email_Subject(fys.getUserFunctionString(type_combo.getValue().toString()), fys.getUserLanguageString(language_combo.getValue().toString()), pageid), getmessage, "Sent message successfully....");
+            loginerror.setText(taal[103]);
+            loginerror.setStyle("-fx-text-fill: green;");
+            loginerror.setVisible(true);
+            loginerror.setDisable(false);
+            
+            name_input.setText("");
+            surname_input.setText("");
+            address_input.setText("");
+            residence_input.setText("");
+            zipcode_input.setText("");
+            country_input.setText("");
+            phone_input.setText("");
+            mail_input.setText("");
         }
-
-        loginerror.setText(taal[103]);
-        loginerror.setStyle("-fx-text-fill: green;");
-        loginerror.setVisible(true);
-        loginerror.setDisable(false);
-
-        name_input.setText("");
-        surname_input.setText("");
-        address_input.setText("");
-        residence_input.setText("");
-        zipcode_input.setText("");
-        country_input.setText("");
-        phone_input.setText("");
-        mail_input.setText("");
     }
 
     @FXML
@@ -162,7 +165,6 @@ public class NieuwaccountaanmakenController implements Initializable {
     @FXML
     private void sendToDatabase(String firstname, String surname, String address, String residence, String zipcode,
             String country, String phone, String mail, String password, String language) throws IOException, SQLException {
-        FYS fys = new FYS();
 
         try {
             Statement stmt = null;
@@ -179,7 +181,7 @@ public class NieuwaccountaanmakenController implements Initializable {
                     + "zip_code, country, phone) VALUES ('0', '" + mail + "', '" + password + "', '" + language + "', '" + firstname + "', "
                     + "'" + surname + "', '" + address + "', '" + residence + "', '" + zipcode + "', "
                     + "'" + country + "', '" + phone + "')";
-
+            System.out.println(sql_account);
             stmt.executeUpdate(sql_account);
             conn.close();
         } catch (SQLException ex) {

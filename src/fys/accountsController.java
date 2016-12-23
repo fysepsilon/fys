@@ -182,6 +182,7 @@ public class accountsController implements Initializable {
             
             // Service medewerker (ZONDER REMOVE BUTTON)
             remove_button.setVisible(false);
+            NewAccountButton.setVisible(false);
         }
 
         type_label.setText(taal[20] + ":");

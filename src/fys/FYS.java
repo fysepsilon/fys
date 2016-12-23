@@ -91,21 +91,6 @@ public class FYS extends Application {
     }
 
     /**
-     * 
-     * @param title zet titel van het popupscherm.
-     * @param changeToWindow Welk scherm er gepopupt wordt.
-     * @throws IOException 
-     */
-    public void OpenAnotherFXML(String title, String changeToWindow) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(changeToWindow));
-        Parent root1 = (Parent) fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.setTitle(title);
-        stage.setScene(new Scene(root1));
-        stage.show();
-    }
-
-    /**
      *
      * @param length de lengte van het wachtwoord.
      * @return een random wachtwoord met de lengte die is geselecteerd.
@@ -623,6 +608,63 @@ public class FYS extends Application {
         conn.close();
         return countLost;
     }
+    
+    public boolean checkFound(int type, String brand, int color) {
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM found "
+                    + "WHERE type='" + type + "' "
+                    + "AND brand = '" + brand + "' "
+                    + "AND color = '" + color + "';";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    return true;
+                }
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        return false;
+    }
+    
+    public int countFound(int type, String brand, int color) throws SQLException {
+        int countFound = 0;
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT count(*) FROM found "
+                        + "WHERE type='" + type + "' "
+                        + "AND brand = '" + brand + "' "
+                        + "AND color = '" + color + "';";            
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    countFound = rs.getInt("count(*)");
+
+                    return countFound;
+                }
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return countFound;
+    }
+
 
     /**
      *

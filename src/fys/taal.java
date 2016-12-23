@@ -228,7 +228,13 @@ public class taal {
             languagefields[164] = "Select the customers language";
             languagefields[165] = "German";
             languagefields[166] = "Forgot password";
-        } else if(language == 1) { // Nederlands
+            languagefields[167] = "You can filter the e-mails through here.";
+            languagefields[168] = "There has been a code used that not belongs "
+                    + "in this email. Click the information icon to see which "
+                    + "codes can be used in it.";
+            languagefields[169] = "You have the character ' used.";
+            languagefields[170] = "You have the character ´ used.";
+        } else if (language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
             languagefields[2] = "BAGAGE DATABASE";
@@ -392,7 +398,7 @@ public class taal {
                     + "een email die \niets betekenen. Hieronder \nstaan "
                     + "de woorden die je \nkan gebruiken met de\n"
                     + "betekenis erachter.";
-            languagefields[153] = "Herstellen";      
+            languagefields[153] = "Herstellen";
             languagefields[154] = "Verwijderen van gegevens";
             languagefields[155] = "U staat op het punt deze bagage- en "
                     + "klantgegevens permanent"
@@ -410,7 +416,11 @@ public class taal {
             languagefields[164] = "Kies hier de taal van de klant";
             languagefields[165] = "Duits";
             languagefields[166] = "Wachtwoord vergeten";
-        } else if(language == 2) { // Spaans
+            languagefields[167] = "Je kan via hier de emails filteren.";
+            languagefields[168] = "Er is een code gebruikt die niet in deze mail thuis hoort. Klik op het informatie icoon om te kijken welke codes er allemaal gebruikt kunnen worden.";
+            languagefields[169] = "Je hebt het teken ' gebruikt.";
+            languagefields[170] = "Je hebt het teken ´ gebruikt.";
+        } else if (language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";
             languagefields[2] = "BASE DE DATOS DE EQUIPAJE";
@@ -592,7 +602,15 @@ public class taal {
             languagefields[164] = "Seleccionar el idioma del cliente";
             languagefields[165] = "Alemán";
             languagefields[166] = "Contraseña";
-        } else if(language == 3) { // Turks
+            languagefields[167] = "Puede filtrar los correos electrónicos a "
+                    + "través de aquí.";
+            languagefields[168] = "Se ha utilizado un código que no pertenece "
+                    + "a este correo electrónico. Haga clic en el icono de "
+                    + "información para ver qué códigos se pueden utilizar "
+                    + "en él.";
+            languagefields[169] = "Tienes el carácter ' usado.";
+            languagefields[170] = "Tienes el carácter ´ usado.";
+        } else if (language == 3) { // Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
             languagefields[2] = "BAGAJ VERİTABANI";
@@ -771,6 +789,13 @@ public class taal {
             languagefields[164] = "Müşterinin dili seçin";
             languagefields[165] = "Alman";
             languagefields[166] = "Şifre";
+            languagefields[167] = "Burada üzerinden e-postalar filtre "
+                    + "edebilirsiniz.";
+            languagefields[168] = "Bu e-postaya ait olmayan bir kod "
+                    + "kullanıldı. İçinde hangi kodların kullanılabileceğini "
+                    + "görmek için bilgi simgesini tıklayın.";
+            languagefields[169] = "Kullandığınız karakter ' var.";
+            languagefields[170] = "Kullandığınız karakter ´ var.";
         } else { // Duits
             languagefields[0] = "FEHLENDES GEPÄCK REGISTRIEREN";
             languagefields[1] = "GEFUNDEN GEPÄCK ANMELDEN";
@@ -953,6 +978,14 @@ public class taal {
             languagefields[164] = "Wählen Sie die Sprache des Kunden";
             languagefields[165] = "Deutsch";
             languagefields[166] = "Kennwort";
+            languagefields[167] = "Sie können die E-Mails, die über hier zu "
+                    + "filtern.";
+            languagefields[168] = "Es wurde ein Code verwendet, der nicht in "
+                    + "diese E-Mail gehört. Klicken Sie auf das "
+                    + "Informationssymbol, um zu sehen, welche Codes darin "
+                    + "verwendet werden können.";
+            languagefields[169] = "Sie haben das Zeichen ' verwendet.";
+            languagefields[170] = "Sie haben das Zeichen ´ verwendet.";
         }
         return languagefields;
     }

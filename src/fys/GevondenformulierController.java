@@ -46,16 +46,19 @@ public class GevondenformulierController implements Initializable {
             flightnumber_input, brand_input, characteristics_input;
     @FXML
     private Label surname_label, name_label, airport_label, label_label,
-            flight_label, destination_label, type_label, brand_label, color_label,
-            characteristics_label, picture_label, loginerror;
+            flight_label, destination_label, type_label, brand_label, 
+            color_label, characteristics_label, picture_label, loginerror, 
+            popup_label;
     @FXML
     private TextArea textinfo;
     @FXML
     private TableView<Bagage> table;
     @FXML
-    private ObservableList<Bagage> data = FXCollections.observableArrayList(), datafilter = FXCollections.observableArrayList();
+    private ObservableList<Bagage> data = FXCollections.observableArrayList(), 
+            datafilter = FXCollections.observableArrayList();
     @FXML
-    private TableColumn status, type, color, brand, picture, information, firstName, surName;
+    private TableColumn status, type, color, brand, picture, information, 
+            firstName, surName;
     @FXML
     private Button picture_button, send_button;
     @FXML
@@ -98,6 +101,7 @@ public class GevondenformulierController implements Initializable {
         send_button.setText(taal[46]);
 
         //Popup
+        popup_label.setText(taal[150]);
         status.setText(taal[48]);
         type.setText(taal[50]);
         color.setText(taal[49]);
@@ -183,15 +187,21 @@ public class GevondenformulierController implements Initializable {
             formulier.setDisable(true);
 
             int count = fys.countLost(fys.getBaggageTypeString(type_combo.getValue().toString()), brand_input.getText(), fys.getColorString(color_combo.getValue().toString()));
-
             if (count == 1) {
                 textinfo.setText("Er is " + count + " vermist bagagestuk met dezelfde kenmerken gevonden\n"
-                        + "als wat er net is ingevuld.");
+                        + "als wat er net is ingevuld.\n"
+                        + "\n"
+                        + "Hieronder staat alle informatie over dit al opgegeven vermiste\n"
+                        + "bagagestuk. Je kan jouw ingevulde bagagestuk annuleren of\n"
+                        + "toch verzenden.");
             } else {
                 textinfo.setText("Er zijn " + count + " vermiste bagagestukken met dezelfde kenmerken gevonden\n"
-                        + "als wat er net is ingevuld.");
+                        + "als wat er net is ingevuld.\n"
+                        + "\n"
+                        + "Hieronder staat alle informatie over deze al opgegeven vermiste\n"
+                        + "bagagestukken. Je kan jouw ingevulde bagagestuk annuleren of\n"
+                        + "toch verzenden.");
             }
-
         } else {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date date = new Date();

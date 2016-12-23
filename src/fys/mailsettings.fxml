@@ -8,6 +8,7 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.MailsettingsController">
     <children>
@@ -87,6 +88,28 @@
                                         <Label id="info_surname" fx:id="info_surname" text="Achternaam" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     </children>
                                 </GridPane>
+                                <GridPane fx:id="luggagetable" prefHeight="79.0" prefWidth="209.0" visible="false">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="10.0" prefWidth="89.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.0" minWidth="10.0" prefWidth="118.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label text="*luggagecolor*" />
+                                        <Label text="*luggagebrand*" GridPane.rowIndex="1" />
+                                        <Label text="*luggagetype*" GridPane.rowIndex="2" />
+                                        <Label text="*luggagestatus*" GridPane.rowIndex="3" />
+                                        <Label id="info_lugcolor" fx:id="info_lugcolor" text="Bagage kleur" GridPane.columnIndex="1" />
+                                        <Label id="info_lugbrand" fx:id="info_lugbrand" text="Bagage merk" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Label id="info_lugtype" fx:id="info_lugtype" text="Bagage type" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Label id="info_lugstatus" fx:id="info_lugstatus" text="Bagage status" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    </children>
+                                </GridPane>
                             </children>
                         </VBox>
                         <Button fx:id="show_VBox" layoutX="798.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleBig" prefHeight="20.0" prefWidth="20.0" style="-fx-background-radius: 0; -fx-background-color: white; -fx-border-color: lightgrey; -fx-border-width: 2;">
@@ -123,8 +146,63 @@
                             </columns>
                         </TableView>
                         <Button fx:id="change_button" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleChange" prefHeight="35.0" prefWidth="208.0" text="Wijzigen" />
+                        <Button fx:id="filter_button" layoutX="236.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleOpenFilter" prefHeight="35.0" prefWidth="208.0" text="Filteren" />
                     </children>        
                 </AnchorPane>                        
+            </children>
+        </Pane>
+        <Pane id="filterPane" fx:id="filterPane" layoutX="300.0" layoutY="214.0" prefHeight="250.0" prefWidth="400.0" style="-fx-border-width: 31 8 8 8; -fx-border-color: black; -fx-background-color: white;" visible="false">
+            <children>
+                <Label id="popup_filterlabel" fx:id="popup_filterlabel" alignment="CENTER" layoutY="5.0" prefHeight="20.0" prefWidth="400.0" text="Filteren" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Button id="closepopup" fx:id="closepopup" layoutX="331.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleCancelFilter" prefHeight="20.0" prefWidth="61.0" style="-fx-background-color: C75050; -fx-background-radius: 0;">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/popup-close.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <ComboBox fx:id="pageFilter" layoutX="166.0" layoutY="76.0" prefHeight="31.0" prefWidth="220.0" promptText="Kies type">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="" />
+                        </FXCollections>
+                    </items>
+                    <value>
+                        <String fx:value="" />
+                    </value>
+                </ComboBox>
+                <ComboBox fx:id="typeFilter" layoutX="166.0" layoutY="113.0" prefHeight="31.0" prefWidth="220.0" promptText="Kies type">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="" />
+                        </FXCollections>
+                    </items>
+                    <value>
+                        <String fx:value="" />
+                    </value>
+                </ComboBox>
+                <ComboBox fx:id="languageFilter" layoutX="166.0" layoutY="150.0" prefHeight="31.0" prefWidth="220.0" promptText="Kies type">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="" />
+                        </FXCollections>
+                    </items>
+                    <value>
+                        <String fx:value="" />
+                    </value>
+                </ComboBox>
+                <Button fx:id="filter" layoutX="14.0" layoutY="205.0" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="31.0" prefWidth="372.0" text="Filteren" />
+                
+                <Label fx:id="pageFilterLabel" layoutX="14.0" layoutY="76.0" prefHeight="31.0" prefWidth="126.0" text="Page" />
+                <Label fx:id="languageFilterLabel" layoutX="14.0" layoutY="150.0" prefHeight="31.0" prefWidth="126.0" text="Language" />
+                <Label fx:id="typeFilterLabel" layoutX="14.0" layoutY="113.0" prefHeight="31.0" prefWidth="126.0" text="Type" />
+                <Label fx:id="mainFilterLabel" layoutX="14.0" layoutY="37.0" prefHeight="31.0" prefWidth="372.0" text="Je kan via hier de emails filteren." />
             </children>
         </Pane>
     </children>

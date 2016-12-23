@@ -20,7 +20,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -49,11 +51,12 @@ public class FYS extends Application {
     private static Stage parentWindow;
     private static final String key = "1234abcd";
     private final static String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
-    
+
     /**
      * Verander het hoofscherm in login.fxml
+     *
      * @param stage Een hoofdscherm
-     * @throws Exception 
+     * @throws Exception
      */
     @Override
     public void start(Stage stage) throws Exception {
@@ -72,7 +75,8 @@ public class FYS extends Application {
     /**
      *
      * @param title zet titel van het hoofscherm.
-     * @param changeToWindow Verander het hoofdscherm in een willekeurige fxml bestand.
+     * @param changeToWindow Verander het hoofdscherm in een willekeurige fxml
+     * bestand.
      * @throws IOException
      */
     public void changeToAnotherFXML(String title, String changeToWindow) throws IOException {
@@ -88,6 +92,21 @@ public class FYS extends Application {
 
     /**
      * 
+     * @param title zet titel van het popupscherm.
+     * @param changeToWindow Welk scherm er gepopupt wordt.
+     * @throws IOException 
+     */
+    public void OpenAnotherFXML(String title, String changeToWindow) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(changeToWindow));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root1));
+        stage.show();
+    }
+
+    /**
+     *
      * @param length de lengte van het wachtwoord.
      * @return een random wachtwoord met de lengte die is geselecteerd.
      */
@@ -118,7 +137,8 @@ public class FYS extends Application {
 
     /**
      *
-     * @param type Welke type er is geselecteerd in de taal van de gebruiker (account).
+     * @param type Welke type er is geselecteerd in de taal van de gebruiker
+     * (account).
      * @return user type in getallen.
      */
     public Integer getUserFunctionString(String type) {
@@ -214,14 +234,14 @@ public class FYS extends Application {
         }
         return taal[27];
     }
-    
+
     /**
-     * 
+     *
      * @param language
      * @param status
-     * @return 
+     * @return
      */
-    public String getStatusForMail(int language, int status){
+    public String getStatusForMail(int language, int status) {
         switch (language) {
             case 0:
                 switch (status) {
@@ -295,7 +315,7 @@ public class FYS extends Application {
                         break;
                 }
                 return "Bulundu";
-        }   
+        }
         return "";
     }
 
@@ -548,6 +568,62 @@ public class FYS extends Application {
         return false;
     }
 
+    public boolean checkLost(int type, String brand, int color) {
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM lost "
+                    + "WHERE type='" + type + "' "
+                    + "AND brand = '" + brand + "' "
+                    + "AND color = '" + color + "';";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    return true;
+                }
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        return false;
+    }
+    
+    public int countLost(int type, String brand, int color) throws SQLException {
+        int countLost = 0;
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT count(*) FROM lost "
+                        + "WHERE lost.type='" + type + "' "
+                        + "AND lost.brand = '" + brand + "' "
+                        + "AND lost.color = '" + color + "';";            
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    countLost = rs.getInt("count(*)");
+
+                    return countLost;
+                }
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return countLost;
+    }
+
     /**
      *
      * @param email Controleer of deze emailadres in de database bestaat.
@@ -645,12 +721,13 @@ public class FYS extends Application {
     }
 
     /**
-     * 
+     *
      * @param getmessage Het bericht uit de database.
-     * @param mail_input Het email-adres waar de mail naar toe moet worden gestuurd.
-     * @return
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * gestuurd.
+     * @return getmessage = bericht
      * @throws UnsupportedEncodingException
-     * @throws SQLException 
+     * @throws SQLException
      */
     public String replaceEmail(String getmessage, String mail_input) throws UnsupportedEncodingException, SQLException {
         getmessage = getmessage.replace("*username*", mail_input);
@@ -661,24 +738,33 @@ public class FYS extends Application {
     }
 
     /**
-     * 
+     *
      * @param getmessage Het bericht uit de database
-     * @param mail_input Het email-adres waar de mail naar toe moet worden gestuurd.
-     * @param tableForm 
-     * @return
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * gestuurd.
+     * @param tableFrom tableFrom uit db
+     * @return getmessage = bericht
      * @throws UnsupportedEncodingException
-     * @throws SQLException 
+     * @throws SQLException
      */
-    public String replaceEmail_tF(String getmessage, String mail_input, int tableForm) throws UnsupportedEncodingException, SQLException {
-        getmessage = getmessage.replace("*luggagecolor*", Email_LuggageColor(tableForm, mail_input));
-        getmessage = getmessage.replace("*luggagebrand*", Email_LuggageBrand(tableForm, mail_input));
-        getmessage = getmessage.replace("*luggagetype*", Email_LuggageType(tableForm, mail_input));
-        getmessage = getmessage.replace("*luggagestatus*", Email_LuggageStatus(tableForm, mail_input));
+    public String replaceEmail_tF(String getmessage, String mail_input, int tableFrom) throws UnsupportedEncodingException, SQLException {
+        getmessage = getmessage.replace("*luggagecolor*", Email_LuggageColor(tableFrom, mail_input));
+        getmessage = getmessage.replace("*luggagebrand*", Email_LuggageBrand(tableFrom, mail_input));
+        getmessage = getmessage.replace("*luggagetype*", Email_LuggageType(tableFrom, mail_input));
+        getmessage = getmessage.replace("*luggagestatus*", Email_LuggageStatus(tableFrom, mail_input));
         return getmessage;
     }
 
+    /**
+     *
+     * @param type type van een account
+     * @param language language van een account
+     * @param pageid id van de pagina
+     * @return mailOphalen
+     * @throws SQLException
+     */
     public int Email_Mailid(int type, int language, int pageid) throws SQLException {
-        int[] mailOphalen = new int[1];
+        int mailOphalen = 0;
 
         Statement stmt = null;
         Connection conn = null;
@@ -689,9 +775,9 @@ public class FYS extends Application {
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
-                    mailOphalen[0] = rs.getInt("mailid");
+                    mailOphalen = rs.getInt("mailid");
 
-                    return mailOphalen[0];
+                    return mailOphalen;
                 }
             }
             conn.close();
@@ -701,11 +787,19 @@ public class FYS extends Application {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-        return mailOphalen[0];
+        return mailOphalen;
     }
 
+    /**
+     *
+     * @param type type van een account
+     * @param language language van een account
+     * @param pageid id van de pagina
+     * @return mailOphalen
+     * @throws SQLException
+     */
     public String Email_Subject(int type, int language, int pageid) throws SQLException {
-        String[] mailOphalen = new String[1];
+        String mailOphalen = "";
 
         Statement stmt = null;
         Connection conn = null;
@@ -716,9 +810,9 @@ public class FYS extends Application {
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
-                    mailOphalen[0] = rs.getString("subject").substring(0, 1).toUpperCase() + rs.getString("subject").substring(1);
+                    mailOphalen = rs.getString("subject").substring(0, 1).toUpperCase() + rs.getString("subject").substring(1);
 
-                    return mailOphalen[0];
+                    return mailOphalen;
                 }
             }
             conn.close();
@@ -728,11 +822,19 @@ public class FYS extends Application {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-        return mailOphalen[0];
+        return mailOphalen;
     }
 
+    /**
+     *
+     * @param type type van een account
+     * @param language language van een account
+     * @param pageid id van de pagina
+     * @return mailOphalen
+     * @throws SQLException
+     */
     public String Email_Message(int type, int language, int pageid) throws SQLException {
-        String[] mailOphalen = new String[1];
+        String mailOphalen = "";
 
         Statement stmt = null;
         Connection conn = null;
@@ -743,9 +845,9 @@ public class FYS extends Application {
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
-                    mailOphalen[0] = rs.getString("message").substring(0, 1).toUpperCase() + rs.getString("message").substring(1);
+                    mailOphalen = rs.getString("message").substring(0, 1).toUpperCase() + rs.getString("message").substring(1);
 
-                    return mailOphalen[0];
+                    return mailOphalen;
                 }
             }
             conn.close();
@@ -755,11 +857,17 @@ public class FYS extends Application {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-        return mailOphalen[0];
+        return mailOphalen;
     }
 
+    /**
+     *
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * @return mailOphalen
+     * @throws SQLException
+     */
     public String Email_Firstname(String mail_input) throws SQLException {
-        String[] mailOphalen = new String[1];
+        String mailOphalen = "";
 
         Statement stmt = null;
         Connection conn = null;
@@ -770,9 +878,9 @@ public class FYS extends Application {
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
-                    mailOphalen[0] = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
+                    mailOphalen = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
 
-                    return mailOphalen[0];
+                    return mailOphalen;
                 }
             }
         } catch (SQLException ex) {
@@ -782,11 +890,17 @@ public class FYS extends Application {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         conn.close();
-        return mailOphalen[0];
+        return mailOphalen;
     }
 
+    /**
+     *
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * @return mailOphalen
+     * @throws SQLException
+     */
     public String Email_Surname(String mail_input) throws SQLException {
-        String[] mailOphalen = new String[1];
+        String mailOphalen = "";
 
         Statement stmt = null;
         Connection conn = null;
@@ -797,9 +911,9 @@ public class FYS extends Application {
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
-                    mailOphalen[0] = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
+                    mailOphalen = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
 
-                    return mailOphalen[0];
+                    return mailOphalen;
                 }
             }
         } catch (SQLException ex) {
@@ -809,11 +923,17 @@ public class FYS extends Application {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         conn.close();
-        return mailOphalen[0];
+        return mailOphalen;
     }
 
+    /**
+     *
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * @return mailOphalen
+     * @throws SQLException
+     */
     public String Email_Password(String mail_input) throws SQLException {
-        String[] mailOphalen = new String[1];
+        String mailOphalen = "";
 
         Statement stmt = null;
         Connection conn = null;
@@ -824,8 +944,9 @@ public class FYS extends Application {
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
-                    mailOphalen[0] = decrypt(rs.getString("password").substring(0, 1).toUpperCase() + rs.getString("password").substring(1));
-                    return mailOphalen[0];
+                    mailOphalen = decrypt(rs.getString("password").substring(0, 1).toUpperCase() + rs.getString("password").substring(1));
+
+                    return mailOphalen;
                 }
             }
         } catch (SQLException ex) {
@@ -835,11 +956,17 @@ public class FYS extends Application {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         conn.close();
-        return mailOphalen[0];
+        return mailOphalen;
     }
 
+    /**
+     *
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * @return mailOphalen
+     * @throws SQLException
+     */
     public int Email_Personid(String mail_input) throws SQLException {
-        int[] mailOphalen = new int[1];
+        int mailOphalen = 0;
 
         Statement stmt = null;
         Connection conn = null;
@@ -850,9 +977,9 @@ public class FYS extends Application {
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
-                    mailOphalen[0] = rs.getInt("person_id");
+                    mailOphalen = rs.getInt("person_id");
 
-                    return mailOphalen[0];
+                    return mailOphalen;
                 }
             }
         } catch (SQLException ex) {
@@ -862,11 +989,17 @@ public class FYS extends Application {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         conn.close();
-        return mailOphalen[0];
+        return mailOphalen;
     }
-    
- public int Email_Language(String mail_input) throws SQLException {
-        int[] mailOphalen = new int[1];
+
+    /**
+     *
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * @return mailOphalen
+     * @throws SQLException
+     */
+    public int Email_Language(String mail_input) throws SQLException {
+        int mailOphalen = 0;
 
         Statement stmt = null;
         Connection conn = null;
@@ -877,9 +1010,9 @@ public class FYS extends Application {
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
-                    mailOphalen[0] = rs.getInt("language");
+                    mailOphalen = rs.getInt("language");
 
-                    return mailOphalen[0];
+                    return mailOphalen;
                 }
             }
         } catch (SQLException ex) {
@@ -889,11 +1022,17 @@ public class FYS extends Application {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         conn.close();
-        return mailOphalen[0];
+        return mailOphalen;
     }
- 
+
+    /**
+     *
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * @return mailOphalen
+     * @throws SQLException
+     */
     public int Email_Persontype(String mail_input) throws SQLException {
-        int[] mailOphalen = new int[1];
+        int mailOphalen = 0;
 
         Statement stmt = null;
         Connection conn = null;
@@ -904,9 +1043,9 @@ public class FYS extends Application {
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
-                    mailOphalen[0] = rs.getInt("type");
+                    mailOphalen = rs.getInt("type");
 
-                    return mailOphalen[0];
+                    return mailOphalen;
                 }
             }
         } catch (SQLException ex) {
@@ -916,11 +1055,18 @@ public class FYS extends Application {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         conn.close();
-        return mailOphalen[0];
+        return mailOphalen;
     }
 
+    /**
+     *
+     * @param tableFrom tableFrom uit db
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * @return mailOphalen
+     * @throws SQLException
+     */
     public String Email_LuggageColor(int tableFrom, String mail_input) throws SQLException {
-        String[] mailOphalen = new String[1];
+        String mailOphalen = "";
 
         Statement stmt = null;
         Connection conn = null;
@@ -934,9 +1080,9 @@ public class FYS extends Application {
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
                         //Retrieve by column name
-                        mailOphalen[0] = getColor(rs.getInt("color"));
+                        mailOphalen = getColor(rs.getInt("color"));
 
-                        return mailOphalen[0];
+                        return mailOphalen;
                     }
                 }
             } else {
@@ -945,9 +1091,9 @@ public class FYS extends Application {
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
                         //Retrieve by column name
-                        mailOphalen[0] = getColor(rs.getInt("color"));
+                        mailOphalen = getColor(rs.getInt("color"));
 
-                        return mailOphalen[0];
+                        return mailOphalen;
                     }
                 }
             }
@@ -959,11 +1105,18 @@ public class FYS extends Application {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         conn.close();
-        return mailOphalen[0];
+        return mailOphalen;
     }
 
+    /**
+     *
+     * @param tableFrom tableFrom uit db
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * @return mailOphalen
+     * @throws SQLException
+     */
     public String Email_LuggageBrand(int tableFrom, String mail_input) throws SQLException {
-        String[] mailOphalen = new String[1];
+        String mailOphalen = "";
 
         Statement stmt = null;
         Connection conn = null;
@@ -976,9 +1129,9 @@ public class FYS extends Application {
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
                         //Retrieve by column name
-                        mailOphalen[0] = rs.getString("brand").substring(0, 1).toUpperCase() + rs.getString("brand").substring(1);
+                        mailOphalen = rs.getString("brand").substring(0, 1).toUpperCase() + rs.getString("brand").substring(1);
 
-                        return mailOphalen[0];
+                        return mailOphalen;
                     }
                 }
             } else {
@@ -987,9 +1140,9 @@ public class FYS extends Application {
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
                         //Retrieve by column name
-                        mailOphalen[0] = rs.getString("brand").substring(0, 1).toUpperCase() + rs.getString("brand").substring(1);
+                        mailOphalen = rs.getString("brand").substring(0, 1).toUpperCase() + rs.getString("brand").substring(1);
 
-                        return mailOphalen[0];
+                        return mailOphalen;
                     }
                 }
             }
@@ -1001,11 +1154,18 @@ public class FYS extends Application {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         conn.close();
-        return mailOphalen[0];
+        return mailOphalen;
     }
 
+    /**
+     *
+     * @param tableFrom tableFrom uit db
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * @return mailOphalen
+     * @throws SQLException
+     */
     public String Email_LuggageType(int tableFrom, String mail_input) throws SQLException {
-        String[] mailOphalen = new String[1];
+        String mailOphalen = "";
 
         Statement stmt = null;
         Connection conn = null;
@@ -1018,9 +1178,9 @@ public class FYS extends Application {
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
                         //Retrieve by column name
-                        mailOphalen[0] = getBaggageType(rs.getInt("type"));;
+                        mailOphalen = getBaggageType(rs.getInt("type"));
 
-                        return mailOphalen[0];
+                        return mailOphalen;
                     }
                 }
             } else {
@@ -1029,9 +1189,9 @@ public class FYS extends Application {
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
                         //Retrieve by column name
-                        mailOphalen[0] = getBaggageType(rs.getInt("type"));;
+                        mailOphalen = getBaggageType(rs.getInt("type"));
 
-                        return mailOphalen[0];
+                        return mailOphalen;
                     }
                 }
             }
@@ -1043,11 +1203,18 @@ public class FYS extends Application {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         conn.close();
-        return mailOphalen[0];
+        return mailOphalen;
     }
 
-     public String Email_LuggageStatus(int tableFrom, String mail_input) throws SQLException {
-        String[] mailOphalen = new String[1];
+    /**
+     *
+     * @param tableFrom tableFrom uit db
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * @return mailOphalen
+     * @throws SQLException
+     */
+    public String Email_LuggageStatus(int tableFrom, String mail_input) throws SQLException {
+        String mailOphalen = "";
 
         Statement stmt = null;
         Connection conn = null;
@@ -1060,9 +1227,9 @@ public class FYS extends Application {
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
                         //Retrieve by column name
-                        mailOphalen[0] = getBaggageType(rs.getInt("status"));;
+                        mailOphalen = getBaggageType(rs.getInt("status"));
 
-                        return mailOphalen[0];
+                        return mailOphalen;
                     }
                 }
             } else {
@@ -1071,9 +1238,9 @@ public class FYS extends Application {
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
                         //Retrieve by column name
-                        mailOphalen[0] = getBaggageType(rs.getInt("status"));;
+                        mailOphalen = getBaggageType(rs.getInt("status"));
 
-                        return mailOphalen[0];
+                        return mailOphalen;
                     }
                 }
             }
@@ -1085,7 +1252,7 @@ public class FYS extends Application {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         conn.close();
-        return mailOphalen[0];
+        return mailOphalen;
     }
 
     /**

@@ -153,6 +153,39 @@ public class Bagage {
         this.brand = new SimpleStringProperty(brandValue);
     }
 
+    public Bagage(String statusValue, String typeValue, String colorValue,
+            String brandValue, String pictureValue, String informationValue, 
+            String firstNameValue, String surNameValue) {
+        this.id = new SimpleIntegerProperty(0);
+        this.realId = new SimpleIntegerProperty(0);
+        this.lostAndFoundID = new SimpleIntegerProperty(0);
+        this.personID = new SimpleIntegerProperty(0);
+        this.address = new SimpleStringProperty("");
+        this.residence = new SimpleStringProperty("");
+        this.zipcode = new SimpleStringProperty("");
+        this.country = new SimpleStringProperty("");
+        this.phone = new SimpleStringProperty("");
+        this.mail = new SimpleStringProperty("");
+        this.labelNumber = new SimpleStringProperty("");
+        this.flightNumber = new SimpleStringProperty("");
+        this.destination = new SimpleStringProperty("");
+        this.airportFound = new SimpleStringProperty("");
+        this.airportLost = new SimpleStringProperty("");
+        this.tableFrom = new SimpleStringProperty("");
+        this.date = new SimpleStringProperty("");
+        this.time = new SimpleStringProperty("");
+
+        this.status = new SimpleStringProperty(statusValue);
+        this.type = new SimpleStringProperty(typeValue);
+        this.color = new SimpleStringProperty(colorValue);
+        this.brand = new SimpleStringProperty(brandValue);
+        this.picture = new SimpleStringProperty(pictureValue);
+        this.information = new SimpleStringProperty(informationValue);
+        this.firstName = new SimpleStringProperty(firstNameValue);
+        this.surName = new SimpleStringProperty(surNameValue);
+
+    }
+
     /**
      *
      * @return the value of id.
@@ -386,7 +419,7 @@ public class Bagage {
         return mail.get();
     }
 
-    /** 
+    /**
      * @param mailValue the mail to set
      */
     public void setMail(String mailValue) {

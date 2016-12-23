@@ -51,7 +51,7 @@ public class WachtwoordVergetenController implements Initializable {
         sendNewPasswordButton.setDisable(true);
         int pageid = 3;
         String email = "";
-        String type = "";
+        int type = 0;
         String language = "";
         Statement stmt = null;
         Connection conn = null;
@@ -74,7 +74,6 @@ public class WachtwoordVergetenController implements Initializable {
                         while (rs.next()) {
                             //Retrieve by column name
                             email = rs.getString("mail");
-                            type = rs.getString("type");
                             language = rs.getString("language");
                             //Display values
                         }
@@ -96,9 +95,9 @@ public class WachtwoordVergetenController implements Initializable {
                         || fys.Email_Persontype(username.getText()) == 2) { // Stuur email als gebruiker type 1 of 2 is.
 
                     // Email bericht filteren op sommige woorden.            
-                    String getmessage = fys.replaceEmail(fys.Email_Message(fys.getUserFunctionString(type), fys.getUserLanguageString(language), pageid), username.getText());
+                    String getmessage = fys.replaceEmail(fys.Email_Message(type, fys.Email_Language(username.getText()), pageid), username.getText());
                     // Email versturen
-                    fys.sendEmail(username.getText(), fys.Email_Subject(fys.getUserFunctionString(type), fys.getUserLanguageString(language), pageid), getmessage, "Sent message successfully....");
+                    fys.sendEmail(username.getText(), fys.Email_Subject(type, fys.Email_Language(username.getText()), pageid), getmessage, "Sent message successfully....");
 
                     sendPasswordMessage.setText("Your password has been sent to: " + username.getText() + "!");
                     sendPasswordMessage.setStyle("-fx-text-fill: green;");

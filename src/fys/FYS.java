@@ -23,19 +23,26 @@ import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.IvParameterSpec;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -578,7 +585,7 @@ public class FYS extends Application {
         }
         return false;
     }
-    
+
     public int countLost(int type, String brand, int color) throws SQLException {
         int countLost = 0;
 
@@ -588,9 +595,9 @@ public class FYS extends Application {
             conn = connectToDatabase(conn);
             stmt = conn.createStatement();
             String sql = "SELECT count(*) FROM lost "
-                        + "WHERE lost.type='" + type + "' "
-                        + "AND lost.brand = '" + brand + "' "
-                        + "AND lost.color = '" + color + "';";            
+                    + "WHERE lost.type='" + type + "' "
+                    + "AND lost.brand = '" + brand + "' "
+                    + "AND lost.color = '" + color + "';";
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
@@ -608,7 +615,7 @@ public class FYS extends Application {
         conn.close();
         return countLost;
     }
-    
+
     public boolean checkFound(int type, String brand, int color) {
         Statement stmt = null;
         Connection conn = null;
@@ -634,7 +641,7 @@ public class FYS extends Application {
         }
         return false;
     }
-    
+
     public int countFound(int type, String brand, int color) throws SQLException {
         int countFound = 0;
 
@@ -644,9 +651,9 @@ public class FYS extends Application {
             conn = connectToDatabase(conn);
             stmt = conn.createStatement();
             String sql = "SELECT count(*) FROM found "
-                        + "WHERE type='" + type + "' "
-                        + "AND brand = '" + brand + "' "
-                        + "AND color = '" + color + "';";            
+                    + "WHERE type='" + type + "' "
+                    + "AND brand = '" + brand + "' "
+                    + "AND color = '" + color + "';";
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
@@ -664,7 +671,6 @@ public class FYS extends Application {
         conn.close();
         return countFound;
     }
-
 
     /**
      *
@@ -734,26 +740,41 @@ public class FYS extends Application {
 
         try {
             // Create a default MimeMessage object.
-            Message message = new MimeMessage(session);
+            Message msg = new MimeMessage(session);
+            Multipart multipart = new MimeMultipart("related");
+            BodyPart htmlPart = new MimeBodyPart();
+            multipart.addBodyPart(htmlPart);
+            BodyPart imgPart = new MimeBodyPart();
+            multipart.addBodyPart(imgPart);
 
             //Set unicode UTF-8
-            message.setHeader("Content-Type", "text/html; charset=UTF-8");
+            msg.setHeader("Content-Type", "text/html; charset=UTF-8");
 
             // Set From: header field of the header.
-            message.setFrom(new InternetAddress(from, "Corendon"));
+            msg.setFrom(new InternetAddress(from, "Corendon"));
+
+            // attaching the multi-part to the message
+            msg.setContent(multipart);
 
             // Set To: header field of the header.
-            message.setRecipients(Message.RecipientType.TO,
+            msg.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(to));
 
             // Set Subject: header field
-            message.setSubject(subject);
+            msg.setSubject(subject);
 
-            // Now set the actual message
-            message.setContent(content, "text/html; charset=UTF-8");
+            // Setting the image
+            imgPart.setHeader("Content-ID", "corendon-logo");
+            
+            htmlPart.setContent(content + "<br/><br/><img style=\"height:54px;width:175px;\"src=\"cid:corendon-logo\"/>",
+                    "text/html; charset=UTF-8");
 
+             // Loading the image
+            DataSource ds = new FileDataSource("C:\\Users\\Veron\\Documents\\NetBeansProjects\\CorendonProject\\fys\\src\\fys\\images\\corendon_logo.png");
+            imgPart.setDataHandler(new DataHandler(ds));
+            
             // Send message
-            Transport.send(message);
+            Transport.send(msg);
 
             System.out.println(printMessage);
 

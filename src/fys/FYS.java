@@ -229,7 +229,7 @@ public class FYS extends Application {
 
     /**
      *
-     * @param language
+     * @param language De taal die ingesteld is naar wie de mail moet worde verstuurd.
      * @param status
      * @return
      */

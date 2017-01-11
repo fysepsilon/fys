@@ -77,7 +77,7 @@ public class StatistiekenController implements Initializable {
     @FXML
     private Button exportToPDF, filter, openpopup;
     @FXML
-    private Label mainFilterLabel, maandFilterLabel, jaarFilterLabel, 
+    private Label mainFilterLabel, maandFilterLabel, jaarFilterLabel,
             popup_filterlabel;
     @FXML
     private ArrayList<String> years = new ArrayList<String>();
@@ -100,6 +100,10 @@ public class StatistiekenController implements Initializable {
     private XYChart.Series series = new XYChart.Series<>();
     @FXML
     private String dateFromInput, dateToInput;
+    @FXML
+    private String[] ExportToPdfTexts = {"Status", "Insurance claims", "Amount of Insurance claims",
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Found",
+        "Lost", "Destroyed", "Completed", "Never found", "Depot"};
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -111,7 +115,7 @@ public class StatistiekenController implements Initializable {
         filter.setText(taal[47]);
         mainFilterLabel.setText(taal[173]);
         maandFilterLabel.setText(taal[171]);
-        jaarFilterLabel.setText(taal[172]);    
+        jaarFilterLabel.setText(taal[172]);
         popup_filterlabel.setText(taal[47]);
         /**
          * Krijg alle unieke jaren vanuit de database. Wanneer de bagage
@@ -360,6 +364,9 @@ public class StatistiekenController implements Initializable {
                 new PieChart.Data(taal[56], destroyAmount), new PieChart.Data(taal[57], settleAmount),
                 new PieChart.Data(taal[58], neverFoundAmount), new PieChart.Data(taal[59], depotAmount));
 
+        //Update de titel
+        pieChart.setTitle(taal[75]);
+
         //Update de gegevens van de piechart.
         pieChart.setData(pieChartData);
 
@@ -429,6 +436,8 @@ public class StatistiekenController implements Initializable {
         }
 
         //Update de linechart naar de waardes die gewenst is.
+        lineChart.setTitle(taal[76]);
+        series.setName(taal[77]);
         series.getData().add(new XYChart.Data<>(taal[78], jan));
         series.getData().add(new XYChart.Data(taal[79], feb));
         series.getData().add(new XYChart.Data<>(taal[80], mar));
@@ -454,7 +463,7 @@ public class StatistiekenController implements Initializable {
         // Set the button types.
         ButtonType loginButtonType = new ButtonType(taal[140], ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
- 
+
         String mainbutton = "-fx-padding: 15px 32px;-fx-text-align: center;"
                 + "-fx-text-decoration:none;-fx-display: inline-block;"
                 + "-fx-margin:4px 2px;-fx-cursor: pointer;"
@@ -566,9 +575,12 @@ public class StatistiekenController implements Initializable {
 
             //Voeg de waardes toe aan de array.
             pieChartData = FXCollections.observableArrayList(
-                    new PieChart.Data(taal[54], foundAmount), new PieChart.Data(taal[55], lostAmount),
-                    new PieChart.Data(taal[56], destroyAmount), new PieChart.Data(taal[57], settleAmount),
-                    new PieChart.Data(taal[58], neverFoundAmount), new PieChart.Data(taal[59], depotAmount));
+                    new PieChart.Data(ExportToPdfTexts[15], foundAmount), new PieChart.Data(ExportToPdfTexts[16], lostAmount),
+                    new PieChart.Data(ExportToPdfTexts[17], destroyAmount), new PieChart.Data(ExportToPdfTexts[18], settleAmount),
+                    new PieChart.Data(ExportToPdfTexts[19], neverFoundAmount), new PieChart.Data(ExportToPdfTexts[20], depotAmount));
+
+            //Update de titel
+            pieChart.setTitle(ExportToPdfTexts[0]);
 
             //Update de piechart met de gevraagde gegevens.
             pieChart.setData(pieChartData);
@@ -626,19 +638,23 @@ public class StatistiekenController implements Initializable {
                 System.out.println("VendorError: " + ex.getErrorCode());
             }
 
+            //Update de titel
+            lineChart.setTitle(ExportToPdfTexts[1]);
+
             //Update de linechart naar de waardes die gewenst is.
-            series.getData().add(new XYChart.Data<>(taal[78], jan));
-            series.getData().add(new XYChart.Data(taal[79], feb));
-            series.getData().add(new XYChart.Data<>(taal[80], mar));
-            series.getData().add(new XYChart.Data(taal[81], apr));
-            series.getData().add(new XYChart.Data<>(taal[82], mei));
-            series.getData().add(new XYChart.Data(taal[83], jun));
-            series.getData().add(new XYChart.Data<>(taal[84], jul));
-            series.getData().add(new XYChart.Data(taal[85], aug));
-            series.getData().add(new XYChart.Data<>(taal[86], sep));
-            series.getData().add(new XYChart.Data(taal[87], okt));
-            series.getData().add(new XYChart.Data<>(taal[88], nov));
-            series.getData().add(new XYChart.Data(taal[89], dec));
+            series.setName(ExportToPdfTexts[2]);
+            series.getData().add(new XYChart.Data<>(ExportToPdfTexts[3], jan));
+            series.getData().add(new XYChart.Data(ExportToPdfTexts[4], feb));
+            series.getData().add(new XYChart.Data<>(ExportToPdfTexts[5], mar));
+            series.getData().add(new XYChart.Data(ExportToPdfTexts[6], apr));
+            series.getData().add(new XYChart.Data<>(ExportToPdfTexts[7], mei));
+            series.getData().add(new XYChart.Data(ExportToPdfTexts[8], jun));
+            series.getData().add(new XYChart.Data<>(ExportToPdfTexts[9], jul));
+            series.getData().add(new XYChart.Data(ExportToPdfTexts[10], aug));
+            series.getData().add(new XYChart.Data<>(ExportToPdfTexts[11], sep));
+            series.getData().add(new XYChart.Data(ExportToPdfTexts[12], okt));
+            series.getData().add(new XYChart.Data<>(ExportToPdfTexts[13], nov));
+            series.getData().add(new XYChart.Data(ExportToPdfTexts[14], dec));
 
             //Update de piechart en linechart voordat er een screenshot van genomen wordt.
             lineChart.applyCss();
@@ -759,7 +775,7 @@ public class StatistiekenController implements Initializable {
                 Logger.getLogger(StatistiekenController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-
+        filter.fire();
     }
 
     public File savePieChartAsPng() {

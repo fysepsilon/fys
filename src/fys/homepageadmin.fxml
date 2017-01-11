@@ -33,9 +33,8 @@
                </LineChart>
               <TableView fx:id="table" layoutX="397.0" layoutY="78.0" prefWidth="402.0">
                   <columns>
-                  <TableColumn id="week" fx:id="week" maxWidth="262.0" minWidth="-1.0" prefWidth="50.0" text="Week" />
                       <TableColumn id="status" fx:id="status" maxWidth="262.0" minWidth="-1.0" prefWidth="212.0" text="Status" />
-                      <TableColumn id="amount" fx:id="amount" maxWidth="250.0" minWidth="-1.0" prefWidth="136.0" text="Aantal" />
+                      <TableColumn id="amount" fx:id="amount" maxWidth="250.0" minWidth="-1.0" prefWidth="187.0" text="Aantal" />
                   </columns>
               </TableView>
            </children>

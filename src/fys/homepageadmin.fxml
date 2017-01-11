@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.HomepageadminController">
+<AnchorPane id="AnchorPane" fx:id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@style/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.HomepageadminController">
     <children>
-        <Pane id="background" fx:id="background" layoutY="122.0" prefHeight="478.0" prefWidth="1000.0" stylesheets="@images/menu.css" />
+        <Pane id="background" fx:id="background" layoutY="122.0" prefHeight="478.0" prefWidth="1000.0" />
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
-        <Pane layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0" style=" -fx-border-width:0 2 0 2; -fx-border-color:lightgrey; -fx-background-color: white;">
+        <Pane id="pagestyle" layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0">
            <children>
                <Label fx:id="linechartTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="0" layoutY="46.0" prefHeight="21.0" prefWidth="399.0" text="Label">
                <font>
@@ -23,7 +23,7 @@
                <font>
                   <Font size="22.0" />
                </font></Label>
-               <LineChart id="linechart" fx:id="linechart" layoutY="78.0" prefWidth="400.0" style="-fx-border-color: lightgrey; -fx-border-width: 2;">
+               <LineChart id="linechart" fx:id="linechart" layoutY="78.0" prefWidth="400.0">
                    <xAxis>
                        <CategoryAxis side="BOTTOM" />
                    </xAxis>
@@ -31,7 +31,7 @@
                        <NumberAxis side="LEFT" />
                    </yAxis>
                </LineChart>
-              <TableView fx:id="table" layoutX="397.0" layoutY="78.0" prefWidth="402.0" style="-fx-border-color: lightgrey; -fx-border-width: 2;">
+              <TableView fx:id="table" layoutX="397.0" layoutY="78.0" prefWidth="402.0">
                   <columns>
                   <TableColumn id="week" fx:id="week" maxWidth="262.0" minWidth="-1.0" prefWidth="50.0" text="Week" />
                       <TableColumn id="status" fx:id="status" maxWidth="262.0" minWidth="-1.0" prefWidth="212.0" text="Status" />

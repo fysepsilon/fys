@@ -10,17 +10,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.MailsettingsController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="1000.0" stylesheets="@style/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.MailsettingsController">
     <children>
-        <Pane id="background" fx:id="background" layoutY="122.0" prefHeight="478.0" prefWidth="1000.0" stylesheets="@images/menu.css" />
+        <Pane id="background" fx:id="background" layoutY="122.0" prefHeight="478.0" prefWidth="1000.0" />
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
-        <Pane layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0" style=" -fx-border-width:0 2 0 2; -fx-border-color:lightgrey; -fx-background-color: white;">
+        <Pane id="pagestyle" layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0">
             <children>
-                <AnchorPane fx:id="edit_pane" disable="true" prefHeight="478.0" prefWidth="1000.0" visible="false">
+                <AnchorPane fx:id="edit_pane" prefHeight="478.0" prefWidth="1000.0" visible="false">
                     <children>                           
-                        <HTMLEditor id="HTMLEditor" fx:id="HTMLEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="121.0" maxWidth="772.0" prefHeight="298.0" prefWidth="772.0" />
-                        <Button fx:id="send_button" layoutX="14.0" layoutY="433.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleSendToDatabase" prefHeight="35.0" prefWidth="230.0" text="Opslaan" /> 
-                        <Button fx:id="cancel_button" layoutX="556.0" layoutY="433.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="35.0" prefWidth="230.0" text="Annuleren" />
+                        <HTMLEditor id="HTMLEditor" fx:id="HTMLEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="121.0" maxWidth="772.0" prefHeight="284.0" prefWidth="772.0" />
+                        <Button id="mainbutton" fx:id="send_button" layoutX="14.0" layoutY="416.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleSendToDatabase" prefHeight="35.0" prefWidth="230.0" text="Opslaan" /> 
+                        <Button id="mainbutton" fx:id="cancel_button" layoutX="556.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="35.0" prefWidth="230.0" text="Annuleren" />
                         <Label fx:id="mailid_label" prefHeight="30.0" prefWidth="126.0" visible="false" />
 
                         <GridPane id="mailGridpane" fx:id="mailGridpane" layoutX="14.0" layoutY="14.0" prefHeight="79.0" prefWidth="772.0">
@@ -36,14 +36,14 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <TextField id="subject_field" fx:id="subject_field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField id="TextField" fx:id="subject_field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <Label id="page_label" fx:id="page_label" text="Pagina:" />
-                                <TextField id="page_field" fx:id="page_field" editable="false" GridPane.columnIndex="1" />
+                                <TextField id="TextField" fx:id="page_field" editable="false" GridPane.columnIndex="1" />
                                 <Label id="type_label" fx:id="type_label" text="Type:" GridPane.columnIndex="3" />
-                                <TextField id="type_field" fx:id="type_field" editable="false" GridPane.columnIndex="4" />
+                                <TextField id="TextField" fx:id="type_field" editable="false" GridPane.columnIndex="4" />
                                 <Label id="language_label" fx:id="language_label" text="Taal:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                 <Label id="subject_label" fx:id="subject_label" text="Onderwerp:" GridPane.rowIndex="1" />
-                                <TextField id="language_field" fx:id="language_field" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                <TextField id="TextField" fx:id="language_field" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                             </children>
                         </GridPane>
                         <Label id="error" fx:id="error" alignment="TOP_LEFT" layoutX="14.0" layoutY="96.0" prefHeight="25.0" prefWidth="560.0" textFill="RED" visible="false">
@@ -51,8 +51,8 @@
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                        <Button fx:id="recover_button" layoutX="285.0" layoutY="433.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleRecover" prefHeight="35.0" prefWidth="230.0" text="Herstellen" />
-                        <VBox fx:id="VBox" layoutX="590.0" layoutY="21.0" prefHeight="398.0" prefWidth="209.0" style="-fx-background-color: white; -fx-border-color: lightgrey;" visible="false">
+                        <Button id="mainbutton" fx:id="recover_button" layoutX="285.0" layoutY="419.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleRecover" prefHeight="35.0" prefWidth="230.0" text="Herstellen" />
+                        <VBox id="mail_VBox" fx:id="VBox" layoutX="590.0" layoutY="21.0" prefHeight="398.0" prefWidth="209.0" visible="false">
                             <children>
                                 <HBox prefHeight="30.0" prefWidth="156.0">
                                     <children>
@@ -66,12 +66,18 @@
                                 <Separator prefHeight="1.0" prefWidth="158.0" />
                                 <Label id="info_label" fx:id="info_label" prefHeight="120.0" prefWidth="209.0" text="Je kan bepaalde woorden gebruiken&#10;in een email die iets betekenen. &#10;Hieronder staan de woorden die je &#10;kan gebruiken met de betekenis &#10;erachter.&#10;" />
                                 <Separator prefHeight="1.0" prefWidth="158.0" />
-                                <GridPane prefHeight="79.0" prefWidth="209.0">
+                                <GridPane prefHeight="162.0" prefWidth="207.0">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="68.0" minWidth="10.0" prefWidth="68.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.0" minWidth="10.0" prefWidth="91.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="74.0" minWidth="10.0" prefWidth="74.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.0" minWidth="10.0" prefWidth="133.0" />
                                     </columnConstraints>
                                     <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -82,10 +88,22 @@
                                         <Label text="*password*" GridPane.rowIndex="1" />
                                         <Label text="*firstname*" GridPane.rowIndex="2" />
                                         <Label text="*surname*" GridPane.rowIndex="3" />
+                                        <Label text="*address*" GridPane.rowIndex="4" />
+                                        <Label text="*shipaddress*" GridPane.rowIndex="5" />
+                                        <Label text="*residence*" GridPane.rowIndex="6" />
+                                        <Label text="*zip_code*" GridPane.rowIndex="7" />
+                                        <Label text="*country*" GridPane.rowIndex="8" />
+                                        <Label text="*phone*" GridPane.rowIndex="9" />
                                         <Label id="info_username" fx:id="info_username" text="Gebruikersnaam" GridPane.columnIndex="1" />
                                         <Label id="info_password" fx:id="info_password" text="Wachtwoord" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                         <Label id="info_firstname" fx:id="info_firstname" text="Voornaam" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                         <Label id="info_surname" fx:id="info_surname" text="Achternaam" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        <Label id="info_address" fx:id="info_address" text="Adres" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                        <Label id="info_shipaddress" fx:id="info_shipaddress" text="Afleveradres" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                        <Label id="info_residence" fx:id="info_residence" text="Woonplaats" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                        <Label id="info_zipcode" fx:id="info_zipcode" text="Postcode" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                        <Label id="info_country" fx:id="info_country" text="Land" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                        <Label id="info_phone" fx:id="info_phone" text="Telefoonnummer" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                                     </children>
                                 </GridPane>
                                 <GridPane fx:id="luggagetable" prefHeight="79.0" prefWidth="209.0" visible="false">
@@ -112,7 +130,7 @@
                                 </GridPane>
                             </children>
                         </VBox>
-                        <Button fx:id="show_VBox" layoutX="798.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleBig" prefHeight="20.0" prefWidth="20.0" style="-fx-background-radius: 0; -fx-background-color: white; -fx-border-color: lightgrey; -fx-border-width: 2;">
+                        <Button id="mail_VBoxShowClose" fx:id="show_VBox" layoutX="798.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleBig" prefHeight="20.0" prefWidth="20.0">
                             <graphic>
                                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -121,7 +139,7 @@
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button fx:id="close_VBOX" layoutX="798.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleCloseBig" prefHeight="20.0" prefWidth="20.0" style="-fx-background-radius: 0; -fx-background-color: white; -fx-border-color: lightgrey; -fx-border-width: 2;" visible="false">
+                        <Button id="mail_VBoxShowClose" fx:id="close_VBOX" layoutX="798.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleCloseBig" prefHeight="20.0" prefWidth="20.0" visible="false">
                             <graphic>
                                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -135,7 +153,7 @@
                 
                 <AnchorPane fx:id="home_pane" prefHeight="478.0" prefWidth="1000.0">
                     <children>        
-                        <TableView fx:id="table" layoutX="14.0" layoutY="63.0" prefHeight="401.0" prefWidth="780.0">
+                        <TableView fx:id="table" layoutX="14.0" layoutY="14.0" prefHeight="394.0" prefWidth="772.0">
                             <columns>
                                 <TableColumn id="mailid" fx:id="mailid" maxWidth="148.0" minWidth="50.0" prefWidth="148.0" visible="false" />
                                 <TableColumn id="subject" fx:id="subject" maxWidth="148.0" minWidth="50.0" prefWidth="148.0" />
@@ -145,20 +163,20 @@
                                 <TableColumn id="language" fx:id="language" maxWidth="148.0" minWidth="50.0" prefWidth="148.0" visible="false" />
                             </columns>
                         </TableView>
-                        <Button fx:id="change_button" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleChange" prefHeight="35.0" prefWidth="208.0" text="Wijzigen" />
-                        <Button fx:id="filter_button" layoutX="236.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleOpenFilter" prefHeight="35.0" prefWidth="208.0" text="Filteren" />
+                        <Button id="mainbutton" fx:id="filter_button" layoutX="14.0" layoutY="415.0" mnemonicParsing="false" onAction="#handleOpenFilter" prefWidth="379.0" text="Filteren" />
+                        <Button id="mainbutton" fx:id="change_button" layoutX="407.0" layoutY="415.0" mnemonicParsing="false" onAction="#handleChange" prefWidth="379.0" text="Wijzigen" />
                     </children>        
                 </AnchorPane>                        
             </children>
         </Pane>
-        <Pane id="filterPane" fx:id="filterPane" layoutX="300.0" layoutY="214.0" prefHeight="250.0" prefWidth="400.0" style="-fx-border-width: 31 8 8 8; -fx-border-color: black; -fx-background-color: white;" visible="false">
+        <Pane id="popup" fx:id="filterPane" layoutX="300.0" layoutY="214.0" prefHeight="250.0" prefWidth="400.0" visible="false">
             <children>
                 <Label id="popup_filterlabel" fx:id="popup_filterlabel" alignment="CENTER" layoutY="5.0" prefHeight="20.0" prefWidth="400.0" text="Filteren" textFill="WHITE">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <Button id="closepopup" fx:id="closepopup" layoutX="331.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleCancelFilter" prefHeight="20.0" prefWidth="61.0" style="-fx-background-color: C75050; -fx-background-radius: 0;">
+                <Button id="popup_close" fx:id="closepopup" layoutX="331.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleCancelFilter" prefHeight="20.0" prefWidth="61.0">
                     <graphic>
                         <ImageView fitHeight="20.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -167,7 +185,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <ComboBox fx:id="pageFilter" layoutX="166.0" layoutY="76.0" prefHeight="31.0" prefWidth="220.0" promptText="Kies type">
+                <ComboBox id="ComboBox" fx:id="pageFilter" layoutX="166.0" layoutY="76.0" prefHeight="31.0" prefWidth="220.0" promptText="Kies type">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="" />
@@ -177,7 +195,7 @@
                         <String fx:value="" />
                     </value>
                 </ComboBox>
-                <ComboBox fx:id="typeFilter" layoutX="166.0" layoutY="113.0" prefHeight="31.0" prefWidth="220.0" promptText="Kies type">
+                <ComboBox id="ComboBox" fx:id="typeFilter" layoutX="166.0" layoutY="113.0" prefHeight="31.0" prefWidth="220.0" promptText="Kies type">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="" />
@@ -187,7 +205,7 @@
                         <String fx:value="" />
                     </value>
                 </ComboBox>
-                <ComboBox fx:id="languageFilter" layoutX="166.0" layoutY="150.0" prefHeight="31.0" prefWidth="220.0" promptText="Kies type">
+                <ComboBox id="ComboBox" fx:id="languageFilter" layoutX="166.0" layoutY="150.0" prefHeight="31.0" prefWidth="220.0" promptText="Kies type">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="" />
@@ -197,7 +215,7 @@
                         <String fx:value="" />
                     </value>
                 </ComboBox>
-                <Button fx:id="filter" layoutX="14.0" layoutY="205.0" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="31.0" prefWidth="372.0" text="Filteren" />
+                <Button id="mainbutton" fx:id="filter" layoutX="14.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="49.0" prefWidth="372.0" text="Filteren" />
                 
                 <Label fx:id="pageFilterLabel" layoutX="14.0" layoutY="76.0" prefHeight="31.0" prefWidth="126.0" text="Page" />
                 <Label fx:id="languageFilterLabel" layoutX="14.0" layoutY="150.0" prefHeight="31.0" prefWidth="126.0" text="Language" />

@@ -32,6 +32,8 @@ public class Bagage {
     @FXML
     private final SimpleStringProperty address;
     @FXML
+    private final SimpleStringProperty shipaddress;
+    @FXML
     private final SimpleStringProperty residence;
     @FXML
     private final SimpleStringProperty zipcode;
@@ -68,6 +70,7 @@ public class Bagage {
      * @param firstNameValue set value to first name.
      * @param surNameValue set value to surName.
      * @param addressValue set value to address.
+     * @param shipaddressValue set value to shipaddress.
      * @param residenceValue set value to residence.
      * @param zipcodeValue set value to zip code.
      * @param countryValue set value to country.
@@ -83,12 +86,16 @@ public class Bagage {
      * @param personIdValue set value to person id.
      * @param realIdValue set value to real id.
      */
-    public Bagage(Integer idValue, String statusValue, String typeValue, String colorValue,
-            String brandValue, String pictureValue, String dateValue, String informationValue, String firstNameValue,
-            String surNameValue, String addressValue, String residenceValue, String zipcodeValue,
-            String countryValue, String phoneValue, String mailValue, String labelNumberValue,
-            String flightNumberValue, String destinationValue, String airportFoundValue, String airportLostValue,
-            String tableFromValue, Integer lostAndFoundIdValue, Integer personIdValue, Integer realIdValue) {
+    public Bagage(Integer idValue, String statusValue, String typeValue, 
+            String colorValue, String brandValue, String pictureValue, 
+            String dateValue, String informationValue, String firstNameValue,
+            String surNameValue, String addressValue, String shipaddressValue, 
+            String residenceValue, String zipcodeValue, String countryValue, 
+            String phoneValue, String mailValue, String labelNumberValue,
+            String flightNumberValue, String destinationValue, 
+            String airportFoundValue, String airportLostValue,
+            String tableFromValue, Integer lostAndFoundIdValue, 
+            Integer personIdValue, Integer realIdValue) {
         this.id = new SimpleIntegerProperty(idValue);
         this.status = new SimpleStringProperty(statusValue);
         this.type = new SimpleStringProperty(typeValue);
@@ -100,6 +107,7 @@ public class Bagage {
         this.firstName = new SimpleStringProperty(firstNameValue);
         this.surName = new SimpleStringProperty(surNameValue);
         this.address = new SimpleStringProperty(addressValue);
+        this.shipaddress = new SimpleStringProperty(shipaddressValue);
         this.residence = new SimpleStringProperty(residenceValue);
         this.zipcode = new SimpleStringProperty(zipcodeValue);
         this.country = new SimpleStringProperty(countryValue);
@@ -123,7 +131,8 @@ public class Bagage {
      * @param colorValue set value to color.
      * @param brandValue set value to brand. Make other variables empty.
      */
-    public Bagage(String dateValue, String timeValue, String colorValue, String brandValue) {
+    public Bagage(String dateValue, String timeValue, String colorValue, 
+            String brandValue) {
         this.id = new SimpleIntegerProperty(0);
         this.realId = new SimpleIntegerProperty(0);
         this.lostAndFoundID = new SimpleIntegerProperty(0);
@@ -135,6 +144,7 @@ public class Bagage {
         this.firstName = new SimpleStringProperty("");
         this.surName = new SimpleStringProperty("");
         this.address = new SimpleStringProperty("");
+        this.shipaddress = new SimpleStringProperty("");
         this.residence = new SimpleStringProperty("");
         this.zipcode = new SimpleStringProperty("");
         this.country = new SimpleStringProperty("");
@@ -154,13 +164,14 @@ public class Bagage {
     }
 
     public Bagage(String statusValue, String typeValue, String colorValue,
-            String brandValue, String pictureValue, String informationValue, 
+            String brandValue, String pictureValue, String informationValue,
             String firstNameValue, String surNameValue) {
         this.id = new SimpleIntegerProperty(0);
         this.realId = new SimpleIntegerProperty(0);
         this.lostAndFoundID = new SimpleIntegerProperty(0);
         this.personID = new SimpleIntegerProperty(0);
         this.address = new SimpleStringProperty("");
+        this.shipaddress = new SimpleStringProperty("");
         this.residence = new SimpleStringProperty("");
         this.zipcode = new SimpleStringProperty("");
         this.country = new SimpleStringProperty("");
@@ -354,6 +365,20 @@ public class Bagage {
      */
     public void setAddress(String addressValue) {
         address.set(addressValue);
+    }
+    
+    /**
+     * @return the shipaddress
+     */
+    public String getShipaddress() {
+        return shipaddress.get();
+    }
+
+    /**
+     * @param shipaddressValue the shipaddress to set
+     */
+    public void setShipaddress(String shipaddressValue) {
+        shipaddress.set(shipaddressValue);
     }
 
     /**

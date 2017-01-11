@@ -5,6 +5,7 @@
  */
 package fys;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -19,6 +20,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -69,11 +71,13 @@ public class FYS extends Application {
     public void start(Stage stage) throws Exception {
         parentWindow = stage;
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 990, 590);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Corendon-Login");
 
+        //stage.setMaxWidth(0);
+        //stage.setMaxHeight(0);
         stage.getIcons().add(new Image("http://www.corendon.com/favicon.png"));
         stage.show();
 
@@ -89,12 +93,26 @@ public class FYS extends Application {
     public void changeToAnotherFXML(String title, String changeToWindow) throws IOException {
         Parent window1;
         window1 = FXMLLoader.load(getClass().getResource(changeToWindow));
+        String css = this.getClass().getResource("style/theme_normal.css").toExternalForm();
+        window1.getStylesheets().add(css);
         Stage mainStage;
         mainStage = FYS.parentWindow;
         mainStage.setTitle(title);
         mainStage.setResizable(false);
         mainStage.getScene().setRoot(window1);
 
+    }
+
+    public void UserManual() {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+
+        try {
+            File myFile = new File("src/fys/templates/Gebruikershandleiding.pdf");
+            Desktop.getDesktop().open(myFile);
+        } catch (IOException ex) {
+            // no application registered for PDFs
+        }
     }
 
     /**
@@ -123,6 +141,8 @@ public class FYS extends Application {
             return taal[64];
         } else if (type == 2) {
             return taal[65];
+        } else if (type == 3) { //Onbekend
+            return taal[163];
         }
         return taal[66];
     }
@@ -140,6 +160,8 @@ public class FYS extends Application {
             return 1;
         } else if (type.equals(taal[65])) {
             return 2;
+        } else if (type.equals(taal[163])) { //Onbekend
+            return 3;
         }
         return 0;
     }
@@ -376,6 +398,8 @@ public class FYS extends Application {
             case 4:
                 return taal[100];
             case 5:
+                return taal[100];
+            case 6:
                 return taal[100];
             default:
                 break;
@@ -765,14 +789,14 @@ public class FYS extends Application {
 
             // Setting the image
             imgPart.setHeader("Content-ID", "corendon-logo");
-            
+
             htmlPart.setContent(content + "<br/><br/><img style=\"height:54px;width:175px;\"src=\"cid:corendon-logo\"/>",
                     "text/html; charset=UTF-8");
 
-             // Loading the image
+            // Loading the image
             DataSource ds = new FileDataSource("C:\\Users\\Veron\\Documents\\NetBeansProjects\\CorendonProject\\fys\\src\\fys\\images\\corendon_logo.png");
             imgPart.setDataHandler(new DataHandler(ds));
-            
+
             // Send message
             Transport.send(msg);
 
@@ -797,6 +821,13 @@ public class FYS extends Application {
         getmessage = getmessage.replace("*password*", Email_Password(mail_input));
         getmessage = getmessage.replace("*firstname*", Email_Firstname(mail_input));
         getmessage = getmessage.replace("*surname*", Email_Surname(mail_input));
+        getmessage = getmessage.replace("*address*", Email_Address(mail_input));
+        getmessage = getmessage.replace("*shipaddress*", Email_Shipaddress(mail_input));
+        getmessage = getmessage.replace("*residence*", Email_Residence(mail_input));
+        getmessage = getmessage.replace("*zip_code*", Email_Zipcode(mail_input));
+        getmessage = getmessage.replace("*country*", Email_Country(mail_input));
+        getmessage = getmessage.replace("*phone*", Email_Phone(mail_input));
+
         return getmessage;
     }
 
@@ -926,72 +957,7 @@ public class FYS extends Application {
     /**
      *
      * @param mail_input Het email-adres waar de mail naar toe moet worden
-     * @return mailOphalen
-     * @throws SQLException
-     */
-    public String Email_Firstname(String mail_input) throws SQLException {
-        String mailOphalen = "";
-
-        Statement stmt = null;
-        Connection conn = null;
-        try {
-            conn = connectToDatabase(conn);
-            stmt = conn.createStatement();
-            String sql = "SELECT first_name FROM person WHERE mail='" + mail_input + "'";
-            try (ResultSet rs = stmt.executeQuery(sql)) {
-                while (rs.next()) {
-                    //Retrieve by column name
-                    mailOphalen = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
-
-                    return mailOphalen;
-                }
-            }
-        } catch (SQLException ex) {
-            // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-        }
-        conn.close();
-        return mailOphalen;
-    }
-
-    /**
-     *
-     * @param mail_input Het email-adres waar de mail naar toe moet worden
-     * @return mailOphalen
-     * @throws SQLException
-     */
-    public String Email_Surname(String mail_input) throws SQLException {
-        String mailOphalen = "";
-
-        Statement stmt = null;
-        Connection conn = null;
-        try {
-            conn = connectToDatabase(conn);
-            stmt = conn.createStatement();
-            String sql = "SELECT surname FROM person WHERE mail='" + mail_input + "'";
-            try (ResultSet rs = stmt.executeQuery(sql)) {
-                while (rs.next()) {
-                    //Retrieve by column name
-                    mailOphalen = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
-
-                    return mailOphalen;
-                }
-            }
-        } catch (SQLException ex) {
-            // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-        }
-        conn.close();
-        return mailOphalen;
-    }
-
-    /**
-     *
-     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * gestuurd.
      * @return mailOphalen
      * @throws SQLException
      */
@@ -1025,6 +991,7 @@ public class FYS extends Application {
     /**
      *
      * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * gestuurd.
      * @return mailOphalen
      * @throws SQLException
      */
@@ -1058,6 +1025,41 @@ public class FYS extends Application {
     /**
      *
      * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * gestuurd.
+     * @return mailOphalen
+     * @throws SQLException
+     */
+    public int Email_Persontype(String mail_input) throws SQLException {
+        int mailOphalen = 0;
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT type FROM person WHERE mail='" + mail_input + "'";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    mailOphalen = rs.getInt("type");
+
+                    return mailOphalen;
+                }
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen;
+    }
+
+    /**
+     *
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * gestuurd.
      * @return mailOphalen
      * @throws SQLException
      */
@@ -1091,22 +1093,261 @@ public class FYS extends Application {
     /**
      *
      * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * gestuurd.
      * @return mailOphalen
      * @throws SQLException
      */
-    public int Email_Persontype(String mail_input) throws SQLException {
-        int mailOphalen = 0;
+    public String Email_Firstname(String mail_input) throws SQLException {
+        String mailOphalen = "";
 
         Statement stmt = null;
         Connection conn = null;
         try {
             conn = connectToDatabase(conn);
             stmt = conn.createStatement();
-            String sql = "SELECT type FROM person WHERE mail='" + mail_input + "'";
+            String sql = "SELECT first_name FROM person WHERE mail='" + mail_input + "'";
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name
-                    mailOphalen = rs.getInt("type");
+                    mailOphalen = rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1);
+
+                    return mailOphalen;
+                }
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen;
+    }
+
+    /**
+     *
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * gestuurd.
+     * @return mailOphalen
+     * @throws SQLException
+     */
+    public String Email_Surname(String mail_input) throws SQLException {
+        String mailOphalen = "";
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT surname FROM person WHERE mail='" + mail_input + "'";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    mailOphalen = rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1);
+
+                    return mailOphalen;
+                }
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen;
+    }
+
+    /**
+     *
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * gestuurd.
+     * @return mailOphalen
+     * @throws SQLException
+     */
+    public String Email_Address(String mail_input) throws SQLException {
+        String mailOphalen = "";
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT address FROM person WHERE mail='" + mail_input + "'";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    mailOphalen = rs.getString("address").substring(0, 1).toUpperCase() + rs.getString("address").substring(1);
+
+                    return mailOphalen;
+                }
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen;
+    }
+
+    /**
+     *
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * gestuurd.
+     * @return mailOphalen
+     * @throws SQLException
+     */
+    public String Email_Shipaddress(String mail_input) throws SQLException {
+        String mailOphalen = "";
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT shipaddress FROM person WHERE mail='" + mail_input + "'";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    mailOphalen = rs.getString("shipaddress").substring(0, 1).toUpperCase() + rs.getString("shipaddress").substring(1);
+
+                    return mailOphalen;
+                }
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen;
+    }
+
+    /**
+     *
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * gestuurd.
+     * @return mailOphalen
+     * @throws SQLException
+     */
+    public String Email_Residence(String mail_input) throws SQLException {
+        String mailOphalen = "";
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT residence FROM person WHERE mail='" + mail_input + "'";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    mailOphalen = rs.getString("residence").substring(0, 1).toUpperCase() + rs.getString("residence").substring(1);
+
+                    return mailOphalen;
+                }
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen;
+    }
+
+    /**
+     *
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * gestuurd.
+     * @return mailOphalen
+     * @throws SQLException
+     */
+    public String Email_Zipcode(String mail_input) throws SQLException {
+        String mailOphalen = "";
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT zip_code FROM person WHERE mail='" + mail_input + "'";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    mailOphalen = rs.getString("zip_code").substring(0, 1).toUpperCase() + rs.getString("zip_code").substring(1);
+
+                    return mailOphalen;
+                }
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen;
+    }
+
+    /**
+     *
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * gestuurd.
+     * @return mailOphalen
+     * @throws SQLException
+     */
+    public String Email_Country(String mail_input) throws SQLException {
+        String mailOphalen = "";
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT country FROM person WHERE mail='" + mail_input + "'";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    mailOphalen = rs.getString("country").substring(0, 1).toUpperCase() + rs.getString("country").substring(1);
+
+                    return mailOphalen;
+                }
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return mailOphalen;
+    }
+
+    /**
+     *
+     * @param mail_input Het email-adres waar de mail naar toe moet worden
+     * gestuurd.
+     * @return mailOphalen
+     * @throws SQLException
+     */
+    public String Email_Phone(String mail_input) throws SQLException {
+        String mailOphalen = "";
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT phone FROM person WHERE mail='" + mail_input + "'";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    mailOphalen = rs.getString("phone").substring(0, 1).toUpperCase() + rs.getString("phone").substring(1);
 
                     return mailOphalen;
                 }
@@ -1290,7 +1531,7 @@ public class FYS extends Application {
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
                         //Retrieve by column name
-                        mailOphalen = getBaggageType(rs.getInt("status"));
+                        mailOphalen = getStatus(rs.getInt("status"));
 
                         return mailOphalen;
                     }
@@ -1301,7 +1542,7 @@ public class FYS extends Application {
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
                         //Retrieve by column name
-                        mailOphalen = getBaggageType(rs.getInt("status"));
+                        mailOphalen = getStatus(rs.getInt("status"));
 
                         return mailOphalen;
                     }

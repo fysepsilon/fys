@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.chart.*?>
 <?import java.lang.*?>
@@ -9,43 +10,66 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.StatistiekenController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@style/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.StatistiekenController">
     <children>
-        <Pane id="background" fx:id="background" layoutY="122.0" prefHeight="478.0" prefWidth="1000.0" stylesheets="@images/menu.css" />
+        <Pane id="background" fx:id="background" layoutY="122.0" prefHeight="478.0" prefWidth="1000.0" />
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
-        <Pane layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0" style=" -fx-border-width:0 2 0 2; -fx-border-color:lightgrey; -fx-background-color: white;">
-         <children>
-              <PieChart id="pieChart" fx:id="pieChart" layoutX="376.0" layoutY="41.0" prefHeight="400.0" prefWidth="424.0" />
-              <LineChart id="lineChart" fx:id="lineChart" layoutY="41.0" prefHeight="430.0" prefWidth="388.0">
-                  <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                  </xAxis>
-                  <yAxis>
-                      <NumberAxis side="LEFT" />
-                  </yAxis>
-              </LineChart>
-            <ComboBox fx:id="month" layoutX="14.0" layoutY="14.0" prefHeight="31.0" prefWidth="168.0">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
+        <Pane id="pagestyle" fx:id="home_pane" layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0">
+            <children>
+                <PieChart id="pieChart" fx:id="pieChart" layoutX="400.0" layoutY="77.0" prefHeight="391.0" prefWidth="386.0" />
+                <LineChart id="lineChart" fx:id="lineChart" layoutX="14.0" layoutY="14.0" prefHeight="454.0" prefWidth="386.0">
+                    <xAxis>
+                        <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis side="LEFT" />
+                    </yAxis>
+                </LineChart>
+                <Button id="mainbutton" fx:id="exportToPDF" layoutX="600.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleExportToPDFAction" prefHeight="49.0" prefWidth="186.0" text="Exporteren naar PDF" />
+                <Button id="mainbutton" fx:id="openpopup" layoutX="400.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleOpenFilter" prefHeight="49.0" prefWidth="186.0" text="Filteren" />
+            </children>
+        </Pane>
+        <Pane id="popup" fx:id="filterPane" layoutX="300.0" layoutY="214.0" prefHeight="250.0" prefWidth="400.0" visible="false">
+            <children>
+                <Label id="popup_filterlabel" fx:id="popup_filterlabel" alignment="CENTER" layoutY="5.0" prefHeight="20.0" prefWidth="400.0" text="Filteren" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Button id="popup_close" fx:id="closepopup" layoutX="331.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleCancelFilter" prefHeight="20.0" prefWidth="61.0">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/popup-close.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <ComboBox id="ComboBox" fx:id="month" layoutX="166.0" layoutY="86.0" prefHeight="31.0" prefWidth="168.0">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="" />
+                        </FXCollections>
+                    </items>
+                    <value>
                         <String fx:value="" />
-                    </FXCollections>
-                </items>
-                <value>
-                    <String fx:value="" />
-                </value>
-            </ComboBox>
-            <ComboBox fx:id="year" layoutX="208.0" layoutY="14.0" prefHeight="31.0" prefWidth="168.0">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
+                    </value>
+                </ComboBox>
+                <ComboBox id="ComboBox" fx:id="year" layoutX="166.0" layoutY="123.0" prefHeight="31.0" prefWidth="168.0">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="" />
+                        </FXCollections>
+                    </items>
+                    <value>
                         <String fx:value="" />
-                    </FXCollections>
-                </items>
-                <value>
-                    <String fx:value="" />
-                </value>
-            </ComboBox>
-            <Button fx:id="exportToPDF" layoutX="604.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleExportToPDFAction" prefHeight="31.0" prefWidth="190.0" text="Exporteren naar PDF" />
-            <Button fx:id="filter" layoutX="399.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="31.0" prefWidth="190.0" text="Filteren" />
-         </children></Pane>
+                    </value>
+                </ComboBox>              
+                <Button id="mainbutton" fx:id="filter" layoutX="14.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="49.0" prefWidth="372.0" text="Filteren" />            
+                <Label fx:id="mainFilterLabel" layoutX="14.0" layoutY="37.0" prefHeight="31.0" prefWidth="372.0" text="Je kan via hier de statistieken filteren." />              
+                <Label fx:id="maandFilterLabel" layoutX="14.0" layoutY="86.0" prefHeight="31.0" prefWidth="126.0" text="Maand" />
+                <Label fx:id="jaarFilterLabel" layoutX="14.0" layoutY="123.0" prefHeight="31.0" prefWidth="126.0" text="Jaar" />
+            </children>
+        </Pane>
     </children>
 </AnchorPane>

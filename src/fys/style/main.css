@@ -1,0 +1,45 @@
+/* @import url("theme_normal.css"); */
+
+#popup {
+    -fx-border-width: 31 8 8 8; 
+    -fx-border-color: black; 
+    -fx-background-color: white;
+}
+
+#popup_close {
+    -fx-background-color: C75050; 
+    -fx-background-radius: 0;
+}
+
+#popup_image {
+    -fx-background-color: white; 
+    -fx-background-radius: 2; 
+    -fx-border-color: #BDBDBD; 
+    -fx-border-radius: 2;
+}
+
+#login_but {
+    -fx-background-radius: 0; 
+    -fx-background-color: #D81E05;
+}
+
+#login_infogrid {
+    -fx-background-color: #D81E05;
+}
+
+#login_infobut {
+    -fx-background-radius: 0; 
+    -fx-background-color: white;
+}
+
+#login_fields {
+    -fx-background-radius: 0;
+}
+
+#footer_line {
+    -fx-background-color: lightgrey;
+}
+
+#footer_text {
+    -fx-text-fill: lightgrey;
+}

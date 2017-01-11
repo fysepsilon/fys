@@ -29,6 +29,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 /**
@@ -39,6 +40,8 @@ import javafx.scene.layout.Pane;
 public class GevondenformulierController implements Initializable {
 
     //Alle inputvelden initialiseren
+    @FXML
+    private AnchorPane AnchorPane;
     @FXML
     private ComboBox airport_combo, color_combo, type_combo, destination_combo;
     @FXML
@@ -60,7 +63,8 @@ public class GevondenformulierController implements Initializable {
     private TableColumn status, type, color, brand, picture, information, 
             firstName, surName;
     @FXML
-    private Button picture_button, send_button;
+    private Button picture_button, send_button, popup_verzbutton, 
+            popup_annubutton;
     @FXML
     private Pane popup, formulier;
     @FXML
@@ -99,9 +103,11 @@ public class GevondenformulierController implements Initializable {
         type_combo.getItems().addAll(taal[29], taal[27], taal[30], taal[125], taal[28]);
         picture_button.setText(taal[44]);
         send_button.setText(taal[46]);
-
+        
         //Popup
         popup_label.setText(taal[150]);
+        popup_verzbutton.setText(taal[46]);
+        popup_annubutton.setText(taal[127]);
         status.setText(taal[48]);
         type.setText(taal[50]);
         color.setText(taal[49]);

@@ -26,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -33,7 +34,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * @author Team Epsilon
  */
 public class HomepageadminController implements Initializable {
-    
+    @FXML private AnchorPane AnchorPane;
     @FXML private int foundAmount, lostAmount, destroyAmount, settleAmount, neverFoundAmount, depotAmount = 0;
     @FXML private int jan, feb, mar, apr, mei, jun, jul, aug, sep, okt, nov, dec = 0;
     @FXML private FYS fys = new FYS();
@@ -54,6 +55,8 @@ public class HomepageadminController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        AnchorPane.setStyle("");
+        
         //Krijg de datum van vandaag terug en split het in jaar en maand.
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date = new Date();

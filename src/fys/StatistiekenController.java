@@ -43,6 +43,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 import javax.imageio.ImageIO;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -59,40 +60,66 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDField;
  */
 public class StatistiekenController implements Initializable {
 
-    @FXML private PieChart pieChart;
-    @FXML private LineChart<Number, Number> lineChart;
-    @FXML private int total = 0;
-    @FXML private int foundAmount, lostAmount, destroyAmount, settleAmount, neverFoundAmount, depotAmount = 0;
-    @FXML private int jan, feb, mar, apr, mei, jun, jul, aug, sep, okt, nov, dec = 0;
-    @FXML private ComboBox year, month;
-    @FXML private Button exportToPDF, filter;
-    @FXML private ArrayList<String> years = new ArrayList<String>();
-    @FXML private Connection conn = null; 
-    @FXML private Statement stmt = null; 
-    @FXML private final FYS fys = new FYS();
-    @FXML private final taal language = new taal();
-    @FXML private final String[] taal = language.getLanguage();
-    @FXML private ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+    @FXML
+    private Pane home_pane, filterPane;
+    @FXML
+    private PieChart pieChart;
+    @FXML
+    private LineChart<Number, Number> lineChart;
+    @FXML
+    private int total = 0;
+    @FXML
+    private int foundAmount, lostAmount, destroyAmount, settleAmount, neverFoundAmount, depotAmount = 0;
+    @FXML
+    private int jan, feb, mar, apr, mei, jun, jul, aug, sep, okt, nov, dec = 0;
+    @FXML
+    private ComboBox year, month;
+    @FXML
+    private Button exportToPDF, filter, openpopup;
+    @FXML
+    private Label mainFilterLabel, maandFilterLabel, jaarFilterLabel, 
+            popup_filterlabel;
+    @FXML
+    private ArrayList<String> years = new ArrayList<String>();
+    @FXML
+    private Connection conn = null;
+    @FXML
+    private Statement stmt = null;
+    @FXML
+    private final FYS fys = new FYS();
+    @FXML
+    private final taal language = new taal();
+    @FXML
+    private final String[] taal = language.getLanguage();
+    @FXML
+    private ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
             new PieChart.Data(taal[54], 0), new PieChart.Data(taal[55], 0),
             new PieChart.Data(taal[56], 0), new PieChart.Data(taal[57], 0),
             new PieChart.Data(taal[58], 0), new PieChart.Data(taal[59], 0));
-    @FXML private XYChart.Series series = new XYChart.Series<>();
-    @FXML private String dateFromInput, dateToInput;
-    
+    @FXML
+    private XYChart.Series series = new XYChart.Series<>();
+    @FXML
+    private String dateFromInput, dateToInput;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         /**
          * De taal van de buttons veranderen
          */
         exportToPDF.setText(taal[138]);
+        openpopup.setText(taal[47]);
         filter.setText(taal[47]);
-        
+        mainFilterLabel.setText(taal[173]);
+        maandFilterLabel.setText(taal[171]);
+        jaarFilterLabel.setText(taal[172]);    
+        popup_filterlabel.setText(taal[47]);
         /**
-         * Krijg alle unieke jaren vanuit de database. Wanneer de bagage geregistreerd zijn als vermist of gevonden.
+         * Krijg alle unieke jaren vanuit de database. Wanneer de bagage
+         * geregistreerd zijn als vermist of gevonden.
          */
         try {
             conn = fys.connectToDatabase(conn);
-            stmt = conn.createStatement();           
+            stmt = conn.createStatement();
             String sql = "SELECT DISTINCT YEAR(STR_TO_DATE(date, \"%Y-%m-%d\")) as date "
                     + "from bagagedatabase.airport";
             ResultSet rs = stmt.executeQuery(sql);
@@ -107,7 +134,7 @@ public class StatistiekenController implements Initializable {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-        
+
         //Voeg alle jaren en maanden vanuit array naar combobox.
         for (int i = 0; i < years.size(); i++) {
             year.getItems().add(years.get(i));
@@ -115,19 +142,18 @@ public class StatistiekenController implements Initializable {
         month.getItems().addAll(
                 taal[109], taal[110], taal[111], taal[112], taal[113], taal[114],
                 taal[115], taal[116], taal[117], taal[118], taal[119], taal[120]);
-        
-        
+
         //PIECHART
         //Begin met het zetten van de titel van de pieChart.
         //Voeg vervolgens lege data toe aan de pieChart.
         pieChart.setTitle(taal[75]);
         pieChart.setData(pieChartData);
         int luggage = 0;
-        
+
         //Krijg alle data van de bagages vanuit de database en voeg de aantal toe aan de aantallen van die status.
         try {
             conn = fys.connectToDatabase(conn);
-            stmt = conn.createStatement();          
+            stmt = conn.createStatement();
             String sql = "SELECT x.status, COUNT(x.status) AS Count FROM "
                     + "(SELECT status FROM lost "
                     + "UNION ALL "
@@ -151,7 +177,7 @@ public class StatistiekenController implements Initializable {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-        
+
         //Voeg per status de aantal toe in de data array.
         pieChartData.get(0).setPieValue(foundAmount);
         pieChartData.get(1).setPieValue(lostAmount);
@@ -159,58 +185,58 @@ public class StatistiekenController implements Initializable {
         pieChartData.get(3).setPieValue(settleAmount);
         pieChartData.get(4).setPieValue(neverFoundAmount);
         pieChartData.get(5).setPieValue(depotAmount);
-        
+
         //Voor elk aantal tel ze met elkaar op en sla het op bij total.
         for (PieChart.Data d : pieChart.getData()) {
             total += d.getPieValue();
         }
-        
+
         //Verander de tekst van elke piechartdata. naar: (aantal statusnaam: percentage).
         pieChartData.forEach(data -> data.nameProperty().bind(
                 Bindings.concat(
-                        (int) data.getPieValue(), " ", data.getName(), ": ", 
-                        (total == 0 || (int) data.getPieValue() == 0) ? 0 : (int)( data.getPieValue() / total * 100), "%"
+                        (int) data.getPieValue(), " ", data.getName(), ": ",
+                        (total == 0 || (int) data.getPieValue() == 0) ? 0 : (int) (data.getPieValue() / total * 100), "%"
                 )
         ));
-        
+
         //LINECHART
         lineChart.setTitle(taal[76]);
         lineChart.setAnimated(true);
-        lineChart.getXAxis().setAutoRanging(true); 
+        lineChart.getXAxis().setAutoRanging(true);
         lineChart.getYAxis().setAutoRanging(true);
-        
+
         //Voeg de lege data toe aan de piechart en zet alvast de namen van de x en y as.
         series.setName(taal[77]);
-        series.getData().add(new XYChart.Data<>(taal[78], 0)); 
+        series.getData().add(new XYChart.Data<>(taal[78], 0));
         series.getData().add(new XYChart.Data(taal[79], 0));
-        series.getData().add(new XYChart.Data<>(taal[80], 0)); 
-        series.getData().add(new XYChart.Data(taal[81], 0)); 
-        series.getData().add(new XYChart.Data<>(taal[82], 0)); 
-        series.getData().add(new XYChart.Data(taal[83], 0)); 
-        series.getData().add(new XYChart.Data<>(taal[84], 0)); 
+        series.getData().add(new XYChart.Data<>(taal[80], 0));
+        series.getData().add(new XYChart.Data(taal[81], 0));
+        series.getData().add(new XYChart.Data<>(taal[82], 0));
+        series.getData().add(new XYChart.Data(taal[83], 0));
+        series.getData().add(new XYChart.Data<>(taal[84], 0));
         series.getData().add(new XYChart.Data(taal[85], 0));
-        series.getData().add(new XYChart.Data<>(taal[86], 0)); 
-        series.getData().add(new XYChart.Data(taal[87], 0)); 
-        series.getData().add(new XYChart.Data<>(taal[88], 0)); 
+        series.getData().add(new XYChart.Data<>(taal[86], 0));
+        series.getData().add(new XYChart.Data(taal[87], 0));
+        series.getData().add(new XYChart.Data<>(taal[88], 0));
         series.getData().add(new XYChart.Data(taal[89], 0));
-        
+
         //Voeg de lege data toe aan de linechart.
         lineChart.setCreateSymbols(true);
-        lineChart.getData().add(series); 
-        
+        lineChart.getData().add(series);
+
         //Krijg alle gegevens van de aangevraagde schadeclaims en voeg ze toe aan variablen.
         try {
             conn = fys.connectToDatabase(conn);
-            stmt = conn.createStatement();        
+            stmt = conn.createStatement();
             String sql = "SELECT date, COUNT(date) as Count FROM bagagedatabase.insurance_claim GROUP BY date;";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name
-                if(rs.getString("date") != null){
+                if (rs.getString("date") != null) {
                     //Krijg van elke date record de maand eruit.
                     String str[] = rs.getString("date").split("-");
                     int month = Integer.parseInt(str[1]);
-                    
+
                     //Zet per maand de aantallen toe in de variable.
                     jan = (month == 1 ? jan += rs.getInt("Count") : jan);
                     feb = (month == 2 ? feb += rs.getInt("Count") : feb);
@@ -234,58 +260,70 @@ public class StatistiekenController implements Initializable {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-        
+
         //Update de waarden die in de linechart zijn toegevoegd. 
         series.getData().set(0, new XYChart.Data<>(taal[78], jan));
         series.getData().set(1, new XYChart.Data(taal[79], feb));
-        series.getData().set(2, new XYChart.Data<>(taal[80], mar)); 
-        series.getData().set(3, new XYChart.Data(taal[81], apr)); 
-        series.getData().set(4, new XYChart.Data<>(taal[82], mei)); 
-        series.getData().set(5, new XYChart.Data(taal[83], jun)); 
-        series.getData().set(6, new XYChart.Data<>(taal[84], jul)); 
+        series.getData().set(2, new XYChart.Data<>(taal[80], mar));
+        series.getData().set(3, new XYChart.Data(taal[81], apr));
+        series.getData().set(4, new XYChart.Data<>(taal[82], mei));
+        series.getData().set(5, new XYChart.Data(taal[83], jun));
+        series.getData().set(6, new XYChart.Data<>(taal[84], jul));
         series.getData().set(7, new XYChart.Data(taal[85], aug));
-        series.getData().set(8, new XYChart.Data<>(taal[86], sep)); 
-        series.getData().set(9, new XYChart.Data(taal[87], okt)); 
-        series.getData().set(10, new XYChart.Data<>(taal[88], nov)); 
+        series.getData().set(8, new XYChart.Data<>(taal[86], sep));
+        series.getData().set(9, new XYChart.Data(taal[87], okt));
+        series.getData().set(10, new XYChart.Data<>(taal[88], nov));
         series.getData().set(11, new XYChart.Data(taal[89], dec));
     }
-    
+
+    @FXML
+    public void handleCancelFilter(ActionEvent event) throws IOException {
+        filterPane.setVisible(false);
+        home_pane.setDisable(false);
+    }
+
+    @FXML
+    public void handleOpenFilter(ActionEvent event) throws IOException {
+        filterPane.setVisible(true);
+        home_pane.setDisable(true);
+    }
+
     //Wanneer de gebruiker op filteren klikt.
     @FXML
     private void handleFilterAction(ActionEvent event) throws IOException, InterruptedException {
         //PIECHART
         //Maak alle variablen en arrays weer leeg.
-        int luggage = 0, foundAmount = 0, lostAmount = 0, destroyAmount = 0, settleAmount = 0, 
+        int luggage = 0, foundAmount = 0, lostAmount = 0, destroyAmount = 0, settleAmount = 0,
                 neverFoundAmount = 0, depotAmount = 0;
         int jan = 0, feb = 0, mar = 0, apr = 0, mei = 0, jun = 0, jul = 0, aug = 0,
                 sep = 0, okt = 0, nov = 0, dec = 0;
         total = 0;
         series.getData().clear();
         pieChartData = FXCollections.observableArrayList();
-        
+
         //Krijg alle data voor die piechart waar het jaar en maand gelijk is aan het geselecteerde jaar en maand.
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
             String sql = "SELECT x.status, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
-                        + "FROM (SELECT status, date FROM lost, airport "
-                        + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
-                        + "UNION ALL SELECT status, date FROM found, airport "
-                        + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x ";
-            if ((year.getSelectionModel().getSelectedItem().toString() == null || 
-                    year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())
-                    && (month.getSelectionModel().getSelectedItem().toString() == null || 
-                    month.getSelectionModel().getSelectedItem().toString().trim().isEmpty())) {
+                    + "FROM (SELECT status, date FROM lost, airport "
+                    + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
+                    + "UNION ALL SELECT status, date FROM found, airport "
+                    + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x ";
+            if ((year.getSelectionModel().getSelectedItem().toString() == null
+                    || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())
+                    && (month.getSelectionModel().getSelectedItem().toString() == null
+                    || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty())) {
                 sql += "WHERE YEAR(x.date) LIKE \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
                         + "AND MONTH(x.date) LIKE \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
                         + "GROUP BY x.status";
-            } else if ((year.getSelectionModel().getSelectedItem().toString() == null || 
-                    year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())) {
+            } else if ((year.getSelectionModel().getSelectedItem().toString() == null
+                    || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())) {
                 sql += "WHERE YEAR(x.date) LIKE \"%%\" "
                         + "AND MONTH(x.date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
                         + "GROUP BY x.status";
-            } else if (month.getSelectionModel().getSelectedItem().toString() == null || 
-                    month.getSelectionModel().getSelectedItem().toString().trim().isEmpty()) {
+            } else if (month.getSelectionModel().getSelectedItem().toString() == null
+                    || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty()) {
                 sql += "WHERE YEAR(x.date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
                         + "AND MONTH(x.date) LIKE \"%%\" "
                         + "GROUP BY x.status";
@@ -294,7 +332,7 @@ public class StatistiekenController implements Initializable {
                         + "AND MONTH(x.date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
                         + "GROUP BY x.status";
             }
-            
+
             //Voeg de aantallen van de statussen toe aan de variablen. 
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
@@ -315,21 +353,21 @@ public class StatistiekenController implements Initializable {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-        
+
         //Voeg de data toe aan de piechart array aan de juiste status. 
         pieChartData = FXCollections.observableArrayList(
                 new PieChart.Data(taal[54], foundAmount), new PieChart.Data(taal[55], lostAmount),
                 new PieChart.Data(taal[56], destroyAmount), new PieChart.Data(taal[57], settleAmount),
                 new PieChart.Data(taal[58], neverFoundAmount), new PieChart.Data(taal[59], depotAmount));
-        
+
         //Update de gegevens van de piechart.
         pieChart.setData(pieChartData);
-        
+
         //Voor elke aantal tel ze met elkaar op en sla het op bij total.
         for (PieChart.Data d : pieChart.getData()) {
             total += d.getPieValue();
         }
-        
+
         //Verander de tekst van elke piechartdata. naar: (aantal statusnaam: percentage).
         pieChartData.forEach(data -> data.nameProperty().bind(
                 Bindings.concat(
@@ -337,33 +375,33 @@ public class StatistiekenController implements Initializable {
                         (total == 0 || (int) data.getPieValue() == 0) ? 0 : (int) (data.getPieValue() / total * 100), "%"
                 )
         ));
-        
+
         //LINECHART
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
             //Krijg alle schadeclaims voor de linechart waar het jaar en maand gelijk is aan het geselecteerde jaar en maand.
             String sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM insurance_claim ";
-            if((year.getSelectionModel().getSelectedItem().toString() == null || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty()) && 
-                    (month.getSelectionModel().getSelectedItem().toString() == null || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty())){
+            if ((year.getSelectionModel().getSelectedItem().toString() == null || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())
+                    && (month.getSelectionModel().getSelectedItem().toString() == null || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty())) {
                 sql += "WHERE YEAR(date) LIKE \"%%\" "
                         + "AND MONTH(date) LIKE \"%%\" GROUP BY date ";
-            } else if((year.getSelectionModel().getSelectedItem().toString() == null || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())){
+            } else if ((year.getSelectionModel().getSelectedItem().toString() == null || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())) {
                 sql += "WHERE YEAR(date) LIKE \"%%\" "
                         + "AND MONTH(date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "\" GROUP BY date ";
-            } else if(month.getSelectionModel().getSelectedItem().toString() == null || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty()){
+            } else if (month.getSelectionModel().getSelectedItem().toString() == null || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty()) {
                 sql += "WHERE YEAR(date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "\" "
                         + "AND MONTH(date) LIKE \"%%\" GROUP BY date ";
-            } else{
+            } else {
                 sql += "WHERE YEAR(date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "\" "
                         + "AND MONTH(date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "\" GROUP BY date ";
             }
-            
+
             //Voeg de aantal schadeclaims per maand toe aan variablen.
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name
-                if(rs.getString("date") != null){
+                if (rs.getString("date") != null) {
                     //Krijg van elke date record de maand eruit.
                     String str[] = rs.getString("date").split("-");
                     int month = Integer.parseInt(str[1]);
@@ -389,7 +427,7 @@ public class StatistiekenController implements Initializable {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-        
+
         //Update de linechart naar de waardes die gewenst is.
         series.getData().add(new XYChart.Data<>(taal[78], jan));
         series.getData().add(new XYChart.Data(taal[79], feb));
@@ -404,7 +442,7 @@ public class StatistiekenController implements Initializable {
         series.getData().add(new XYChart.Data<>(taal[88], nov));
         series.getData().add(new XYChart.Data(taal[89], dec));
     }
-    
+
     //Wanneer de gebruiker op exporteren klikt.
     @FXML
     private void handleExportToPDFAction(ActionEvent event) throws IOException {
@@ -416,6 +454,16 @@ public class StatistiekenController implements Initializable {
         // Set the button types.
         ButtonType loginButtonType = new ButtonType(taal[140], ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
+ 
+        String mainbutton = "-fx-padding: 15px 32px;-fx-text-align: center;"
+                + "-fx-text-decoration:none;-fx-display: inline-block;"
+                + "-fx-margin:4px 2px;-fx-cursor: pointer;"
+                + "-fx-text-fill:white;-fx-background-color:#D81E05;"
+                + "-fx-border: 5px;-fx-border-style: solid; "
+                + "-fx-border-color: #D81E05;-fx-background-radius: 0;"
+                + "-fx-font-weight: bold;";
+        String TextField = "-fx-border: 5px; -fx-border-style: solid;"
+                + "-fx-border-color: #666666;-fx-background-radius: 0px;";
 
         // Create the datefrom and dateto labels and fields.
         GridPane grid = new GridPane();
@@ -423,8 +471,10 @@ public class StatistiekenController implements Initializable {
         grid.setVgap(20);
 
         TextField dateFrom = new TextField();
+        dateFrom.setStyle(TextField);
         dateFrom.setPromptText("01-01-1970");
         TextField dateTo = new TextField();
+        dateTo.setStyle(TextField);
         dateTo.setPromptText("31-12-2016");
 
         grid.add(new Label(taal[141] + ":"), 0, 0);
@@ -432,8 +482,13 @@ public class StatistiekenController implements Initializable {
         grid.add(new Label(taal[142] + ":"), 0, 1);
         grid.add(dateTo, 1, 1);
 
+        Node cancelButton = dialog.getDialogPane().lookupButton(ButtonType.CANCEL);
+        cancelButton.setStyle(mainbutton);
+
         // Enable/Disable export button depending on whether a datefrom was entered.
         Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
+        loginButton.setLayoutX(14);
+        loginButton.setStyle(mainbutton);
         loginButton.setDisable(true);
 
         dateFrom.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -458,7 +513,7 @@ public class StatistiekenController implements Initializable {
         });
 
         Optional<Pair<String, String>> result = dialog.showAndWait();
-        
+
         //Doe dit alleen wanneer er waardes zijn ingevuld.
         result.ifPresent(dates -> {
             dateFromInput = dates.getKey();
@@ -474,7 +529,7 @@ public class StatistiekenController implements Initializable {
             total = 0;
             series.getData().clear();
             pieChartData = FXCollections.observableArrayList();
-            
+
             //Krijg alle data voor de pietchart die tussen de periode van DateFrom en DateTo ligt.
             try {
                 conn = fys.connectToDatabase(conn);
@@ -486,9 +541,9 @@ public class StatistiekenController implements Initializable {
                         + "UNION ALL SELECT status, date FROM found, airport "
                         + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
                         + "WHERE date BETWEEN \"" + fys.convertToDutchDate(dateFromInput) + "\" "
-                        + "AND \"" + fys.convertToDutchDate(dateToInput) +"\" "
+                        + "AND \"" + fys.convertToDutchDate(dateToInput) + "\" "
                         + "GROUP BY x.status";
-                
+
                 //Voeg alle aantallen per status toe aan variabelen.
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
@@ -508,21 +563,21 @@ public class StatistiekenController implements Initializable {
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
             }
-            
+
             //Voeg de waardes toe aan de array.
             pieChartData = FXCollections.observableArrayList(
                     new PieChart.Data(taal[54], foundAmount), new PieChart.Data(taal[55], lostAmount),
                     new PieChart.Data(taal[56], destroyAmount), new PieChart.Data(taal[57], settleAmount),
                     new PieChart.Data(taal[58], neverFoundAmount), new PieChart.Data(taal[59], depotAmount));
-            
+
             //Update de piechart met de gevraagde gegevens.
             pieChart.setData(pieChartData);
-            
+
             //Voor elke aantal tel ze met elkaar op en sla het op bij total.
             for (PieChart.Data d : pieChart.getData()) {
                 total += d.getPieValue();
             }
-            
+
             //Verander de tekst van elke piechartdata. naar: (aantal statusnaam: percentage).
             pieChartData.forEach(data -> data.nameProperty().bind(
                     Bindings.concat(
@@ -570,7 +625,7 @@ public class StatistiekenController implements Initializable {
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
             }
-            
+
             //Update de linechart naar de waardes die gewenst is.
             series.getData().add(new XYChart.Data<>(taal[78], jan));
             series.getData().add(new XYChart.Data(taal[79], feb));
@@ -584,24 +639,24 @@ public class StatistiekenController implements Initializable {
             series.getData().add(new XYChart.Data(taal[87], okt));
             series.getData().add(new XYChart.Data<>(taal[88], nov));
             series.getData().add(new XYChart.Data(taal[89], dec));
-            
+
             //Update de piechart en linechart voordat er een screenshot van genomen wordt.
             lineChart.applyCss();
             lineChart.layout();
             pieChart.applyCss();
             pieChart.layout();
-            
+
             //Maak een screenshot van de piechart en linechart.
             savePieChartAsPng();
             saveLineChartAsPng();
-            
+
             try {
-                
+
                 //Krijg de datum van vandaag voor pdf.
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = new Date();
                 String dateString = dateFormat.format(date);
-                
+
                 //Krijg de content van de template pdf en maake nieuw pdf aan.
                 File pdfdoc = new File("src/fys/templates/statisticstemplate.pdf");
                 PDDocument document = null;
@@ -630,7 +685,7 @@ public class StatistiekenController implements Initializable {
                     if (field.getFullyQualifiedName().equals("depot")) {
                         field.setValue(String.valueOf(depotAmount));
                     }
-                    
+
                     if (field.getFullyQualifiedName().equals("jan")) {
                         field.setValue(String.valueOf(jan));
                     }
@@ -674,7 +729,7 @@ public class StatistiekenController implements Initializable {
                         field.setValue(String.valueOf(dateFromInput + " | " + dateToInput));
                     }
                 }
-                
+
                 //Retrieving the page
                 PDPage page = document.getPage(0);
 
@@ -685,18 +740,18 @@ public class StatistiekenController implements Initializable {
 
                 //creating the PDPageContentStream object
                 PDPageContentStream contents = new PDPageContentStream(document, page, true, true, true);
-                
+
                 //Drawing the image in the PDF document
                 contents.drawImage(pieChartImage, 75, 0, 350, 300);
                 contents.drawImage(lineChartImage, 425, 0, 350, 300);
 
                 //Closing the PDPageContentStream object
                 contents.close();
-                
+
                 //Sla het docment op.
                 document.save("src/fys/statistieken/statistics" + dateFromInput + dateToInput + ".pdf");
                 document.close();
-                
+
                 //Verwijder de plaatjes die waren opgeslagen.
                 savePieChartAsPng().delete();
                 saveLineChartAsPng().delete();
@@ -706,7 +761,7 @@ public class StatistiekenController implements Initializable {
         });
 
     }
-    
+
     public File savePieChartAsPng() {
         WritableImage image = pieChart.snapshot(new SnapshotParameters(), null);
         // TODO: probably use a file chooser here

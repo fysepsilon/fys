@@ -211,11 +211,6 @@ public class NieuwaccountaanmakenController implements Initializable {
         SendNewAccount.setText(taal[46]);
         cancel.setText(taal[127]);
         language_combo.setPromptText(taal[73]);
-
-        if (loginController.getUsertype() == 1) { // Service medewerker (GEEN TYPE FUNCTIE)
-            type_label.setVisible(false);
-            type_combo.setVisible(false);
-        }
         type_combo.setPromptText(taal[74]);
         type_combo.getItems().addAll(
                 taal[66],

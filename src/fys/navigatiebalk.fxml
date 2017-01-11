@@ -11,22 +11,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="AnchorPane" prefHeight="120.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.NavigatiebalkController">
+<AnchorPane id="AnchorPane" fx:id="AnchorPane" prefHeight="120.0" prefWidth="1000.0" stylesheets="@style/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.NavigatiebalkController">
     <children>
         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@images/corendon_logo.png" />
             </image>
         </ImageView>
-        <Label layoutY="73.0" prefHeight="49.0" prefWidth="1000.0" style="-fx-background-color: #D81E05;" />
-        
-        <Text id="welcomeText" fx:id="welcomeText" layoutX="294.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" " textAlignment="RIGHT" wrappingWidth="525.9482421875">
-            <font>
-                <Font name="System Bold Italic" size="18.0" />
-            </font>
-        </Text>
-           
-        <MenuBar layoutX="909.0" layoutY="23.0" prefHeight="0.0" prefWidth="50.0" style="-fx-background-color: #D81E05;" stylesheets="@images/menu.css">
+        <Label layoutY="73.0" prefHeight="49.0" prefWidth="1000.0" style="-fx-background-color: #D81E05;" />           
+        <MenuBar layoutX="850.0" layoutY="23.0" prefHeight="0.0" prefWidth="50.0" style="-fx-background-color: #D81E05;">
             <menus>
                 <Menu>
                     <items>
@@ -46,16 +39,13 @@
         </MenuBar>
         <HBox id="HBoxSM" fx:id="HBoxSM" layoutY="73.0" prefHeight="49.0" prefWidth="1000.0">
             <children>
-                <Button id="home" fx:id="home" mnemonicParsing="false" onAction="#handleHome" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" textFill="WHITE">
+                <Button id="menubutton" fx:id="home" mnemonicParsing="false" onAction="#handleHome" prefHeight="48.0" textFill="WHITE">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
                     <padding>
                         <Insets left="10.0" right="10.0" />
                     </padding>
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
                     <graphic>
                         <ImageView fitHeight="15.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -64,151 +54,116 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <SplitPane id="afscheiding1" fx:id="afscheiding1" prefHeight="49.0" prefWidth="2.0" style="-fx-background-color: #B81A04;" />
-                <Button id="missing" fx:id="missing" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="VERMISTE BAGAGE REGISTREREN" textFill="WHITE">
+                <SplitPane id="splitter" />
+                <Button id="menubutton" fx:id="missing" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="48.0" text="VERMISTE BAGAGE REGISTREREN" textFill="WHITE">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
                     <padding>
                         <Insets left="10.0" right="10.0" />
                     </padding>
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
                 </Button>
-                <SplitPane id="afscheiding2" fx:id="afscheiding2" prefHeight="49.0" prefWidth="2.0" style="-fx-background-color: #B81A04;" />
-                <Button id="found" fx:id="found" mnemonicParsing="false" onAction="#handleGevondenBagageFormulier" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="GEVONDEN BAGAGE REGISTREREN" textFill="WHITE">
+                <SplitPane id="splitter" />
+                <Button id="menubutton" fx:id="found" mnemonicParsing="false" onAction="#handleGevondenBagageFormulier" prefHeight="48.0" text="GEVONDEN BAGAGE REGISTREREN" textFill="WHITE">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
                     <padding>
                         <Insets left="10.0" right="10.0" />
                     </padding>
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
                 </Button>
-                <SplitPane id="afscheiding3" fx:id="afscheiding3" prefHeight="49.0" prefWidth="2.0" style="-fx-background-color: #B81A04;" />
-                <Button id="luggage" fx:id="luggage" mnemonicParsing="false" onAction="#handleBagagedatabase" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="BAGAGE DATABASE" textFill="WHITE">
+                <SplitPane id="splitter" />
+                <Button id="menubutton" fx:id="luggage" mnemonicParsing="false" onAction="#handleBagagedatabase" prefHeight="48.0" text="BAGAGE DATABASE" textFill="WHITE">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
                     <padding>
                         <Insets left="10.0" right="10.0" />
                     </padding>
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
                 </Button>
-                <SplitPane id="afscheiding4" fx:id="afscheiding4" prefHeight="49.0" prefWidth="2.0" style="-fx-background-color: #B81A04;" />
-                <Button id="account" fx:id="account" mnemonicParsing="false" onAction="#handleAccounts" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="ACCOUNTS" textFill="WHITE">
+                <SplitPane id="splitter" />
+                <Button id="menubutton" fx:id="account" mnemonicParsing="false" onAction="#handleAccounts" prefHeight="48.0" text="ACCOUNTS" textFill="WHITE">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
                     <padding>
                         <Insets left="10.0" right="10.0" />
                     </padding>
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
                 </Button>
             </children>
         </HBox>
-      <HBox id="HBox" fx:id="HBoxAdmin" layoutY="73.0" prefHeight="49.0" prefWidth="1000.0" visible="false">
-         <children>
-            
-              <Button id="homeAdmin" fx:id="homeAdmin" mnemonicParsing="false" onAction="#handleHomeAdmin" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" textFill="WHITE">
-                  <cursor>
-                      <Cursor fx:constant="HAND" />
-                  </cursor>
-                  <padding>
-                      <Insets left="10.0" right="10.0" />
-                  </padding>
-                  <font>
-                      <Font name="System Bold" size="14.0" />
-                  </font>
-                  <graphic>
-                      <ImageView fitHeight="15.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                          <image>
-                              <Image url="@images/homeknop.png" />
-                          </image>
-                      </ImageView>
-                  </graphic>
-              </Button>      
-           
-                <SplitPane id="afscheiding5" fx:id="afscheiding5" prefHeight="49.0" prefWidth="2.0" style="-fx-background-color: #B81A04;" />
-              <Button id="missingAdmin" fx:id="missingAdmin" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="VERMISTE BAGAGE REGISTREREN" textFill="WHITE">
-                  <cursor>
-                      <Cursor fx:constant="HAND" />
-                  </cursor>
-                  <padding>
-                      <Insets left="10.0" right="10.0" />
-                  </padding>
-                  <font>
-                      <Font name="System Bold" size="14.0" />
-                  </font>
-              </Button>
-                <SplitPane id="afscheiding6" fx:id="afscheiding6" prefHeight="49.0" prefWidth="2.0" style="-fx-background-color: #B81A04;" />
-              <Button id="foundAdmin" fx:id="foundAdmin" mnemonicParsing="false" onAction="#handleGevondenBagageFormulier" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="GEVONDEN BAGAGE REGISTREREN" textFill="WHITE">
-                  <cursor>
-                      <Cursor fx:constant="HAND" />
-                  </cursor>
-                  <padding>
-                      <Insets left="10.0" right="10.0" />
-                  </padding>
-                  <font>
-                      <Font name="System Bold" size="14.0" />
-                  </font>
-              </Button>
-                <SplitPane id="afscheiding7" fx:id="afscheiding7" prefHeight="49.0" prefWidth="2.0" style="-fx-background-color: #B81A04;" />
-              <Button id="luggageAdmin" fx:id="luggageAdmin" mnemonicParsing="false" onAction="#handleBagagedatabase" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="BAGAGE DATABASE" textFill="WHITE">
-                  <cursor>
-                      <Cursor fx:constant="HAND" />
-                  </cursor>
-                  <padding>
-                      <Insets left="10.0" right="10.0" />
-                  </padding>
-                  <font>
-                      <Font name="System Bold" size="14.0" />
-                  </font>
-              </Button>
-                <SplitPane id="afscheiding8" fx:id="afscheiding8" prefHeight="49.0" prefWidth="2.0" style="-fx-background-color: #B81A04;" />
-              <Button id="accountAdmin" fx:id="accountAdmin" mnemonicParsing="false" onAction="#handleAccounts" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="ACCOUNTS" textFill="WHITE">
-                  <cursor>
-                      <Cursor fx:constant="HAND" />
-                  </cursor>
-                  <padding>
-                      <Insets left="10.0" right="10.0" />
-                  </padding>
-                  <font>
-                      <Font name="System Bold" size="14.0" />
-                  </font>
-              </Button>
-                <SplitPane id="afscheiding9" fx:id="afscheiding9" prefHeight="49.0" prefWidth="2.0" style="-fx-background-color: #B81A04;" />
-              <Button id="staticsAdmin" fx:id="staticsAdmin" mnemonicParsing="false" onAction="#handleStaticsAdmin" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="STATISTIEKEN" textFill="WHITE">
-                  <cursor>
-                      <Cursor fx:constant="HAND" />
-                  </cursor>
-                  <padding>
-                      <Insets left="10.0" right="10.0" />
-                  </padding>
-                  <font>
-                      <Font name="System Bold" size="14.0" />
-                  </font>
-              </Button>
-              <SplitPane id="afscheiding10" fx:id="afscheiding10" prefHeight="49.0" prefWidth="2.0" style="-fx-background-color: #B81A04;" />
-              <Button id="mailAdmin" fx:id="mailAdmin" mnemonicParsing="false" onAction="#handleMailsettings" prefHeight="48.0" style="-fx-background-radius: 0;" stylesheets="@images/menu.css" text="E-MAIL INSTELLINGEN" textFill="WHITE">
-                  <cursor>
-                      <Cursor fx:constant="HAND" />
-                  </cursor>
-                  <padding>
-                      <Insets left="10.0" right="10.0" />
-                  </padding>
-                  <font>
-                      <Font name="System Bold" size="14.0" />
-                  </font>
-              </Button>
-         </children>
-      </HBox>
+        <HBox id="HBox" fx:id="HBoxAdmin" layoutY="73.0" prefHeight="49.0" prefWidth="1000.0" visible="false">
+            <children>
+                <Button id="menubutton" fx:id="homeAdmin" mnemonicParsing="false" onAction="#handleHomeAdmin" prefHeight="48.0" textFill="WHITE">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <padding>
+                        <Insets left="10.0" right="10.0" />
+                    </padding>
+                    <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/homeknop.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>      
+                <SplitPane id="splitter" />
+                <Button id="menubutton" fx:id="missingAdmin" mnemonicParsing="false" onAction="#handleBagageformulieren" prefHeight="48.0" text="VERMISTE BAGAGE REGISTREREN">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <padding>
+                        <Insets left="10.0" right="10.0" />
+                    </padding>
+                </Button>
+                <SplitPane id="splitter" />
+                <Button id="menubutton" fx:id="foundAdmin" mnemonicParsing="false" onAction="#handleGevondenBagageFormulier" prefHeight="48.0" text="GEVONDEN BAGAGE REGISTREREN" textFill="WHITE">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <padding>
+                        <Insets left="10.0" right="10.0" />
+                    </padding>
+                </Button>
+                <SplitPane id="splitter" />
+                <Button id="menubutton" fx:id="luggageAdmin" mnemonicParsing="false" onAction="#handleBagagedatabase" prefHeight="48.0" text="BAGAGE DATABASE" textFill="WHITE">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <padding>
+                        <Insets left="10.0" right="10.0" />
+                    </padding>
+                </Button>
+                <SplitPane id="splitter" />
+                <Button id="menubutton" fx:id="accountAdmin" mnemonicParsing="false" onAction="#handleAccounts" prefHeight="48.0" text="ACCOUNTS" textFill="WHITE">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <padding>
+                        <Insets left="10.0" right="10.0" />
+                    </padding>
+                </Button>
+                <SplitPane id="splitter" />
+                <Button id="menubutton" fx:id="staticsAdmin" mnemonicParsing="false" onAction="#handleStaticsAdmin" prefHeight="48.0" text="STATISTIEKEN" textFill="WHITE">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <padding>
+                        <Insets left="10.0" right="10.0" />
+                    </padding>
+                </Button>
+                <SplitPane id="splitter" />
+                <Button id="menubutton" fx:id="mailAdmin" mnemonicParsing="false" onAction="#handleMailsettings" prefHeight="48.0" text="E-MAIL INSTELLINGEN" textFill="WHITE">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <padding>
+                        <Insets left="10.0" right="10.0" />
+                    </padding>
+                </Button>
+            </children>
+        </HBox>
     </children>
 </AnchorPane>

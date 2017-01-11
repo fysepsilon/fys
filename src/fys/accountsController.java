@@ -98,6 +98,7 @@ public class accountsController implements Initializable {
             alert.setTitle(taal[128]);
             alert.setContentText(taal[129] + dr_first_name + " " + dr_surname + taal[130]);
 
+            
             ButtonType buttonTypeOne = new ButtonType(taal[146]);
             ButtonType buttonTypeCancel = new ButtonType(taal[127], ButtonBar.ButtonData.CANCEL_CLOSE);
 
@@ -176,13 +177,15 @@ public class accountsController implements Initializable {
         language_label.setText(taal[68] + ":");
 
         loginController loginController = new loginController();
-        if (loginController.getUsertype() == 1) { // Service medewerker (ZONDER TYPE EDIT FUNCTIE)
+        if (loginController.getUsertype() == 1) {
+            // Service medewerker (ZONDER TYPE EDIT FUNCTIE)
             type_label.setVisible(false);
             type_combo.setVisible(false);
             
-            // Service medewerker (ZONDER REMOVE BUTTON)
+            // Service medewerker (ZONDER REMOVE & NEW ACCOUNT BUTTON)
             remove_button.setVisible(false);
             NewAccountButton.setVisible(false);
+            change_button.setPrefWidth(800.0);
         }
 
         type_label.setText(taal[20] + ":");

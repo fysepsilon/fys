@@ -234,6 +234,9 @@ public class taal {
                     + "codes can be used in it.";
             languagefields[169] = "You have the character ' used.";
             languagefields[170] = "You have the character ´ used.";
+            languagefields[171] = "Month";
+            languagefields[172] = "Year";
+            languagefields[173] = "You can filter your statistics through here.";
         } else if (language == 1) { // Nederlands
             languagefields[0] = "VERMISTE BAGAGE REGISTREREN";
             languagefields[1] = "GEVONDEN BAGAGE REGISTREREN";
@@ -420,6 +423,9 @@ public class taal {
             languagefields[168] = "Er is een code gebruikt die niet in deze mail thuis hoort. Klik op het informatie icoon om te kijken welke codes er allemaal gebruikt kunnen worden.";
             languagefields[169] = "Je hebt het teken ' gebruikt.";
             languagefields[170] = "Je hebt het teken ´ gebruikt.";
+            languagefields[171] = "Maand";
+            languagefields[172] = "Jaar";  
+            languagefields[173] = "Je kan via hier de statistieken filteren.";
         } else if (language == 2) { // Spaans
             languagefields[0] = "FALTA EQUIPAJE REGISTRO";
             languagefields[1] = "ENCONTRADO EQUIPAJE REGISTRO";
@@ -610,6 +616,9 @@ public class taal {
                     + "en él.";
             languagefields[169] = "Tienes el carácter ' usado.";
             languagefields[170] = "Tienes el carácter ´ usado.";
+            languagefields[171] = "Mes";
+            languagefields[172] = "Año";
+            languagefields[173] = "Puedes realizar un filtrado sus estadísticas por aquí.";
         } else if (language == 3) { // Turks
             languagefields[0] = "EKSİK BAGAJ KAYIT";
             languagefields[1] = "BULUNAMADI BAGAJ KAYIT";
@@ -796,6 +805,9 @@ public class taal {
                     + "görmek için bilgi simgesini tıklayın.";
             languagefields[169] = "Kullandığınız karakter ' var.";
             languagefields[170] = "Kullandığınız karakter ´ var.";
+            languagefields[171] = "Ay";
+            languagefields[172] = "Yıl";
+            languagefields[173] = "Burada aracılığıyla istatistiklerini filtre edebilirsiniz.";
         } else { // Duits
             languagefields[0] = "FEHLENDES GEPÄCK REGISTRIEREN";
             languagefields[1] = "GEFUNDEN GEPÄCK ANMELDEN";
@@ -986,6 +998,9 @@ public class taal {
                     + "verwendet werden können.";
             languagefields[169] = "Sie haben das Zeichen ' verwendet.";
             languagefields[170] = "Sie haben das Zeichen ´ verwendet.";
+            languagefields[171] = "Monat";
+            languagefields[172] = "Jahr";
+            languagefields[173] = "Sie können Ihre Statistiken durch hier filtern.";
         }
         return languagefields;
     }

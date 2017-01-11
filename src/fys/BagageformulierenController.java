@@ -49,7 +49,8 @@ public class BagageformulierenController implements Initializable {
             labelnumber_input, flightnumber_input, brand_input,
             characteristics_input;
     @FXML
-    private Button picture_button, send_button;
+    private Button picture_button, send_button, popup_verzbutton, 
+            popup_annubutton;
     @FXML
     private TableColumn status, type, color, brand, picture, information,
             firstName, surName;
@@ -383,6 +384,8 @@ public class BagageformulierenController implements Initializable {
 
         //Popup
         popup_label.setText(taal[150]);
+        popup_verzbutton.setText(taal[46]);
+        popup_annubutton.setText(taal[127]);
         status.setText(taal[48]);
         type.setText(taal[50]);
         color.setText(taal[49]);

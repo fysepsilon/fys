@@ -81,6 +81,11 @@ public class loginController implements Initializable {
         loginController.usersname = usersname;
     }
     
+    @FXML
+    private void handleInformation(ActionEvent event) {
+        fys.UserManual();
+    }
+    
     //Wanneer de gebruiker op wachtwoord vergeten klikt. 
     //Wordt diegene doorgestuurd naar de pagina van wachtwoord vergeten.
     @FXML
@@ -91,16 +96,16 @@ public class loginController implements Initializable {
     
     //Als de gebruiker op de knop op login klikt.
     @FXML
-    private void handleChechLoginAction(ActionEvent event) throws IOException, SQLException {
+    private void handleCheckLoginAction(ActionEvent event) throws IOException, SQLException {
         //Controleer of de velden gebruikersnaam of wachtwoord zijn ingevuld lat anders een error zien.
         if ((username.getText() == null || username.getText().trim().isEmpty()) || 
                 (password.getText() == null || password.getText().trim().isEmpty())) {
-            loginerror.setText("Username and/or password fied(s) are empty!");
+            loginerror.setText("Fields are left blank!");
             loginerror.setVisible(true);
         } else if (authenticateLogin(username.getText(), fys.encrypt(password.getText())) && 
                 (getUsertype() == 1 || getUsertype() == 2)) {
                     loginController loginController = new loginController();
-            //Kijk wat voor gebruiker inlogt een admin of servicemedewerker.
+            //Kijk wat voor gebruiker inlogt: een admin of servicemedewerker.
             if (loginController.getUsertype() == 1) {
                 fys.changeToAnotherFXML("Corendon-Home", "homepage.fxml");
             } else { // Switch screen to HomeAdmin
@@ -108,7 +113,7 @@ public class loginController implements Initializable {
             }
         //Laat een error zien dat de gebruikersnaam en wachtwoord niet overeenkomen.
         } else {
-            loginerror.setText("Your username and password do not match!");
+            loginerror.setText("Username and password do not match!");
             loginerror.setVisible(true);
         }
     }

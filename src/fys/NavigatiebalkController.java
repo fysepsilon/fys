@@ -32,8 +32,6 @@ public class NavigatiebalkController implements Initializable {
     @FXML
     private Button missingAdmin, foundAdmin, luggageAdmin, accountAdmin, staticsAdmin, home, missing, found, luggage, account, mailAdmin;
     @FXML
-    private Text welcomeText;
-    @FXML
     private HBox HBoxAdmin, HBoxSM;
     @FXML
     private MenuItem settings, usermanual, logout;
@@ -96,18 +94,7 @@ public class NavigatiebalkController implements Initializable {
 
     @FXML
     private void handleManual(ActionEvent event) throws IOException {
-        try {
-            File myFile = new File("src/fys/templates/Gebruikershandleiding.pdf");
-            Desktop.getDesktop().open(myFile);
-        } catch (IOException ex) {
-            // no application registered for PDFs
-        }
-        
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(taal[160]);
-        alert.setTitle(taal[160]);
-        alert.setContentText(taal[161]);
-        alert.showAndWait();
+        fys.UserManual();
     }
 
     @Override
@@ -129,10 +116,8 @@ public class NavigatiebalkController implements Initializable {
             mailAdmin.setText(taal[137]);
             HBoxAdmin.setVisible(true);
             HBoxSM.setVisible(false);
-            welcomeText.setText(taal[6] + " - " + taal[5] + "! " + name);
         } else {
             //Zet alle woorden in de taal die is geinstalleerd.
-            welcomeText.setText(taal[7] + " - " + taal[5] + "! " + name);
             missing.setText(taal[0]);
             found.setText(taal[1]);
             luggage.setText(taal[2]);

@@ -31,13 +31,16 @@ public class WachtwoordVergetenController implements Initializable {
     @FXML
     private TextField username;
     @FXML
-    private Label label;
-    @FXML
-    private Label sendPasswordMessage;
+    private Label loginerror;
     @FXML
     private Button sendNewPasswordButton;
     @FXML
     private final FYS fys = new FYS();
+    
+    @FXML
+    private void handleInformation(ActionEvent event) {
+        fys.UserManual();
+    }
     
     //Dit wordt aangeroepen wanneer je op de button terug klikt.
     @FXML
@@ -60,9 +63,8 @@ public class WachtwoordVergetenController implements Initializable {
 
         //Controleer of de velden wachtwoord leeg zijn. Anders laat een error zien.
         if ((username.getText() == null || username.getText().trim().isEmpty())) {
-            sendPasswordMessage.setText("Username is empty!");
-            sendPasswordMessage.setStyle("-fx-text-fill: red;");
-            sendPasswordMessage.setVisible(true);
+            loginerror.setText("Username is empty!");
+            loginerror.setVisible(true);
             sendNewPasswordButton.setDisable(false);
         } else //Als de emailadres niet klopt volgens de regels dan wordt een error getoond.
         {
@@ -87,9 +89,8 @@ public class WachtwoordVergetenController implements Initializable {
                 
                 //Controleer of de ingevulde veld leeg is. Laat dan een error zien.
                 if ((email == null || email.trim().isEmpty())) {
-                    sendPasswordMessage.setText("This username unfortunately does not exists!");
-                    sendPasswordMessage.setStyle("-fx-text-fill: red;");
-                    sendPasswordMessage.setVisible(true);
+                    loginerror.setText("This username unfortunately does not exists!");
+                    loginerror.setVisible(true);
                     sendNewPasswordButton.setDisable(false);
                 } else if (fys.Email_Persontype(username.getText()) == 1
                         || fys.Email_Persontype(username.getText()) == 2) { // Stuur email als gebruiker type 1 of 2 is.
@@ -99,16 +100,15 @@ public class WachtwoordVergetenController implements Initializable {
                     // Email versturen
                     fys.sendEmail(username.getText(), fys.Email_Subject(type, fys.Email_Language(username.getText()), pageid), getmessage, "Sent message successfully....");
 
-                    sendPasswordMessage.setText("Your password has been sent to: " + username.getText() + "!");
-                    sendPasswordMessage.setStyle("-fx-text-fill: green;");
-                    sendPasswordMessage.setVisible(true);
+                    loginerror.setText("Your password has been sent to: " + username.getText() + "!");
+                    loginerror.setStyle("-fx-text-fill: green;");
+                    loginerror.setVisible(true);
                     username.setText("");
                     sendNewPasswordButton.setDisable(false);
                 }
             } else {
-                sendPasswordMessage.setText("Please enter a valid email address!");
-                sendPasswordMessage.setStyle("-fx-text-fill: red;");
-                sendPasswordMessage.setVisible(true);
+                loginerror.setText("Please enter a valid email address!");
+                loginerror.setVisible(true);
                 sendNewPasswordButton.setDisable(false);
             }
         }

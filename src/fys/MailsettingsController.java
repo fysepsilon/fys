@@ -109,7 +109,7 @@ public class MailsettingsController implements Initializable {
 
         //Popup
         pageFilter.getItems().addAll(taal[63], taal[95], taal[166], taal[100]);
-        typeFilter.getItems().addAll(taal[66], taal[64], taal[65]);
+        typeFilter.getItems().addAll(taal[66], taal[64], taal[65], taal[163]);
         languageFilter.getItems().addAll(taal[69], taal[70], taal[71], taal[72], taal[165]);
         popup_filterlabel.setText(taal[47]);
         pageFilterLabel.setText(taal[144]);

@@ -468,8 +468,6 @@ public class BagagedatabaseController implements Initializable {
                 System.out.println("Emailadres bestaat al!");
                 //Deze mail wordt verstuurd wanneer de status veranderd en niet op afgehandeld is gezet.
             } else {
-                System.out.println(airportCombo.getValue().toString());
-                System.out.println(mailInput.getText());
                 sendToDatabase(Integer.parseInt(idLabel.getText()), 
                         Integer.parseInt(personIdLabel.getText()),
                         Integer.parseInt(lafIdLabel.getText()), 

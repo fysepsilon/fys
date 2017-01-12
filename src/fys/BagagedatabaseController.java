@@ -58,9 +58,9 @@ public class BagagedatabaseController implements Initializable {
     @FXML
     private ObservableList<Bagage> dataFilter = FXCollections.observableArrayList();
     @FXML
-    private TableColumn id, status, type, color, brand, picture, date, 
-            information, firstName, surName, address, residence, 
-            zipcode, country, phone, mail, labelNumber, flightNumber, 
+    private TableColumn id, status, type, color, brand, picture, date,
+            information, firstName, surName, address, residence,
+            zipcode, country, phone, mail, labelNumber, flightNumber,
             destination, airportFound, airportLost, tableFrom, lostAndFoundID,
             personID, realId;
     @FXML
@@ -70,7 +70,7 @@ public class BagagedatabaseController implements Initializable {
     @FXML
     private TextArea characteristicsFilter;
     @FXML
-    private ComboBox statusCombo, airportCombo, typeCombo, colorCombo, 
+    private ComboBox statusCombo, airportCombo, typeCombo, colorCombo,
             destination_combo;
     @FXML
     private TextField nameInput, surNameInput, addressInput,
@@ -78,7 +78,7 @@ public class BagagedatabaseController implements Initializable {
             mailInput, labelNumberInput, flightNumberInput,
             brandInput, characteristicsInput;
     @FXML
-    private Button pictureButton, sendButton, cancelButton, changeButton, 
+    private Button pictureButton, sendButton, cancelButton, changeButton,
             removeButton, filter;
     @FXML
     private Label mailLabel, phoneLabel, countryLabel, zipcodeLabel,
@@ -86,8 +86,8 @@ public class BagagedatabaseController implements Initializable {
             airportLabel, labelLabel, flightLabel, destinationLabel,
             typeLabel, brandLabel, colorLabel, characteristicsLabel,
             pictureLabel, statusLabel, personIdLabel, lafIdLabel,
-            tableFromLabel, loginerror, shipaddressLabel, popup_filterlabel, 
-            popupLabelStatus, popupLabelType, popupLabelKleur, popupLabelMerk, 
+            tableFromLabel, loginerror, shipaddressLabel, popup_filterlabel,
+            popupLabelStatus, popupLabelType, popupLabelKleur, popupLabelMerk,
             popupLabelDatum, popupLabelEi;
     @FXML
     private final FYS fys = new FYS();
@@ -189,7 +189,7 @@ public class BagagedatabaseController implements Initializable {
                 taal[58],
                 taal[59],
                 taal[108]);
-                
+
         getLuggageData();
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -253,7 +253,7 @@ public class BagagedatabaseController implements Initializable {
         filterPane.setVisible(true);
         database_pane.setDisable(true);
     }
-    
+
     //Wanneer er op de button filteren wordt geklikt.
     @FXML
     private void handleFilterAction(ActionEvent event) throws IOException {
@@ -282,6 +282,10 @@ public class BagagedatabaseController implements Initializable {
 
         //Update de tabel met gegevens die is gevraagd.
         table.setItems(dataFilter);
+
+        //Sluit de popup
+        filterPane.setVisible(false);
+        database_pane.setDisable(false);
     }
 
     public void getLuggageData() {
@@ -339,11 +343,11 @@ public class BagagedatabaseController implements Initializable {
                     int personID = rs.getInt("person_id");
 
                     //Voeg de gegegevens toe in de data array.
-                    data.add(new Bagage(luggage, status, type, color, brand, 
-                            picture, date, characteristics, firstname, surname, 
-                            address, shipaddress, residence, zipcode, country, 
+                    data.add(new Bagage(luggage, status, type, color, brand,
+                            picture, date, characteristics, firstname, surname,
+                            address, shipaddress, residence, zipcode, country,
                             phone, mail, labelnumber, flightnumber, destination,
-                            airportfound, airportlost, tablefrom, 
+                            airportfound, airportlost, tablefrom,
                             lostAndFoundID, personID, id));
                 }
             }
@@ -411,12 +415,12 @@ public class BagagedatabaseController implements Initializable {
     }
 
     @FXML
-    public void doNext(int dr_id, int dr_personId, int dr_lafId, int drFrom, 
-            String dr_status, String dr_airport, String dr_name, 
+    public void doNext(int dr_id, int dr_personId, int dr_lafId, int drFrom,
+            String dr_status, String dr_airport, String dr_name,
             String dr_surname, String dr_address, String dr_shipaddress,
-            String dr_residence, String dr_zipcode, String dr_country, 
-            String dr_phone, String dr_mail, String dr_label, String dr_flight, 
-            String dr_destination, String dr_type, String dr_brand, 
+            String dr_residence, String dr_zipcode, String dr_country,
+            String dr_phone, String dr_mail, String dr_label, String dr_flight,
+            String dr_destination, String dr_type, String dr_brand,
             String dr_color, String dr_characteristics) {
         database_pane.setDisable(true);
         database_pane.setVisible(false);
@@ -468,20 +472,20 @@ public class BagagedatabaseController implements Initializable {
                 System.out.println("Emailadres bestaat al!");
                 //Deze mail wordt verstuurd wanneer de status veranderd en niet op afgehandeld is gezet.
             } else {
-                sendToDatabase(Integer.parseInt(idLabel.getText()), 
+                sendToDatabase(Integer.parseInt(idLabel.getText()),
                         Integer.parseInt(personIdLabel.getText()),
-                        Integer.parseInt(lafIdLabel.getText()), 
+                        Integer.parseInt(lafIdLabel.getText()),
                         Integer.parseInt(tableFromLabel.getText()),
                         fys.getStatusString(statusCombo.getValue().toString()),
-                        (airportCombo.getValue() == null ? "": airportCombo.getValue().toString()), nameInput.getText(),
+                        (airportCombo.getValue() == null ? "" : airportCombo.getValue().toString()), nameInput.getText(),
                         surNameInput.getText(), addressInput.getText(), shipaddressLabel.getText(),
                         residenceInput.getText(), zipcodeInput.getText(), countryInput.getText(),
-                        phoneInput.getText(), mailInput.getText(), 
-                        labelNumberInput.getText(), filePath, 
+                        phoneInput.getText(), mailInput.getText(),
+                        labelNumberInput.getText(), filePath,
                         flightNumberInput.getText(), destination,
                         fys.getBaggageTypeString(typeCombo.getValue().toString()),
                         brandInput.getText(),
-                        fys.getColorString(colorCombo.getValue().toString()), 
+                        fys.getColorString(colorCombo.getValue().toString()),
                         characteristicsInput.getText());
             }
         }
@@ -527,10 +531,10 @@ public class BagagedatabaseController implements Initializable {
                         + "picture='" + filePath + "', type='" + type + "', brand='" + brand + "',"
                         + "color='" + color + "', characteristics='" + characteristics + "'"
                         + "WHERE id='" + dr_id + "'";
-                
+
                 //Registreer de status van een bagage.
-                sql_status = "INSERT INTO luggage_status VALUES(" + dr_id + ", '" + 
-                        dateString + "', '" + timeString + "', '" + status + "', 0);";
+                sql_status = "INSERT INTO luggage_status VALUES(" + dr_id + ", '"
+                        + dateString + "', '" + timeString + "', '" + status + "', 0);";
 
                 switch (status) {
                     //case 0: Gaat van lost naar status Gevonden
@@ -560,11 +564,11 @@ public class BagagedatabaseController implements Initializable {
                         + "picture='" + filePath + "', type='" + type + "', brand='" + brand + "',"
                         + "color='" + color + "', characteristics='" + characteristics + "'"
                         + "WHERE id='" + dr_id + "'";
-                
+
                 //Registreer de status van een bagage.
-                sql_status = "INSERT INTO luggage_status VALUES(" + dr_id + ", '" + 
-                        dateString + "', '" + timeString + "', '" + status + "', 1);";
-                
+                sql_status = "INSERT INTO luggage_status VALUES(" + dr_id + ", '"
+                        + dateString + "', '" + timeString + "', '" + status + "', 1);";
+
                 switch (status) {
                     //case 1: Gaat van found naar status Vermist
                     case 1:
@@ -579,7 +583,7 @@ public class BagagedatabaseController implements Initializable {
                                 + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
                                 + "destination='" + destination + "'"
                                 + "WHERE lost_and_found_id='" + dr_lafId + "'";
-                        break;     
+                        break;
                     //default: Gaat van found naar status Gevonden, Vernietigd, Nooit gevonden, Depot 
                     default:
                         sql_airport = "UPDATE bagagedatabase.airport SET airport_found='" + airport + "',"
@@ -593,22 +597,22 @@ public class BagagedatabaseController implements Initializable {
                 stmt.executeUpdate(sql_lost);
             }
             stmt.executeUpdate(sql_airport);
-            if(status != fys.getStatusString(dr_status)){
+            if (status != fys.getStatusString(dr_status)) {
                 stmt.executeUpdate(sql_status);
             }
-            
+
             if (status != 3) {
                 int pageid = 4;
                 int type_email = 0;
-                if(mailInput.getText() == null || !FYS.isValidEmailAddress(mailInput.getText()) || mailInput.getText().trim().isEmpty()){
-                    
-                } else{
+                if (mailInput.getText() == null || !FYS.isValidEmailAddress(mailInput.getText()) || mailInput.getText().trim().isEmpty()) {
+
+                } else {
                     // Email bericht filteren op sommige woorden.
-                        String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, 
-                            fys.Email_Language(mailInput.getText()), pageid), mailInput.getText(), 
+                    String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email,
+                            fys.Email_Language(mailInput.getText()), pageid), mailInput.getText(),
                             Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
                     // Email versturen
-                        fys.sendEmail(mailInput.getText(), fys.Email_Subject(type_email, fys.Email_Language(mailInput.getText()), pageid), getmessage, "Sent message successfully....");
+                    fys.sendEmail(mailInput.getText(), fys.Email_Subject(type_email, fys.Email_Language(mailInput.getText()), pageid), getmessage, "Sent message successfully....");
                 }
             }
 
@@ -675,10 +679,10 @@ public class BagagedatabaseController implements Initializable {
 
                 int pageid = 5;
                 int type_email = 0;
-                
-                if(mailInput.getText() == null || !FYS.isValidEmailAddress(mailInput.getText()) || mailInput.getText().trim().isEmpty()){
-                    
-                } else{
+
+                if (mailInput.getText() == null || !FYS.isValidEmailAddress(mailInput.getText()) || mailInput.getText().trim().isEmpty()) {
+
+                } else {
                     // Email bericht filteren op sommige woorden.            
                     String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, fys.Email_Language(mailInput.getText()), pageid), mailInput.getText(), Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
                     // Email versturen
@@ -691,9 +695,9 @@ public class BagagedatabaseController implements Initializable {
                 int type_email = 3; //Onbekend
                 int language_email = 1; //Nederlands ?!
                 String email_paymentdepartment = "fysepsilon@gmail.com"; // Betalingsafdeling mail
-                if(mailInput.getText() == null || !FYS.isValidEmailAddress(mailInput.getText()) || mailInput.getText().trim().isEmpty()){
-                    
-                } else{
+                if (mailInput.getText() == null || !FYS.isValidEmailAddress(mailInput.getText()) || mailInput.getText().trim().isEmpty()) {
+
+                } else {
                     // Email bericht filteren op sommige woorden.            
                     String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, language_email, pageid), mailInput.getText(), Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
                     // Email versturen
@@ -782,7 +786,7 @@ public class BagagedatabaseController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(taal[154]);
             alert.setTitle(taal[154]);
-            alert.setContentText(taal[105]);
+            alert.setContentText(taal[134]);
             alert.showAndWait();
         }
     }

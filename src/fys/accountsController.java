@@ -98,7 +98,6 @@ public class accountsController implements Initializable {
             alert.setTitle(taal[128]);
             alert.setContentText(taal[129] + dr_first_name + " " + dr_surname + taal[130]);
 
-            
             ButtonType buttonTypeOne = new ButtonType(taal[146]);
             ButtonType buttonTypeCancel = new ButtonType(taal[127], ButtonBar.ButtonData.CANCEL_CLOSE);
 
@@ -120,9 +119,9 @@ public class accountsController implements Initializable {
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(taal[104]);
-            alert.setTitle(taal[104]);
-            alert.setContentText(taal[105]);
+            alert.setHeaderText(taal[133]);
+            alert.setTitle(taal[133]);
+            alert.setContentText(taal[134]);
             alert.showAndWait();
         }
     }
@@ -181,7 +180,7 @@ public class accountsController implements Initializable {
             // Service medewerker (ZONDER TYPE EDIT FUNCTIE)
             type_label.setVisible(false);
             type_combo.setVisible(false);
-            
+
             // Service medewerker (ZONDER REMOVE & NEW ACCOUNT BUTTON)
             remove_button.setVisible(false);
             NewAccountButton.setVisible(false);
@@ -299,10 +298,11 @@ public class accountsController implements Initializable {
             doNext(dr_first_name, dr_surname, dr_type_combo, dr_mail, dr_address, dr_residence, dr_zip_code, dr_country, dr_phone, dr_language_combo, dr_personId);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(taal[133]);
-            alert.setTitle(taal[133]);
-            alert.setContentText(taal[134]);
+            alert.setHeaderText(taal[104]);
+            alert.setTitle(taal[104]);
+            alert.setContentText(taal[105]);
             alert.showAndWait();
+
         }
     }
 

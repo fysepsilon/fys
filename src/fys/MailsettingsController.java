@@ -211,9 +211,9 @@ public class MailsettingsController implements Initializable {
             doNext(dr_mailid, dr_subject, dr_message, dr_page, dr_type, dr_language);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(taal[133]);
-            alert.setTitle(taal[133]);
-            alert.setContentText(taal[134]);
+            alert.setHeaderText(taal[104]);
+            alert.setTitle(taal[104]);
+            alert.setContentText(taal[105]);
             alert.showAndWait();
         }
     }
@@ -355,17 +355,17 @@ public class MailsettingsController implements Initializable {
             // Foutmelding
             error.setText(taal[93]);
             error.setVisible(true);
-        } else if (HTMLEditor.getHtmlText().contains("*luggagecolor*") 
-                || HTMLEditor.getHtmlText().contains("*luggagebrand*") 
-                || HTMLEditor.getHtmlText().contains("*luggagetype*") 
-                || HTMLEditor.getHtmlText().contains("*luggagestatus*") 
+        } else if (HTMLEditor.getHtmlText().contains("*luggagecolor*")
+                || HTMLEditor.getHtmlText().contains("*luggagebrand*")
+                || HTMLEditor.getHtmlText().contains("*luggagetype*")
+                || HTMLEditor.getHtmlText().contains("*luggagestatus*")
                 && page.getText() != taal[100]) {
             error.setText(taal[168]);
             error.setVisible(true);
         } else if (HTMLEditor.getHtmlText().contains("'")) {
             error.setText(taal[169]);
             error.setVisible(true);
-         } else if (HTMLEditor.getHtmlText().contains("´")) {
+        } else if (HTMLEditor.getHtmlText().contains("´")) {
             error.setText(taal[170]);
             error.setVisible(true);
         } else {

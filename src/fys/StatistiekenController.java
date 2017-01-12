@@ -61,7 +61,7 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 public class StatistiekenController implements Initializable {
 
     @FXML
-    private Pane home_pane, filterPane;
+    private Pane home_pane, filterPane, pdfPane;
     @FXML
     private PieChart pieChart;
     @FXML
@@ -75,10 +75,12 @@ public class StatistiekenController implements Initializable {
     @FXML
     private ComboBox year, month;
     @FXML
-    private Button exportToPDF, filter, openpopup;
+    private Button exportToPDF, filter, openpopup, cancel, exporttopdf;
     @FXML
     private Label mainFilterLabel, maandFilterLabel, jaarFilterLabel,
-            popup_filterlabel;
+            popup_filterlabel, ErrorLabel, dateToLabel, dateFromLabel;
+    @FXML
+    private TextField dateFrom, dateTo;
     @FXML
     private ArrayList<String> years = new ArrayList<String>();
     @FXML
@@ -99,8 +101,6 @@ public class StatistiekenController implements Initializable {
     @FXML
     private XYChart.Series series = new XYChart.Series<>();
     @FXML
-    private String dateFromInput, dateToInput;
-    @FXML
     private String[] ExportToPdfTexts = {"Status", "Insurance claims", "Amount of Insurance claims",
         "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Found",
         "Lost", "Destroyed", "Completed", "Never found", "Depot"};
@@ -108,7 +108,7 @@ public class StatistiekenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         /**
-         * De taal van de buttons veranderen
+         * De taal veranderen
          */
         exportToPDF.setText(taal[138]);
         openpopup.setText(taal[47]);
@@ -117,6 +117,12 @@ public class StatistiekenController implements Initializable {
         maandFilterLabel.setText(taal[171]);
         jaarFilterLabel.setText(taal[172]);
         popup_filterlabel.setText(taal[47]);
+        dateToLabel.setText(taal[142]);
+        dateFromLabel.setText(taal[141]);
+        dateFrom.setPromptText("01-01-1970");
+        dateTo.setPromptText("31-12-2016");
+        cancel.setText(taal[127]);
+        exporttopdf.setText(taal[140]);
         /**
          * Krijg alle unieke jaren vanuit de database. Wanneer de bagage
          * geregistreerd zijn als vermist of gevonden.
@@ -450,81 +456,30 @@ public class StatistiekenController implements Initializable {
         series.getData().add(new XYChart.Data(taal[89], dec));
     }
 
+    @FXML
+    private void handleCancelPdf(ActionEvent event) throws IOException {
+        home_pane.setDisable(false);
+        pdfPane.setVisible(false);
+    }
+    
+    @FXML
+    private void handleOpenPdf(ActionEvent event) throws IOException {
+        home_pane.setDisable(true);
+        pdfPane.setVisible(true);
+    }
+
     //Wanneer de gebruiker op exporteren klikt.
     @FXML
     private void handleExportToPDFAction(ActionEvent event) throws IOException {
-        // Create the custom dialog.
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
-        dialog.setTitle(taal[138]);
-        dialog.setHeaderText(taal[139]);
-
-        // Set the button types.
-        ButtonType loginButtonType = new ButtonType(taal[140], ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
-
-        String mainbutton = "-fx-padding: 15px 32px;-fx-text-align: center;"
-                + "-fx-text-decoration:none;-fx-display: inline-block;"
-                + "-fx-margin:4px 2px;-fx-cursor: pointer;"
-                + "-fx-text-fill:white;-fx-background-color:#D81E05;"
-                + "-fx-border: 5px;-fx-border-style: solid; "
-                + "-fx-border-color: #D81E05;-fx-background-radius: 0;"
-                + "-fx-font-weight: bold;";
-        String TextField = "-fx-border: 5px; -fx-border-style: solid;"
-                + "-fx-border-color: #666666;-fx-background-radius: 0px;";
-
-        // Create the datefrom and dateto labels and fields.
-        GridPane grid = new GridPane();
-        grid.setHgap(20);
-        grid.setVgap(20);
-
-        TextField dateFrom = new TextField();
-        dateFrom.setStyle(TextField);
-        dateFrom.setPromptText("01-01-1970");
-        TextField dateTo = new TextField();
-        dateTo.setStyle(TextField);
-        dateTo.setPromptText("31-12-2016");
-
-        grid.add(new Label(taal[141] + ":"), 0, 0);
-        grid.add(dateFrom, 1, 0);
-        grid.add(new Label(taal[142] + ":"), 0, 1);
-        grid.add(dateTo, 1, 1);
-
-        Node cancelButton = dialog.getDialogPane().lookupButton(ButtonType.CANCEL);
-        cancelButton.setStyle(mainbutton);
-
-        // Enable/Disable export button depending on whether a datefrom was entered.
-        Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
-        loginButton.setLayoutX(14);
-        loginButton.setStyle(mainbutton);
-        loginButton.setDisable(true);
-
-        dateFrom.textProperty().addListener((observable, oldValue, newValue) -> {
-            loginButton.setDisable(newValue.trim().isEmpty());
-        });
-
-        dialog.getDialogPane().setContent(grid);
-
-        // Request focus on the datefrom field by default.
-        Platform.runLater(() -> dateFrom.requestFocus());
-
-        // Convert the result to a datefrom-dateto-pair when the export button is clicked.
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == loginButtonType) {
-                if ((dateFrom.getText() == null || dateFrom.getText().trim().isEmpty()) || (dateTo.getText() == null || dateTo.getText().trim().isEmpty())) {
-                    return null;
-                } else {
-                    return new Pair<>(dateFrom.getText(), dateTo.getText());
-                }
-            }
-            return null;
-        });
-
-        Optional<Pair<String, String>> result = dialog.showAndWait();
-
-        //Doe dit alleen wanneer er waardes zijn ingevuld.
-        result.ifPresent(dates -> {
-            dateFromInput = dates.getKey();
-            dateToInput = dates.getValue();
+        if ((dateFrom.getText() == null || dateFrom.getText().trim().isEmpty())
+                || (dateTo.getText() == null
+                || dateTo.getText().trim().isEmpty())) {
+            ErrorLabel.setText(taal[93]);
+            ErrorLabel.setVisible(true);
+        } else {
+            String dateFromInput = dateFrom.getText();
+            String dateToInput = dateTo.getText();
+            //Doe dit alleen wanneer er waardes zijn ingevuld.
             lineChart.setAnimated(false);
             pieChart.setAnimated(false);
             //PIECHART
@@ -546,7 +501,6 @@ public class StatistiekenController implements Initializable {
                         + "WHERE date >= \"" + fys.convertToDutchDate(dateFromInput) + "\" "
                         + "AND date <= \"" + fys.convertToDutchDate(dateToInput) + "\" "
                         + "GROUP BY status";
-                System.out.println(sql);
                 //Voeg alle aantallen per status toe aan variabelen.
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
@@ -766,11 +720,14 @@ public class StatistiekenController implements Initializable {
                 //Verwijder de plaatjes die waren opgeslagen.
                 savePieChartAsPng().delete();
                 saveLineChartAsPng().delete();
+                
+                //Sluit de popup
+                home_pane.setDisable(false);
+                pdfPane.setVisible(false);
             } catch (IOException ex) {
                 Logger.getLogger(StatistiekenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        filter.fire();
+            }  
+        }
     }
 
     public File savePieChartAsPng() {

@@ -17,7 +17,7 @@
         <Pane id="pagestyle" fx:id="home_pane" layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0">
             <children>
                 <PieChart id="pieChart" fx:id="pieChart" layoutX="400.0" layoutY="77.0" prefHeight="391.0" prefWidth="386.0" />
-                <LineChart id="lineChart" fx:id="lineChart" layoutX="14.0" layoutY="14.0" prefHeight="454.0" prefWidth="386.0">
+                <LineChart id="lineChart" fx:id="lineChart" layoutX="14.0" layoutY="20.0" prefHeight="448.0" prefWidth="386.0">
                     <xAxis>
                         <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -25,8 +25,33 @@
                         <NumberAxis side="LEFT" />
                     </yAxis>
                 </LineChart>
-                <Button id="mainbutton" fx:id="exportToPDF" layoutX="600.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleExportToPDFAction" prefHeight="49.0" prefWidth="186.0" text="Exporteren naar PDF" />
+                <Button id="mainbutton" fx:id="exportToPDF" layoutX="600.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleOpenPdf" prefHeight="49.0" prefWidth="186.0" text="Exporteren naar PDF" />
                 <Button id="mainbutton" fx:id="openpopup" layoutX="400.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleOpenFilter" prefHeight="49.0" prefWidth="186.0" text="Filteren" />
+            </children>
+        </Pane>
+        <Pane id="popup" fx:id="pdfPane" layoutX="300.0" layoutY="214.0" prefHeight="250.0" prefWidth="400.0" visible="false">
+            <children>
+                <Label id="popup_filterlabel" fx:id="popup_pdflabel" alignment="CENTER" layoutY="5.0" prefHeight="20.0" prefWidth="400.0" text="Exporteren naar PDF" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Button id="popup_close" fx:id="closepdfpopup" layoutX="331.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleCancelPdf" prefHeight="20.0" prefWidth="61.0">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/popup-close.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <TextField id="TextField" fx:id="dateFrom" layoutX="166.0" layoutY="76.0" prefHeight="31.0" prefWidth="220.0" />
+                <TextField id="TextField" fx:id="dateTo" layoutX="166.0" layoutY="127.0" prefHeight="31.0" prefWidth="220.0" />             
+                <Button id="mainbutton" fx:id="exporttopdf" layoutX="14.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleExportToPDFAction" prefHeight="49.0" prefWidth="179.0" text="Filteren" />            
+                <Button id="mainbutton" fx:id="cancel" layoutX="207.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleCancelPdf" prefHeight="49.0" prefWidth="179.0" text="Annuleren" />                           
+                <Label fx:id="dateFromLabel" layoutX="14.0" layoutY="76.0" prefHeight="31.0" prefWidth="126.0" text="Maand" />
+                <Label fx:id="dateToLabel" layoutX="14.0" layoutY="127.0" prefHeight="31.0" prefWidth="126.0" text="Jaar" />
+                <Label fx:id="ErrorLabel" layoutX="14.0" layoutY="37.0" prefHeight="31.0" prefWidth="372.0" textFill="RED" visible="false" />              
             </children>
         </Pane>
         <Pane id="popup" fx:id="filterPane" layoutX="300.0" layoutY="214.0" prefHeight="250.0" prefWidth="400.0" visible="false">

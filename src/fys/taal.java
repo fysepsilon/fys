@@ -240,8 +240,8 @@ public class taal {
                 languagefields[172] = "Year";
                 languagefields[173] = "You can filter your statistics through here.";
                 languagefields[174] = "Mandatory fields.";
-                languagefields[175] = "Goud";
                 languagefields[175] = "Gold";
+                languagefields[176] = "Application theme";
                 break;
             case 1:
                 // Nederlands
@@ -435,7 +435,7 @@ public class taal {
                 languagefields[173] = "Je kan via hier de statistieken filteren.";
                 languagefields[174] = "Verplichte velden.";
                 languagefields[175] = "Goud";
-                languagefields[176] = "Thema";
+                languagefields[176] = "Applicatie thema";
                 break;
             case 2:
                 // Spaans
@@ -633,6 +633,7 @@ public class taal {
                 languagefields[173] = "Puedes realizar un filtrado sus estadísticas por aquí.";
                 languagefields[174] = "Campos obligatorios.";
                 languagefields[175] = "Oro";
+                languagefields[176] = "El tema de la aplicación";
                 break;
             case 3:
                 // Turks
@@ -826,6 +827,7 @@ public class taal {
                 languagefields[173] = "Burada aracılığıyla istatistiklerini filtre edebilirsiniz.";
                 languagefields[174] = "Zorunlu alanlar.";
                 languagefields[175] = "Altın";
+                languagefields[176] = "Uygulama teması";
                 break;
             default:
                 // Duits
@@ -1023,6 +1025,7 @@ public class taal {
                 languagefields[173] = "Sie können Ihre Statistiken durch hier filtern.";
                 languagefields[174] = "Pflichtfelder.";
                 languagefields[175] = "Gold";
+                languagefields[176] = "Anwendung Thema";
                 break;
         }
         return languagefields;

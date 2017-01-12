@@ -55,7 +55,7 @@ public class InstellingenController implements Initializable {
         save.setDefaultButton(true);
         language.getItems().addAll(taal[69],taal[70], taal[71], taal[72], 
                 taal[165]);
-        style.getItems().addAll(taal[34], taal[38], taal[175]);
+        style.getItems().addAll(taal[34], taal[175], taal[38]);
         //Krijg de gegevens van de gebruiker die ingelogd is.
         //Vul de textfields in met gegevens die zijn opgehaald.
         try {
@@ -119,6 +119,8 @@ public class InstellingenController implements Initializable {
                 login.setEmail(username.getText());
                 languages.setLanguage(fys.getUserLanguageString(language.getSelectionModel().getSelectedItem().toString()));
                 taal = languages.getLanguage();
+                loginController loginController = new loginController();
+                loginController.setUserstyle(fys.getUserStyleString(style.getSelectionModel().getSelectedItem().toString()));
                 
                 //Geef een melding in de taal die is geinstalleerd dat de gegevens zijn aangepast.
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);

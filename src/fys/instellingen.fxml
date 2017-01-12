@@ -14,18 +14,20 @@
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
         <Pane id="pagestyle" layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0">
            <children>
-               <Button id="mainbutton" fx:id="save" layoutX="78.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleSaveAction" prefHeight="49.0" prefWidth="596.0" text="Opslaan" />
+               <Button id="mainbutton" fx:id="save" layoutX="77.0" layoutY="376.0" mnemonicParsing="false" onAction="#handleSaveAction" prefHeight="49.0" prefWidth="596.0" text="Opslaan" />
                <TextField id="TextField" fx:id="username" layoutX="242.0" layoutY="128.0" prefHeight="31.0" prefWidth="431.0" />
                <Text fx:id="email_label" layoutX="78.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mailadres:" />
-               <ComboBox id="ComboBox" fx:id="language" layoutX="242.0" layoutY="246.0" prefHeight="31.0" prefWidth="431.0" />
+               <ComboBox id="ComboBox" fx:id="language" layoutX="242.0" layoutY="252.0" prefHeight="31.0" prefWidth="431.0" />
                <Text fx:id="password_label" layoutX="78.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wachtwoord:" />
                <PasswordField id="TextField" fx:id="password" layoutX="242.0" layoutY="190.0" prefHeight="31.0" prefWidth="431.0" />
-               <Text fx:id="language_label" layoutX="78.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Taal:" />
+               <Text fx:id="language_label" layoutX="79.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Taal:" />
                <Label id="loginerror" fx:id="error" alignment="CENTER" layoutX="200.0" layoutY="143.0" prefHeight="25.0" prefWidth="596.0" textFill="RED" visible="false">
                    <font>
                        <Font name="System Bold" size="16.0" />
                    </font>
                </Label>
+            <Text fx:id="style_label" layoutX="79.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Style:" />
+            <ComboBox id="ComboBox" fx:id="style" layoutX="243.0" layoutY="314.0" prefHeight="31.0" prefWidth="431.0" />
            </children>
         </Pane>
     </children>

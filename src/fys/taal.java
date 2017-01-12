@@ -435,6 +435,7 @@ public class taal {
                 languagefields[173] = "Je kan via hier de statistieken filteren.";
                 languagefields[174] = "Verplichte velden.";
                 languagefields[175] = "Goud";
+                languagefields[176] = "Thema";
                 break;
             case 2:
                 // Spaans

@@ -86,7 +86,7 @@ public class BagagedatabaseController implements Initializable {
             airportLabel, labelLabel, flightLabel, destinationLabel,
             typeLabel, brandLabel, colorLabel, characteristicsLabel,
             pictureLabel, statusLabel, personIdLabel, lafIdLabel,
-            tableFromLabel, loginerror, shipaddresLabel, popup_filterlabel, 
+            tableFromLabel, loginerror, shipaddressLabel, popup_filterlabel, 
             popupLabelStatus, popupLabelType, popupLabelKleur, popupLabelMerk, 
             popupLabelDatum, popupLabelEi;
     @FXML
@@ -432,7 +432,7 @@ public class BagagedatabaseController implements Initializable {
         nameInput.setText(dr_name);
         surNameInput.setText(dr_surname);
         addressInput.setText(dr_address);
-        shipaddresLabel.setText(dr_shipaddress);
+        shipaddressLabel.setText(dr_shipaddress);
         residenceInput.setText(dr_residence);
         zipcodeInput.setText(dr_zipcode);
         countryInput.setText(dr_country);
@@ -476,7 +476,7 @@ public class BagagedatabaseController implements Initializable {
                         Integer.parseInt(tableFromLabel.getText()),
                         fys.getStatusString(statusCombo.getValue().toString()),
                         (airportCombo.getValue() == null ? "": airportCombo.getValue().toString()), nameInput.getText(),
-                        surNameInput.getText(), addressInput.getText(), 
+                        surNameInput.getText(), addressInput.getText(), shipaddressLabel.getText(),
                         residenceInput.getText(), zipcodeInput.getText(), countryInput.getText(),
                         phoneInput.getText(), mailInput.getText(), 
                         labelNumberInput.getText(), filePath, 
@@ -491,7 +491,7 @@ public class BagagedatabaseController implements Initializable {
 
     private void sendToDatabase(int dr_id, int dr_personId, int dr_lafId,
             int tableFrom, int status, String airport, String frontname,
-            String surname, String address,
+            String surname, String address, String shipaddress,
             String residence, String zipcode, String country, String phone,
             String mail, String labelnumber, String filePath,
             String flightnumber, String destination, int type, String brand,
@@ -640,7 +640,7 @@ public class BagagedatabaseController implements Initializable {
                         field.setValue(country);
                     }
                     if (field.getFullyQualifiedName().equals("address_field")) {
-                        field.setValue(address);
+                        field.setValue(shipaddress);
                     }
                     if (field.getFullyQualifiedName().equals("city_field")) {
                         field.setValue(residence);

@@ -79,7 +79,7 @@
                         <Label fx:id="zipcodeLabel" prefHeight="30.0" prefWidth="126.0" text="Postcode:" GridPane.rowIndex="6" />
                         <Label fx:id="residenceLabel" prefHeight="30.0" prefWidth="126.0" text="Woonplaats:" GridPane.rowIndex="5" />
                         <Label fx:id="addressLabel" prefHeight="30.0" prefWidth="126.0" text="Adres:" GridPane.rowIndex="4" />
-                        <Label fx:id="shipaddresLabel" prefHeight="30.0" prefWidth="126.0" text="Afleveradres:" GridPane.rowIndex="4" visible="false" />
+                        <Label fx:id="shipaddressLabel" prefHeight="30.0" prefWidth="126.0" text="Afleveradres:" GridPane.rowIndex="4" visible="false" />
                         <Label fx:id="surNameLabel" prefHeight="30.0" prefWidth="126.0" text="Achternaam:" GridPane.rowIndex="3" />
                         <Label fx:id="nameLabel" prefHeight="30.0" prefWidth="126.0" text="Voornaam:" GridPane.rowIndex="2" />
                         <Label fx:id="airportLabel" prefHeight="30.0" prefWidth="126.0" text="Luchthaven:" GridPane.rowIndex="1" />

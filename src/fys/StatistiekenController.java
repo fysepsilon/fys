@@ -125,7 +125,7 @@ public class StatistiekenController implements Initializable {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
             String sql = "SELECT DISTINCT YEAR(STR_TO_DATE(date, \"%Y-%m-%d\")) as date "
-                    + "from bagagedatabase.airport";
+                    + "from bagagedatabase.luggage_status";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //voeg alle jaren in de array van years.
@@ -158,11 +158,8 @@ public class StatistiekenController implements Initializable {
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-            String sql = "SELECT x.status, COUNT(x.status) AS Count FROM "
-                    + "(SELECT status FROM lost "
-                    + "UNION ALL "
-                    + "SELECT status FROM found) x "
-                    + "GROUP BY x.status";
+            String sql = "SELECT status, COUNT(status) AS Count FROM "
+                    + "bagagedatabase.luggage_status GROUP BY status;";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 luggage++;
@@ -232,7 +229,8 @@ public class StatistiekenController implements Initializable {
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-            String sql = "SELECT date, COUNT(date) as Count FROM bagagedatabase.insurance_claim GROUP BY date;";
+            String sql = "SELECT date, COUNT(date) as Count FROM bagagedatabase.luggage_status "
+                    + "WHERE status = 6 GROUP BY date;";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name
@@ -296,6 +294,9 @@ public class StatistiekenController implements Initializable {
     @FXML
     private void handleFilterAction(ActionEvent event) throws IOException, InterruptedException {
         //PIECHART
+        //close filterpane.
+        filterPane.setVisible(false);
+        home_pane.setDisable(false);
         //Maak alle variablen en arrays weer leeg.
         int luggage = 0, foundAmount = 0, lostAmount = 0, destroyAmount = 0, settleAmount = 0,
                 neverFoundAmount = 0, depotAmount = 0;
@@ -309,34 +310,30 @@ public class StatistiekenController implements Initializable {
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-            String sql = "SELECT x.status, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
-                    + "FROM (SELECT status, date FROM lost, airport "
-                    + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
-                    + "UNION ALL SELECT status, date FROM found, airport "
-                    + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x ";
+            String sql = "SELECT status, COUNT(status) AS Count, YEAR(date) as year, MONTH(date) as month FROM "
+                    + "bagagedatabase.luggage_status ";
             if ((year.getSelectionModel().getSelectedItem().toString() == null
                     || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())
                     && (month.getSelectionModel().getSelectedItem().toString() == null
                     || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty())) {
-                sql += "WHERE YEAR(x.date) LIKE \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
-                        + "AND MONTH(x.date) LIKE \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
-                        + "GROUP BY x.status";
+                sql += "WHERE YEAR(date) LIKE \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
+                        + "AND MONTH(date) LIKE \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
+                        + "GROUP BY status";
             } else if ((year.getSelectionModel().getSelectedItem().toString() == null
                     || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())) {
-                sql += "WHERE YEAR(x.date) LIKE \"%%\" "
-                        + "AND MONTH(x.date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
-                        + "GROUP BY x.status";
+                sql += "WHERE YEAR(date) LIKE \"%%\" "
+                        + "AND MONTH(date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
+                        + "GROUP BY status";
             } else if (month.getSelectionModel().getSelectedItem().toString() == null
                     || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty()) {
-                sql += "WHERE YEAR(x.date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
-                        + "AND MONTH(x.date) LIKE \"%%\" "
-                        + "GROUP BY x.status";
+                sql += "WHERE YEAR(date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
+                        + "AND MONTH(date) LIKE \"%%\" "
+                        + "GROUP BY status";
             } else {
-                sql += "WHERE YEAR(x.date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
-                        + "AND MONTH(x.date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
-                        + "GROUP BY x.status";
+                sql += "WHERE YEAR(date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "%\" "
+                        + "AND MONTH(date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "%\" "
+                        + "GROUP BY status";
             }
-
             //Voeg de aantallen van de statussen toe aan de variablen. 
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
@@ -388,22 +385,23 @@ public class StatistiekenController implements Initializable {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
             //Krijg alle schadeclaims voor de linechart waar het jaar en maand gelijk is aan het geselecteerde jaar en maand.
-            String sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM insurance_claim ";
+            String sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM luggage_status ";
             if ((year.getSelectionModel().getSelectedItem().toString() == null || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())
                     && (month.getSelectionModel().getSelectedItem().toString() == null || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty())) {
                 sql += "WHERE YEAR(date) LIKE \"%%\" "
-                        + "AND MONTH(date) LIKE \"%%\" GROUP BY date ";
+                        + "AND MONTH(date) LIKE \"%%\" and status = 6 GROUP BY date ";
             } else if ((year.getSelectionModel().getSelectedItem().toString() == null || year.getSelectionModel().getSelectedItem().toString().trim().isEmpty())) {
                 sql += "WHERE YEAR(date) LIKE \"%%\" "
-                        + "AND MONTH(date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "\" GROUP BY date ";
+                        + "AND MONTH(date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "\" "
+                        + "and status = 6 GROUP BY date ";
             } else if (month.getSelectionModel().getSelectedItem().toString() == null || month.getSelectionModel().getSelectedItem().toString().trim().isEmpty()) {
                 sql += "WHERE YEAR(date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "\" "
-                        + "AND MONTH(date) LIKE \"%%\" GROUP BY date ";
+                        + "AND MONTH(date) LIKE \"%%\" and status = 6 GROUP BY date ";
             } else {
                 sql += "WHERE YEAR(date) = \"" + year.getSelectionModel().getSelectedItem().toString() + "\" "
-                        + "AND MONTH(date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "\" GROUP BY date ";
+                        + "AND MONTH(date) = \"" + fys.getMonthNumber(month.getSelectionModel().getSelectedItem().toString()) + "\" and status = 6 "
+                        + "GROUP BY date ";
             }
-
             //Voeg de aantal schadeclaims per maand toe aan variablen.
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -544,15 +542,11 @@ public class StatistiekenController implements Initializable {
                 conn = fys.connectToDatabase(conn);
                 stmt = conn.createStatement();
                 //connectToDatabase(conn, stmt, "test", "root", "root"); 
-                String sql = "SELECT x.status, x.date, COUNT(x.status) AS Count "
-                        + "FROM (SELECT status, date FROM lost, airport "
-                        + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
-                        + "UNION ALL SELECT status, date FROM found, airport "
-                        + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
-                        + "WHERE date BETWEEN \"" + fys.convertToDutchDate(dateFromInput) + "\" "
-                        + "AND \"" + fys.convertToDutchDate(dateToInput) + "\" "
-                        + "GROUP BY x.status";
-
+                String sql = "SELECT status, date, COUNT(status) AS Count FROM bagagedatabase.luggage_status "
+                        + "WHERE date >= \"" + fys.convertToDutchDate(dateFromInput) + "\" "
+                        + "AND date <= \"" + fys.convertToDutchDate(dateToInput) + "\" "
+                        + "GROUP BY status";
+                System.out.println(sql);
                 //Voeg alle aantallen per status toe aan variabelen.
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
@@ -603,10 +597,11 @@ public class StatistiekenController implements Initializable {
             try {
                 conn = fys.connectToDatabase(conn);
                 stmt = conn.createStatement();
-                String sql = "SELECT date, COUNT(date) as Count FROM insurance_claim "
-                        + "WHERE date BETWEEN \"" + fys.convertToDutchDate(dateFromInput) + "\" "
-                        + "AND \"" + fys.convertToDutchDate(dateToInput) + "\" "
+                String sql = "SELECT date, COUNT(date) as Count FROM bagagedatabase.luggage_status "
+                        + "WHERE status = 6 AND date >= \"" + fys.convertToDutchDate(dateFromInput) + "\" "
+                        + "AND date <= \"" + fys.convertToDutchDate(dateToInput) + "\" "
                         + "GROUP BY date";
+                System.out.println(sql);
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {
                     //Retrieve by column name

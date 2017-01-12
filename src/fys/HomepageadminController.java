@@ -56,7 +56,7 @@ public class HomepageadminController implements Initializable {
         AnchorPane.setStyle("");
         
         //Krijg de datum van vandaag terug en split het in jaar en maand.
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-M-dd HH:mm");
         Date date = new Date();
         String dateTimeString = dateFormat.format(date);
         String[] tokens = dateTimeString.split("-");
@@ -92,10 +92,10 @@ public class HomepageadminController implements Initializable {
         //Krijg alle gegevens van deze maand van de aangevraagde schadeclaims en voeg ze toe aan variablen.
         try {
             conn = fys.connectToDatabase(conn);
-            stmt = conn.createStatement();        
-            String sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM bagagedatabase.insurance_claim "
-                    +"WHERE YEAR(date) LIKE \"%" + year + "%\" "
-                    + "AND MONTH(date) LIKE \"%" + months + "%\" ";
+            stmt = conn.createStatement();
+            String sql = "SELECT date, YEAR(date) AS year, MONTH(date) AS month, COUNT(date) as Count FROM bagagedatabase.luggage_status "
+                    + "WHERE YEAR(date) LIKE \"%" + year + "%\" " 
+                    + "AND MONTH(date) LIKE \"%" + months + "%\" AND status = 6 GROUP BY date";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 if(rs.getString("date") != null){
@@ -165,15 +165,10 @@ public class HomepageadminController implements Initializable {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
             //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql = "SELECT x.status, YEAR(x.date) AS year, MONTH(x.date) AS month, COUNT(x.status) AS Count "
-                    + "FROM (SELECT status, date FROM lost, airport "
-                    + "WHERE lost.lost_and_found_id = airport.lost_and_found_id "
-                    + "UNION ALL SELECT status, date FROM found, airport "
-                    + "WHERE found.lost_and_found_id = airport.lost_and_found_id) x "
-                    + "WHERE YEAR(x.date) LIKE \"%" + year + "%\" "
-                    + "AND MONTH(x.date) LIKE \"%" + months + "%\" "
-                    + "GROUP BY x.status";
-            
+            String sql = "SELECT status, COUNT(*) as Count FROM bagagedatabase.luggage_status "
+                    + "WHERE YEAR(date) LIKE \"%" + year + "%\" "
+                    + "AND MONTH(date) LIKE \"%" + months + "%\" "
+                    + "GROUP BY status;";
 
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {

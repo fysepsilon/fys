@@ -239,6 +239,7 @@ public class taal {
                 languagefields[171] = "Month";
                 languagefields[172] = "Year";
                 languagefields[173] = "You can filter your statistics through here.";
+                languagefields[174] = "Mandatory fields.";
                 break;
             case 1:
                 // Nederlands
@@ -430,7 +431,8 @@ public class taal {
                 languagefields[171] = "Maand";
                 languagefields[172] = "Jaar";
                 languagefields[173] = "Je kan via hier de statistieken filteren.";
-                languagefields[174] = "Goud";
+                languagefields[174] = "Verplichte velden.";
+                languagefields[175] = "Goud";
                 break;
             case 2:
                 // Spaans
@@ -626,6 +628,7 @@ public class taal {
                 languagefields[171] = "Mes";
                 languagefields[172] = "Año";
                 languagefields[173] = "Puedes realizar un filtrado sus estadísticas por aquí.";
+                languagefields[174] = "Campos obligatorios.";
                 break;
             case 3:
                 // Turks
@@ -817,6 +820,7 @@ public class taal {
                 languagefields[171] = "Ay";
                 languagefields[172] = "Yıl";
                 languagefields[173] = "Burada aracılığıyla istatistiklerini filtre edebilirsiniz.";
+                languagefields[174] = "Zorunlu alanlar.";
                 break;
             default:
                 // Duits
@@ -1012,6 +1016,7 @@ public class taal {
                 languagefields[171] = "Monat";
                 languagefields[172] = "Jahr";
                 languagefields[173] = "Sie können Ihre Statistiken durch hier filtern.";
+                languagefields[174] = "Pflichtfelder.";
                 break;
         }
         return languagefields;

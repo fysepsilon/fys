@@ -428,6 +428,7 @@ public class BagagedatabaseController implements Initializable {
         lafIdLabel.setText(String.valueOf(dr_lafId));
         tableFromLabel.setText(String.valueOf(drFrom));
         statusCombo.setValue(dr_status);
+        airportCombo.setValue(dr_airport);
         nameInput.setText(dr_name);
         surNameInput.setText(dr_surname);
         addressInput.setText(dr_address);
@@ -474,10 +475,9 @@ public class BagagedatabaseController implements Initializable {
                         Integer.parseInt(lafIdLabel.getText()), 
                         Integer.parseInt(tableFromLabel.getText()),
                         fys.getStatusString(statusCombo.getValue().toString()),
-                        airportCombo.getValue().toString(), nameInput.getText(),
+                        (airportCombo.getValue() == null ? "": airportCombo.getValue().toString()), nameInput.getText(),
                         surNameInput.getText(), addressInput.getText(), 
-                        shipaddresLabel.getText(), residenceInput.getText(), 
-                        zipcodeInput.getText(), countryInput.getText(),
+                        residenceInput.getText(), zipcodeInput.getText(), countryInput.getText(),
                         phoneInput.getText(), mailInput.getText(), 
                         labelNumberInput.getText(), filePath, 
                         flightNumberInput.getText(), destination,
@@ -491,7 +491,7 @@ public class BagagedatabaseController implements Initializable {
 
     private void sendToDatabase(int dr_id, int dr_personId, int dr_lafId,
             int tableFrom, int status, String airport, String frontname,
-            String surname, String address, String shipaddress,
+            String surname, String address,
             String residence, String zipcode, String country, String phone,
             String mail, String labelnumber, String filePath,
             String flightnumber, String destination, int type, String brand,
@@ -513,6 +513,7 @@ public class BagagedatabaseController implements Initializable {
 
             String sql_lost = "";
             String sql_airport = "";
+            String sql_status = "";
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date date = new Date();
             String dateTimeString = dateFormat.format(date);
@@ -528,6 +529,10 @@ public class BagagedatabaseController implements Initializable {
                         + "picture='" + filePath + "', type='" + type + "', brand='" + brand + "',"
                         + "color='" + color + "', characteristics='" + characteristics + "'"
                         + "WHERE id='" + dr_id + "'";
+                
+                //Registreer de status van een bagage.
+                sql_status = "INSERT INTO luggage_status VALUES(" + dr_id + ", '" + 
+                        dateString + "', '" + timeString + "', '" + status + "', 0);";
 
                 switch (status) {
                     //case 0: Gaat van lost naar status Gevonden
@@ -544,11 +549,6 @@ public class BagagedatabaseController implements Initializable {
                                 + "destination='" + destination + "'"
                                 + "WHERE lost_and_found_id='" + dr_lafId + "'";
                         break;
-                    //case 6: registreer schadeclaim de status zal niet veranderen.    
-                    case 6:
-                        sql_airport = "INSERT INTO insurance_claim VALUES(" + dr_id + ", '" + dateString + "', "
-                                + "'" + timeString + "', 0);";
-                        break;
                     //default: Gaat van lost naar status Vermist, Vernietigd, Nooit Gevonden of Depot 
                     default:
                         sql_airport = "UPDATE bagagedatabase.airport SET airport_lost='" + airport + "',"
@@ -562,7 +562,11 @@ public class BagagedatabaseController implements Initializable {
                         + "picture='" + filePath + "', type='" + type + "', brand='" + brand + "',"
                         + "color='" + color + "', characteristics='" + characteristics + "'"
                         + "WHERE id='" + dr_id + "'";
-
+                
+                //Registreer de status van een bagage.
+                sql_status = "INSERT INTO luggage_status VALUES(" + dr_id + ", '" + 
+                        dateString + "', '" + timeString + "', '" + status + "', 1);";
+                
                 switch (status) {
                     //case 1: Gaat van found naar status Vermist
                     case 1:
@@ -577,12 +581,7 @@ public class BagagedatabaseController implements Initializable {
                                 + "label_number='" + labelnumber + "', flight_number='" + flightnumber + "',"
                                 + "destination='" + destination + "'"
                                 + "WHERE lost_and_found_id='" + dr_lafId + "'";
-                        break;
-                    //case 6: registreer schadeclaim de status zal niet veranderen.     
-                    case 6:
-                        sql_airport = "INSERT INTO insurance_claim VALUES(" + dr_id + ", '" + dateString + "', "
-                                + "'" + timeString + "', 1);";
-                        break;
+                        break;     
                     //default: Gaat van found naar status Gevonden, Vernietigd, Nooit gevonden, Depot 
                     default:
                         sql_airport = "UPDATE bagagedatabase.airport SET airport_found='" + airport + "',"
@@ -596,15 +595,23 @@ public class BagagedatabaseController implements Initializable {
                 stmt.executeUpdate(sql_lost);
             }
             stmt.executeUpdate(sql_airport);
-
+            if(status != fys.getStatusString(dr_status)){
+                stmt.executeUpdate(sql_status);
+            }
+            
             if (status != 3) {
                 int pageid = 4;
                 int type_email = 0;
-
-                // Email bericht filteren op sommige woorden.            
-                String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, fys.Email_Language(mailInput.getText()), pageid), mailInput.getText(), Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
-                // Email versturen
-                fys.sendEmail(mailInput.getText(), fys.Email_Subject(type_email, fys.Email_Language(mailInput.getText()), pageid), getmessage, "Sent message successfully....");
+                if(mailInput.getText() == null || !FYS.isValidEmailAddress(mailInput.getText()) || mailInput.getText().trim().isEmpty()){
+                    
+                } else{
+                    // Email bericht filteren op sommige woorden.
+                        String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, 
+                            fys.Email_Language(mailInput.getText()), pageid), mailInput.getText(), 
+                            Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
+                    // Email versturen
+                        fys.sendEmail(mailInput.getText(), fys.Email_Subject(type_email, fys.Email_Language(mailInput.getText()), pageid), getmessage, "Sent message successfully....");
+                }
             }
 
             /*Indien de status wordt veranderd naar afgehandeld wordt er een DHL-
@@ -633,7 +640,7 @@ public class BagagedatabaseController implements Initializable {
                         field.setValue(country);
                     }
                     if (field.getFullyQualifiedName().equals("address_field")) {
-                        field.setValue(shipaddress);
+                        field.setValue(address);
                     }
                     if (field.getFullyQualifiedName().equals("city_field")) {
                         field.setValue(residence);
@@ -670,11 +677,15 @@ public class BagagedatabaseController implements Initializable {
 
                 int pageid = 5;
                 int type_email = 0;
-
-                // Email bericht filteren op sommige woorden.            
-                String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, fys.Email_Language(mailInput.getText()), pageid), mailInput.getText(), Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
-                // Email versturen
-                fys.sendEmail(mailInput.getText(), fys.Email_Subject(type_email, fys.Email_Language(mailInput.getText()), pageid), getmessage, "Sent message successfully....");
+                
+                if(mailInput.getText() == null || !FYS.isValidEmailAddress(mailInput.getText()) || mailInput.getText().trim().isEmpty()){
+                    
+                } else{
+                    // Email bericht filteren op sommige woorden.            
+                    String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, fys.Email_Language(mailInput.getText()), pageid), mailInput.getText(), Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
+                    // Email versturen
+                    fys.sendEmail(mailInput.getText(), fys.Email_Subject(type_email, fys.Email_Language(mailInput.getText()), pageid), getmessage, "Sent message successfully....");
+                }
             }
 
             if (status == 4) { //Nooit gevonden
@@ -682,12 +693,14 @@ public class BagagedatabaseController implements Initializable {
                 int type_email = 3; //Onbekend
                 int language_email = 1; //Nederlands ?!
                 String email_paymentdepartment = "fysepsilon@gmail.com"; // Betalingsafdeling mail
-
-                // Email bericht filteren op sommige woorden.            
-                String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, language_email, pageid), mailInput.getText(), Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
-                // Email versturen
-                fys.sendEmail(email_paymentdepartment, fys.Email_Subject(type_email, language_email, pageid), getmessage, "Sent message successfully....");
-
+                if(mailInput.getText() == null || !FYS.isValidEmailAddress(mailInput.getText()) || mailInput.getText().trim().isEmpty()){
+                    
+                } else{
+                    // Email bericht filteren op sommige woorden.            
+                    String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, language_email, pageid), mailInput.getText(), Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
+                    // Email versturen
+                    fys.sendEmail(email_paymentdepartment, fys.Email_Subject(type_email, language_email, pageid), getmessage, "Sent message successfully....");
+                }
             }
 
             pictureButton.setText(taal[44]);

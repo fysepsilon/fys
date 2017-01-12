@@ -158,7 +158,12 @@
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
-                </Label>         
+                </Label>
+            <Label id="loginerror" fx:id="mandatory" alignment="TOP_LEFT" layoutX="557.0" prefHeight="25.0" prefWidth="223.0" textAlignment="RIGHT" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>         
             </children>
         </Pane>
         <Pane id="popup" fx:id="popup" layoutX="220.0" layoutY="159.0" prefHeight="360.0" prefWidth="560.0" visible="false">

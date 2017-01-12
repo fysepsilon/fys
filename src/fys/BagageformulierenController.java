@@ -68,7 +68,7 @@ public class BagageformulierenController implements Initializable {
             flight_label, destination_label, type_label, brand_label,
             color_label, characteristics_label, picture_label, address_label,
             residence_label, zipcode_label, country_label, phone_label,
-            mail_label, loginerror, language_label, popup_label;
+            mail_label, loginerror, language_label, popup_label, mandatory;
     @FXML
     private final FYS fys = new FYS();
     @FXML
@@ -91,6 +91,8 @@ public class BagageformulierenController implements Initializable {
         //Controleren of alles wat ingevuld moet worden is ingevuld
         if ((name_input.getText() == null || name_input.getText().trim().isEmpty())
                 || (surname_input.getText() == null || surname_input.getText().trim().isEmpty())
+                || (country_input.getText() == null || country_input.getText().trim().isEmpty())
+                || (phone_input.getText() == null || phone_input.getText().trim().isEmpty())
                 || (airport_combo.getValue() == null) || (address_input.getText() == null
                 || address_input.getText().trim().isEmpty()) || (residence_input.getText() == null
                 || residence_input.getText().trim().isEmpty()) || (zipcode_input.getText() == null
@@ -183,9 +185,11 @@ public class BagageformulierenController implements Initializable {
             String sql = "SELECT found.*, "
                     + "person.first_name, person.surname FROM found, person "
                     + "WHERE found.person_id = person.person_id "
-                    + "AND found.type='" + fys.getBaggageTypeString(type_combo.getValue().toString()) + "' "
+                    + "AND found.type='" + (type_combo.getValue() == null ? "" 
+                    : fys.getBaggageTypeString(type_combo.getValue().toString())) + "' "
                     + "AND found.brand = '" + brand_input.getText() + "' "
-                    + "AND found.color = '" + fys.getColorString(color_combo.getValue().toString()) + "';";
+                    + "AND found.color = '" + (color_combo.getValue() == null ? "" 
+                    : fys.getColorString(color_combo.getValue().toString())) + "';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name
@@ -278,9 +282,13 @@ public class BagageformulierenController implements Initializable {
             }
 
             // Email bericht filteren op sommige woorden.            
-            String getmessage = fys.replaceEmail(fys.Email_Message(type_email, fys.getUserLanguageString(language_combo.getValue().toString()), pageid), mail_input.getText());
+            String getmessage = fys.replaceEmail(fys.Email_Message(type_email, 
+                    fys.getUserLanguageString(language_combo.getValue().toString()), 
+                    pageid), mail_input.getText());
             // Email versturen
-            fys.sendEmail(mail_input.getText(), fys.Email_Subject(type_email, fys.getUserLanguageString(language_combo.getValue().toString()), pageid), getmessage, "Sent message successfully....");
+            fys.sendEmail(mail_input.getText(), fys.Email_Subject(type_email, 
+                    fys.getUserLanguageString(language_combo.getValue().toString()), pageid), 
+                    getmessage, "Sent message successfully....");
 
             conn.close();
         } catch (SQLException ex) {
@@ -339,34 +347,35 @@ public class BagageformulierenController implements Initializable {
     public void handleFileSelector(ActionEvent event) throws IOException {
         File file = fys.fileChooser();
         //String fileRaw = file.getAbsolutePath();
-        filePath = "/fys/src/fys/luggageImages/" + file.getName();
+        filePath = "/fys/src/fys/luggageImages/" + (file == null ? "" : file.getName());
 
         //filePath = fileRaw.replace("\\","\\\\");
         //System.out.println(filePath);
-        picture_button.setText(file.getName());
+        picture_button.setText((file == null ? "" : file.getName()));
     }
 
     //Methode om alle labels op de pagina in de ingestelde taal te zetten
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        airport_label.setText(taal[8] + ":");
-        name_label.setText(taal[9] + ":");
-        surname_label.setText(taal[10] + ":");
-        address_label.setText(taal[11] + ":");
-        residence_label.setText(taal[12] + ":");
-        zipcode_label.setText(taal[13] + ":");
-        country_label.setText(taal[14] + ":");
-        phone_label.setText(taal[15] + ":");
-        mail_label.setText(taal[16] + ":");
+        mandatory.setText("* " + taal[174]);
+        airport_label.setText(taal[8] + "* :");
+        name_label.setText(taal[9] + "* :");
+        surname_label.setText(taal[10] + "* :");
+        address_label.setText(taal[11] + "* :");
+        residence_label.setText(taal[12] + "* :");
+        zipcode_label.setText(taal[13] + "* :");
+        country_label.setText(taal[14] + "* :");
+        phone_label.setText(taal[15] + "* :");
+        mail_label.setText(taal[16] + "* :");
         label_label.setText(taal[17] + ":");
         flight_label.setText(taal[18] + ":");
         destination_label.setText(taal[19] + ":");
-        type_label.setText(taal[20] + ":");
-        brand_label.setText(taal[21] + ":");
-        color_label.setText(taal[22] + ":");
+        type_label.setText(taal[20] + "* :");
+        brand_label.setText(taal[21] + "* :");
+        color_label.setText(taal[22] + "* :");
         characteristics_label.setText(taal[23] + ":");
         picture_label.setText(taal[24] + ":");
-        language_label.setText(taal[68] + ":");
+        language_label.setText(taal[68] + "* :");
         language_combo.getItems().addAll(
                 taal[69], taal[70], taal[71], taal[72], taal[165]);
 

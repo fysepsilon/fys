@@ -5,6 +5,7 @@
  */
 package fys;
 
+import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -167,7 +168,7 @@ public class FYS extends Application {
         taal language = new taal();
         String[] taal = language.getLanguage();
         if (type == 1) { //Goud
-            return taal[174];
+            return taal[175];
         } else if (type == 2) { // Blauw
             return taal[38];
         }
@@ -177,7 +178,7 @@ public class FYS extends Application {
      public Integer getUserStyleString(String type) {
         taal language = new taal();
         String[] taal = language.getLanguage();
-        if (type.equals(taal[174])) {
+        if (type.equals(taal[175])) {
             return 1;
         } else if (type.equals(taal[38])) {
             return 2;
@@ -797,7 +798,7 @@ public class FYS extends Application {
      * @param printMessage Eventueel printen dat het is verstuurd.
      * @throws UnsupportedEncodingException
      */
-    public void sendEmail(String to, String subject, String content, String printMessage) throws UnsupportedEncodingException {
+    public void sendEmail(String to, String subject, String content, String printMessage) throws UnsupportedEncodingException, IOException {
         String from = "admin@corendon.com";
         final String username = "fysepsilon@gmail.com";//Gmail-username
         final String password = "epsilonfys";//Gmail-password
@@ -850,7 +851,7 @@ public class FYS extends Application {
                     "text/html; charset=UTF-8");
 
             // Loading the image
-            DataSource ds = new FileDataSource("C:\\Users\\Veron\\Documents\\NetBeansProjects\\CorendonProject\\fys\\src\\fys\\images\\corendon_logo.png");
+            DataSource ds = new FileDataSource("src/fys/images/corendon_logo.png");
             imgPart.setDataHandler(new DataHandler(ds));
 
             // Send message
@@ -878,7 +879,6 @@ public class FYS extends Application {
         getmessage = getmessage.replace("*firstname*", Email_Firstname(mail_input));
         getmessage = getmessage.replace("*surname*", Email_Surname(mail_input));
         getmessage = getmessage.replace("*address*", Email_Address(mail_input));
-        getmessage = getmessage.replace("*shipaddress*", Email_Shipaddress(mail_input));
         getmessage = getmessage.replace("*residence*", Email_Residence(mail_input));
         getmessage = getmessage.replace("*zip_code*", Email_Zipcode(mail_input));
         getmessage = getmessage.replace("*country*", Email_Country(mail_input));

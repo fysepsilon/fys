@@ -5,6 +5,7 @@
  */
 package fys;
 
+import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -741,7 +742,7 @@ public class FYS extends Application {
      * @param printMessage Eventueel printen dat het is verstuurd.
      * @throws UnsupportedEncodingException
      */
-    public void sendEmail(String to, String subject, String content, String printMessage) throws UnsupportedEncodingException {
+    public void sendEmail(String to, String subject, String content, String printMessage) throws UnsupportedEncodingException, IOException {
         String from = "admin@corendon.com";
         final String username = "fysepsilon@gmail.com";//Gmail-username
         final String password = "epsilonfys";//Gmail-password
@@ -794,7 +795,7 @@ public class FYS extends Application {
                     "text/html; charset=UTF-8");
 
             // Loading the image
-            DataSource ds = new FileDataSource("C:\\Users\\Veron\\Documents\\NetBeansProjects\\CorendonProject\\fys\\src\\fys\\images\\corendon_logo.png");
+            DataSource ds = new FileDataSource("src/fys/images/corendon_logo.png");
             imgPart.setDataHandler(new DataHandler(ds));
 
             // Send message
@@ -822,7 +823,6 @@ public class FYS extends Application {
         getmessage = getmessage.replace("*firstname*", Email_Firstname(mail_input));
         getmessage = getmessage.replace("*surname*", Email_Surname(mail_input));
         getmessage = getmessage.replace("*address*", Email_Address(mail_input));
-        getmessage = getmessage.replace("*shipaddress*", Email_Shipaddress(mail_input));
         getmessage = getmessage.replace("*residence*", Email_Residence(mail_input));
         getmessage = getmessage.replace("*zip_code*", Email_Zipcode(mail_input));
         getmessage = getmessage.replace("*country*", Email_Country(mail_input));

@@ -430,10 +430,10 @@ public class BagagedatabaseController implements Initializable {
         lafIdLabel.setText(String.valueOf(dr_lafId));
         tableFromLabel.setText(String.valueOf(drFrom));
         statusCombo.setValue(dr_status);
+        airportCombo.setValue(dr_airport);
         nameInput.setText(dr_name);
         surNameInput.setText(dr_surname);
         addressInput.setText(dr_address);
-        // shipaddresLabel.setText(dr_shipaddress);
         residenceInput.setText(dr_residence);
         zipcodeInput.setText(dr_zipcode);
         countryInput.setText(dr_country);
@@ -476,8 +476,7 @@ public class BagagedatabaseController implements Initializable {
                         fys.getStatusString(statusCombo.getValue().toString()),
                         (airportCombo.getValue() == null ? "": airportCombo.getValue().toString()), nameInput.getText(),
                         surNameInput.getText(), addressInput.getText(), 
-                        /*shipaddresLabel.getText(),*/ residenceInput.getText(), 
-                        zipcodeInput.getText(), countryInput.getText(),
+                        residenceInput.getText(), zipcodeInput.getText(), countryInput.getText(),
                         phoneInput.getText(), mailInput.getText(), 
                         labelNumberInput.getText(), filePath, 
                         flightNumberInput.getText(), destination,
@@ -491,7 +490,7 @@ public class BagagedatabaseController implements Initializable {
 
     private void sendToDatabase(int dr_id, int dr_personId, int dr_lafId,
             int tableFrom, int status, String airport, String frontname,
-            String surname, String address, /*String shipaddress,*/
+            String surname, String address,
             String residence, String zipcode, String country, String phone,
             String mail, String labelnumber, String filePath,
             String flightnumber, String destination, int type, String brand,
@@ -602,13 +601,16 @@ public class BagagedatabaseController implements Initializable {
             if (status != 3) {
                 int pageid = 4;
                 int type_email = 0;
-
-                // Email bericht filteren op sommige woorden.            
-                String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, 
-                        fys.Email_Language(mailInput.getText()), pageid), mailInput.getText(), 
-                        Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
-                // Email versturen
-                fys.sendEmail(mailInput.getText(), fys.Email_Subject(type_email, fys.Email_Language(mailInput.getText()), pageid), getmessage, "Sent message successfully....");
+                if(mailInput.getText() == null || !FYS.isValidEmailAddress(mailInput.getText()) || mailInput.getText().trim().isEmpty()){
+                    
+                } else{
+                    // Email bericht filteren op sommige woorden.
+                        String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, 
+                            fys.Email_Language(mailInput.getText()), pageid), mailInput.getText(), 
+                            Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
+                    // Email versturen
+                        fys.sendEmail(mailInput.getText(), fys.Email_Subject(type_email, fys.Email_Language(mailInput.getText()), pageid), getmessage, "Sent message successfully....");
+                }
             }
 
             /*Indien de status wordt veranderd naar afgehandeld wordt er een DHL-
@@ -674,11 +676,15 @@ public class BagagedatabaseController implements Initializable {
 
                 int pageid = 5;
                 int type_email = 0;
-
-                // Email bericht filteren op sommige woorden.            
-                String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, fys.Email_Language(mailInput.getText()), pageid), mailInput.getText(), Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
-                // Email versturen
-                fys.sendEmail(mailInput.getText(), fys.Email_Subject(type_email, fys.Email_Language(mailInput.getText()), pageid), getmessage, "Sent message successfully....");
+                
+                if(mailInput.getText() == null || !FYS.isValidEmailAddress(mailInput.getText()) || mailInput.getText().trim().isEmpty()){
+                    
+                } else{
+                    // Email bericht filteren op sommige woorden.            
+                    String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, fys.Email_Language(mailInput.getText()), pageid), mailInput.getText(), Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
+                    // Email versturen
+                    fys.sendEmail(mailInput.getText(), fys.Email_Subject(type_email, fys.Email_Language(mailInput.getText()), pageid), getmessage, "Sent message successfully....");
+                }
             }
 
             if (status == 4) { //Nooit gevonden
@@ -686,12 +692,14 @@ public class BagagedatabaseController implements Initializable {
                 int type_email = 3; //Onbekend
                 int language_email = 1; //Nederlands ?!
                 String email_paymentdepartment = "fysepsilon@gmail.com"; // Betalingsafdeling mail
-
-                // Email bericht filteren op sommige woorden.            
-                String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, language_email, pageid), mailInput.getText(), Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
-                // Email versturen
-                fys.sendEmail(email_paymentdepartment, fys.Email_Subject(type_email, language_email, pageid), getmessage, "Sent message successfully....");
-
+                if(mailInput.getText() == null || !FYS.isValidEmailAddress(mailInput.getText()) || mailInput.getText().trim().isEmpty()){
+                    
+                } else{
+                    // Email bericht filteren op sommige woorden.            
+                    String getmessage = fys.replaceEmail(fys.replaceEmail_tF(fys.Email_Message(type_email, language_email, pageid), mailInput.getText(), Integer.parseInt(tableFromLabel.getText())), mailInput.getText());
+                    // Email versturen
+                    fys.sendEmail(email_paymentdepartment, fys.Email_Subject(type_email, language_email, pageid), getmessage, "Sent message successfully....");
+                }
             }
 
             pictureButton.setText(taal[44]);

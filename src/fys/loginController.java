@@ -35,6 +35,8 @@ public class loginController implements Initializable {
     @FXML
     private static int usertype;
     @FXML
+    private static int userstyle;
+    @FXML
     private static int userlanguage;
     @FXML
     private static String usersname;
@@ -56,6 +58,14 @@ public class loginController implements Initializable {
     public void setUsertype(int userType) {
         loginController.usertype = userType;
     }
+    
+    public int getUserstyle() {
+        return userstyle;
+    }
+
+    public void setUserstyle(int userStyle) {
+        loginController.userstyle = userStyle;
+    }
 
     public int getUserlanguage() {
         return userlanguage;
@@ -76,6 +86,7 @@ public class loginController implements Initializable {
     public String getUsersName() {
         return usersname;
     }
+    
 
     public void setUsersName(String usersname) {
         loginController.usersname = usersname;
@@ -128,7 +139,7 @@ public class loginController implements Initializable {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
 
-            String sql = "SELECT mail, password, type, first_name, insertion, surname FROM person WHERE mail='" + 
+            String sql = "SELECT mail, password, type, first_name, insertion, surname, style FROM person WHERE mail='" + 
                     inputUsername + "' AND password = '" + inputPassword + "'";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -137,6 +148,7 @@ public class loginController implements Initializable {
                 setEmail(rs.getString("mail"));
                 password = rs.getString("password");
                 setUsertype(rs.getInt("type"));
+                setUserstyle(rs.getInt("style"));
                 setUsersName(rs.getString("first_name").substring(0, 1).toUpperCase() + rs.getString("first_name").substring(1)
                         + " " + rs.getString("insertion") + " "
                         + rs.getString("surname").substring(0, 1).toUpperCase() + rs.getString("surname").substring(1));

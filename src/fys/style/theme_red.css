@@ -1,3 +1,24 @@
+#mainbutton {
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-margin: 4px 2px;
+    -fx-cursor: pointer;
+    -fx-text-fill: #D81E05;
+    -fx-background-color: white;
+    -fx-border: 5px;
+    -fx-border-style: solid;
+    -fx-border-color: #D81E05;
+    -fx-pref-height: 49px;
+    -fx-font-weight:Bold;
+}
+
+#mainbutton:hover {
+    -fx-background-color: #D81E05;
+    -fx-text-fill:white;
+}
+
 #picturebutton{
     /* -fx-padding: 15px 32px; */
     -fx-text-align: center;
@@ -5,33 +26,53 @@
     -fx-display: inline-block;
     -fx-margin: 4px 2px;
     -fx-cursor: pointer;
+    -fx-border: 5px;
+    -fx-border-style: solid;
     -fx-border-color: #d9d9d9;    
     -fx-background-color: #d9d9d9;
 }
 
-#picturebutton:hover{
-    -fx-background-color: white;
-    -fx-text-fill: #666666;
-}
-
 #TextField {
-    -fx-border-color: #CCCCCC;
+    -fx-border: 5px;
+    -fx-border-style: solid;
+    -fx-border-color: #d9d9d9;
     -fx-background-radius: 0px;
     -fx-text-fill:#666666;
 }
 
 #TextArea {
-    -fx-border-color: #CCCCCC;
+    -fx-border: 5px;
+    -fx-border-style: solid;
+    -fx-border-color: #d9d9d9;
     -fx-background-radius: 0px;
     -fx-text-fill:#666666;
 }
 
 #ComboBox {
-    -fx-border-color: #CCCCCC;
+    -fx-border: 5px;
+    -fx-border-style: solid;
+    -fx-border-color: #d9d9d9;
     -fx-background-radius: 0px;
     -fx-background-color: #d9d9d9;
 }
 
+#menubutton {
+    -fx-background-color: #D81E05;
+    -fx-font-size: 14.0;
+    -fx-font-weight: Bold;
+    -fx-background-radius: 0;
+    -fx-text-fill: white;
+}
+
+#menubutton:hover {
+    -fx-background-color: #B81A04;
+}
+
+#splitter {
+    -fx-background-color: #B81A04;
+    -fx-prefHeight: 49.0;
+    -fx-prefWidth: 2.0;
+}
 #background {
      -fx-background-image: url("../images/bg.jpg");
 }

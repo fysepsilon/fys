@@ -59,7 +59,7 @@ public class BagagedatabaseController implements Initializable {
     private ObservableList<Bagage> dataFilter = FXCollections.observableArrayList();
     @FXML
     private TableColumn id, status, type, color, brand, picture, date, 
-            information, firstName, surName, address, shipaddress, residence, 
+            information, firstName, surName, address, residence, 
             zipcode, country, phone, mail, labelNumber, flightNumber, 
             destination, airportFound, airportLost, tableFrom, lostAndFoundID,
             personID, realId;
@@ -202,7 +202,6 @@ public class BagagedatabaseController implements Initializable {
         firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         surName.setCellValueFactory(new PropertyValueFactory<>("surName"));
         address.setCellValueFactory(new PropertyValueFactory<>("address"));
-        shipaddress.setCellValueFactory(new PropertyValueFactory<>("shipaddress"));
         residence.setCellValueFactory(new PropertyValueFactory<>("residence"));
         zipcode.setCellValueFactory(new PropertyValueFactory<>("zipcode"));
         country.setCellValueFactory(new PropertyValueFactory<>("country"));
@@ -228,7 +227,6 @@ public class BagagedatabaseController implements Initializable {
         firstName.setStyle("-fx-alignment: CENTER;");
         surName.setStyle("-fx-alignment: CENTER;");
         address.setStyle("-fx-alignment: CENTER;");
-        shipaddress.setStyle("-fx-alignment: CENTER;");
         residence.setStyle("-fx-alignment: CENTER;");
         zipcode.setStyle("-fx-alignment: CENTER;");
         country.setStyle("-fx-alignment: CENTER;");
@@ -389,7 +387,6 @@ public class BagagedatabaseController implements Initializable {
             String dr_color = (table.getSelectionModel().getSelectedItem().getColor());
             String dr_characteristics = (table.getSelectionModel().getSelectedItem().getInformation());
 
-            System.out.println(dr_shipaddress);
             doNext(dr_id, dr_personId, dr_lafId, drFrom, dr_status, dr_airport,
                     dr_name, dr_surname, dr_address, dr_shipaddress, dr_residence, dr_zipcode,
                     dr_country, dr_phone, dr_mail, dr_label, dr_flight, dr_destination,
@@ -434,7 +431,7 @@ public class BagagedatabaseController implements Initializable {
         nameInput.setText(dr_name);
         surNameInput.setText(dr_surname);
         addressInput.setText(dr_address);
-        // shipaddresLabel.setText(dr_shipaddress);
+        shipaddresLabel.setText(dr_shipaddress);
         residenceInput.setText(dr_residence);
         zipcodeInput.setText(dr_zipcode);
         countryInput.setText(dr_country);
@@ -470,6 +467,8 @@ public class BagagedatabaseController implements Initializable {
                 System.out.println("Emailadres bestaat al!");
                 //Deze mail wordt verstuurd wanneer de status veranderd en niet op afgehandeld is gezet.
             } else {
+                System.out.println(airportCombo.getValue().toString());
+                System.out.println(mailInput.getText());
                 sendToDatabase(Integer.parseInt(idLabel.getText()), 
                         Integer.parseInt(personIdLabel.getText()),
                         Integer.parseInt(lafIdLabel.getText()), 
@@ -505,7 +504,7 @@ public class BagagedatabaseController implements Initializable {
 
             //connectToDatabase(conn, stmt, "test", "root", "root");
             String sql_person = "UPDATE bagagedatabase.person SET first_name='" + frontname + "',"
-                    + "surname='" + surname + "', address='" + address + "', shipaddress='" + shipaddress + "',"
+                    + "surname='" + surname + "', address='" + address + "',"
                     + "residence='" + residence + "', zip_code='" + zipcode + "',"
                     + "country='" + country + "', phone='" + phone + "',"
                     + "mail='" + mail + "'"
@@ -708,7 +707,6 @@ public class BagagedatabaseController implements Initializable {
         File file = fys.fileChooser();
         //String fileRaw = file.getAbsolutePath();
         filePath = "fys/src/fys/luggageImages/" + file.getName();
-        System.out.println(filePath);
         //filePath = fileRaw.replace("\\","\\\\");
         pictureButton.setText(file.getName());
     }

@@ -13,13 +13,14 @@
 
 <AnchorPane id="AnchorPane" fx:id="AnchorPane" prefHeight="120.0" prefWidth="1000.0" stylesheets="@style/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.NavigatiebalkController">
     <children>
+        <Pane id="logo" layoutX="100.0" layoutY="7.0" prefHeight="57.0" prefWidth="200.0" />
         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@images/corendon_logo.png" />
             </image>
         </ImageView>
-        <Label layoutY="73.0" prefHeight="49.0" prefWidth="1000.0" style="-fx-background-color: #D81E05;" />           
-        <MenuBar layoutX="850.0" layoutY="23.0" prefHeight="0.0" prefWidth="50.0" style="-fx-background-color: #D81E05;">
+        <Label id="menubackgroundcolor" layoutY="73.0" prefHeight="49.0" prefWidth="1000.0" />           
+        <MenuBar id="menubackgroundcolor" layoutX="850.0" layoutY="23.0" prefHeight="0.0" prefWidth="50.0">
             <menus>
                 <Menu>
                     <items>

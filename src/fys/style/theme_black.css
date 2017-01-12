@@ -1,37 +1,72 @@
-#picturebutton{
-    /* -fx-padding: 15px 32px; */
+#mainbutton {
+    -fx-padding: 15px 32px;
     -fx-text-align: center;
     -fx-text-decoration: none;
     -fx-display: inline-block;
     -fx-margin: 4px 2px;
     -fx-cursor: pointer;
-    -fx-border-color: #d9d9d9;    
-    -fx-background-color: #d9d9d9;
+    -fx-background-color: white;
+    -fx-border-style:solid;
+    -fx-border-color: black;
+    -fx-pref-height: 49px;
+}
+
+#mainbutton:hover {
+    -fx-background-color: black;
+    -fx-text-fill:white;
+}
+
+#picturebutton{
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-margin: 4px 2px;
+    -fx-cursor: pointer;
+    -fx-border-color: black;    
+    -fx-background-color: black;
+    -fx-text-fill:white;
 }
 
 #picturebutton:hover{
     -fx-background-color: white;
-    -fx-text-fill: #666666;
+    -fx-text-fill: black;
 }
 
 #TextField {
-    -fx-border-color: #CCCCCC;
+    -fx-border-color: black;
     -fx-background-radius: 0px;
-    -fx-text-fill:#666666;
+    -fx-text-fill:white;
 }
 
 #TextArea {
-    -fx-border-color: #CCCCCC;
+    -fx-border-color: black;
     -fx-background-radius: 0px;
-    -fx-text-fill:#666666;
+    -fx-text-fill:white;
 }
 
 #ComboBox {
-    -fx-border-color: #CCCCCC;
+    -fx-border-color: black;
     -fx-background-radius: 0px;
-    -fx-background-color: #d9d9d9;
+    -fx-background-color: white;
 }
 
+#menubutton {
+    -fx-background-color: black;
+    -fx-font-size: 14.0;
+    -fx-font-weight: Bold;
+    -fx-background-radius: 0;
+    -fx-text-fill: white;
+}
+
+#menubutton:hover {
+    -fx-background-color: #666666;
+}
+
+#splitter {
+    -fx-background-color: #666666;
+    -fx-prefHeight: 49.0;
+    -fx-prefWidth: 2.0;
+}
 #background {
      -fx-background-image: url("../images/bg.jpg");
 }

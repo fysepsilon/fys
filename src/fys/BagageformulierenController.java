@@ -229,11 +229,11 @@ public class BagageformulierenController implements Initializable {
 
             //Query om klant toe te voegen aan de database
             String sql_person = "INSERT INTO bagagedatabase.person (type, language, "
-                    + "first_name, surname, address, residence, zip_code, country, "
+                    + "first_name, surname, address, shipaddress, residence, zip_code, country, "
                     + "phone, mail, password) VALUES ('0', '"
                     + fys.getUserLanguageString(language_combo.getSelectionModel().getSelectedItem().toString())
                     + "', '" + frontname + "', "
-                    + "'" + surname + "', '" + address + "', '" + residence + "', "
+                    + "'" + surname + "', '" + address + "', '" + address + "', '" + residence + "', "
                     + "'" + zipcode + "', '" + country + "', '" + phone + "', "
                     + "'" + mail + "', '" + password + "')";
             stmt.executeUpdate(sql_person);

@@ -286,7 +286,7 @@ public class taal {
                 languagefields[41] = "Zwart";
                 languagefields[42] = "Grijs";
                 languagefields[43] = "Wit";
-                languagefields[44] = "Klik hier om een afbeelding toe te voegen";
+                languagefields[44] = "Voeg een afbeelding toe";
                 languagefields[45] = "Aanmaken account";
                 languagefields[46] = "Verzenden";
                 languagefields[47] = "Filteren";
@@ -430,6 +430,7 @@ public class taal {
                 languagefields[171] = "Maand";
                 languagefields[172] = "Jaar";
                 languagefields[173] = "Je kan via hier de statistieken filteren.";
+                languagefields[174] = "Goud";
                 break;
             case 2:
                 // Spaans

@@ -20,11 +20,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -91,10 +88,23 @@ public class FYS extends Application {
      * @throws IOException
      */
     public void changeToAnotherFXML(String title, String changeToWindow) throws IOException {
+        loginController loginController = new loginController();
+        int style = loginController.getUserstyle();
+                
         Parent window1;
         window1 = FXMLLoader.load(getClass().getResource(changeToWindow));
-        String css = this.getClass().getResource("style/theme_normal.css").toExternalForm();
-        window1.getStylesheets().add(css);
+        
+        if (style == 1) {
+            String css = this.getClass().getResource("style/theme_menu_gold.css").toExternalForm();
+            window1.getStylesheets().add(css);
+        } else if (style == 2) {
+            String css = this.getClass().getResource("style/theme_menu_blue.css").toExternalForm();
+            window1.getStylesheets().add(css);
+        } else {
+            String css = this.getClass().getResource("style/theme_menu_default.css").toExternalForm();
+            window1.getStylesheets().add(css);
+        }
+        
         Stage mainStage;
         mainStage = FYS.parentWindow;
         mainStage.setTitle(title);
@@ -102,6 +112,30 @@ public class FYS extends Application {
         mainStage.getScene().setRoot(window1);
 
     }
+    
+    public void changeStyleAndFXML(String title, String changeToWindow, int style) throws IOException, SQLException {
+        Parent window1;
+        window1 = FXMLLoader.load(getClass().getResource(changeToWindow));
+        /*if (PersonStyle(mail_input) == 1) {
+            String css = this.getClass().getResource("style/theme_menu_gold.css").toExternalForm();
+            window1.getStylesheets().add(css);
+        } else if (PersonStyle(mail_input) == 2) {
+            String css = this.getClass().getResource("style/theme_menu_blue.css").toExternalForm();
+            window1.getStylesheets().add(css);
+        } else {
+            String css = this.getClass().getResource("style/theme_menu_default.css").toExternalForm();
+            window1.getStylesheets().add(css);
+        }*/
+        
+        
+        Stage mainStage;
+        mainStage = FYS.parentWindow;
+        mainStage.setTitle(title);
+        mainStage.setResizable(false);
+        mainStage.getScene().setRoot(window1);
+
+    }
+
 
     public void UserManual() {
         taal language = new taal();
@@ -129,6 +163,28 @@ public class FYS extends Application {
         return new String(text);
     }
 
+    public String getUserStyle(int type) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        if (type == 1) { //Goud
+            return taal[174];
+        } else if (type == 2) { // Blauw
+            return taal[38];
+        }
+        return taal[34]; // Rood
+    }
+     
+     public Integer getUserStyleString(String type) {
+        taal language = new taal();
+        String[] taal = language.getLanguage();
+        if (type.equals(taal[174])) {
+            return 1;
+        } else if (type.equals(taal[38])) {
+            return 2;
+        }
+        return 0;
+    }
+    
     /**
      *
      * @param type welke type er is geselecteerd in cijfers.
@@ -1362,6 +1418,33 @@ public class FYS extends Application {
         return mailOphalen;
     }
 
+    public int PersonStyle(String mail_input) throws SQLException {
+        int style = 0;
+
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT style FROM person WHERE mail='" + mail_input + "'";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    style = rs.getInt("style");
+
+                    return style;
+                }
+            }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        conn.close();
+        return style;
+    }
+    
     /**
      *
      * @param tableFrom tableFrom uit db

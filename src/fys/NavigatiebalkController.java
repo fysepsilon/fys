@@ -101,8 +101,6 @@ public class NavigatiebalkController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //genereer de welkom naam.
         loginController loginController = new loginController();
-        String name = loginController.getUsersName().replaceAll("null", "");
-        name = name.replaceAll("  ", " ");
         taal language = new taal();
         //Controleer of een admin of systeembeheerder is ingelogd.
         //Laat box zien als het admin is.

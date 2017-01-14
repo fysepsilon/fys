@@ -91,11 +91,16 @@
                        <Label fx:id="personId_label" prefHeight="30.0" prefWidth="126.0" visible="false" />
                        <Button id="mainbutton" fx:id="cancel_button" layoutX="14.0" layoutY="415.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleCancel" prefHeight="35.0" prefWidth="379.0" text="Annuleren" />
                        <Button id="mainbutton" fx:id="send_button" layoutX="407.0" layoutY="415.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleSendToDatabase" prefHeight="35.0" prefWidth="379.0" text="Verzenden" /> 
-                       <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutX="20.0" layoutY="15.0" prefHeight="25.0" prefWidth="598.0" textFill="RED" visible="false">
+                       <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutX="20.0" layoutY="15.0" prefHeight="25.0" prefWidth="477.0" textFill="RED" visible="false">
                            <font>
                                <Font name="System Bold" size="16.0" />
                            </font>
                        </Label>
+                  <Label id="loginerror" fx:id="mandatory" alignment="TOP_LEFT" layoutX="535.0" layoutY="15.0" prefHeight="25.0" prefWidth="248.0" textAlignment="RIGHT" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
                    </children>
                </AnchorPane>
            </children>

@@ -96,7 +96,7 @@ public class NieuwaccountaanmakenController implements Initializable {
             loginerror.setVisible(true);
 
         } else if (!FYS.isValidEmailAddress(mail_input.getText())) {
-            loginerror.setText("E-mailadres is niet geldig!");
+            loginerror.setText(taal[177]);
             loginerror.setVisible(true);
             //Anders update de gegevens in de database.    
         } else if (fys.checkEmailExists(mail_input.getText())) {

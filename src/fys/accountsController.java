@@ -56,7 +56,7 @@ public class accountsController implements Initializable {
     @FXML
     private Label loginerror, type_label, language_label, first_name_label, surname_label,
             address_label, residence_label, zip_code_label, country_label, phone_label, mail_label,
-            personId_label;
+            personId_label, mandatory;
     @FXML
     private final loginController loginController = new loginController();
     @FXML
@@ -150,6 +150,7 @@ public class accountsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        mandatory.setText("* " + taal[174]);
         first_name.setText(taal[9]);
         surname.setText(taal[10]);
         address.setText(taal[11]);
@@ -165,15 +166,15 @@ public class accountsController implements Initializable {
         remove_button.setText(taal[128]);
         cancel_button.setText(taal[127]);
         send_button.setText(taal[46]);
-        first_name_label.setText(taal[9] + ":");
-        surname_label.setText(taal[10] + ":");
-        address_label.setText(taal[11] + ":");
-        residence_label.setText(taal[12] + ":");
-        zip_code_label.setText(taal[13] + ":");
-        country_label.setText(taal[14] + ":");
-        phone_label.setText(taal[15] + ":");
-        mail_label.setText(taal[16] + ":");
-        language_label.setText(taal[68] + ":");
+        first_name_label.setText(taal[9] + "* :");
+        surname_label.setText(taal[10] + "* :");
+        address_label.setText(taal[11] + "* :");
+        residence_label.setText(taal[12] + "* :");
+        zip_code_label.setText(taal[13] + "* :");
+        country_label.setText(taal[14] + "* :");
+        phone_label.setText(taal[15] + "* :");
+        mail_label.setText(taal[16] + "* :");
+        language_label.setText(taal[68] + "* :");
 
         loginController loginController = new loginController();
         if (loginController.getUsertype() == 1) {
@@ -349,6 +350,14 @@ public class accountsController implements Initializable {
                 // Foutmelding
                 loginerror.setText(taal[93]);
                 loginerror.setVisible(true);
+            } else if (!FYS.isValidEmailAddress(mail_input.getText())) {
+                loginerror.setText(taal[177]);
+                loginerror.setVisible(true);
+                //Anders update de gegevens in de database.    
+            } else if (fys.checkEmailExists(mail_input.getText())) {
+                //Foutmelding
+                loginerror.setText(taal[121]);
+                loginerror.setVisible(true);
             } else {
                 sendToDatabase_type(Integer.parseInt(personId_label.getText()),
                         first_name_input.getText(), surname_input.getText(),
@@ -372,6 +381,14 @@ public class accountsController implements Initializable {
                 // Foutmelding
                 loginerror.setText(taal[93]);
                 loginerror.setVisible(true);
+            } else if (!FYS.isValidEmailAddress(mail_input.getText())) {
+                loginerror.setText(taal[177]);
+                loginerror.setVisible(true);
+                //Anders update de gegevens in de database.    
+            } else if (fys.checkEmailExists(mail_input.getText())) {
+                //Foutmelding
+                loginerror.setText(taal[121]);
+                loginerror.setVisible(true);
             } else {
                 sendToDatabase(Integer.parseInt(personId_label.getText()),
                         first_name_input.getText(), surname_input.getText(),
@@ -393,6 +410,14 @@ public class accountsController implements Initializable {
                     || (language_combo.getValue() == null)) {
                 // Foutmelding
                 loginerror.setText(taal[93]);
+                loginerror.setVisible(true);
+            } else if (!FYS.isValidEmailAddress(mail_input.getText())) {
+                loginerror.setText(taal[177]);
+                loginerror.setVisible(true);
+                //Anders update de gegevens in de database.    
+            } else if (fys.checkEmailExists(mail_input.getText())) {
+                //Foutmelding
+                loginerror.setText(taal[121]);
                 loginerror.setVisible(true);
             } else {
                 sendToDatabase_type(Integer.parseInt(personId_label.getText()),

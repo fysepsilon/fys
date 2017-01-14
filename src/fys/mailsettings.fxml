@@ -155,12 +155,12 @@
                     <children>        
                         <TableView fx:id="table" layoutX="14.0" layoutY="14.0" prefHeight="394.0" prefWidth="772.0">
                             <columns>
-                                <TableColumn id="mailid" fx:id="mailid" maxWidth="148.0" minWidth="50.0" prefWidth="148.0" visible="false" />
-                                <TableColumn id="subject" fx:id="subject" maxWidth="148.0" minWidth="50.0" prefWidth="148.0" />
-                                <TableColumn id="message" fx:id="message" maxWidth="1000.0" minWidth="50.0" prefWidth="1000.0" />
-                                <TableColumn id="page" fx:id="page" maxWidth="148.0" minWidth="50.0" prefWidth="148.0" visible="false" />
-                                <TableColumn id="type" fx:id="type" maxWidth="148.0" minWidth="50.0" prefWidth="148.0" visible="false" />
-                                <TableColumn id="language" fx:id="language" maxWidth="148.0" minWidth="50.0" prefWidth="148.0" visible="false" />
+                                <TableColumn id="mailid" fx:id="mailid" maxWidth="75.0" minWidth="50.0" prefWidth="50.0" />
+                                <TableColumn id="subject" fx:id="subject" maxWidth="250.0" minWidth="200.0" prefWidth="200.0" />
+                                <TableColumn id="page" fx:id="page" maxWidth="250.0" minWidth="175.0" prefWidth="175.0" />
+                                <TableColumn id="type" fx:id="type" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+                                <TableColumn id="language" fx:id="language" maxWidth="100.0" minWidth="75.0" prefWidth="75.0" />
+                                <TableColumn id="message" fx:id="message" maxWidth="1500.0" minWidth="1000.0" prefWidth="1000.0" />
                             </columns>
                         </TableView>
                         <Button id="mainbutton" fx:id="filter_button" layoutX="14.0" layoutY="415.0" mnemonicParsing="false" onAction="#handleOpenFilter" prefWidth="379.0" text="Filteren" />

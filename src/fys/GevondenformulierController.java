@@ -51,7 +51,7 @@ public class GevondenformulierController implements Initializable {
     private Label surname_label, name_label, airport_label, label_label,
             flight_label, destination_label, type_label, brand_label, 
             color_label, characteristics_label, picture_label, loginerror, 
-            popup_label;
+            popup_label, mandatory;
     @FXML
     private TextArea textinfo;
     @FXML
@@ -82,15 +82,16 @@ public class GevondenformulierController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        airport_label.setText(taal[8] + ":");
+        mandatory.setText("* " + taal[174]);
+        airport_label.setText(taal[8] + "* :");
         name_label.setText(taal[9] + ":");
         surname_label.setText(taal[10] + ":");
         label_label.setText(taal[17] + ":");
         flight_label.setText(taal[18] + ":");
         destination_label.setText(taal[19] + ":");
-        type_label.setText(taal[20] + ":");
-        brand_label.setText(taal[21] + ":");
-        color_label.setText(taal[22] + ":");
+        type_label.setText(taal[20] + "* :");
+        brand_label.setText(taal[21] + "* :");
+        color_label.setText(taal[22] + "* :");
         characteristics_label.setText(taal[23] + ":");
         picture_label.setText(taal[24] + ":");
         airport_combo.setPromptText(taal[25]);
@@ -141,13 +142,15 @@ public class GevondenformulierController implements Initializable {
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-            //connectToDatabase(conn, stmt, "test", "root", "root");           
+            //connectToDatabase(conn, stmt, "test", "root", "root");
             String sql = "SELECT lost.*, "
                     + "person.first_name, person.surname FROM lost, person "
                     + "WHERE lost.person_id = person.person_id "
-                    + "AND lost.type='" + fys.getBaggageTypeString(type_combo.getValue().toString()) + "' "
+                    + "AND lost.type='" + (type_combo.getValue() == null ? ""
+                            : fys.getBaggageTypeString(type_combo.getValue().toString())) + "' "
                     + "AND lost.brand = '" + brand_input.getText() + "' "
-                    + "AND lost.color = '" + fys.getColorString(color_combo.getValue().toString()) + "';";
+                    + "AND lost.color = '" + (color_combo.getValue() == null ? ""
+                            : fys.getColorString(color_combo.getValue().toString())) + "';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name

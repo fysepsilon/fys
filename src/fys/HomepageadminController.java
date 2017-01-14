@@ -169,7 +169,6 @@ public class HomepageadminController implements Initializable {
                     + "WHERE YEAR(date) LIKE \"%" + year + "%\" "
                     + "AND MONTH(date) LIKE \"%" + months + "%\" "
                     + "GROUP BY status;";
-
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     //Retrieve by column name

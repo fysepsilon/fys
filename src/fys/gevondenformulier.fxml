@@ -12,7 +12,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="flight_input" prefHeight="600.0" prefWidth="1000.0" stylesheets="@style/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.GevondenformulierController">
     <children>
-        <Pane id="background" fx:id="background" layoutY="122.0" prefHeight="478.0" prefWidth="1000.0"/>
+        <Pane id="background" fx:id="background" layoutY="122.0" prefHeight="478.0" prefWidth="1000.0" />
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
         <Pane id="pagestyle" fx:id="formulier" layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0">
             <children>
@@ -131,11 +131,16 @@
                     </children>
                 </GridPane>
                 <Button id="mainbutton" fx:id="send_button" layoutX="10.0" layoutY="410.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleSendToDatabase" prefHeight="35.0" prefWidth="771.0" text="Verzenden" />
-                <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutX="10.0" layoutY="14.0" prefHeight="25.0" prefWidth="598.0" textFill="RED" visible="false">
+                <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutX="10.0" layoutY="14.0" prefHeight="25.0" prefWidth="501.0" textFill="RED" visible="false">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
                 </Label>
+            <Label id="loginerror" fx:id="mandatory" alignment="TOP_LEFT" layoutX="549.0" layoutY="24.0" prefHeight="25.0" prefWidth="230.0" textAlignment="RIGHT" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
             </children>
         </Pane>
         <Pane id="popup" fx:id="popup" layoutX="220.0" layoutY="159.0" prefHeight="360.0" prefWidth="560.0" visible="false">

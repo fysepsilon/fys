@@ -162,7 +162,6 @@ public class FYS extends Application {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-        System.out.println(language);
         try {
             File myFile = new File("src/fys/templates/Gebruikershandleiding_EN.pdf");
             if (language == 1){

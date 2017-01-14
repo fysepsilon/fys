@@ -139,11 +139,41 @@ public class FYS extends Application {
 
 
     public void UserManual() {
-        taal language = new taal();
-        String[] taal = language.getLanguage();
-
+        int language = 0;
+        loginController login = new loginController();
+        Statement stmt = null;
+        Connection conn = null;
         try {
-            File myFile = new File("src/fys/templates/Gebruikershandleiding.pdf");
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT language FROM person "
+                    + "WHERE type = '" + login.getUsertype() + "' "
+                    + "AND mail='" + login.getEmail() + "'";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    language = rs.getInt("language");
+                }
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        System.out.println(language);
+        try {
+            File myFile = new File("src/fys/templates/Gebruikershandleiding_EN.pdf");
+            if (language == 1){
+                myFile = new File("src/fys/templates/Gebruikershandleiding_NL.pdf");
+            } else if (language == 2){
+                myFile = new File("src/fys/templates/Gebruikershandleiding_ES.pdf");
+            } else if (language == 3){
+                myFile = new File("src/fys/templates/Gebruikershandleiding_TR.pdf");
+            } else if (language == 4){
+                myFile = new File("src/fys/templates/Gebruikershandleiding_DE.pdf");
+            }
             Desktop.getDesktop().open(myFile);
         } catch (IOException ex) {
             // no application registered for PDFs

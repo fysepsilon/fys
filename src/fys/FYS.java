@@ -91,21 +91,29 @@ public class FYS extends Application {
     public void changeToAnotherFXML(String title, String changeToWindow) throws IOException {
         loginController loginController = new loginController();
         int style = loginController.getUserstyle();
-                
+        String css;
         Parent window1;
         window1 = FXMLLoader.load(getClass().getResource(changeToWindow));
-        
+
         if (style == 1) {
-            String css = this.getClass().getResource("style/theme_menu_gold.css").toExternalForm();
-            window1.getStylesheets().add(css);
+            css = this.getClass().getResource("style/theme_menu_yellow.css").toExternalForm();
         } else if (style == 2) {
-            String css = this.getClass().getResource("style/theme_menu_blue.css").toExternalForm();
-            window1.getStylesheets().add(css);
+            css = this.getClass().getResource("style/theme_menu_blue.css").toExternalForm();
+        } else if (style == 3) {
+            css = this.getClass().getResource("style/theme_menu_orange.css").toExternalForm();
+        } else if (style == 4) {
+            css = this.getClass().getResource("style/theme_menu_green.css").toExternalForm();
+        } else if (style == 5) {
+            css = this.getClass().getResource("style/theme_menu_pink.css").toExternalForm();
+        } else if (style == 6) {
+            css = this.getClass().getResource("style/theme_menu_grey.css").toExternalForm();
+        } else if (style == 7) {
+            css = this.getClass().getResource("style/theme_menu_black.css").toExternalForm();
         } else {
-            String css = this.getClass().getResource("style/theme_menu_default.css").toExternalForm();
-            window1.getStylesheets().add(css);
+            css = this.getClass().getResource("style/theme_menu_default.css").toExternalForm();
         }
-        
+
+        window1.getStylesheets().add(css);
         Stage mainStage;
         mainStage = FYS.parentWindow;
         mainStage.setTitle(title);
@@ -113,30 +121,6 @@ public class FYS extends Application {
         mainStage.getScene().setRoot(window1);
 
     }
-    
-    public void changeStyleAndFXML(String title, String changeToWindow, int style) throws IOException, SQLException {
-        Parent window1;
-        window1 = FXMLLoader.load(getClass().getResource(changeToWindow));
-        /*if (PersonStyle(mail_input) == 1) {
-            String css = this.getClass().getResource("style/theme_menu_gold.css").toExternalForm();
-            window1.getStylesheets().add(css);
-        } else if (PersonStyle(mail_input) == 2) {
-            String css = this.getClass().getResource("style/theme_menu_blue.css").toExternalForm();
-            window1.getStylesheets().add(css);
-        } else {
-            String css = this.getClass().getResource("style/theme_menu_default.css").toExternalForm();
-            window1.getStylesheets().add(css);
-        }*/
-        
-        
-        Stage mainStage;
-        mainStage = FYS.parentWindow;
-        mainStage.setTitle(title);
-        mainStage.setResizable(false);
-        mainStage.getScene().setRoot(window1);
-
-    }
-
 
     public void UserManual() {
         taal language = new taal();
@@ -164,28 +148,58 @@ public class FYS extends Application {
         return new String(text);
     }
 
+    /**
+     * 
+     * @param type style type
+     * @return name of style
+     */
     public String getUserStyle(int type) {
         taal language = new taal();
         String[] taal = language.getLanguage();
-        if (type == 1) { //Goud
-            return taal[175];
+        if (type == 1) { //Geel
+            return taal[36];
         } else if (type == 2) { // Blauw
             return taal[38];
+        } else if (type == 3) { // Oranje
+            return taal[35];
+        } else if (type == 4) { // Groen
+            return taal[37];
+        } else if (type == 5) { // Roze
+            return taal[40];
+        } else if (type == 6) { // Grijs
+            return taal[42];
+        } else if (type == 7) {
+            return taal[41];
         }
         return taal[34]; // Rood
     }
-     
-     public Integer getUserStyleString(String type) {
+
+    /**
+     * 
+     * @param type style type
+     * @return type of style
+     */
+    public Integer getUserStyleString(String type) {
         taal language = new taal();
         String[] taal = language.getLanguage();
-        if (type.equals(taal[175])) {
+        if (type.equals(taal[36])) {
             return 1;
         } else if (type.equals(taal[38])) {
             return 2;
+        } else if (type.equals(taal[35])) {
+            return 3;
+        } else if (type.equals(taal[37])) {
+            return 4;
+        } else if (type.equals(taal[40])) {
+            return 5;
+        } else if (type.equals(taal[42])) {
+            return 6;
+        } else if (type.equals(taal[41])) {
+            return 7;
         }
         return 0;
     }
-    
+
     /**
      *
      * @param type welke type er is geselecteerd in cijfers.
@@ -308,7 +322,8 @@ public class FYS extends Application {
 
     /**
      *
-     * @param language De taal die ingesteld is naar wie de mail moet worde verstuurd.
+     * @param language De taal die ingesteld is naar wie de mail moet worde
+     * verstuurd.
      * @param status
      * @return
      */
@@ -1444,7 +1459,7 @@ public class FYS extends Application {
         conn.close();
         return style;
     }
-    
+
     /**
      *
      * @param tableFrom tableFrom uit db

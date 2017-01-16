@@ -1,0 +1,47 @@
+#menubutton {
+    -fx-background-color: #FF6900;
+    -fx-font-size: 14.0;
+    -fx-font-weight: Bold;
+    -fx-background-radius: 0;
+    -fx-text-fill: white;
+}
+
+#menubutton:hover {
+    -fx-background-color: #EA7600;
+}
+
+#splitter {
+    -fx-background-color: #FFB25B;
+    -fx-prefHeight: 49.0;
+    -fx-prefWidth: 2.0;
+}
+
+#menubackgroundcolor {
+    -fx-background-color: #FF6900;   
+}
+
+#mainbutton {
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-margin: 4px 2px;
+    -fx-cursor: pointer;
+    -fx-text-fill: #FF6900;
+    -fx-background-color: white;
+    -fx-border-style:solid;
+    -fx-border-color: #FF6900;
+    -fx-pref-height: 49px;
+    -fx-font-weight:Bold;
+}
+
+#mainbutton:hover {
+    -fx-background-color: #FF6900;
+    -fx-text-fill:white;
+}
+
+#logo {
+    -fx-background-image: url("../images/corendon_logo.png");
+    -fx-background-size: 200, 150;
+    -fx-background-repeat: no-repeat;
+}

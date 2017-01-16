@@ -1,4 +1,102 @@
-@import url("theme_normal.css");
+#picturebutton{
+    /* -fx-padding: 15px 32px; */
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-margin: 4px 2px;
+    -fx-cursor: pointer;
+    -fx-border-color: #d9d9d9;    
+    -fx-background-color: #d9d9d9;
+}
+
+#picturebutton:hover{
+    -fx-background-color: white;
+    -fx-text-fill: #666666;
+}
+
+#TextField {
+    -fx-border-color: #CCCCCC;
+    -fx-background-radius: 0px;
+    -fx-text-fill:#666666;
+}
+
+#TextArea {
+    -fx-border-color: #CCCCCC;
+    -fx-background-radius: 0px;
+    -fx-text-fill:#666666;
+}
+
+#ComboBox {
+    -fx-border-color: #CCCCCC;
+    -fx-background-radius: 0px;
+    -fx-background-color: #d9d9d9;
+}
+
+#background {
+     -fx-background-image: url("../images/bg.jpg");
+}
+
+#pagestyle{
+   -fx-border-width: 0 2 0 2; 
+   -fx-border-color: #d9d9d9; 
+   -fx-background-color: white;
+}
+
+
+.table-view .column-header-background{
+    -fx-background-color: #d9d9d9;
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-cell{
+    -fx-text-fill: #666666;
+}
+
+.table-row-cell{
+    -fx-border-color: 
+        transparent
+        transparent
+        derive(-fx-base, 80%) 
+        transparent;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #21a5d1;
+    /* -fx-border-color:red; */
+    -fx-text-fill: white;
+}
+
+.table-view > .virtual-flow > .scroll-bar:vertical,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track-background, 
+.table-view > .virtual-flow > .scroll-bar:horizontal,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+    -fx-background-color: transparent;
+}
+
+#mail_VBox {
+    -fx-background-color: white; 
+    -fx-border-color: lightgrey;
+}
+
+#mail_VBoxShowClose {
+    -fx-background-radius: 0; 
+    -fx-background-color: white; 
+    -fx-border-color: lightgrey; 
+    -fx-border-width: 2;
+}
 
 #popup {
     -fx-border-width: 31 8 8 8; 

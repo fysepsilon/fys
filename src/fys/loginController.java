@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 /**
  *
@@ -27,28 +28,25 @@ import javafx.scene.control.TextField;
 public class loginController implements Initializable {
 
     @FXML
-    private TextField username;
+    private Pane login_pane, wachtwoord_pane, email_pane;
     @FXML
-    private PasswordField password;
+    private TextField username, passwordforgot, emailphone, emailaddress,
+            emailfirstname;
     @FXML
-    private Label loginerror;
+    private PasswordField password, emailpassword;
     @FXML
-    private static int usertype;
+    private Label loginerror, passworderror, emailerror;
     @FXML
-    private static int userstyle;
+    private static int usertype, userstyle, userlanguage;
     @FXML
-    private static int userlanguage;
+    private static String usersname, email;
     @FXML
-    private static String usersname;
-    @FXML
-    private static String email;
-    @FXML
-    private Button logInButton;
+    private Button logInButton, sendNewPasswordButton, sendEmailButton;
     @FXML
     private final FYS fys = new FYS();
-    
+
     /**
-     * 
+     *
      * @return De type van de gebruiker.
      */
     public int getUsertype() {
@@ -58,7 +56,7 @@ public class loginController implements Initializable {
     public void setUsertype(int userType) {
         loginController.usertype = userType;
     }
-    
+
     public int getUserstyle() {
         return userstyle;
     }
@@ -86,43 +84,133 @@ public class loginController implements Initializable {
     public String getUsersName() {
         return usersname;
     }
-    
 
     public void setUsersName(String usersname) {
         loginController.usersname = usersname;
     }
-    
+
     @FXML
     private void handleInformation(ActionEvent event) {
         fys.UserManual();
     }
-    
+
     //Wanneer de gebruiker op wachtwoord vergeten klikt. 
-    //Wordt diegene doorgestuurd naar de pagina van wachtwoord vergeten.
+    //Wordt diegene doorgestuurd naar de pane van wachtwoord vergeten.
     @FXML
     private void handleForgotPasswordAction(ActionEvent event) throws IOException {
-        //Switch screen to wachtwoordvergeten.
-        fys.changeToAnotherFXML("Corendon-Forgotpassword", "wachtwoordVergeten.fxml");
+        login_pane.setVisible(false);
+        login_pane.setDisable(true);
+        wachtwoord_pane.setVisible(true);
+        wachtwoord_pane.setDisable(false);
+    }
+
+    @FXML
+    private void handleBackButtonAction(ActionEvent event) throws IOException {
+        login_pane.setVisible(true);
+        login_pane.setDisable(false);
+        wachtwoord_pane.setVisible(false);
+        wachtwoord_pane.setDisable(true);
     }
     
+    @FXML
+    private void handleBackEmailAction(ActionEvent event) throws IOException {
+        login_pane.setVisible(true);
+        login_pane.setDisable(false);
+        email_pane.setVisible(false);
+        email_pane.setDisable(true);
+        emailerror.setText("");
+    }
+    
+    @FXML
+    private void handleForgotEmailAction(ActionEvent event) throws IOException {
+        login_pane.setVisible(false);
+        login_pane.setDisable(true);
+        email_pane.setVisible(true);
+        email_pane.setDisable(false);
+    }
+
+    //Dit wordt aangeroepen wanneer de gebruiker op de button wachtwoord verzenden klikt.
+    @FXML
+    private void handleSendNewPasswordAction(ActionEvent event) throws IOException, SQLException {
+        sendNewPasswordButton.setDisable(true);
+        int pageid = 3;
+        String email = "";
+        int type = 0;
+        String language = "";
+        Statement stmt = null;
+        Connection conn = null;
+        conn = fys.connectToDatabase(conn);
+        stmt = conn.createStatement();
+
+        //Controleer of de velden wachtwoord leeg zijn. Anders laat een error zien.
+        if ((passwordforgot.getText() == null || passwordforgot.getText().trim().isEmpty())) {
+            passworderror.setText("Username is empty!");
+            passworderror.setVisible(true);
+            sendNewPasswordButton.setDisable(false);
+        } else //Als de emailadres niet klopt volgens de regels dan wordt een error getoond.
+         if (FYS.isValidEmailAddress(passwordforgot.getText())) {
+                //Haal de mail die is ingevuld.
+                try {
+                    String sql = "SELECT mail, type, language FROM person WHERE mail='" + passwordforgot.getText() + "' AND (type = '1' OR type = '2')";
+                    try (ResultSet rs = stmt.executeQuery(sql)) {
+                        while (rs.next()) {
+                            //Retrieve by column name
+                            email = rs.getString("mail");
+                            language = rs.getString("language");
+                            //Display values
+                        }
+                    }
+                } catch (SQLException ex) {
+                    // handle any errors
+                    System.out.println("SQLException: " + ex.getMessage());
+                    System.out.println("SQLState: " + ex.getSQLState());
+                    System.out.println("VendorError: " + ex.getErrorCode());
+                }
+
+                //Controleer of de ingevulde veld leeg is. Laat dan een error zien.
+                if ((email == null || email.trim().isEmpty())) {
+                    passworderror.setText("This username unfortunately does not exists!");
+                    passworderror.setVisible(true);
+                    sendNewPasswordButton.setDisable(false);
+                } else if (fys.Email_Persontype(passwordforgot.getText()) == 1
+                        || fys.Email_Persontype(passwordforgot.getText()) == 2) { // Stuur email als gebruiker type 1 of 2 is.
+
+                    // Email bericht filteren op sommige woorden.            
+                    String getmessage = fys.replaceEmail(fys.Email_Message(type, fys.Email_Language(passwordforgot.getText()), pageid), passwordforgot.getText());
+                    // Email versturen
+                    fys.sendEmail(passwordforgot.getText(), fys.Email_Subject(type, fys.Email_Language(passwordforgot.getText()), pageid), getmessage, "Sent message successfully....");
+
+                    passworderror.setText("Your password has been sent to: " + passwordforgot.getText() + "!");
+                    passworderror.setStyle("-fx-text-fill: green;");
+                    passworderror.setVisible(true);
+                    passwordforgot.setText("");
+                    sendNewPasswordButton.setDisable(false);
+                }
+            } else {
+                passworderror.setText("Please enter a valid email address!");
+                passworderror.setVisible(true);
+                sendNewPasswordButton.setDisable(false);
+            }
+    }
+
     //Als de gebruiker op de knop op login klikt.
     @FXML
     private void handleCheckLoginAction(ActionEvent event) throws IOException, SQLException {
         //Controleer of de velden gebruikersnaam of wachtwoord zijn ingevuld lat anders een error zien.
-        if ((username.getText() == null || username.getText().trim().isEmpty()) || 
-                (password.getText() == null || password.getText().trim().isEmpty())) {
+        if ((username.getText() == null || username.getText().trim().isEmpty())
+                || (password.getText() == null || password.getText().trim().isEmpty())) {
             loginerror.setText("Fields are left blank!");
             loginerror.setVisible(true);
-        } else if (authenticateLogin(username.getText(), fys.encrypt(password.getText())) && 
-                (getUsertype() == 1 || getUsertype() == 2)) {
-                    loginController loginController = new loginController();
+        } else if (authenticateLogin(username.getText(), fys.encrypt(password.getText()))
+                && (getUsertype() == 1 || getUsertype() == 2)) {
+            loginController loginController = new loginController();
             //Kijk wat voor gebruiker inlogt: een admin of servicemedewerker.
             if (loginController.getUsertype() == 1) {
                 fys.changeToAnotherFXML("Corendon-Home", "homepage.fxml");
             } else { // Switch screen to HomeAdmin
                 fys.changeToAnotherFXML("Corendon-Home", "homepageadmin.fxml");
             }
-        //Laat een error zien dat de gebruikersnaam en wachtwoord niet overeenkomen.
+            //Laat een error zien dat de gebruikersnaam en wachtwoord niet overeenkomen.
         } else {
             loginerror.setText("Username and password do not match!");
             loginerror.setVisible(true);
@@ -139,8 +227,8 @@ public class loginController implements Initializable {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
 
-            String sql = "SELECT mail, password, type, first_name, insertion, surname, style FROM person WHERE mail='" + 
-                    inputUsername + "' AND password = '" + inputPassword + "'";
+            String sql = "SELECT mail, password, type, first_name, insertion, surname, style FROM person WHERE mail='"
+                    + inputUsername + "' AND password = '" + inputPassword + "'";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name
@@ -169,9 +257,71 @@ public class loginController implements Initializable {
         return !username.equals("") && !password.equals("");
     }
 
+    @FXML
+    private void handleSendEmailAction(ActionEvent event) throws IOException, SQLException {
+        sendEmailButton.setDisable(true);
+        String email = "";
+        String language = "";
+        Statement stmt = null;
+        Connection conn = null;
+        conn = fys.connectToDatabase(conn);
+        stmt = conn.createStatement();
+
+        //Controleer of de velden wachtwoord leeg zijn. Anders laat een error zien.
+        if ((emailfirstname.getText() == null || emailfirstname.getText().trim().isEmpty()
+                || emailaddress.getText() == null || emailaddress.getText().trim().isEmpty()
+                || emailpassword.getText() == null || emailpassword.getText().trim().isEmpty()
+                || emailphone.getText() == null || emailphone.getText().trim().isEmpty())) {
+            emailerror.setText("Er zijn velden leeggelaten");
+            emailerror.setVisible(true);
+            sendEmailButton.setDisable(false);
+        } else //Als de emailadres niet klopt volgens de regels dan wordt een error getoond.
+        {
+            //Haal de mail die is ingevuld.
+            try {
+                String sql = "SELECT mail FROM person "
+                        + "WHERE first_name='" + emailfirstname.getText() + "' "
+                        + "AND address='" + emailaddress.getText() + "' "
+                        + "AND password='" + fys.encrypt(emailpassword.getText()) + "' "
+                        + "AND phone='" + emailphone.getText() + "' "
+                        + "AND (type = '1' OR type = '2')";
+                try (ResultSet rs = stmt.executeQuery(sql)) {
+                    while (rs.next()) {
+                        //Retrieve by column name
+                        email = rs.getString("mail");
+                    }
+                }
+            } catch (SQLException ex) {
+                // handle any errors
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
+
+            //Controleer of de ingevulde veld leeg is. Laat dan een error zien.
+            if ((email == null || email.trim().isEmpty())) {
+                emailerror.setText("De opgegeven combinatie is niet gevonden!");
+                emailerror.setVisible(true);
+                sendEmailButton.setDisable(false);
+            } else if (fys.Email_Persontype(email) == 1
+                    || fys.Email_Persontype(email) == 2) { // Controleer of de gebruiker type 1 of 2 is.
+
+                emailerror.setText("Uw email is: " + email);
+                emailerror.setStyle("-fx-text-fill: green;");
+                emailerror.setVisible(true);
+                emailfirstname.setText("");
+                emailaddress.setText("");
+                emailpassword.setText("");
+                emailphone.setText("");
+                sendEmailButton.setDisable(false);
+            }
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         logInButton.setDefaultButton(true);
+        sendNewPasswordButton.setDefaultButton(true);
     }
 
 }

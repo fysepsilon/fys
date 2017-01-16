@@ -344,7 +344,6 @@ public class StatistiekenController implements Initializable {
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     luggage++;
-                    //System.out.println(rs.getString("status") + " " + rs.getInt("Count"));
                     //Retrieve by column name
                     foundAmount = (rs.getInt("status") == 0 ? rs.getInt("Count") : foundAmount);
                     lostAmount = (rs.getInt("status") == 1 ? rs.getInt("Count") : lostAmount);
@@ -555,7 +554,6 @@ public class StatistiekenController implements Initializable {
                         + "WHERE status = 6 AND date >= \"" + fys.convertToDutchDate(dateFromInput) + "\" "
                         + "AND date <= \"" + fys.convertToDutchDate(dateToInput) + "\" "
                         + "GROUP BY date";
-                System.out.println(sql);
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {
                     //Retrieve by column name

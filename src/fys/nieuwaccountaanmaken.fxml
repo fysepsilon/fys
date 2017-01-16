@@ -39,7 +39,7 @@
                         <TextField id="TextField" fx:id="zipcode_input" prefHeight="39.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                     </children>
                 </GridPane>
-                <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="772.0" textFill="RED" visible="false">
+                <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="470.0" textFill="RED" visible="false">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
@@ -81,6 +81,11 @@
                 </GridPane>
                 <Button id="mainbutton" fx:id="cancel" layoutX="14.0" layoutY="415.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="49.0" prefWidth="379.0" text="Annuleer" />
                 <Button id="mainbutton" fx:id="SendNewAccount" layoutX="407.0" layoutY="415.0" mnemonicParsing="false" onAction="#handleAction" prefHeight="49.0" prefWidth="379.0" text="Verzenden" />
+            <Label id="loginerror" fx:id="mandatory" alignment="TOP_LEFT" layoutX="582.0" layoutY="14.0" prefHeight="25.0" prefWidth="203.0" textAlignment="RIGHT" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
             </children>
         </Pane>
     </children>

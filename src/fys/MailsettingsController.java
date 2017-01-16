@@ -87,8 +87,12 @@ public class MailsettingsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        mailid.setText("ID");
         subject.setText(taal[135]);
         message.setText(taal[136]);
+        page.setText(taal[144]);
+        type.setText(taal[20]);
+        language.setText(taal[68]);
         subject_label.setText(taal[135] + ":");
         page_label.setText(taal[144] + ":");
         type_label.setText(taal[20] + ":");
@@ -127,8 +131,12 @@ public class MailsettingsController implements Initializable {
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
         language.setCellValueFactory(new PropertyValueFactory<>("language"));
 
+        mailid.setStyle("-fx-alignment: CENTER;");
+        page.setStyle("-fx-alignment: CENTER;");
         subject.setStyle("-fx-alignment: CENTER;");
         message.setStyle("-fx-alignment: CENTER;");
+        type.setStyle("-fx-alignment: CENTER;");
+        language.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
     }
 

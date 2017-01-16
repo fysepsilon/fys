@@ -159,7 +159,7 @@
                         <Font name="System Bold" size="16.0" />
                     </font>
                 </Label>
-            <Label id="loginerror" fx:id="mandatory" alignment="TOP_LEFT" layoutX="557.0" prefHeight="25.0" prefWidth="223.0" textAlignment="RIGHT" textFill="RED">
+            <Label id="loginerror" fx:id="mandatory" alignment="TOP_LEFT" layoutX="557.0" prefHeight="25.0" prefWidth="223.0" textAlignment="RIGHT">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -168,7 +168,7 @@
         </Pane>
         <Pane id="popup" fx:id="popup" layoutX="220.0" layoutY="159.0" prefHeight="360.0" prefWidth="560.0" visible="false">
             <children>
-                <TableView fx:id="table" layoutX="14.0" layoutY="172.0" prefHeight="130.0" prefWidth="533.0">
+                <TableView fx:id="table" layoutX="14.0" layoutY="172.0" prefHeight="116.0" prefWidth="533.0">
                     <columns>
                         <TableColumn id="status" fx:id="status" maxWidth="182.0" minWidth="0.0" prefWidth="102.0" text="Status" />
                         <TableColumn id="type" fx:id="type" maxWidth="150.0" minWidth="85.0" prefWidth="105.0" text="Type" />
@@ -194,8 +194,8 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button id="mainbutton" fx:id="popup_verzbutton" layoutX="14.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleVerzendenBut" prefHeight="35.0" prefWidth="259.0" text="Verzenden" />
-                <Button id="mainbutton" fx:id="popup_annubutton" layoutX="287.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleCancelBut" prefHeight="35.0" prefWidth="259.0" text="Annuleren" />
+                <Button id="mainbutton" fx:id="popup_verzbutton" layoutX="14.0" layoutY="297.0" mnemonicParsing="false" onAction="#handleVerzendenBut" prefHeight="49.0" prefWidth="259.0" text="Verzenden" />
+                <Button id="mainbutton" fx:id="popup_annubutton" layoutX="287.0" layoutY="297.0" mnemonicParsing="false" onAction="#handleCancelBut" prefHeight="49.0" prefWidth="259.0" text="Annuleren" />
                 <TextArea id="TextArea" fx:id="textinfo" editable="false" layoutX="14.0" layoutY="39.0" prefHeight="119.0" prefWidth="383.0" text="Er is/zijn COUNT vermiste bagage(s) met dezelfde kenmerken &#10;gevonden als wat er net is ingevuld.&#10;" />
                 <Button id="popup_image" layoutX="411.0" layoutY="39.0" mnemonicParsing="false" prefHeight="119.0" prefWidth="135.0">
                     <graphic>

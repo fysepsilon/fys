@@ -157,13 +157,13 @@ public class FYS extends Application {
         }
         try {
             File myFile = new File("src/fys/templates/Gebruikershandleiding_EN.pdf");
-            if (language == 1){
+            if (language == 1) {
                 myFile = new File("src/fys/templates/Gebruikershandleiding_NL.pdf");
-            } else if (language == 2){
+            } else if (language == 2) {
                 myFile = new File("src/fys/templates/Gebruikershandleiding_ES.pdf");
-            } else if (language == 3){
+            } else if (language == 3) {
                 myFile = new File("src/fys/templates/Gebruikershandleiding_TR.pdf");
-            } else if (language == 4){
+            } else if (language == 4) {
                 myFile = new File("src/fys/templates/Gebruikershandleiding_DE.pdf");
             }
             Desktop.getDesktop().open(myFile);
@@ -187,7 +187,7 @@ public class FYS extends Application {
     }
 
     /**
-     * 
+     *
      * @param type style type
      * @return name of style
      */
@@ -213,7 +213,7 @@ public class FYS extends Application {
     }
 
     /**
-     * 
+     *
      * @param type style type
      * @return type of style
      */
@@ -694,6 +694,13 @@ public class FYS extends Application {
         return false;
     }
 
+    /**
+     *
+     * @param type type from luggage
+     * @param brand brand from luggage
+     * @param color color from luggage
+     * @return true or false
+     */
     public boolean checkLost(int type, String brand, int color) {
         Statement stmt = null;
         Connection conn = null;
@@ -720,6 +727,14 @@ public class FYS extends Application {
         return false;
     }
 
+    /**
+     *
+     * @param type type from luggage
+     * @param brand brand from luggage
+     * @param color color from luggage
+     * @return count number from lost luggage
+     * @throws SQLException
+     */
     public int countLost(int type, String brand, int color) throws SQLException {
         int countLost = 0;
 
@@ -750,6 +765,13 @@ public class FYS extends Application {
         return countLost;
     }
 
+    /**
+     *
+     * @param type type from luggage
+     * @param brand brand from luggage
+     * @param color color from luggage
+     * @return true or false
+     */
     public boolean checkFound(int type, String brand, int color) {
         Statement stmt = null;
         Connection conn = null;
@@ -776,6 +798,14 @@ public class FYS extends Application {
         return false;
     }
 
+    /**
+     *
+     * @param type type from luggage
+     * @param brand brand from luggage
+     * @param color color from luggage
+     * @return count number from found luggage
+     * @throws SQLException
+     */
     public int countFound(int type, String brand, int color) throws SQLException {
         int countFound = 0;
 

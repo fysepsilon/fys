@@ -81,7 +81,7 @@
                 </GridPane>
                 <Button id="mainbutton" fx:id="cancel" layoutX="14.0" layoutY="415.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="49.0" prefWidth="379.0" text="Annuleer" />
                 <Button id="mainbutton" fx:id="SendNewAccount" layoutX="407.0" layoutY="415.0" mnemonicParsing="false" onAction="#handleAction" prefHeight="49.0" prefWidth="379.0" text="Verzenden" />
-            <Label id="loginerror" fx:id="mandatory" alignment="TOP_LEFT" layoutX="582.0" layoutY="14.0" prefHeight="25.0" prefWidth="203.0" textAlignment="RIGHT" textFill="RED">
+            <Label id="loginerror" fx:id="mandatory" alignment="TOP_LEFT" layoutX="582.0" layoutY="14.0" prefHeight="25.0" prefWidth="203.0" textAlignment="RIGHT">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

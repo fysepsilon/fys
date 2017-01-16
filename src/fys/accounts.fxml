@@ -96,7 +96,7 @@
                                <Font name="System Bold" size="16.0" />
                            </font>
                        </Label>
-                  <Label id="loginerror" fx:id="mandatory" alignment="TOP_LEFT" layoutX="535.0" layoutY="15.0" prefHeight="25.0" prefWidth="248.0" textAlignment="RIGHT" textFill="RED">
+                  <Label id="loginerror" fx:id="mandatory" alignment="TOP_LEFT" layoutX="535.0" layoutY="15.0" prefHeight="25.0" prefWidth="248.0" textAlignment="RIGHT" textFill="black">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>

@@ -103,6 +103,8 @@ public class loginController implements Initializable {
         wachtwoord_pane.setVisible(true);
         wachtwoord_pane.setDisable(false);
         sendNewPasswordButton.setDefaultButton(true);
+        logInButton.setDefaultButton(false);
+        sendEmailButton.setDefaultButton(false);
     }
 
     @FXML
@@ -112,6 +114,8 @@ public class loginController implements Initializable {
         wachtwoord_pane.setVisible(false);
         wachtwoord_pane.setDisable(true);
         logInButton.setDefaultButton(true);
+        sendEmailButton.setDefaultButton(false);
+        sendNewPasswordButton.setDefaultButton(false);
     }
     
     @FXML
@@ -122,6 +126,8 @@ public class loginController implements Initializable {
         email_pane.setDisable(true);
         emailerror.setText("");
         logInButton.setDefaultButton(true);
+        sendEmailButton.setDefaultButton(false);
+        sendNewPasswordButton.setDefaultButton(false);
     }
     
     @FXML
@@ -131,6 +137,8 @@ public class loginController implements Initializable {
         email_pane.setVisible(true);
         email_pane.setDisable(false);
         sendEmailButton.setDefaultButton(true);
+        sendNewPasswordButton.setDefaultButton(false);
+        logInButton.setDefaultButton(false);
     }
 
     //Dit wordt aangeroepen wanneer de gebruiker op de button wachtwoord verzenden klikt.
@@ -324,7 +332,9 @@ public class loginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       logInButton.setDefaultButton(true);
+        logInButton.setDefaultButton(true);
+        sendEmailButton.setDefaultButton(false);
+        sendNewPasswordButton.setDefaultButton(false);
     }
 
 }

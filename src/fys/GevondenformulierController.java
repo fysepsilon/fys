@@ -144,9 +144,11 @@ public class GevondenformulierController implements Initializable {
             String sql = "SELECT lost.*, "
                     + "person.first_name, person.surname FROM lost, person "
                     + "WHERE lost.person_id = person.person_id "
-                    + "AND lost.type='" + fys.getBaggageTypeString(type_combo.getValue().toString()) + "' "
+                    + "AND lost.type='" + (type_combo.getValue() == null ? ""
+                    : fys.getBaggageTypeString(type_combo.getValue().toString())) + "' "
                     + "AND lost.brand = '" + brand_input.getText() + "' "
-                    + "AND lost.color = '" + fys.getColorString(color_combo.getValue().toString()) + "';";
+                    + "AND lost.color = '" + (color_combo.getValue() == null ? ""
+                    : fys.getColorString(color_combo.getValue().toString())) + "';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name

@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -335,6 +336,12 @@ public class loginController implements Initializable {
         logInButton.setDefaultButton(true);
         sendEmailButton.setDefaultButton(false);
         sendNewPasswordButton.setDefaultButton(false);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                username.requestFocus();
+            }
+        });
     }
 
 }

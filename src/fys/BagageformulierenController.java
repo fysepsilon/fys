@@ -175,9 +175,11 @@ public class BagageformulierenController implements Initializable {
             String sql = "SELECT found.*, "
                     + "person.first_name, person.surname FROM found, person "
                     + "WHERE found.person_id = person.person_id "
-                    + "AND found.type='" + fys.getBaggageTypeString(type_combo.getValue().toString()) + "' "
+                    + "AND found.type='" + (type_combo.getValue() == null ? "" 
+                    : fys.getBaggageTypeString(type_combo.getValue().toString())) + "' "
                     + "AND found.brand = '" + brand_input.getText() + "' "
-                    + "AND found.color = '" + fys.getColorString(color_combo.getValue().toString()) + "';";
+                    + "AND found.color = '" + (color_combo.getValue() == null ? "" 
+                    : fys.getColorString(color_combo.getValue().toString())) + "';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name

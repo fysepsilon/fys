@@ -61,8 +61,8 @@ public class loginController implements Initializable {
         return userstyle;
     }
 
-    public void setUserstyle(int userStyle) {
-        loginController.userstyle = userStyle;
+    public static void setUserstyle(int userStyle) {
+        userstyle = userStyle;
     }
 
     public int getUserlanguage() {
@@ -102,6 +102,7 @@ public class loginController implements Initializable {
         login_pane.setDisable(true);
         wachtwoord_pane.setVisible(true);
         wachtwoord_pane.setDisable(false);
+        sendNewPasswordButton.setDefaultButton(true);
     }
 
     @FXML
@@ -110,6 +111,7 @@ public class loginController implements Initializable {
         login_pane.setDisable(false);
         wachtwoord_pane.setVisible(false);
         wachtwoord_pane.setDisable(true);
+        logInButton.setDefaultButton(true);
     }
     
     @FXML
@@ -119,6 +121,7 @@ public class loginController implements Initializable {
         email_pane.setVisible(false);
         email_pane.setDisable(true);
         emailerror.setText("");
+        logInButton.setDefaultButton(true);
     }
     
     @FXML
@@ -127,6 +130,7 @@ public class loginController implements Initializable {
         login_pane.setDisable(true);
         email_pane.setVisible(true);
         email_pane.setDisable(false);
+        sendEmailButton.setDefaultButton(true);
     }
 
     //Dit wordt aangeroepen wanneer de gebruiker op de button wachtwoord verzenden klikt.
@@ -272,7 +276,7 @@ public class loginController implements Initializable {
                 || emailaddress.getText() == null || emailaddress.getText().trim().isEmpty()
                 || emailpassword.getText() == null || emailpassword.getText().trim().isEmpty()
                 || emailphone.getText() == null || emailphone.getText().trim().isEmpty())) {
-            emailerror.setText("Er zijn velden leeggelaten");
+            emailerror.setText("There are fields empty");
             emailerror.setVisible(true);
             sendEmailButton.setDisable(false);
         } else //Als de emailadres niet klopt volgens de regels dan wordt een error getoond.
@@ -300,13 +304,13 @@ public class loginController implements Initializable {
 
             //Controleer of de ingevulde veld leeg is. Laat dan een error zien.
             if ((email == null || email.trim().isEmpty())) {
-                emailerror.setText("De opgegeven combinatie is niet gevonden!");
+                emailerror.setText("The given combination is not found!");
                 emailerror.setVisible(true);
                 sendEmailButton.setDisable(false);
             } else if (fys.Email_Persontype(email) == 1
                     || fys.Email_Persontype(email) == 2) { // Controleer of de gebruiker type 1 of 2 is.
 
-                emailerror.setText("Uw email is: " + email);
+                emailerror.setText("Your email is: " + email);
                 emailerror.setStyle("-fx-text-fill: green;");
                 emailerror.setVisible(true);
                 emailfirstname.setText("");
@@ -320,8 +324,7 @@ public class loginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        logInButton.setDefaultButton(true);
-        sendNewPasswordButton.setDefaultButton(true);
+       logInButton.setDefaultButton(true);
     }
 
 }

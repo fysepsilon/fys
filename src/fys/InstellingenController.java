@@ -115,15 +115,13 @@ public class InstellingenController implements Initializable {
                         + "', password = '" + FYS.encrypt(password.getText()) + "', language = '"
                         + fys.getUserLanguageString(language.getSelectionModel().getSelectedItem().toString())
                         + "', style = '" + fys.getUserStyleString(style.getSelectionModel().getSelectedItem().toString()) + "' WHERE person_id = " + id + ";";
+                loginController.setUserstyle(fys.getUserStyleString(style.getSelectionModel().getSelectedItem().toString()));
                 stmt.executeUpdate(sql);
                 conn.close();
                 login.setEmail(username.getText());
                 languages.setLanguage(fys.getUserLanguageString(language.getSelectionModel().getSelectedItem().toString()));
-                taal = languages.getLanguage();
-                loginController loginController = new loginController();
-                loginController.setUserstyle(fys.getUserStyleString(style.getSelectionModel().getSelectedItem().toString()));
-                
                 //Geef een melding in de taal die is geinstalleerd dat de gegevens zijn aangepast.
+                taal = languages.getLanguage();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText(taal[122]);
                 alert.setTitle(taal[122]);

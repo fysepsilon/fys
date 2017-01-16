@@ -95,22 +95,31 @@ public class FYS extends Application {
         Parent window1;
         window1 = FXMLLoader.load(getClass().getResource(changeToWindow));
 
-        if (style == 1) {
-            css = this.getClass().getResource("style/theme_menu_yellow.css").toExternalForm();
-        } else if (style == 2) {
-            css = this.getClass().getResource("style/theme_menu_blue.css").toExternalForm();
-        } else if (style == 3) {
-            css = this.getClass().getResource("style/theme_menu_orange.css").toExternalForm();
-        } else if (style == 4) {
-            css = this.getClass().getResource("style/theme_menu_green.css").toExternalForm();
-        } else if (style == 5) {
-            css = this.getClass().getResource("style/theme_menu_pink.css").toExternalForm();
-        } else if (style == 6) {
-            css = this.getClass().getResource("style/theme_menu_grey.css").toExternalForm();
-        } else if (style == 7) {
-            css = this.getClass().getResource("style/theme_menu_black.css").toExternalForm();
-        } else {
-            css = this.getClass().getResource("style/theme_menu_default.css").toExternalForm();
+        switch (style) {
+            case 1:
+                css = this.getClass().getResource("style/theme_menu_yellow.css").toExternalForm();
+                break;
+            case 2:
+                css = this.getClass().getResource("style/theme_menu_blue.css").toExternalForm();
+                break;
+            case 3:
+                css = this.getClass().getResource("style/theme_menu_orange.css").toExternalForm();
+                break;
+            case 4:
+                css = this.getClass().getResource("style/theme_menu_green.css").toExternalForm();
+                break;
+            case 5:
+                css = this.getClass().getResource("style/theme_menu_pink.css").toExternalForm();
+                break;
+            case 6:
+                css = this.getClass().getResource("style/theme_menu_grey.css").toExternalForm();
+                break;
+            case 7:
+                css = this.getClass().getResource("style/theme_menu_black.css").toExternalForm();
+                break;
+            default:
+                css = this.getClass().getResource("style/theme_menu_default.css").toExternalForm();
+                break;
         }
 
         window1.getStylesheets().add(css);

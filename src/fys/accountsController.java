@@ -79,6 +79,8 @@ public class accountsController implements Initializable {
     private Statement stmt = null;
     @FXML
     private Connection conn = null;
+    @FXML
+    private String dr_mail = "";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -320,7 +322,7 @@ public class accountsController implements Initializable {
             String dr_first_name = (table.getSelectionModel().getSelectedItem().getFirst_name());
             String dr_surname = (table.getSelectionModel().getSelectedItem().getSurname());
             String dr_type_combo = (table.getSelectionModel().getSelectedItem().getType());
-            String dr_mail = (table.getSelectionModel().getSelectedItem().getMail());
+            dr_mail = (table.getSelectionModel().getSelectedItem().getMail());
             String dr_address = (table.getSelectionModel().getSelectedItem().getAddress());
             String dr_residence = (table.getSelectionModel().getSelectedItem().getResidence());
             String dr_zip_code = (table.getSelectionModel().getSelectedItem().getZip_code());
@@ -383,7 +385,7 @@ public class accountsController implements Initializable {
                 loginerror.setText(taal[177]);
                 loginerror.setVisible(true);
                 //Anders update de gegevens in de database.    
-            } else if (fys.checkEmailExists(mail_input.getText())) {
+            } else if (fys.checkEmailExistsOnChange(mail_input.getText(), dr_mail)) {
                 //Foutmelding
                 loginerror.setText(taal[121]);
                 loginerror.setVisible(true);

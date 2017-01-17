@@ -249,6 +249,7 @@ public class taal {
                 languagefields[181] = " lost luggage with the same features found if what had just been completed. Below is all the information it has already declared missing luggage. You may cancel your completed piece of baggage or send it anyway.";
                 languagefields[182] = "Do not send";   
                 languagefields[183] = "Okay";
+                languagefields[184] = " luggages found in the database.";
                 break;
             case 1:
                 // Nederlands
@@ -461,6 +462,7 @@ public class taal {
                         + "ingevulde bagagestuk annuleren of\ntoch verzenden.";
                 languagefields[182] = "Niet verzenden";
                 languagefields[183] = "Oké";
+                languagefields[184] = " bagages in de database gevonden.";
                 break;
             case 2:
                 // Spaans
@@ -666,6 +668,7 @@ public class taal {
                 languagefields[181] = " pérdida de equipaje, con las mismas características que se encuentran si lo que acababa de ser completado. A continuación se muestra toda la información que ya ha declarado el equipaje perdido. Es posible cancelar la pieza terminada del equipaje o enviarlo.";
                 languagefields[182] = "No envíe";
                 languagefields[183] = "Bien";
+                languagefields[184] = " los equipajes que se encuentra en la base de datos.";
                 break;
             case 3:
                 // Turks
@@ -867,6 +870,7 @@ public class taal {
                 languagefields[181] = " sadece tamamlanmış oldu ne olursa bulundu, aynı özelliklere sahip bagaj kaybetti. Aşağıda zaten eksik bagaj duyurdu tüm bilgiler. Bagaj bitmiş parça iptal veya yine de gönderebilir.";
                 languagefields[182] = "Göndermek etmeyin";
                 languagefields[183] = "Tamam";
+                languagefields[184] = " veritabanında bulunan bagaj.";
                 break;
             default:
                 // Duits
@@ -1072,6 +1076,7 @@ public class taal {
                 languagefields[181] = " verloren gefunden Gepäck mit den gleichen Features, wenn, was gerade abgeschlossen ist. Im Folgenden finden Sie alle Informationen, die sie bereits fehlende Gepäck erklärt hat. Sie können Ihre abgeschlossen Gepäckstück stornieren oder trotzdem versenden.";
                 languagefields[182] = "Nicht senden";
                 languagefields[183] = "Okay";
+                languagefields[184] = " Gepäck in der Datenbank gefunden.";
                 break;
         }
         return languagefields;

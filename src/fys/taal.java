@@ -103,9 +103,9 @@ public class taal {
                 languagefields[46] = "Send";
                 languagefields[47] = "Filter";
                 languagefields[48] = "Status";
-                languagefields[49] = "Color"; //DUBBEL
-                languagefields[50] = "Type"; //DUBBEL
-                languagefields[51] = "Brand"; //DUBBEL
+                languagefields[49] = "Color";
+                languagefields[50] = "Type";
+                languagefields[51] = "Brand";
                 languagefields[52] = "Date";
                 languagefields[53] = "Extra information";
                 languagefields[54] = "Found";
@@ -149,14 +149,14 @@ public class taal {
                 languagefields[92] = "Save";
                 languagefields[93] = "Some required fields are left blank!";
                 languagefields[94] = "E-mail already exists!";
-                languagefields[95] = "Register missing luggage"; //DUBBEL?
-                languagefields[96] = "Register found luggage"; //DUBBEL?
-                languagefields[97] = "Home"; //DUBBEL?
-                languagefields[98] = "Accounts"; //DUBBEL?
-                languagefields[99] = "Statistics"; //DUBBEL?
-                languagefields[100] = "Luggage database"; //DUBBEL?
-                languagefields[101] = "Login"; //DUBBEL?
-                languagefields[102] = "Settings"; //DUBBEL
+                languagefields[95] = "Register missing luggage";
+                languagefields[96] = "Register found luggage";
+                languagefields[97] = "Home";
+                languagefields[98] = "Accounts";
+                languagefields[99] = "Statistics";
+                languagefields[100] = "Luggage database";
+                languagefields[101] = "Login";
+                languagefields[102] = "Settings";
                 languagefields[103] = "The account is created and an e-mail has "
                         + "been sent!";
                 languagefields[104] = "Change data";
@@ -202,7 +202,7 @@ public class taal {
                 languagefields[142] = "Date to";
                 languagefields[143] = "Week";
                 languagefields[144] = "Page";
-                languagefields[145] = "Extra"; //DUBBEL?
+                languagefields[145] = "Extra";
                 languagefields[146] = "Confirm";
                 languagefields[147] = "Are you sure you want to reset this email "
                         + "to its normal message?";

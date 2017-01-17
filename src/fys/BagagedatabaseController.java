@@ -309,7 +309,7 @@ public class BagagedatabaseController implements Initializable {
         filterPane.setVisible(false);
         database_pane.setDisable(false);
         
-        alertInfoPane.setVisible(false);
+        alertInfoPane.setVisible(true);
         database_pane.setDisable(true);
         
     }

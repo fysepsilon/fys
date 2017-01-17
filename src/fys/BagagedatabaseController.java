@@ -50,7 +50,7 @@ public class BagagedatabaseController implements Initializable {
     @FXML
     private AnchorPane database_pane, wijzig_pane;
     @FXML
-    private Pane filterPane, alertRemovePane, alertChangePane;
+    private Pane filterPane, alertRemovePane, alertChangePane, alertConfirmPane;
     @FXML
     private TableView<Bagage> table;
     @FXML
@@ -66,7 +66,8 @@ public class BagagedatabaseController implements Initializable {
     @FXML
     private ComboBox statusFilter, typeFilter;
     @FXML
-    private TextArea characteristicsFilter, alertremove_area, alertchange_area;
+    private TextArea characteristicsFilter, alertremove_area, alertchange_area,
+            alertconfirm_area;
     @FXML
     private ComboBox statusCombo, airportCombo, typeCombo, colorCombo,
             destination_combo;
@@ -79,7 +80,8 @@ public class BagagedatabaseController implements Initializable {
     @FXML
     private Button pictureButton, sendButton, cancelButton, changeButton,
             removeButton, filter, filterButton, alertremove_button,
-            alertchange_button;
+            alertchange_button, alertconfirm_buttonleft, 
+            alertconfirm_buttonright;
     ;
     @FXML
     private Label mailLabel, phoneLabel, countryLabel, zipcodeLabel,
@@ -90,7 +92,7 @@ public class BagagedatabaseController implements Initializable {
             tableFromLabel, loginerror, shipaddressLabel, popup_filterlabel,
             popupLabelStatus, popupLabelType, popupLabelKleur, popupLabelMerk,
             popupLabelDatum, popupLabelEi, alertremove_headerlabel,
-            alertchange_headerlabel;
+            alertchange_headerlabel, alertconfirm_headerlabel;
     @FXML
     private final FYS fys = new FYS();
     @FXML
@@ -152,6 +154,10 @@ public class BagagedatabaseController implements Initializable {
         alertchange_headerlabel.setText(taal[104]);
         alertchange_button.setText(taal[183]);
         alertchange_area.setText(taal[105]);
+        alertconfirm_buttonleft.setText(taal[146]);
+        alertconfirm_buttonright.setText(taal[127]);
+        alertconfirm_area.setText(taal[155]);
+        alertconfirm_headerlabel.setText(taal[154]);
 
         airportLabel.setText(taal[8] + ":");
         nameLabel.setText(taal[9] + ":");
@@ -763,15 +769,24 @@ public class BagagedatabaseController implements Initializable {
             int dr_personId = (table.getSelectionModel().getSelectedItem().getPersonID());
             int dr_lafId = (table.getSelectionModel().getSelectedItem().getLostAndFoundID());
             int dr_from = Integer.parseInt((table.getSelectionModel().getSelectedItem().getTableFrom()));
-
-            //Vraag of de gebruiker het zeker weet
-            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-            confirm.setTitle(taal[154]);
-            confirm.setHeaderText(taal[154]);
-            confirm.setContentText(taal[155]);
-            Optional<ButtonType> result = confirm.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                try {
+        
+            alertConfirmPane.setVisible(true);
+            database_pane.setDisable(true);
+        
+            idLabel.setText(String.valueOf(dr_id));
+            personIdLabel.setText(String.valueOf(dr_personId));
+            lafIdLabel.setText(String.valueOf(dr_lafId));
+            tableFromLabel.setText(String.valueOf(dr_from));
+            
+        } else {
+            alertRemovePane.setVisible(true);
+            database_pane.setDisable(true);
+        }
+    }
+    
+    @FXML
+    private void handleConfirmAlertConfirm(ActionEvent event) throws IOException {
+        try {
                     conn = fys.connectToDatabase(conn);
                     stmt = conn.createStatement();
                     String sql_del = "";
@@ -779,14 +794,14 @@ public class BagagedatabaseController implements Initializable {
                     String sql_del3 = "";
 
                     //Verwijder de gegevens die coresponderen aan de id, personId en lafId
-                    if (dr_from == 0) { //0 = lost_table
-                        sql_del = "DELETE FROM bagagedatabase.lost WHERE id='" + dr_id + "'";
-                        sql_del2 = "DELETE FROM bagagedatabase.person WHERE person_id='" + dr_personId + "'";
-                        sql_del3 = "DELETE FROM bagagedatabase.airport WHERE lost_and_found_id='" + dr_lafId + "'";
-                    } else if (dr_from == 1) { //1 = found_table
-                        sql_del = "DELETE FROM bagagedatabase.found WHERE id='" + dr_id + "'";
-                        sql_del2 = "DELETE FROM bagagedatabase.person WHERE person_id='" + dr_personId + "'";
-                        sql_del3 = "DELETE FROM bagagedatabase.airport WHERE lost_and_found_id='" + dr_lafId + "'";
+                    if (Integer.parseInt(tableFromLabel.getText()) == 0) { //0 = lost_table
+                        sql_del = "DELETE FROM bagagedatabase.lost WHERE id='" + Integer.parseInt(idLabel.getText()) + "'";
+                        sql_del2 = "DELETE FROM bagagedatabase.person WHERE person_id='" + Integer.parseInt(personIdLabel.getText()) + "'";
+                        sql_del3 = "DELETE FROM bagagedatabase.airport WHERE lost_and_found_id='" + Integer.parseInt(lafIdLabel.getText()) + "'";
+                    } else if (Integer.parseInt(tableFromLabel.getText()) == 1) { //1 = found_table
+                        sql_del = "DELETE FROM bagagedatabase.found WHERE id='" + Integer.parseInt(idLabel.getText()) + "'";
+                        sql_del2 = "DELETE FROM bagagedatabase.person WHERE person_id='" + Integer.parseInt(personIdLabel.getText()) + "'";
+                        sql_del3 = "DELETE FROM bagagedatabase.airport WHERE lost_and_found_id='" + Integer.parseInt(lafIdLabel.getText()) + "'";
                     }
                     stmt.executeUpdate(sql_del);
                     stmt.executeUpdate(sql_del2);
@@ -800,12 +815,13 @@ public class BagagedatabaseController implements Initializable {
                     System.out.println("SQLState: " + ex.getSQLState());
                     System.out.println("VendorError: " + ex.getErrorCode());
                 }
-            } else {
-                //Ignore
-            }
-        } else {
-            alertRemovePane.setVisible(true);
-            database_pane.setDisable(true);
-        }
+        alertConfirmPane.setVisible(false);
+        database_pane.setDisable(false);
+    }
+
+    @FXML
+    private void handleCloseAlertConfirm(ActionEvent event) throws IOException {
+        alertConfirmPane.setVisible(false);
+        database_pane.setDisable(false);
     }
 }

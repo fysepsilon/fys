@@ -293,5 +293,26 @@
                 <TextArea id="TextArea" fx:id="alertremove_area" editable="false" layoutX="14.0" layoutY="36.0" prefHeight="94.0" prefWidth="272.0" text="Je moet eerst een rij selecteren voordat je deze kan wijzigen" wrapText="true" />
             </children>
         </Pane>
+        <Pane id="popup" fx:id="alertConfirmPane" layoutX="350.0" layoutY="261.0" prefHeight="200.0" prefWidth="300.0" visible="false">
+            <children>
+                <Label id="popup_filterlabel" fx:id="alertconfirm_headerlabel" alignment="CENTER" layoutY="5.0" prefHeight="20.0" prefWidth="300.0" text="Header label" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Button id="popup_close" layoutX="231.0" mnemonicParsing="false" onAction="#handleCloseAlertConfirm" prefHeight="20.0" prefWidth="61.0">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/popup-close.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button id="mainbutton" fx:id="alertconfirm_buttonleft" layoutX="14.0" layoutY="137.0" mnemonicParsing="false" onAction="#handleConfirmAlertConfirm" prefHeight="49.0" prefWidth="132.0" text="Bevestigen" />
+                <Button id="mainbutton" fx:id="alertconfirm_buttonright" layoutX="154.0" layoutY="137.0" mnemonicParsing="false" onAction="#handleCloseAlertConfirm" prefHeight="49.0" prefWidth="132.0" text="Annuleren" />
+                <TextArea id="TextArea" fx:id="alertconfirm_area" editable="false" layoutX="14.0" layoutY="36.0" prefHeight="94.0" prefWidth="272.0" text="Je moet eerst een rij selecteren voordat je deze kan wijzigen" wrapText="true" />
+            </children>
+        </Pane>
     </children>
 </AnchorPane>

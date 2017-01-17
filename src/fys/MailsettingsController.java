@@ -11,17 +11,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -45,7 +41,7 @@ public class MailsettingsController implements Initializable {
     @FXML
     private AnchorPane home_pane, edit_pane;
     @FXML
-    private Pane filterPane, alertChangePane, mainPane;
+    private Pane filterPane, alertChangePane, mainPane, alertConfirmPane;
     @FXML
     private TableView<Mail> table;
     @FXML
@@ -57,26 +53,25 @@ public class MailsettingsController implements Initializable {
     @FXML
     private ComboBox pageFilter, typeFilter, languageFilter;
     @FXML
-    private TextArea alertchange_area;
+    private TextArea alertchange_area, alertconfirm_area;
     @FXML
     private HTMLEditor HTMLEditor;
     @FXML
     private Button change_button, send_button, cancel_button, recover_button,
-            show_VBox, close_VBOX, filter_button, filter, alertchange_button;
+            show_VBox, close_VBOX, filter_button, filter, alertchange_button, 
+            alertconfirm_buttonleft, alertconfirm_buttonright;
     @FXML
     private Label mailid_label, subject_label, page_label, type_label,
             language_label, info_firstname, info_surname, info_password,
             info_username, info, error, info_label, popup_filterlabel,
             pageFilterLabel, languageFilterLabel, typeFilterLabel,
-            mainFilterLabel, alertchange_headerlabel;
+            mainFilterLabel, alertchange_headerlabel, alertconfirm_headerlabel;
     @FXML
     private GridPane mailGridpane, luggagetable;
     @FXML
     private VBox VBox;
     @FXML
     private TextField subject_field, page_field, type_field, language_field;
-    @FXML
-    private final loginController loginController = new loginController();
     @FXML
     private final FYS fys = new FYS();
     @FXML
@@ -124,12 +119,15 @@ public class MailsettingsController implements Initializable {
         typeFilterLabel.setText(taal[20]);
         mainFilterLabel.setText(taal[167]);
         filter.setText(taal[47]);
-        
-        
+
         //Alert
         alertchange_headerlabel.setText(taal[104]);
         alertchange_button.setText(taal[183]);
         alertchange_area.setText(taal[105]);
+        alertconfirm_buttonleft.setText(taal[146]);
+        alertconfirm_buttonright.setText(taal[127]);
+        alertconfirm_area.setText(taal[147]);
+        alertconfirm_headerlabel.setText(taal[153]);
 
         //Tabel
         getMailData();
@@ -237,7 +235,7 @@ public class MailsettingsController implements Initializable {
         alertChangePane.setVisible(false);
         mainPane.setDisable(false);
     }
-    
+
     @FXML
     public void doNext(int dr_mailid, String dr_subject, String dr_message,
             String dr_page, String dr_type, String dr_language) {
@@ -293,36 +291,37 @@ public class MailsettingsController implements Initializable {
 
     //Wanneer je op de button herstellen klikt.
     public void handleRecover(ActionEvent event) throws IOException {
-            int dr_mailid = (table.getSelectionModel().getSelectedItem().getMailid());
-            String dr_subject = (table.getSelectionModel().getSelectedItem().getSubject());
-            String dr_message = (table.getSelectionModel().getSelectedItem().getMessage());
-            String dr_page = (table.getSelectionModel().getSelectedItem().getPage());
-            String dr_type = (table.getSelectionModel().getSelectedItem().getType());
-            String dr_language = (table.getSelectionModel().getSelectedItem().getLanguage());
+        int dr_mailid = (table.getSelectionModel().getSelectedItem().getMailid());
+        String dr_subject = (table.getSelectionModel().getSelectedItem().getSubject());
+        String dr_message = (table.getSelectionModel().getSelectedItem().getMessage());
+        String dr_page = (table.getSelectionModel().getSelectedItem().getPage());
+        String dr_type = (table.getSelectionModel().getSelectedItem().getType());
+        String dr_language = (table.getSelectionModel().getSelectedItem().getLanguage());
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle(taal[153]);
-            alert.setContentText(taal[147]);
+        alertConfirmPane.setVisible(true);
+        mainPane.setDisable(true);
 
-            ButtonType buttonTypeOne = new ButtonType(taal[146]);
-            ButtonType buttonTypeCancel = new ButtonType(taal[127], ButtonBar.ButtonData.CANCEL_CLOSE);
+        mailid_label.setText(String.valueOf(dr_mailid));
+    }
 
-            alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
+    @FXML
+    private void handleConfirmAlertConfirm(ActionEvent event) throws IOException {
+        try {
+            sendToDatabase2(Integer.parseInt(mailid_label.getText()));
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        alertConfirmPane.setVisible(false);
+        mainPane.setDisable(false);
+    }
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == buttonTypeOne) {
-
-            mailid_label.setText(String.valueOf(dr_mailid));
-
-                try {
-                    sendToDatabase2(Integer.parseInt(mailid_label.getText()));
-                } catch (SQLException ex) {
-                    // handle any errors
-                    System.out.println("SQLException: " + ex.getMessage());
-                    System.out.println("SQLState: " + ex.getSQLState());
-                    System.out.println("VendorError: " + ex.getErrorCode());
-                }
-            }
+    @FXML
+    private void handleCloseAlertConfirm(ActionEvent event) throws IOException {
+        alertConfirmPane.setVisible(false);
+        mainPane.setDisable(false);
     }
 
     //Herstellen

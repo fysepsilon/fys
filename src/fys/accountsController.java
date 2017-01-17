@@ -40,8 +40,9 @@ import javafx.scene.layout.Pane;
 public class accountsController implements Initializable {
 
     @FXML
-    private Button NewAccountButton, change_button, remove_button, 
-            cancel_button, send_button, alertremove_button, alertchange_button;
+    private Button NewAccountButton, change_button, remove_button,
+            cancel_button, send_button, alertremove_button, alertchange_button,
+            alertconfirm_buttonleft, alertconfirm_buttonright;
     @FXML
     private TableView<Accounts> table;
     @FXML
@@ -57,14 +58,15 @@ public class accountsController implements Initializable {
     private TextField first_name_input, surname_input, mail_input, address_input,
             residence_input, zip_code_input, country_input, phone_input;
     @FXML
-    private TextArea alertremove_area, alertchange_area;
+    private TextArea alertremove_area, alertchange_area, alertconfirm_area;
     @FXML
-    private Label loginerror, type_label, language_label, first_name_label, 
-            surname_label, address_label, residence_label, zip_code_label, 
-            country_label, phone_label, mail_label, personId_label, mandatory, 
-            alertremove_headerlabel, alertchange_headerlabel;
+    private Label loginerror, type_label, language_label, first_name_label,
+            surname_label, address_label, residence_label, zip_code_label,
+            country_label, phone_label, mail_label, personId_label, mandatory,
+            alertremove_headerlabel, alertchange_headerlabel, 
+            alertconfirm_headerlabel;
     @FXML
-    private Pane mainPane, alertRemovePane, alertChangePane;
+    private Pane mainPane, alertRemovePane, alertChangePane, alertConfirmPane;
     @FXML
     private final loginController loginController = new loginController();
     @FXML
@@ -77,94 +79,6 @@ public class accountsController implements Initializable {
     private Statement stmt = null;
     @FXML
     private Connection conn = null;
-
-    // Wanneer je op de button nieuw account aanmaken klikt.
-    @FXML
-    private void handlenieuwaccount(ActionEvent event) throws IOException {
-        fys.changeToAnotherFXML(taal[63], "nieuwaccountaanmaken.fxml");
-    }
-
-    // Wanneer je op de button annuleren klikt.
-    @FXML
-    private void handleCancel(ActionEvent event) throws IOException {
-        database_pane.setDisable(false);
-        database_pane.setVisible(true);
-        wijzig_pane.setDisable(true);
-        wijzig_pane.setVisible(false);
-    }
-
-    // Wanneer je op de button verwijderen klikt.
-    public void handleRemove(ActionEvent event) throws IOException {
-        int selectedIndex = table.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
-            int dr_personId = (table.getSelectionModel().getSelectedItem().getPersonId());
-            String dr_first_name = (table.getSelectionModel().getSelectedItem().getFirst_name());
-            String dr_surname = (table.getSelectionModel().getSelectedItem().getSurname());
-
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText(taal[128]);
-            alert.setTitle(taal[128]);
-            alert.setContentText(taal[129] + dr_first_name + " " + dr_surname + taal[130]);
-
-            ButtonType buttonTypeOne = new ButtonType(taal[146]);
-            ButtonType buttonTypeCancel = new ButtonType(taal[127], ButtonBar.ButtonData.CANCEL_CLOSE);
-
-            alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == buttonTypeOne) {
-
-                personId_label.setText(String.valueOf(dr_personId));
-
-                try {
-                    sendToDatabase2(Integer.parseInt(personId_label.getText()));
-                } catch (SQLException ex) {
-                    // handle any errors
-                    System.out.println("SQLException: " + ex.getMessage());
-                    System.out.println("SQLState: " + ex.getSQLState());
-                    System.out.println("VendorError: " + ex.getErrorCode());
-                }
-            }
-        } else {
-            alertRemovePane.setVisible(true);
-            mainPane.setDisable(true);
-        }
-    }
-
-    private void sendToDatabase2(int dr_personId) throws IOException, SQLException {
-        try {
-            conn = fys.connectToDatabase(conn);
-            stmt = conn.createStatement();
-
-            //connectToDatabase(conn, stmt, "test", "root", "root");
-            String sql_remove = "DELETE FROM bagagedatabase.person "
-                    + "WHERE person_id='" + dr_personId + "'";
-
-            stmt.executeUpdate(sql_remove);
-
-            fys.changeToAnotherFXML(taal[98], "accounts.fxml");
-
-            conn.close();
-        } catch (SQLException ex) {
-            // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-        }
-    }
-
-    @FXML
-    private void handleCloseAlertRemove(ActionEvent event) throws IOException {
-        alertRemovePane.setVisible(false);
-        mainPane.setDisable(false);
-    }
-    
-    
-    @FXML
-    private void handleCloseAlertChange(ActionEvent event) throws IOException {
-        alertChangePane.setVisible(false);
-        mainPane.setDisable(false);
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -227,7 +141,10 @@ public class accountsController implements Initializable {
         alertchange_headerlabel.setText(taal[104]);
         alertchange_button.setText(taal[183]);
         alertchange_area.setText(taal[105]);
-        
+        alertconfirm_buttonleft.setText(taal[146]);
+        alertconfirm_buttonright.setText(taal[127]);
+        alertconfirm_headerlabel.setText(taal[154]);
+
         //Tabel
         getLuggageData();
         first_name.setCellValueFactory(new PropertyValueFactory<>("first_name"));
@@ -253,6 +170,95 @@ public class accountsController implements Initializable {
         phone.setStyle("-fx-alignment: CENTER;");
         language_column.setStyle("-fx-alignment: CENTER;");
         table.setItems(data);
+    }
+    
+    // Wanneer je op de button nieuw account aanmaken klikt.
+    @FXML
+    private void handlenieuwaccount(ActionEvent event) throws IOException {
+        fys.changeToAnotherFXML(taal[63], "nieuwaccountaanmaken.fxml");
+    }
+
+    // Wanneer je op de button annuleren klikt.
+    @FXML
+    private void handleCancel(ActionEvent event) throws IOException {
+        database_pane.setDisable(false);
+        database_pane.setVisible(true);
+        wijzig_pane.setDisable(true);
+        wijzig_pane.setVisible(false);
+    }
+    
+    @FXML
+    private void handleCloseAlertConfirm(ActionEvent event) throws IOException {
+        alertConfirmPane.setVisible(false);
+        mainPane.setDisable(false);
+    }    
+
+    // Wanneer je op de button verwijderen klikt.
+    public void handleRemove(ActionEvent event) throws IOException {
+        int selectedIndex = table.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            int dr_personId = (table.getSelectionModel().getSelectedItem().getPersonId());
+            String dr_first_name = (table.getSelectionModel().getSelectedItem().getFirst_name());
+            String dr_surname = (table.getSelectionModel().getSelectedItem().getSurname());
+
+            alertconfirm_area.setText(taal[129] + dr_first_name + taal[130]);
+
+            alertConfirmPane.setVisible(true);
+            mainPane.setDisable(true);
+            
+            personId_label.setText(String.valueOf(dr_personId));
+        } else {
+            alertRemovePane.setVisible(true);
+            mainPane.setDisable(true);
+        }
+    }
+
+    @FXML
+    private void handleConfirmAlertConfirm(ActionEvent event) throws IOException {
+        try {
+            sendToDatabase2(Integer.parseInt(personId_label.getText()));
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        alertConfirmPane.setVisible(false);
+        mainPane.setDisable(false);
+    }
+
+    private void sendToDatabase2(int dr_personId) throws IOException, SQLException {
+        try {
+            conn = fys.connectToDatabase(conn);
+            stmt = conn.createStatement();
+
+            //connectToDatabase(conn, stmt, "test", "root", "root");
+            String sql_remove = "DELETE FROM bagagedatabase.person "
+                    + "WHERE person_id='" + dr_personId + "'";
+
+            stmt.executeUpdate(sql_remove);
+
+            fys.changeToAnotherFXML(taal[98], "accounts.fxml");
+
+            conn.close();
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+    }
+
+    @FXML
+    private void handleCloseAlertRemove(ActionEvent event) throws IOException {
+        alertRemovePane.setVisible(false);
+        mainPane.setDisable(false);
+    }
+
+    @FXML
+    private void handleCloseAlertChange(ActionEvent event) throws IOException {
+        alertChangePane.setVisible(false);
+        mainPane.setDisable(false);
     }
 
     public void getLuggageData() {
@@ -324,7 +330,7 @@ public class accountsController implements Initializable {
             int dr_personId = (table.getSelectionModel().getSelectedItem().getPersonId());
 
             doNext(dr_first_name, dr_surname, dr_type_combo, dr_mail, dr_address, dr_residence, dr_zip_code, dr_country, dr_phone, dr_language_combo, dr_personId);
-        } else {       
+        } else {
             alertChangePane.setVisible(true);
             mainPane.setDisable(true);
         }

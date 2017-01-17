@@ -33,7 +33,7 @@
                </LineChart>
               <TableView fx:id="table" layoutX="400.0" layoutY="49.0" prefHeight="415.0" prefWidth="386.0">
                   <columns>
-                      <TableColumn id="status" fx:id="status" maxWidth="212.0" minWidth="-1.0" prefWidth="212.0" text="Status" />
+                      <TableColumn id="status" fx:id="status" maxWidth="212.0" minWidth="212.0" prefWidth="212.0" text="Status" />
                       <TableColumn id="amount" fx:id="amount" maxWidth="174.0" minWidth="-1.0" prefWidth="174.0" text="Aantal" />
                   </columns>
               </TableView>

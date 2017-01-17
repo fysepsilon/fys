@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -106,6 +108,16 @@ public class loginController implements Initializable {
         sendNewPasswordButton.setDefaultButton(true);
         logInButton.setDefaultButton(false);
         sendEmailButton.setDefaultButton(false);
+        
+        //Make a boolean for the focus 
+        final BooleanProperty secondTime = new SimpleBooleanProperty(true); // Variable to store the focus on stage load
+
+        passwordforgot.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue && secondTime.get()) {
+                wachtwoord_pane.requestFocus(); // Delegate the focus to container
+                secondTime.setValue(false); // Variable value changed for future references
+            }
+        });
     }
 
     @FXML
@@ -140,6 +152,16 @@ public class loginController implements Initializable {
         sendEmailButton.setDefaultButton(true);
         sendNewPasswordButton.setDefaultButton(false);
         logInButton.setDefaultButton(false);
+        
+        //Make a boolean for the focus 
+        final BooleanProperty thirthTime = new SimpleBooleanProperty(true); // Variable to store the focus on stage load
+
+        emailfirstname.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue && thirthTime.get()) {
+                email_pane.requestFocus(); // Delegate the focus to container
+                thirthTime.setValue(false); // Variable value changed for future references
+            }
+        });
     }
 
     //Dit wordt aangeroepen wanneer de gebruiker op de button wachtwoord verzenden klikt.
@@ -333,6 +355,31 @@ public class loginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //Make a boolean for the focus 
+        final BooleanProperty firstTime = new SimpleBooleanProperty(true); // Variable to store the focus on stage load
+        final BooleanProperty secondTime = new SimpleBooleanProperty(true); // Variable to store the focus on stage load
+        final BooleanProperty thirthTime = new SimpleBooleanProperty(true); // Variable to store the focus on stage load
+
+        //Dont focus
+        username.focusedProperty().addListener((observable,  oldValue,  newValue) -> {
+            if(newValue && firstTime.get()){
+                login_pane.requestFocus(); // Delegate the focus to container
+                firstTime.setValue(false); // Variable value changed for future references
+            }
+        });
+        passwordforgot.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue && secondTime.get()) {
+                wachtwoord_pane.requestFocus(); // Delegate the focus to container
+                secondTime.setValue(false); // Variable value changed for future references
+            }
+        });
+        emailfirstname.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue && thirthTime.get()) {
+                email_pane.requestFocus(); // Delegate the focus to container
+                thirthTime.setValue(false); // Variable value changed for future references
+            }
+        });
+        
         logInButton.setDefaultButton(true);
         sendEmailButton.setDefaultButton(false);
         sendNewPasswordButton.setDefaultButton(false);

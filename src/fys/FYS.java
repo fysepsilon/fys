@@ -131,7 +131,7 @@ public class FYS extends Application {
     }
     
     /**
-     * Functiion for Usermanual
+     * Function for Usermanual
      */
     public void UserManual() {
         int language = 0;

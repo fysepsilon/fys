@@ -293,10 +293,16 @@ public class BagagedatabaseController implements Initializable {
 
         //Update de tabel met gegevens die is gevraagd.
         table.setItems(dataFilter);
-
+        
         //Sluit de popup
         filterPane.setVisible(false);
         database_pane.setDisable(false);
+        
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(taal[104]);
+        alert.setTitle(taal[104]);
+        alert.setContentText(taal[180] + dataFilter.size() + taal[184]);
+        alert.showAndWait();
     }
 
     public void getLuggageData() {

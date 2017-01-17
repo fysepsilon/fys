@@ -53,10 +53,6 @@ public class HomepageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        recentlabel.setText(taal[106]);
-        lostlabel.setText(taal[55]);
-        foundlabel.setText(taal[54]);
-
         date.setText(taal[52]);
         time.setText(taal[107]);
         color.setText(taal[49]);

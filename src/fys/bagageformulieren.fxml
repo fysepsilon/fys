@@ -154,7 +154,7 @@
                     </children>
                 </GridPane>
                 <Button id="mainbutton" fx:id="send_button" layoutX="14.0" layoutY="415.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleSendToDatabase" prefHeight="49.0" prefWidth="772.0" text="Verzenden" />
-                <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutX="20.0" prefHeight="25.0" prefWidth="760.0" textFill="RED" visible="false">
+                <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutX="14.0" prefHeight="25.0" prefWidth="763.0" textFill="RED" visible="false">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>

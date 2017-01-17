@@ -268,7 +268,31 @@ public class BagageformulierenController implements Initializable {
                         + "characteristics, status, picture, person_id, lost_and_found_id) VALUES ('" + type + "', "
                         + "'" + brand + "', '" + color + "', '" + characteristics + "', 1, "
                         + "'" + filePath + "', '" + personId + "', '" + lostAndFoundId + "')";
+                               
                 stmt.executeUpdate(sql_lost);
+                
+                String sql_statics = "SELECT * FROM bagagedatabase.lost WHERE person_id = " + personId + " "
+                        + "AND lost_and_found_id = " + lostAndFoundId + ";";
+                try (ResultSet statics_rs = stmt.executeQuery(sql_statics)) {
+                    int id = -1;
+                    while (statics_rs.next()) {
+                        id = statics_rs.getInt("id");
+                    }
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    Date dateStatics = new Date();
+                    String dateTimeString = dateFormat.format(dateStatics);
+                    String[] tokens = dateTimeString.split(" ");
+                    if (tokens.length != 2) {
+                        throw new IllegalArgumentException();
+                    }
+                    String dateString = tokens[0];
+                    String timeString = tokens[1];
+
+                    //Registreer de status van een bagage.
+                    String sql_status = "INSERT INTO luggage_status VALUES(" + id + ", '"
+                            + dateString + "', '" + timeString + "', 1, 0);";
+                    stmt.executeUpdate(sql_status);
+                }
             }
 
             // Email bericht filteren op sommige woorden.            

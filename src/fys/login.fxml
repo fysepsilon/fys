@@ -102,8 +102,8 @@
                 </ImageView>
                 <TextField id="login_fields" fx:id="emailfirstname" layoutY="141.0" prefHeight="31.0" prefWidth="314.0" promptText="first name" />
                 <TextField id="login_fields" fx:id="emailaddress" layoutY="182.0" prefHeight="31.0" prefWidth="314.0" promptText="address" />
-                <PasswordField id="login_fields" fx:id="emailpassword" layoutY="264.0" prefHeight="31.0" prefWidth="314.0" promptText="password" />
                 <TextField id="login_fields" fx:id="emailphone" layoutY="223.0" prefHeight="31.0" prefWidth="314.0" promptText="phone number" />
+                <PasswordField id="login_fields" fx:id="emailpassword" layoutY="264.0" prefHeight="31.0" prefWidth="314.0" promptText="password" />
                 <Button id="login_but" fx:id="sendEmailButton" defaultButton="true" layoutY="325.0" mnemonicParsing="false" onAction="#handleSendEmailAction" prefHeight="31.0" prefWidth="187.0" text="Send" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="12.0" />

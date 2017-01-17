@@ -62,7 +62,11 @@ public class HomepageadminController implements Initializable {
         String months = tokens[1];
        
         //LINECHART
-        linechartTitle.setText(taal[76] + " " + fys.getMonthName(months ) +" " + year);
+        if (months.length() == 1) {
+            linechartTitle.setText(taal[76] + " " + fys.getMonthName("0" + months) + " " + year);
+        } else {
+            linechartTitle.setText(taal[76] + " " + fys.getMonthName(months ) +" " + year);
+        }
         linechart.setAnimated(true);
         linechart.getXAxis().setAutoRanging(true); 
         linechart.getYAxis().setAutoRanging(true); 
@@ -141,7 +145,11 @@ public class HomepageadminController implements Initializable {
         series.getData().set(11, new XYChart.Data(taal[89], dec));
         
         //Voeg de aantal 0 toe in de tabel en de namen van de statussen.
-        tableTitle.setText(taal[48] + " " + fys.getMonthName(months ) +" " + year);
+        if(months.length() == 1){
+            tableTitle.setText(taal[48] + " " + fys.getMonthName("0" + months) + " " + year);
+        } else{
+            tableTitle.setText(taal[48] + " " + fys.getMonthName(months) + " " + year);
+        }
         status.setText(taal[48]);
         amount.setText(taal[132]);
         getStatusData(year, months);

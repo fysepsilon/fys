@@ -26,7 +26,7 @@
                             <columns>
                                 <TableColumn id="date" fx:id="date" maxWidth="150.0" minWidth="85.0" prefWidth="85.0" text="Datum" />
                                 <TableColumn id="time" fx:id="time" maxWidth="150.0" minWidth="60.0" prefWidth="60.0" text="Tijd" />                            
-                                <TableColumn id="color" fx:id="color" maxWidth="182.0" minWidth="0.0" prefWidth="87.0" text="Kleur" />
+                                <TableColumn id="color" fx:id="color" maxWidth="182.0" minWidth="87.0" prefWidth="87.0" text="Kleur" />
                                 <TableColumn id="brand" fx:id="brand" maxWidth="281.0" minWidth="42.0" prefWidth="153.0" text="Merk" />
                             </columns>
                         </TableView>
@@ -34,7 +34,7 @@
                             <columns>
                                 <TableColumn id="date1" fx:id="date1" maxWidth="150.0" minWidth="85.0" prefWidth="85.0" text="Datum" />
                                 <TableColumn id="time1" fx:id="time1" maxWidth="150.0" minWidth="60.0" prefWidth="60.0" text="Tijd" />                                                    
-                                <TableColumn id="color1" fx:id="color1" maxWidth="182.0" minWidth="0.0" prefWidth="87.0" text="Kleur" />
+                                <TableColumn id="color1" fx:id="color1" maxWidth="182.0" minWidth="87.0" prefWidth="87.0" text="Kleur" />
                                 <TableColumn id="brand1" fx:id="brand1" maxWidth="281.0" minWidth="42.0" prefWidth="153.0" text="Merk" />
                             </columns>
                         </TableView>

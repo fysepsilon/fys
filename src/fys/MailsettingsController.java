@@ -26,6 +26,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -44,7 +45,7 @@ public class MailsettingsController implements Initializable {
     @FXML
     private AnchorPane home_pane, edit_pane;
     @FXML
-    private Pane filterPane;
+    private Pane filterPane, alertChangePane, mainPane;
     @FXML
     private TableView<Mail> table;
     @FXML
@@ -56,16 +57,18 @@ public class MailsettingsController implements Initializable {
     @FXML
     private ComboBox pageFilter, typeFilter, languageFilter;
     @FXML
+    private TextArea alertchange_area;
+    @FXML
     private HTMLEditor HTMLEditor;
     @FXML
     private Button change_button, send_button, cancel_button, recover_button,
-            show_VBox, close_VBOX, filter_button, filter;
+            show_VBox, close_VBOX, filter_button, filter, alertchange_button;
     @FXML
     private Label mailid_label, subject_label, page_label, type_label,
             language_label, info_firstname, info_surname, info_password,
             info_username, info, error, info_label, popup_filterlabel,
             pageFilterLabel, languageFilterLabel, typeFilterLabel,
-            mainFilterLabel;
+            mainFilterLabel, alertchange_headerlabel;
     @FXML
     private GridPane mailGridpane, luggagetable;
     @FXML
@@ -121,6 +124,12 @@ public class MailsettingsController implements Initializable {
         typeFilterLabel.setText(taal[20]);
         mainFilterLabel.setText(taal[167]);
         filter.setText(taal[47]);
+        
+        
+        //Alert
+        alertchange_headerlabel.setText(taal[104]);
+        alertchange_button.setText(taal[183]);
+        alertchange_area.setText(taal[105]);
 
         //Tabel
         getMailData();
@@ -218,14 +227,17 @@ public class MailsettingsController implements Initializable {
 
             doNext(dr_mailid, dr_subject, dr_message, dr_page, dr_type, dr_language);
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(taal[104]);
-            alert.setTitle(taal[104]);
-            alert.setContentText(taal[105]);
-            alert.showAndWait();
+            alertChangePane.setVisible(true);
+            mainPane.setDisable(true);
         }
     }
 
+    @FXML
+    private void handleCloseAlertChange(ActionEvent event) throws IOException {
+        alertChangePane.setVisible(false);
+        mainPane.setDisable(false);
+    }
+    
     @FXML
     public void doNext(int dr_mailid, String dr_subject, String dr_message,
             String dr_page, String dr_type, String dr_language) {
@@ -281,8 +293,6 @@ public class MailsettingsController implements Initializable {
 
     //Wanneer je op de button herstellen klikt.
     public void handleRecover(ActionEvent event) throws IOException {
-        int selectedIndex = table.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
             int dr_mailid = (table.getSelectionModel().getSelectedItem().getMailid());
             String dr_subject = (table.getSelectionModel().getSelectedItem().getSubject());
             String dr_message = (table.getSelectionModel().getSelectedItem().getMessage());
@@ -291,8 +301,7 @@ public class MailsettingsController implements Initializable {
             String dr_language = (table.getSelectionModel().getSelectedItem().getLanguage());
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText(taal[104]);
-            alert.setTitle(taal[104]);
+            alert.setTitle(taal[153]);
             alert.setContentText(taal[147]);
 
             ButtonType buttonTypeOne = new ButtonType(taal[146]);
@@ -303,7 +312,7 @@ public class MailsettingsController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == buttonTypeOne) {
 
-                mailid_label.setText(String.valueOf(dr_mailid));
+            mailid_label.setText(String.valueOf(dr_mailid));
 
                 try {
                     sendToDatabase2(Integer.parseInt(mailid_label.getText()));
@@ -314,13 +323,6 @@ public class MailsettingsController implements Initializable {
                     System.out.println("VendorError: " + ex.getErrorCode());
                 }
             }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(taal[104]);
-            alert.setTitle(taal[104]);
-            alert.setContentText(taal[105]);
-            alert.showAndWait();
-        }
     }
 
     //Herstellen

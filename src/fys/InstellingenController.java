@@ -61,9 +61,6 @@ public class InstellingenController implements Initializable {
                 taal[165]);
         style.getItems().addAll(taal[34], taal[36], taal[38], taal[35], 
                 taal[37], taal[40], taal[42], taal[41]);
-        alertmain_headerlabel.setText(taal[122]);
-        alertmain_button.setText(taal[183]);
-        alertmain_area.setText(taal[123]);
         //Krijg de gegevens van de gebruiker die ingelogd is.
         //Vul de textfields in met gegevens die zijn opgehaald.
         try {
@@ -130,6 +127,10 @@ public class InstellingenController implements Initializable {
                 //Geef een melding in de taal die is geinstalleerd dat de gegevens zijn aangepast.
                 taal = languages.getLanguage();
                 
+                alertmain_headerlabel.setText(taal[122]);
+                alertmain_button.setText(taal[183]);
+                alertmain_area.setText(taal[123]);
+        
                 alertPane.setVisible(true);
                 mainPane.setDisable(true);
                 

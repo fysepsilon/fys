@@ -26,9 +26,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -38,7 +40,8 @@ import javafx.scene.layout.AnchorPane;
 public class accountsController implements Initializable {
 
     @FXML
-    private Button NewAccountButton, change_button, remove_button, cancel_button, send_button;
+    private Button NewAccountButton, change_button, remove_button, 
+            cancel_button, send_button, alertremove_button, alertchange_button;
     @FXML
     private TableView<Accounts> table;
     @FXML
@@ -54,9 +57,14 @@ public class accountsController implements Initializable {
     private TextField first_name_input, surname_input, mail_input, address_input,
             residence_input, zip_code_input, country_input, phone_input;
     @FXML
-    private Label loginerror, type_label, language_label, first_name_label, surname_label,
-            address_label, residence_label, zip_code_label, country_label, phone_label, mail_label,
-            personId_label, mandatory;
+    private TextArea alertremove_area, alertchange_area;
+    @FXML
+    private Label loginerror, type_label, language_label, first_name_label, 
+            surname_label, address_label, residence_label, zip_code_label, 
+            country_label, phone_label, mail_label, personId_label, mandatory, 
+            alertremove_headerlabel, alertchange_headerlabel;
+    @FXML
+    private Pane mainPane, alertRemovePane, alertChangePane;
     @FXML
     private final loginController loginController = new loginController();
     @FXML
@@ -118,11 +126,8 @@ public class accountsController implements Initializable {
                 }
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(taal[133]);
-            alert.setTitle(taal[133]);
-            alert.setContentText(taal[134]);
-            alert.showAndWait();
+            alertRemovePane.setVisible(true);
+            mainPane.setDisable(true);
         }
     }
 
@@ -146,6 +151,19 @@ public class accountsController implements Initializable {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
+    }
+
+    @FXML
+    private void handleCloseAlertRemove(ActionEvent event) throws IOException {
+        alertRemovePane.setVisible(false);
+        mainPane.setDisable(false);
+    }
+    
+    
+    @FXML
+    private void handleCloseAlertChange(ActionEvent event) throws IOException {
+        alertChangePane.setVisible(false);
+        mainPane.setDisable(false);
     }
 
     @Override
@@ -202,6 +220,15 @@ public class accountsController implements Initializable {
                 taal[72],
                 taal[165]);
 
+        //Alerts
+        alertremove_headerlabel.setText(taal[133]);
+        alertremove_button.setText(taal[183]);
+        alertremove_area.setText(taal[134]);
+        alertchange_headerlabel.setText(taal[104]);
+        alertchange_button.setText(taal[183]);
+        alertchange_area.setText(taal[105]);
+        
+        //Tabel
         getLuggageData();
         first_name.setCellValueFactory(new PropertyValueFactory<>("first_name"));
         surname.setCellValueFactory(new PropertyValueFactory<>("surname"));
@@ -297,13 +324,9 @@ public class accountsController implements Initializable {
             int dr_personId = (table.getSelectionModel().getSelectedItem().getPersonId());
 
             doNext(dr_first_name, dr_surname, dr_type_combo, dr_mail, dr_address, dr_residence, dr_zip_code, dr_country, dr_phone, dr_language_combo, dr_personId);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(taal[104]);
-            alert.setTitle(taal[104]);
-            alert.setContentText(taal[105]);
-            alert.showAndWait();
-
+        } else {       
+            alertChangePane.setVisible(true);
+            mainPane.setDisable(true);
         }
     }
 

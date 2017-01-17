@@ -32,7 +32,7 @@
             <ComboBox id="ComboBox" fx:id="style" layoutX="243.0" layoutY="314.0" prefHeight="31.0" prefWidth="431.0" />
            </children>
         </Pane>
-        <Pane id="popup" fx:id="alertPane" layoutX="350.0" layoutY="261.0" prefHeight="200.0" prefWidth="300.0">
+        <Pane id="popup" fx:id="alertPane" layoutX="350.0" layoutY="261.0" prefHeight="200.0" prefWidth="300.0" visible="false">
             <children>
                 <Label id="popup_filterlabel" fx:id="alertmain_headerlabel" alignment="CENTER" layoutY="5.0" prefHeight="20.0" prefWidth="300.0" text="Header label" textFill="WHITE">
                     <font>

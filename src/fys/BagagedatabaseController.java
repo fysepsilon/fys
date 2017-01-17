@@ -50,7 +50,7 @@ public class BagagedatabaseController implements Initializable {
     @FXML
     private AnchorPane database_pane, wijzig_pane;
     @FXML
-    private Pane filterPane;
+    private Pane filterPane, alertRemovePane, alertChangePane;
     @FXML
     private TableView<Bagage> table;
     @FXML
@@ -64,11 +64,9 @@ public class BagagedatabaseController implements Initializable {
             destination, airportFound, airportLost, tableFrom, lostAndFoundID,
             personID, realId;
     @FXML
-    private TextField colorFilter, brandFilter, dateFilter;
-    @FXML
     private ComboBox statusFilter, typeFilter;
     @FXML
-    private TextArea characteristicsFilter;
+    private TextArea characteristicsFilter, alertremove_area, alertchange_area;
     @FXML
     private ComboBox statusCombo, airportCombo, typeCombo, colorCombo,
             destination_combo;
@@ -76,10 +74,13 @@ public class BagagedatabaseController implements Initializable {
     private TextField nameInput, surNameInput, addressInput,
             residenceInput, zipcodeInput, countryInput, phoneInput,
             mailInput, labelNumberInput, flightNumberInput,
-            brandInput, characteristicsInput;
+            brandInput, characteristicsInput, colorFilter, brandFilter,
+            dateFilter;
     @FXML
     private Button pictureButton, sendButton, cancelButton, changeButton,
-            removeButton, filter, filterButton;
+            removeButton, filter, filterButton, alertremove_button,
+            alertchange_button;
+    ;
     @FXML
     private Label mailLabel, phoneLabel, countryLabel, zipcodeLabel,
             residenceLabel, addressLabel, surNameLabel, nameLabel, idLabel,
@@ -88,7 +89,8 @@ public class BagagedatabaseController implements Initializable {
             pictureLabel, statusLabel, personIdLabel, lafIdLabel,
             tableFromLabel, loginerror, shipaddressLabel, popup_filterlabel,
             popupLabelStatus, popupLabelType, popupLabelKleur, popupLabelMerk,
-            popupLabelDatum, popupLabelEi;
+            popupLabelDatum, popupLabelEi, alertremove_headerlabel,
+            alertchange_headerlabel;
     @FXML
     private final FYS fys = new FYS();
     @FXML
@@ -142,6 +144,14 @@ public class BagagedatabaseController implements Initializable {
         cancelButton.setText(taal[127]);
         changeButton.setText(taal[67]);
         removeButton.setText(taal[156]);
+
+        //Alerts
+        alertremove_headerlabel.setText(taal[133]);
+        alertremove_button.setText(taal[183]);
+        alertremove_area.setText(taal[134]);
+        alertchange_headerlabel.setText(taal[104]);
+        alertchange_button.setText(taal[183]);
+        alertchange_area.setText(taal[105]);
 
         airportLabel.setText(taal[8] + ":");
         nameLabel.setText(taal[9] + ":");
@@ -403,12 +413,21 @@ public class BagagedatabaseController implements Initializable {
                     dr_country, dr_phone, dr_mail, dr_label, dr_flight, dr_destination,
                     dr_type, dr_brand, dr_color, dr_characteristics);
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(taal[104]);
-            alert.setTitle(taal[104]);
-            alert.setContentText(taal[105]);
-            alert.showAndWait();
+            alertChangePane.setVisible(true);
+            database_pane.setDisable(true);
         }
+    }
+
+    @FXML
+    private void handleCloseAlertRemove(ActionEvent event) throws IOException {
+        alertRemovePane.setVisible(false);
+        database_pane.setDisable(false);
+    }
+
+    @FXML
+    private void handleCloseAlertChange(ActionEvent event) throws IOException {
+        alertChangePane.setVisible(false);
+        database_pane.setDisable(false);
     }
 
     //Wanneer er op de kop Anuleren wordt geklikt
@@ -775,12 +794,6 @@ public class BagagedatabaseController implements Initializable {
                     conn.close();
 
                     fys.changeToAnotherFXML(taal[100], "bagagedatabase.fxml");
-//                    Alert info = new Alert(AlertType.INFORMATION);
-//                    info.setTitle("Information Dialog");
-//                    info.setHeaderText(taal[157]);
-//                    info.setContentText(taal[158]);
-
-//                    info.showAndWait();
                 } catch (SQLException ex) {
                     // handle any errors
                     System.out.println("SQLException: " + ex.getMessage());
@@ -791,11 +804,8 @@ public class BagagedatabaseController implements Initializable {
                 //Ignore
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(taal[154]);
-            alert.setTitle(taal[154]);
-            alert.setContentText(taal[134]);
-            alert.showAndWait();
+            alertRemovePane.setVisible(true);
+            database_pane.setDisable(true);
         }
     }
 }

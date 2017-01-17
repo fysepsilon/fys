@@ -45,7 +45,7 @@
         </ImageView>
         <HBox id="footer_line" layoutX="40.0" layoutY="550.0" prefHeight="1.0" prefWidth="910.0" />
         <Label id="footer_text" layoutX="40.0" layoutY="559.0" text="©2017 Corendon" />
-        <Pane fx:id="login_pane" layoutX="636.0" layoutY="40.0" prefHeight="450.0" prefWidth="314.0">
+        <Pane fx:id="login_pane" layoutX="555.0" layoutY="40.0" prefHeight="450.0" prefWidth="395.0">
             <children>
                 <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -61,14 +61,14 @@
                 </Button>
                 <Hyperlink id="forgotPassword" layoutY="314.0" onAction="#handleForgotPasswordAction" text="Forgot password?" textFill="#00BCE2" />
                 <Hyperlink id="forgotPassword" layoutY="334.0" onAction="#handleForgotEmailAction" text="Forgot email?" textFill="#00BCE2" />
-                <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutY="106.0" prefHeight="25.0" prefWidth="314.0" textFill="#D81E05" visible="false">
+                <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutY="106.0" prefHeight="25.0" prefWidth="390.0" textFill="#D81E05" visible="false">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
                 </Label>
             </children>
         </Pane>
-        <Pane fx:id="wachtwoord_pane" disable="true" layoutX="636.0" layoutY="40.0" prefHeight="450.0" prefWidth="314.0" visible="false">
+        <Pane fx:id="wachtwoord_pane" disable="true" layoutX="555.0" layoutY="40.0" prefHeight="450.0" prefWidth="395.0" visible="false">
             <children>
                 <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -86,14 +86,14 @@
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Button>
-                <Label id="loginerror" fx:id="passworderror" alignment="TOP_LEFT" layoutY="106.0" prefHeight="25.0" prefWidth="314.0" textFill="#D81E05" visible="false">
+                <Label id="loginerror" fx:id="passworderror" alignment="TOP_LEFT" layoutY="106.0" prefHeight="25.0" prefWidth="390.0" textFill="#D81E05" visible="false">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
                 </Label>
             </children>
         </Pane>
-        <Pane fx:id="email_pane" disable="true" layoutX="636.0" layoutY="40.0" prefHeight="450.0" prefWidth="314.0" visible="false">
+        <Pane fx:id="email_pane" disable="true" layoutX="555.0" layoutY="40.0" prefHeight="450.0" prefWidth="395.0" visible="false">
             <children>
                 <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -114,7 +114,7 @@
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Button>
-                <Label id="loginerror" fx:id="emailerror" alignment="TOP_LEFT" layoutY="106.0" prefHeight="25.0" prefWidth="314.0" textFill="#D81E05" visible="false">
+                <Label id="loginerror" fx:id="emailerror" alignment="TOP_LEFT" layoutY="106.0" prefHeight="25.0" prefWidth="390.0" textFill="#D81E05" visible="false">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>

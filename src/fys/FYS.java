@@ -5,7 +5,6 @@
  */
 package fys;
 
-import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;

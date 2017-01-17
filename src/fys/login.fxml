@@ -52,20 +52,22 @@
                         <Image url="@images/corendon_logo.png" />
                     </image>
                 </ImageView>
-                <TextField id="login_fields" fx:id="username" layoutY="141.0" prefHeight="31.0" prefWidth="314.0" promptText="someone@corendon.com" />
-                <PasswordField id="login_fields" fx:id="password" layoutY="182.0" prefHeight="31.0" prefWidth="314.0" promptText="password" />
-                <Button id="login_but" fx:id="logInButton" defaultButton="true" layoutY="243.0" mnemonicParsing="false" onAction="#handleCheckLoginAction" prefHeight="31.0" prefWidth="187.0" text="Log in" textFill="WHITE">
+                <TextField id="login_fields" fx:id="username" layoutY="174.0" prefHeight="31.0" prefWidth="314.0" promptText="someone@corendon.com" />
+                <PasswordField id="login_fields" fx:id="password" layoutY="235.0" prefHeight="31.0" prefWidth="314.0" promptText="password" />
+                <Button id="login_but" fx:id="logInButton" defaultButton="true" layoutX="3.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleCheckLoginAction" prefHeight="31.0" prefWidth="187.0" text="Log in" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Button>
                 <Hyperlink id="forgotPassword" layoutY="314.0" onAction="#handleForgotPasswordAction" text="Forgot password?" textFill="#00BCE2" />
                 <Hyperlink id="forgotPassword" layoutY="334.0" onAction="#handleForgotEmailAction" text="Forgot email?" textFill="#00BCE2" />
-                <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutY="106.0" prefHeight="25.0" prefWidth="390.0" textFill="#D81E05" visible="false">
+                <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutY="116.0" prefHeight="25.0" prefWidth="390.0" textFill="#D81E05" visible="false">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
                 </Label>
+            <Label layoutY="147.0" prefHeight="27.0" prefWidth="110.0" text="E-mailaddress:" />
+            <Label layoutY="212.0" prefHeight="27.0" prefWidth="110.0" text="Password:" />
             </children>
         </Pane>
         <Pane fx:id="wachtwoord_pane" disable="true" layoutX="555.0" layoutY="40.0" prefHeight="450.0" prefWidth="395.0" visible="false">
@@ -91,7 +93,7 @@
                         <Font name="System Bold" size="16.0" />
                     </font>
                 </Label>
-            <Label layoutY="131.0" prefHeight="27.0" prefWidth="86.0" text="E-mailadres:" />
+            <Label layoutY="131.0" prefHeight="27.0" prefWidth="110.0" text="E-mailaddress:" />
             </children>
         </Pane>
         <Pane fx:id="email_pane" disable="true" layoutX="555.0" layoutY="40.0" prefHeight="450.0" prefWidth="395.0" visible="false">
@@ -101,16 +103,16 @@
                         <Image url="@images/corendon_logo.png" />
                     </image>
                 </ImageView>
-                <TextField id="login_fields" fx:id="emailfirstname" layoutY="141.0" prefHeight="31.0" prefWidth="314.0" promptText="first name" />
-                <TextField id="login_fields" fx:id="emailaddress" layoutY="182.0" prefHeight="31.0" prefWidth="314.0" promptText="address" />
-                <TextField id="login_fields" fx:id="emailphone" layoutY="223.0" prefHeight="31.0" prefWidth="314.0" promptText="phone number" />
-                <PasswordField id="login_fields" fx:id="emailpassword" layoutY="264.0" prefHeight="31.0" prefWidth="314.0" promptText="password" />
-                <Button id="login_but" fx:id="sendEmailButton" defaultButton="true" layoutY="325.0" mnemonicParsing="false" onAction="#handleSendEmailAction" prefHeight="31.0" prefWidth="187.0" text="Send" textFill="WHITE">
+                <TextField id="login_fields" fx:id="emailfirstname" layoutY="154.0" prefHeight="31.0" prefWidth="314.0" promptText="first name" />
+                <TextField id="login_fields" fx:id="emailaddress" layoutY="210.0" prefHeight="31.0" prefWidth="314.0" promptText="address" />
+                <TextField id="login_fields" fx:id="emailphone" layoutY="276.0" prefHeight="31.0" prefWidth="314.0" promptText="phone number" />
+                <PasswordField id="login_fields" fx:id="emailpassword" layoutY="341.0" prefHeight="31.0" prefWidth="314.0" promptText="password" />
+                <Button id="login_but" fx:id="sendEmailButton" defaultButton="true" layoutX="198.0" layoutY="399.0" mnemonicParsing="false" onAction="#handleSendEmailAction" prefHeight="31.0" prefWidth="187.0" text="Send" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Button>
-                <Button id="login_but" layoutY="366.0" mnemonicParsing="false" onAction="#handleBackEmailAction" prefHeight="31.0" prefWidth="187.0" text="Back" textFill="WHITE">
+                <Button id="login_but" layoutY="399.0" mnemonicParsing="false" onAction="#handleBackEmailAction" prefHeight="31.0" prefWidth="187.0" text="Back" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
@@ -120,6 +122,10 @@
                         <Font name="System Bold" size="16.0" />
                     </font>
                 </Label>
+            <Label layoutY="131.0" prefHeight="27.0" prefWidth="110.0" text="First name:" />
+            <Label layoutY="185.0" prefHeight="27.0" prefWidth="110.0" text="Address:" />
+            <Label layoutY="249.0" prefHeight="27.0" prefWidth="110.0" text="Phone number:" />
+            <Label layoutY="314.0" prefHeight="27.0" prefWidth="110.0" text="Password:" />
                </children>
         </Pane>
     </children>

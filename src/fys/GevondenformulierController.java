@@ -41,8 +41,6 @@ public class GevondenformulierController implements Initializable {
 
     //Alle inputvelden initialiseren
     @FXML
-    private AnchorPane AnchorPane;
-    @FXML
     private ComboBox airport_combo, color_combo, type_combo, destination_combo;
     @FXML
     private TextField name_input, surname_input, labelnumber_input,
@@ -51,7 +49,7 @@ public class GevondenformulierController implements Initializable {
     private Label surname_label, name_label, airport_label, label_label,
             flight_label, destination_label, type_label, brand_label, 
             color_label, characteristics_label, picture_label, loginerror, 
-            popup_label;
+            popup_label, mandatory;
     @FXML
     private TextArea textinfo;
     @FXML
@@ -82,15 +80,16 @@ public class GevondenformulierController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        airport_label.setText(taal[8] + ":");
+        mandatory.setText("* " + taal[174]);
+        airport_label.setText(taal[8] + "* :");
         name_label.setText(taal[9] + ":");
         surname_label.setText(taal[10] + ":");
         label_label.setText(taal[17] + ":");
         flight_label.setText(taal[18] + ":");
         destination_label.setText(taal[19] + ":");
-        type_label.setText(taal[20] + ":");
-        brand_label.setText(taal[21] + ":");
-        color_label.setText(taal[22] + ":");
+        type_label.setText(taal[20] + "* :");
+        brand_label.setText(taal[21] + "* :");
+        color_label.setText(taal[22] + "* :");
         characteristics_label.setText(taal[23] + ":");
         picture_label.setText(taal[24] + ":");
         airport_combo.setPromptText(taal[25]);
@@ -107,7 +106,7 @@ public class GevondenformulierController implements Initializable {
         //Popup
         popup_label.setText(taal[150]);
         popup_verzbutton.setText(taal[46]);
-        popup_annubutton.setText(taal[127]);
+        popup_annubutton.setText(taal[182]);
         status.setText(taal[48]);
         type.setText(taal[50]);
         color.setText(taal[49]);
@@ -137,17 +136,19 @@ public class GevondenformulierController implements Initializable {
         table.setItems(data);
     }
 
-    public void getLuggageData() {
+    public void getLuggageData() throws SQLException {
         try {
             conn = fys.connectToDatabase(conn);
             stmt = conn.createStatement();
-            //connectToDatabase(conn, stmt, "test", "root", "root");           
+            //connectToDatabase(conn, stmt, "test", "root", "root");
             String sql = "SELECT lost.*, "
                     + "person.first_name, person.surname FROM lost, person "
                     + "WHERE lost.person_id = person.person_id "
-                    + "AND lost.type='" + fys.getBaggageTypeString(type_combo.getValue().toString()) + "' "
+                    + "AND lost.type='" + (type_combo.getValue() == null ? ""
+                    : fys.getBaggageTypeString(type_combo.getValue().toString())) + "' "
                     + "AND lost.brand = '" + brand_input.getText() + "' "
-                    + "AND lost.color = '" + fys.getColorString(color_combo.getValue().toString()) + "';";
+                    + "AND lost.color = '" + (color_combo.getValue() == null ? ""
+                    : fys.getColorString(color_combo.getValue().toString())) + "';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //Retrieve by column name
@@ -194,19 +195,9 @@ public class GevondenformulierController implements Initializable {
 
             int count = fys.countLost(fys.getBaggageTypeString(type_combo.getValue().toString()), brand_input.getText(), fys.getColorString(color_combo.getValue().toString()));
             if (count == 1) {
-                textinfo.setText("Er is " + count + " vermist bagagestuk met dezelfde kenmerken gevonden\n"
-                        + "als wat er net is ingevuld.\n"
-                        + "\n"
-                        + "Hieronder staat alle informatie over dit al opgegeven vermiste\n"
-                        + "bagagestuk. Je kan jouw ingevulde bagagestuk annuleren of\n"
-                        + "toch verzenden.");
+                textinfo.setText(taal[178] + count + taal[179]);
             } else {
-                textinfo.setText("Er zijn " + count + " vermiste bagagestukken met dezelfde kenmerken gevonden\n"
-                        + "als wat er net is ingevuld.\n"
-                        + "\n"
-                        + "Hieronder staat alle informatie over deze al opgegeven vermiste\n"
-                        + "bagagestukken. Je kan jouw ingevulde bagagestuk annuleren of\n"
-                        + "toch verzenden.");
+                textinfo.setText(taal[180] + count + taal[181]);
             }
         } else {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");

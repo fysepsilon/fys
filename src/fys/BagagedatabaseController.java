@@ -79,7 +79,7 @@ public class BagagedatabaseController implements Initializable {
             brandInput, characteristicsInput;
     @FXML
     private Button pictureButton, sendButton, cancelButton, changeButton,
-            removeButton, filter;
+            removeButton, filter, filterButton;
     @FXML
     private Label mailLabel, phoneLabel, countryLabel, zipcodeLabel,
             residenceLabel, addressLabel, surNameLabel, nameLabel, idLabel,
@@ -114,6 +114,7 @@ public class BagagedatabaseController implements Initializable {
         popupLabelEi.setText(taal[53]);
         popup_filterlabel.setText(taal[47]);
         filter.setText(taal[47]);
+        filterButton.setText(taal[47]);
         colorFilter.setPromptText(taal[49]);
         brandFilter.setPromptText(taal[51]);
         dateFilter.setPromptText(taal[52]);

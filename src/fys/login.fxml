@@ -10,24 +10,6 @@
 
 <AnchorPane id="AnchorPane" maxHeight="590.0" maxWidth="990.0" prefHeight="590.0" prefWidth="990.0" stylesheets="@style/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.loginController">
     <children>
-        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="636.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@images/corendon_logo.png" />
-            </image>
-        </ImageView>
-        <TextField id="login_fields" fx:id="username" layoutX="636.0" layoutY="181.0" prefHeight="31.0" prefWidth="314.0" promptText="someone@corendon.com" />
-        <PasswordField id="login_fields" fx:id="password" layoutX="636.0" layoutY="222.0" prefHeight="31.0" prefWidth="314.0" promptText="password" />
-        <Button id="login_but" fx:id="logInButton" layoutX="636.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleCheckLoginAction" prefHeight="31.0" prefWidth="187.0" text="Log in" textFill="WHITE">
-            <font>
-                <Font name="System Bold" size="12.0" />
-            </font>
-        </Button>
-        <Hyperlink id="forgotPassword" layoutX="636.0" layoutY="354.0" onAction="#handleForgotPasswordAction" text="Forgot password?" />
-        <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutX="636.0" layoutY="146.0" prefHeight="25.0" prefWidth="314.0" textFill="#D81E05" visible="false">
-            <font>
-                <Font name="System Bold" size="16.0" />
-            </font>
-        </Label>
         <GridPane id="login_infogrid" layoutX="40.0" layoutY="354.0" prefHeight="134.0" prefWidth="470.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="15.0" />
@@ -63,5 +45,81 @@
         </ImageView>
         <HBox id="footer_line" layoutX="40.0" layoutY="550.0" prefHeight="1.0" prefWidth="910.0" />
         <Label id="footer_text" layoutX="40.0" layoutY="559.0" text="©2017 Corendon" />
+        <Pane fx:id="login_pane" layoutX="555.0" layoutY="40.0" prefHeight="450.0" prefWidth="395.0">
+            <children>
+                <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/corendon_logo.png" />
+                    </image>
+                </ImageView>
+                <TextField id="login_fields" fx:id="username" layoutY="141.0" prefHeight="31.0" prefWidth="314.0" promptText="someone@corendon.com" />
+                <PasswordField id="login_fields" fx:id="password" layoutY="182.0" prefHeight="31.0" prefWidth="314.0" promptText="password" />
+                <Button id="login_but" fx:id="logInButton" defaultButton="true" layoutY="243.0" mnemonicParsing="false" onAction="#handleCheckLoginAction" prefHeight="31.0" prefWidth="187.0" text="Log in" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
+                <Hyperlink id="forgotPassword" layoutY="314.0" onAction="#handleForgotPasswordAction" text="Forgot password?" textFill="#00BCE2" />
+                <Hyperlink id="forgotPassword" layoutY="334.0" onAction="#handleForgotEmailAction" text="Forgot email?" textFill="#00BCE2" />
+                <Label id="loginerror" fx:id="loginerror" alignment="TOP_LEFT" layoutY="106.0" prefHeight="25.0" prefWidth="390.0" textFill="#D81E05" visible="false">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <Pane fx:id="wachtwoord_pane" disable="true" layoutX="555.0" layoutY="40.0" prefHeight="450.0" prefWidth="395.0" visible="false">
+            <children>
+                <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/corendon_logo.png" />
+                    </image>
+                </ImageView>
+                <TextField id="login_fields" fx:id="passwordforgot" layoutY="141.0" prefHeight="31.0" prefWidth="314.0" promptText="someone@corendon.com" />
+                <Button id="login_but" fx:id="sendNewPasswordButton" defaultButton="true" layoutY="202.0" mnemonicParsing="false" onAction="#handleSendNewPasswordAction" prefHeight="31.0" prefWidth="187.0" text="Send" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
+                <Button id="login_but" layoutY="243.0" mnemonicParsing="false" onAction="#handleBackButtonAction" prefHeight="31.0" prefWidth="187.0" text="Back" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
+                <Label id="loginerror" fx:id="passworderror" alignment="TOP_LEFT" layoutY="106.0" prefHeight="25.0" prefWidth="390.0" textFill="#D81E05" visible="false">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <Pane fx:id="email_pane" disable="true" layoutX="555.0" layoutY="40.0" prefHeight="450.0" prefWidth="395.0" visible="false">
+            <children>
+                <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/corendon_logo.png" />
+                    </image>
+                </ImageView>
+                <TextField id="login_fields" fx:id="emailfirstname" layoutY="141.0" prefHeight="31.0" prefWidth="314.0" promptText="first name" />
+                <TextField id="login_fields" fx:id="emailaddress" layoutY="182.0" prefHeight="31.0" prefWidth="314.0" promptText="address" />
+                <PasswordField id="login_fields" fx:id="emailpassword" layoutY="264.0" prefHeight="31.0" prefWidth="314.0" promptText="password" />
+                <TextField id="login_fields" fx:id="emailphone" layoutY="223.0" prefHeight="31.0" prefWidth="314.0" promptText="phone number" />
+                <Button id="login_but" fx:id="sendEmailButton" defaultButton="true" layoutY="325.0" mnemonicParsing="false" onAction="#handleSendEmailAction" prefHeight="31.0" prefWidth="187.0" text="Send" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
+                <Button id="login_but" layoutY="366.0" mnemonicParsing="false" onAction="#handleBackEmailAction" prefHeight="31.0" prefWidth="187.0" text="Back" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
+                <Label id="loginerror" fx:id="emailerror" alignment="TOP_LEFT" layoutY="106.0" prefHeight="25.0" prefWidth="390.0" textFill="#D81E05" visible="false">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+               </children>
+        </Pane>
     </children>
 </AnchorPane>

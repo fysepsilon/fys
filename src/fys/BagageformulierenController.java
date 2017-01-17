@@ -125,20 +125,10 @@ public class BagageformulierenController implements Initializable {
             formulier.setDisable(true);
 
             int count = fys.countFound(fys.getBaggageTypeString(type_combo.getValue().toString()), brand_input.getText(), fys.getColorString(color_combo.getValue().toString()));
-            if (count == 1) {
-                textinfo.setText("Er is " + count + " gevonden bagagestuk met dezelfde kenmerken gevonden\n"
-                        + "als wat er net is ingevuld.\n"
-                        + "\n"
-                        + "Hieronder staat alle informatie over dit al opgegeven gevonden\n"
-                        + "bagagestuk. Je kan jouw ingevulde bagagestuk annuleren of\n"
-                        + "toch verzenden.");
+             if (count == 1) {
+                textinfo.setText(taal[178] + count + taal[179]);
             } else {
-                textinfo.setText("Er zijn " + count + " gevonden bagagestukken met dezelfde kenmerken gevonden\n"
-                        + "als wat er net is ingevuld.\n"
-                        + "\n"
-                        + "Hieronder staat alle informatie over deze al opgegeven gevonden\n"
-                        + "bagagestukken. Je kan jouw ingevulde bagagestuk annuleren of\n"
-                        + "toch verzenden.");
+                textinfo.setText(taal[180] + count + taal[181]);
             }
         } else {
             loginerror.setVisible(false);
@@ -394,7 +384,7 @@ public class BagageformulierenController implements Initializable {
         //Popup
         popup_label.setText(taal[150]);
         popup_verzbutton.setText(taal[46]);
-        popup_annubutton.setText(taal[127]);
+        popup_annubutton.setText(taal[182]);
         status.setText(taal[48]);
         type.setText(taal[50]);
         color.setText(taal[49]);

@@ -242,6 +242,7 @@ public class taal {
                 languagefields[174] = "Mandatory fields.";
                 languagefields[175] = "Gold";
                 languagefields[176] = "Application theme";
+                languagefields[177] = "E-mailadres is not correct!";
                 break;
             case 1:
                 // Nederlands
@@ -427,7 +428,10 @@ public class taal {
                 languagefields[165] = "Duits";
                 languagefields[166] = "Wachtwoord vergeten";
                 languagefields[167] = "Je kan via hier de emails filteren.";
-                languagefields[168] = "Er is een code gebruikt die niet in deze mail thuis hoort. Klik op het informatie icoon om te kijken welke codes er allemaal gebruikt kunnen worden.";
+                languagefields[168] = "Er is een code gebruikt die niet in "
+                        + "deze mail thuis hoort. Klik op het informatie icoon "
+                        + "om te kijken welke codes er allemaal gebruikt "
+                        + "kunnen worden.";
                 languagefields[169] = "Je hebt het teken ' gebruikt.";
                 languagefields[170] = "Je hebt het teken ´ gebruikt.";
                 languagefields[171] = "Maand";
@@ -436,6 +440,20 @@ public class taal {
                 languagefields[174] = "Verplichte velden.";
                 languagefields[175] = "Goud";
                 languagefields[176] = "Applicatie thema";
+                languagefields[177] = "E-mailadres is niet geldig!";
+                languagefields[178] = "Er is ";
+                languagefields[179] = " vermist bagagestuk met dezelfde "
+                        + "kenmerken gevonden\nals wat er net is ingevuld.\n\n"
+                        + "Hieronder staat alle informatie over dit al "
+                        + "opgegeven vermiste\n bagagestuk. Je kan jouw "
+                        + "ingevulde bagagestuk annuleren of\n toch verzenden.";
+                languagefields[180] = "Er zijn ";
+                languagefields[181] = " vermiste bagagestukken met dezelfde "
+                        + "kenmerken gevonden\nals wat er net is ingevuld.\n\n"
+                        + "Hieronder staat alle informatie over deze al "
+                        + "opgegeven vermiste\nbagagestukken. Je kan jouw "
+                        + "ingevulde bagagestuk annuleren of\ntoch verzenden.";
+                languagefields[182] = "Niet verzenden";
                 break;
             case 2:
                 // Spaans
@@ -634,6 +652,7 @@ public class taal {
                 languagefields[174] = "Campos obligatorios.";
                 languagefields[175] = "Oro";
                 languagefields[176] = "El tema de la aplicación";
+                languagefields[177] = "Dirección de correo electrónico no es válida!";
                 break;
             case 3:
                 // Turks
@@ -828,6 +847,7 @@ public class taal {
                 languagefields[174] = "Zorunlu alanlar.";
                 languagefields[175] = "Altın";
                 languagefields[176] = "Uygulama teması";
+                languagefields[177] = "E-posta adresi geçerli değil!";
                 break;
             default:
                 // Duits
@@ -1026,6 +1046,7 @@ public class taal {
                 languagefields[174] = "Pflichtfelder.";
                 languagefields[175] = "Gold";
                 languagefields[176] = "Anwendung Thema";
+                languagefields[177] = "E-Mail-Adresse ist nicht gültig!";
                 break;
         }
         return languagefields;

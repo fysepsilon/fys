@@ -90,21 +90,38 @@ public class FYS extends Application {
     public void changeToAnotherFXML(String title, String changeToWindow) throws IOException {
         loginController loginController = new loginController();
         int style = loginController.getUserstyle();
-                
+        String css;
         Parent window1;
         window1 = FXMLLoader.load(getClass().getResource(changeToWindow));
-        
-        if (style == 1) {
-            String css = this.getClass().getResource("style/theme_menu_gold.css").toExternalForm();
-            window1.getStylesheets().add(css);
-        } else if (style == 2) {
-            String css = this.getClass().getResource("style/theme_menu_blue.css").toExternalForm();
-            window1.getStylesheets().add(css);
-        } else {
-            String css = this.getClass().getResource("style/theme_menu_default.css").toExternalForm();
-            window1.getStylesheets().add(css);
+
+        switch (style) {
+            case 1:
+                css = this.getClass().getResource("style/theme_menu_yellow.css").toExternalForm();
+                break;
+            case 2:
+                css = this.getClass().getResource("style/theme_menu_blue.css").toExternalForm();
+                break;
+            case 3:
+                css = this.getClass().getResource("style/theme_menu_orange.css").toExternalForm();
+                break;
+            case 4:
+                css = this.getClass().getResource("style/theme_menu_green.css").toExternalForm();
+                break;
+            case 5:
+                css = this.getClass().getResource("style/theme_menu_pink.css").toExternalForm();
+                break;
+            case 6:
+                css = this.getClass().getResource("style/theme_menu_grey.css").toExternalForm();
+                break;
+            case 7:
+                css = this.getClass().getResource("style/theme_menu_black.css").toExternalForm();
+                break;
+            default:
+                css = this.getClass().getResource("style/theme_menu_default.css").toExternalForm();
+                break;
         }
-        
+
+        window1.getStylesheets().add(css);
         Stage mainStage;
         mainStage = FYS.parentWindow;
         mainStage.setTitle(title);
@@ -112,37 +129,42 @@ public class FYS extends Application {
         mainStage.getScene().setRoot(window1);
 
     }
-    
-    public void changeStyleAndFXML(String title, String changeToWindow, int style) throws IOException, SQLException {
-        Parent window1;
-        window1 = FXMLLoader.load(getClass().getResource(changeToWindow));
-        /*if (PersonStyle(mail_input) == 1) {
-            String css = this.getClass().getResource("style/theme_menu_gold.css").toExternalForm();
-            window1.getStylesheets().add(css);
-        } else if (PersonStyle(mail_input) == 2) {
-            String css = this.getClass().getResource("style/theme_menu_blue.css").toExternalForm();
-            window1.getStylesheets().add(css);
-        } else {
-            String css = this.getClass().getResource("style/theme_menu_default.css").toExternalForm();
-            window1.getStylesheets().add(css);
-        }*/
-        
-        
-        Stage mainStage;
-        mainStage = FYS.parentWindow;
-        mainStage.setTitle(title);
-        mainStage.setResizable(false);
-        mainStage.getScene().setRoot(window1);
-
-    }
-
 
     public void UserManual() {
-        taal language = new taal();
-        String[] taal = language.getLanguage();
-
+        int language = 0;
+        loginController login = new loginController();
+        Statement stmt = null;
+        Connection conn = null;
         try {
-            File myFile = new File("src/fys/templates/Gebruikershandleiding.pdf");
+            conn = connectToDatabase(conn);
+            stmt = conn.createStatement();
+            String sql = "SELECT language FROM person "
+                    + "WHERE type = '" + login.getUsertype() + "' "
+                    + "AND mail='" + login.getEmail() + "'";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    language = rs.getInt("language");
+                }
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        try {
+            File myFile = new File("src/fys/templates/Gebruikershandleiding_EN.pdf");
+            if (language == 1) {
+                myFile = new File("src/fys/templates/Gebruikershandleiding_NL.pdf");
+            } else if (language == 2) {
+                myFile = new File("src/fys/templates/Gebruikershandleiding_ES.pdf");
+            } else if (language == 3) {
+                myFile = new File("src/fys/templates/Gebruikershandleiding_TR.pdf");
+            } else if (language == 4) {
+                myFile = new File("src/fys/templates/Gebruikershandleiding_DE.pdf");
+            }
             Desktop.getDesktop().open(myFile);
         } catch (IOException ex) {
             // no application registered for PDFs
@@ -163,28 +185,58 @@ public class FYS extends Application {
         return new String(text);
     }
 
+    /**
+     *
+     * @param type style type
+     * @return name of style
+     */
     public String getUserStyle(int type) {
         taal language = new taal();
         String[] taal = language.getLanguage();
-        if (type == 1) { //Goud
-            return taal[175];
+        if (type == 1) { //Geel
+            return taal[36];
         } else if (type == 2) { // Blauw
             return taal[38];
+        } else if (type == 3) { // Oranje
+            return taal[35];
+        } else if (type == 4) { // Groen
+            return taal[37];
+        } else if (type == 5) { // Roze
+            return taal[40];
+        } else if (type == 6) { // Grijs
+            return taal[42];
+        } else if (type == 7) {
+            return taal[41];
         }
         return taal[34]; // Rood
     }
-     
-     public Integer getUserStyleString(String type) {
+
+    /**
+     *
+     * @param type style type
+     * @return type of style
+     */
+    public Integer getUserStyleString(String type) {
         taal language = new taal();
         String[] taal = language.getLanguage();
-        if (type.equals(taal[175])) {
+        if (type.equals(taal[36])) {
             return 1;
         } else if (type.equals(taal[38])) {
             return 2;
+        } else if (type.equals(taal[35])) {
+            return 3;
+        } else if (type.equals(taal[37])) {
+            return 4;
+        } else if (type.equals(taal[40])) {
+            return 5;
+        } else if (type.equals(taal[42])) {
+            return 6;
+        } else if (type.equals(taal[41])) {
+            return 7;
         }
         return 0;
     }
-    
+
     /**
      *
      * @param type welke type er is geselecteerd in cijfers.
@@ -307,7 +359,8 @@ public class FYS extends Application {
 
     /**
      *
-     * @param language De taal die ingesteld is naar wie de mail moet worde verstuurd.
+     * @param language De taal die ingesteld is naar wie de mail moet worde
+     * verstuurd.
      * @param status
      * @return
      */
@@ -640,6 +693,13 @@ public class FYS extends Application {
         return false;
     }
 
+    /**
+     *
+     * @param type type from luggage
+     * @param brand brand from luggage
+     * @param color color from luggage
+     * @return true or false
+     */
     public boolean checkLost(int type, String brand, int color) {
         Statement stmt = null;
         Connection conn = null;
@@ -666,6 +726,14 @@ public class FYS extends Application {
         return false;
     }
 
+    /**
+     *
+     * @param type type from luggage
+     * @param brand brand from luggage
+     * @param color color from luggage
+     * @return count number from lost luggage
+     * @throws SQLException
+     */
     public int countLost(int type, String brand, int color) throws SQLException {
         int countLost = 0;
 
@@ -696,6 +764,13 @@ public class FYS extends Application {
         return countLost;
     }
 
+    /**
+     *
+     * @param type type from luggage
+     * @param brand brand from luggage
+     * @param color color from luggage
+     * @return true or false
+     */
     public boolean checkFound(int type, String brand, int color) {
         Statement stmt = null;
         Connection conn = null;
@@ -722,6 +797,14 @@ public class FYS extends Application {
         return false;
     }
 
+    /**
+     *
+     * @param type type from luggage
+     * @param brand brand from luggage
+     * @param color color from luggage
+     * @return count number from found luggage
+     * @throws SQLException
+     */
     public int countFound(int type, String brand, int color) throws SQLException {
         int countFound = 0;
 
@@ -1443,7 +1526,7 @@ public class FYS extends Application {
         conn.close();
         return style;
     }
-    
+
     /**
      *
      * @param tableFrom tableFrom uit db

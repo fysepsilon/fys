@@ -35,7 +35,7 @@ public class NieuwaccountaanmakenController implements Initializable {
     private ComboBox language_combo, type_combo;
     @FXML
     private Label loginerror, surname_label, name_label, type_label, address_label, residence_label,
-            zipcode_label, country_label, phone_label, mail_label, language_label;
+            zipcode_label, country_label, phone_label, mail_label, language_label, mandatory;
     @FXML
     private Button SendNewAccount, cancel;
     @FXML
@@ -96,7 +96,7 @@ public class NieuwaccountaanmakenController implements Initializable {
             loginerror.setVisible(true);
 
         } else if (!FYS.isValidEmailAddress(mail_input.getText())) {
-            loginerror.setText("E-mailadres is niet geldig!");
+            loginerror.setText(taal[177]);
             loginerror.setVisible(true);
             //Anders update de gegevens in de database.    
         } else if (fys.checkEmailExists(mail_input.getText())) {
@@ -197,17 +197,18 @@ public class NieuwaccountaanmakenController implements Initializable {
         taal language = new taal();
         String[] taal = language.getLanguage();
         loginController loginController = new loginController();
-
-        name_label.setText(taal[9] + ":");
-        surname_label.setText(taal[10] + ":");
-        address_label.setText(taal[11] + ":");
-        residence_label.setText(taal[12] + ":");
-        zipcode_label.setText(taal[13] + ":");
-        country_label.setText(taal[14] + ":");
-        phone_label.setText(taal[15] + ":");
-        mail_label.setText(taal[16] + ":");
-        type_label.setText(taal[20] + ":");
-        language_label.setText(taal[68] + ":");
+        
+        mandatory.setText("* " + taal[174]);
+        name_label.setText(taal[9] + "* :");
+        surname_label.setText(taal[10] + "* :");
+        address_label.setText(taal[11] + "* :");
+        residence_label.setText(taal[12] + "* :");
+        zipcode_label.setText(taal[13] + "* :");
+        country_label.setText(taal[14] + "* :");
+        phone_label.setText(taal[15] + "* :");
+        mail_label.setText(taal[16] + "* :");
+        type_label.setText(taal[20] + "* :");
+        language_label.setText(taal[68] + "* :");
         SendNewAccount.setText(taal[46]);
         cancel.setText(taal[127]);
         language_combo.setPromptText(taal[73]);

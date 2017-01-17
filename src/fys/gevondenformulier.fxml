@@ -173,7 +173,7 @@
                 </Button>
                 <Button id="mainbutton" fx:id="popup_verzbutton" layoutX="14.0" layoutY="297.0" mnemonicParsing="false" onAction="#handleVerzendenBut" prefHeight="49.0" prefWidth="259.0" text="Verzenden" />
                 <Button id="mainbutton" fx:id="popup_annubutton" layoutX="287.0" layoutY="297.0" mnemonicParsing="false" onAction="#handleCancelBut" prefHeight="49.0" prefWidth="259.0" text="Annuleren" />
-                <TextArea id="TextArea" fx:id="textinfo" editable="false" layoutX="14.0" layoutY="39.0" prefHeight="119.0" prefWidth="383.0" text="Er is/zijn COUNT vermiste bagage(s) met dezelfde kenmerken &#10;gevonden als wat er net is ingevuld.&#10;" />
+                <TextArea id="TextArea" fx:id="textinfo" editable="false" layoutX="14.0" layoutY="39.0" prefHeight="119.0" prefWidth="383.0" text="Er is/zijn COUNT vermiste bagage(s) met dezelfde kenmerken gevonden als wat er net is ingevuld.&#10;" wrapText="true" />
                 <Button id="popup_image" layoutX="411.0" layoutY="39.0" mnemonicParsing="false" prefHeight="119.0" prefWidth="135.0">
                     <graphic>
                         <ImageView pickOnBounds="true" preserveRatio="true">

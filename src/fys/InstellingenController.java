@@ -20,7 +20,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 /**
@@ -31,11 +33,13 @@ import javafx.scene.text.Text;
 public class InstellingenController implements Initializable {
 
     private Integer id;
+    @FXML private Pane mainPane, alertPane;
     @FXML private TextField username;
     @FXML private PasswordField password;
     @FXML private ComboBox language, style;
-    @FXML private Button save;
-    @FXML private Label error;
+    @FXML private Button save, alertmain_button;
+    @FXML private Label error, alertmain_headerlabel;
+    @FXML private TextArea alertmain_area;
     @FXML private Text email_label, password_label, language_label, style_label;
     @FXML private final taal languages = new taal();
     @FXML private String[] taal = languages.getLanguage();
@@ -57,6 +61,9 @@ public class InstellingenController implements Initializable {
                 taal[165]);
         style.getItems().addAll(taal[34], taal[36], taal[38], taal[35], 
                 taal[37], taal[40], taal[42], taal[41]);
+        alertmain_headerlabel.setText(taal[122]);
+        alertmain_button.setText(taal[183]);
+        alertmain_area.setText(taal[123]);
         //Krijg de gegevens van de gebruiker die ingelogd is.
         //Vul de textfields in met gegevens die zijn opgehaald.
         try {
@@ -122,12 +129,10 @@ public class InstellingenController implements Initializable {
                 languages.setLanguage(fys.getUserLanguageString(language.getSelectionModel().getSelectedItem().toString()));
                 //Geef een melding in de taal die is geinstalleerd dat de gegevens zijn aangepast.
                 taal = languages.getLanguage();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setHeaderText(taal[122]);
-                alert.setTitle(taal[122]);
-                alert.setContentText(taal[123]);
-                alert.showAndWait();
-                fys.changeToAnotherFXML(taal[102], "instellingen.fxml");
+                
+                alertPane.setVisible(true);
+                mainPane.setDisable(true);
+                
             } catch (SQLException ex) {
                 // handle any errors
                 System.out.println("SQLException: " + ex.getMessage());
@@ -135,5 +140,12 @@ public class InstellingenController implements Initializable {
                 System.out.println("VendorError: " + ex.getErrorCode());
             }
         }
+    }
+    
+    @FXML
+    private void handleCloseAlertMain(ActionEvent event) throws IOException {
+        alertPane.setVisible(false);
+        mainPane.setDisable(false);
+        fys.changeToAnotherFXML(taal[102], "instellingen.fxml");
     }
 }

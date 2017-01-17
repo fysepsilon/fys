@@ -470,7 +470,8 @@ public class BagagedatabaseController implements Initializable {
             }
 
             if (fys.checkEmailExistsOnChange(mailInput.getText(), dr_mail)) {
-                System.out.println("Emailadres bestaat al!");
+                loginerror.setText(taal[94]);
+                loginerror.setVisible(true);
                 //Deze mail wordt verstuurd wanneer de status veranderd en niet op afgehandeld is gezet.
             } else {
                 sendToDatabase(Integer.parseInt(idLabel.getText()),

@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.chart.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@style/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fys.InstellingenController">
     <children>
         <Pane id="background" fx:id="background" layoutY="122.0" prefHeight="478.0" prefWidth="1000.0" />        
         <fx:include fx:id="navigatiebalk" source="navigatiebalk.fxml" />
-        <Pane id="pagestyle" layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0">
+        <Pane id="pagestyle" fx:id="mainPane" layoutX="100.0" layoutY="122.0" prefHeight="478.0" prefWidth="800.0">
            <children>
                <Button id="mainbutton" fx:id="save" layoutX="77.0" layoutY="376.0" mnemonicParsing="false" onAction="#handleSaveAction" prefHeight="49.0" prefWidth="596.0" text="Opslaan" />
                <TextField id="TextField" fx:id="username" layoutX="242.0" layoutY="128.0" prefHeight="31.0" prefWidth="431.0" />
@@ -29,6 +31,26 @@
             <Text fx:id="style_label" layoutX="79.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Style:" />
             <ComboBox id="ComboBox" fx:id="style" layoutX="243.0" layoutY="314.0" prefHeight="31.0" prefWidth="431.0" />
            </children>
+        </Pane>
+        <Pane id="popup" fx:id="alertPane" layoutX="350.0" layoutY="261.0" prefHeight="200.0" prefWidth="300.0">
+            <children>
+                <Label id="popup_filterlabel" fx:id="alertmain_headerlabel" alignment="CENTER" layoutY="5.0" prefHeight="20.0" prefWidth="300.0" text="Header label" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Button id="popup_close" layoutX="231.0" mnemonicParsing="false" onAction="#handleCloseAlertMain" prefHeight="20.0" prefWidth="61.0">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/popup-close.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button id="mainbutton" fx:id="alertmain_button" layoutX="14.0" layoutY="137.0" mnemonicParsing="false" onAction="#handleCloseAlertMain" prefHeight="49.0" prefWidth="272.0" text="Button" />
+                <TextArea id="TextArea" fx:id="alertmain_area" editable="false" layoutX="14.0" layoutY="36.0" prefHeight="94.0" prefWidth="272.0" text="Je moet eerst een rij selecteren voordat je deze kan wijzigen" wrapText="true" />
+            </children>
         </Pane>
     </children>
 </AnchorPane>

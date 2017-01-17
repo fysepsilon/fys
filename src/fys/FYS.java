@@ -130,7 +130,10 @@ public class FYS extends Application {
         mainStage.getScene().setRoot(window1);
 
     }
-
+    
+    /**
+     * Functiion for Usermanual
+     */
     public void UserManual() {
         int language = 0;
         loginController login = new loginController();

@@ -242,7 +242,13 @@ public class taal {
                 languagefields[174] = "Mandatory fields.";
                 languagefields[175] = "Gold";
                 languagefields[176] = "Application theme";
-                languagefields[177] = "E-mailadres is not correct!";
+                languagefields[177] = "E-mailadres is not correct!"; 
+                languagefields[178] = "There is ";
+                languagefields[179] = " missing piece of luggage with the same features found if what had just been completed. Below is all the information about this already declared missing piece of luggage. You may cancel your completed piece of baggage or send it anyway.";
+                languagefields[180] = "There are ";
+                languagefields[181] = " lost luggage with the same features found if what had just been completed. Below is all the information it has already declared missing luggage. You may cancel your completed piece of baggage or send it anyway.";
+                languagefields[182] = "Do not send";   
+                languagefields[183] = "Okay";
                 break;
             case 1:
                 // Nederlands
@@ -454,6 +460,7 @@ public class taal {
                         + "opgegeven vermiste\nbagagestukken. Je kan jouw "
                         + "ingevulde bagagestuk annuleren of\ntoch verzenden.";
                 languagefields[182] = "Niet verzenden";
+                languagefields[183] = "Oké";
                 break;
             case 2:
                 // Spaans
@@ -653,6 +660,12 @@ public class taal {
                 languagefields[175] = "Oro";
                 languagefields[176] = "El tema de la aplicación";
                 languagefields[177] = "Dirección de correo electrónico no es válida!";
+                languagefields[178] = "Hay ";
+                languagefields[179] = " falta pieza de equipaje con las mismas características que se encuentran si lo que acababa de ser completado. A continuación se muestra toda la información acerca de esta pieza que falta ya declarada de equipaje. Es posible cancelar la pieza terminada del equipaje o enviarlo.";
+                languagefields[180] = "Hay";
+                languagefields[181] = " pérdida de equipaje, con las mismas características que se encuentran si lo que acababa de ser completado. A continuación se muestra toda la información que ya ha declarado el equipaje perdido. Es posible cancelar la pieza terminada del equipaje o enviarlo.";
+                languagefields[182] = "No envíe";
+                languagefields[183] = "Bien";
                 break;
             case 3:
                 // Turks
@@ -848,6 +861,12 @@ public class taal {
                 languagefields[175] = "Altın";
                 languagefields[176] = "Uygulama teması";
                 languagefields[177] = "E-posta adresi geçerli değil!";
+                languagefields[178] = "Var ";
+                languagefields[179] = " sadece tamamlanmış olmuştu ne olur eksik parçası, aynı özelliklere sahip bagaj bulundu. Bagaj bu zaten bildirilmiş eksik parça hakkında tüm bilgileri bulabilirsiniz. Bagaj bitmiş parça iptal veya yine de gönderebilir.";
+                languagefields[180] = "Var ";
+                languagefields[181] = " sadece tamamlanmış oldu ne olursa bulundu, aynı özelliklere sahip bagaj kaybetti. Aşağıda zaten eksik bagaj duyurdu tüm bilgiler. Bagaj bitmiş parça iptal veya yine de gönderebilir.";
+                languagefields[182] = "Göndermek etmeyin";
+                languagefields[183] = "Tamam";
                 break;
             default:
                 // Duits
@@ -1047,6 +1066,12 @@ public class taal {
                 languagefields[175] = "Gold";
                 languagefields[176] = "Anwendung Thema";
                 languagefields[177] = "E-Mail-Adresse ist nicht gültig!";
+                languagefields[178] = "Es gibt ";
+                languagefields[179] = " fehlende Stück gefunden Gepäck mit den gleichen Features, wenn, was gerade abgeschlossen worden war. Im Folgenden finden Sie alle Informationen zu diesem bereits erklärt fehlende Gepäckstück . Sie können Ihre abgeschlossen Gepäckstück stornieren oder trotzdem versenden.";
+                languagefields[180] = "Es gibt ";
+                languagefields[181] = " verloren gefunden Gepäck mit den gleichen Features, wenn, was gerade abgeschlossen ist. Im Folgenden finden Sie alle Informationen, die sie bereits fehlende Gepäck erklärt hat. Sie können Ihre abgeschlossen Gepäckstück stornieren oder trotzdem versenden.";
+                languagefields[182] = "Nicht senden";
+                languagefields[183] = "Okay";
                 break;
         }
         return languagefields;

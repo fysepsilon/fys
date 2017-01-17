@@ -50,7 +50,8 @@ public class BagagedatabaseController implements Initializable {
     @FXML
     private AnchorPane database_pane, wijzig_pane;
     @FXML
-    private Pane filterPane, alertRemovePane, alertChangePane, alertConfirmPane;
+    private Pane filterPane, alertRemovePane, alertChangePane, alertConfirmPane, 
+            alertInfoPane;
     @FXML
     private TableView<Bagage> table;
     @FXML
@@ -67,7 +68,7 @@ public class BagagedatabaseController implements Initializable {
     private ComboBox statusFilter, typeFilter;
     @FXML
     private TextArea characteristicsFilter, alertremove_area, alertchange_area,
-            alertconfirm_area;
+            alertconfirm_area, alertinfo_area;
     @FXML
     private ComboBox statusCombo, airportCombo, typeCombo, colorCombo,
             destination_combo;
@@ -81,7 +82,7 @@ public class BagagedatabaseController implements Initializable {
     private Button pictureButton, sendButton, cancelButton, changeButton,
             removeButton, filter, filterButton, alertremove_button,
             alertchange_button, alertconfirm_buttonleft, 
-            alertconfirm_buttonright;
+            alertconfirm_buttonright, alertinfo_button;
     ;
     @FXML
     private Label mailLabel, phoneLabel, countryLabel, zipcodeLabel,
@@ -92,7 +93,8 @@ public class BagagedatabaseController implements Initializable {
             tableFromLabel, loginerror, shipaddressLabel, popup_filterlabel,
             popupLabelStatus, popupLabelType, popupLabelKleur, popupLabelMerk,
             popupLabelDatum, popupLabelEi, alertremove_headerlabel,
-            alertchange_headerlabel, alertconfirm_headerlabel;
+            alertchange_headerlabel, alertconfirm_headerlabel, 
+            alertinfo_headerlabel;
     @FXML
     private final FYS fys = new FYS();
     @FXML
@@ -158,7 +160,9 @@ public class BagagedatabaseController implements Initializable {
         alertconfirm_buttonright.setText(taal[127]);
         alertconfirm_area.setText(taal[155]);
         alertconfirm_headerlabel.setText(taal[154]);
-
+        alertinfo_headerlabel.setText(taal[104]);
+        alertinfo_button.setText(taal[183]);
+        
         airportLabel.setText(taal[8] + ":");
         nameLabel.setText(taal[9] + ":");
         surNameLabel.setText(taal[10] + ":");
@@ -299,16 +303,15 @@ public class BagagedatabaseController implements Initializable {
 
         //Update de tabel met gegevens die is gevraagd.
         table.setItems(dataFilter);
-        
+        alertinfo_area.setText(taal[180] + dataFilter.size() + taal[184]);
+
         //Sluit de popup
         filterPane.setVisible(false);
         database_pane.setDisable(false);
         
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(taal[104]);
-        alert.setTitle(taal[104]);
-        alert.setContentText(taal[180] + dataFilter.size() + taal[184]);
-        alert.showAndWait();
+        alertInfoPane.setVisible(false);
+        database_pane.setDisable(true);
+        
     }
 
     public void getLuggageData() {
@@ -822,6 +825,12 @@ public class BagagedatabaseController implements Initializable {
     @FXML
     private void handleCloseAlertConfirm(ActionEvent event) throws IOException {
         alertConfirmPane.setVisible(false);
+        database_pane.setDisable(false);
+    }
+    
+    @FXML
+    private void handleCloseAlertInfo(ActionEvent event) throws IOException {
+        alertInfoPane.setVisible(false);
         database_pane.setDisable(false);
     }
 }

@@ -75,13 +75,13 @@
                         <Image url="@images/corendon_logo.png" />
                     </image>
                 </ImageView>
-                <TextField id="login_fields" fx:id="passwordforgot" layoutY="141.0" prefHeight="31.0" prefWidth="314.0" promptText="someone@corendon.com" />
-                <Button id="login_but" fx:id="sendNewPasswordButton" defaultButton="true" layoutY="202.0" mnemonicParsing="false" onAction="#handleSendNewPasswordAction" prefHeight="31.0" prefWidth="187.0" text="Send" textFill="WHITE">
+                <TextField id="login_fields" fx:id="passwordforgot" layoutY="159.0" prefHeight="31.0" prefWidth="314.0" promptText="someone@corendon.com" />
+                <Button id="login_but" fx:id="sendNewPasswordButton" defaultButton="true" layoutY="220.0" mnemonicParsing="false" onAction="#handleSendNewPasswordAction" prefHeight="31.0" prefWidth="187.0" text="Send" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Button>
-                <Button id="login_but" layoutY="243.0" mnemonicParsing="false" onAction="#handleBackButtonAction" prefHeight="31.0" prefWidth="187.0" text="Back" textFill="WHITE">
+                <Button id="login_but" layoutY="261.0" mnemonicParsing="false" onAction="#handleBackButtonAction" prefHeight="31.0" prefWidth="187.0" text="Back" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
@@ -91,6 +91,7 @@
                         <Font name="System Bold" size="16.0" />
                     </font>
                 </Label>
+            <Label layoutY="121.0" prefHeight="27.0" prefWidth="86.0" text="E-mail:" />
             </children>
         </Pane>
         <Pane fx:id="email_pane" disable="true" layoutX="555.0" layoutY="40.0" prefHeight="450.0" prefWidth="395.0" visible="false">

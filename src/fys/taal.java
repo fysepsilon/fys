@@ -119,7 +119,7 @@ public class taal {
                 languagefields[62] = "Log out";
                 languagefields[63] = "Create a new account";
                 languagefields[64] = "Service-employee";
-                languagefields[65] = "Administrator"; //DUBBEL
+                languagefields[65] = "Administrator";
                 languagefields[66] = "Customer";
                 languagefields[67] = "Edit";
                 languagefields[68] = "Language";
@@ -129,7 +129,7 @@ public class taal {
                 languagefields[72] = "Turkish";
                 languagefields[73] = "Choose the language";
                 languagefields[74] = "Choose the role";
-                languagefields[75] = "Status"; //DUBBEL
+                languagefields[75] = "Status cumulatively";
                 languagefields[76] = "Insurance claims";
                 languagefields[77] = "Amount of Insurance claims";
                 languagefields[78] = "Jan";
@@ -329,7 +329,7 @@ public class taal {
                 languagefields[72] = "Turks";
                 languagefields[73] = "Kies hier de taal";
                 languagefields[74] = "Kies hier de rol";
-                languagefields[75] = "Status";
+                languagefields[75] = "Status cumulatief";
                 languagefields[76] = "Schadeclaims";
                 languagefields[77] = "Aantal schadeclaims";
                 languagefields[78] = "jan";
@@ -542,7 +542,7 @@ public class taal {
                 languagefields[72] = "Turco";
                 languagefields[73] = "Seleccionar el idioma";
                 languagefields[74] = "Elige el papel";
-                languagefields[75] = "Estatus";
+                languagefields[75] = "Estatus acumulativamente";
                 languagefields[76] = "Reclamaciones de seguros";
                 languagefields[77] = "Número de reclamaciones";
                 languagefields[78] = "ene";
@@ -748,7 +748,7 @@ public class taal {
                 languagefields[72] = "Türk";
                 languagefields[73] = "Dil seçin";
                 languagefields[74] = "Rolünü seçin";
-                languagefields[75] = "Durum";
+                languagefields[75] = "Durum kümülatif";
                 languagefields[76] = "Sigorta talepleri";
                 languagefields[77] = "Iddiaların sayısı";
                 languagefields[78] = "oca";
@@ -950,7 +950,7 @@ public class taal {
                 languagefields[72] = "Türkisch";
                 languagefields[73] = "Wählen Sie die Sprache";
                 languagefields[74] = "Wählen Sie die Rolle";
-                languagefields[75] = "Status";
+                languagefields[75] = "Status kumulativ";
                 languagefields[76] = "Versicherungsansprüche";
                 languagefields[77] = "Anzahl der Ansprüche";
                 languagefields[78] = "jan";
